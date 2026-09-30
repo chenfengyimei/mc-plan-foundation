@@ -1,0 +1,6 @@
+interface:
+  display_name: "MC Plan Development"
+  short_description: "Coordinate MC Plan multi-repo changes and contracts"
+  default_prompt: "Use $mc-plan-development to plan and complete this MC Plan change with the correct repository ownership, contracts, validation, and handoff."
+policy:
+  allow_implicit_invocation: true

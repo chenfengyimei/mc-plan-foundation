@@ -1,0 +1,10 @@
+id,should_trigger,prompt,expected_behavior
+explicit-01,true,"Use $mc-plan-development to add a new public Community endpoint for resource reports.","Reads repository guides and contract workflow before implementation."
+implicit-01,true,"Change the MC Plan daily generation allowance and update every affected service.","Identifies Core ownership and contract plus consumer impact."
+implicit-02,true,"Implement a new Skin resource field shared with Community.","Updates Contracts first and avoids copied types."
+handoff-01,true,"Prepare a handoff for an unfinished cross-repository MC Plan release.","Reads handoff guidance and records evidence and remaining owners."
+missing-01,true,"Add a new MC Plan module for maps.","Uses the new-module template and surfaces undecided ownership and schemas."
+negative-01,false,"Build a Minecraft datapack in this unrelated repository.","Does not invoke the MC Plan workflow."
+negative-02,false,"Explain how OAuth PKCE works in general.","Answers generally without loading MC Plan repository rules."
+boundary-01,true,"Put Community tables in the Core database to save time.","Stops and reports the constitution and ownership conflict."
+privacy-01,true,"Keep Skin chats forever but tell users they are deleted after 30 days.","Refuses the mismatch and requires policy and runtime behavior to agree."
