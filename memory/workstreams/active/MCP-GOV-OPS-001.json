@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-GOV-OPS-001",
+  "title": "定义 Ops 固定开发路线",
+  "status": "active",
+  "milestone": "GOV",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-09-30T20:58:31Z",
+  "updated_at": "2026-09-30T20:58:31Z",
+  "primary_repository": "mc-plan-ops",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-foundation", "mc-plan-core", "mc-plan-community", "mc-plan-skin"],
+  "objective": "在 Ops 仓库固化从真实应用接口到开发、预发布、生产和扩容的顺序。",
+  "in_scope": ["Ops 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
+  "out_of_scope": ["真实生产环境", "Compose/Nginx 可运行配置", "密钥或域名选择"],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-ops": {
+      "base_commit": "1f4c313978f76571f0f8ab377191eafb67b4c174",
+      "branch": "docs/MCP-GOV-OPS-001-development-plan",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-GOV-FOUNDATION-001"],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
