@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-GOV-CORE-001",
+  "title": "定义 Core 固定开发路线",
+  "status": "active",
+  "milestone": "GOV",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-09-30T20:40:31Z",
+  "updated_at": "2026-09-30T20:40:31Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-foundation", "mc-plan-contracts", "mc-plan-ops"],
+  "objective": "在 Core 仓库固化 F1 模块顺序、契约依赖、辅助组合和验收门槛。",
+  "in_scope": ["Core 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
+  "out_of_scope": ["NestJS/Prisma 工程", "Keycloak 部署", "产品契约字段变更"],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "5c8f0ae390ab730fd54950d6ecd45f5eab949c33",
+      "branch": "docs/MCP-GOV-CORE-001-development-plan",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-GOV-CONTRACTS-001"],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
