@@ -1,0 +1,33 @@
+{
+  "$schema": "../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-001",
+  "title": "替换为工作流标题",
+  "status": "planned",
+  "milestone": "F1",
+  "initial_owner": "替换为初始负责人",
+  "owner": "替换为负责人",
+  "started_at": "2026-10-01T00:00:00Z",
+  "updated_at": "2026-10-01T00:00:00Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-foundation"],
+  "objective": "替换为可观察目标",
+  "in_scope": ["替换为范围内事项"],
+  "out_of_scope": ["替换为明确排除项"],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "替换为 40 位提交哈希",
+      "branch": "feat/MCP-F1-CORE-001-topic",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}

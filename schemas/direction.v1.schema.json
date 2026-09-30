@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.mc-plan.example/foundation/direction.v1.schema.json",
+  "title": "MC Plan current direction v1",
+  "type": "object",
+  "required": ["schema_version", "milestone", "primary_repository", "status", "objective", "entry_gate", "exit_criteria", "allowed_supporting_repositories", "updated_at"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "milestone": { "type": "string", "minLength": 1 },
+    "primary_repository": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["planned", "active", "blocked", "completed"] },
+    "objective": { "type": "string", "minLength": 1 },
+    "entry_gate": { "type": "string", "minLength": 1 },
+    "exit_criteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "allowed_supporting_repositories": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "updated_at": { "type": "string", "format": "date-time" }
+  },
+  "additionalProperties": false
+}

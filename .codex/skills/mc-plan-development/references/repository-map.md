@@ -11,6 +11,6 @@ Read this reference when deciding ownership or the affected repositories.
 | `mc-plan-skin` | Conversations, render jobs, candidates, skin validation, provider adapters, Official/Standalone behavior | User master data, community interactions, global ledger |
 | `mc-plan-ops` | Production topology, deploy manifests, proxy, monitoring, backup/restore, runbooks | Application source, public self-host defaults, committed secrets |
 
-The workspace root is not a Git repository. Each child repository has its own history, releases, approvals, and rollback.
+The workspace root is not a Git repository. Each child repository has its own history, releases, approvals, and rollback. The machine-readable list and lifecycle are in Foundation's `memory/current/repositories.json`; this table defines ownership, not project existence.
 
-For a new module, use Foundation's `templates/new-module.md` before creating a repository or resource type.
+For a new module, use Foundation's `templates/new-module.md`. Register it as `proposed`, accept its boundary ADR, create the required repository skeleton while `approved`, and change it to `active` only after validation. Do not add an unregistered `mc-plan-*` directory.

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.mc-plan.example/foundation/workstream.v1.schema.json",
+  "title": "MC Plan workstream v1",
+  "type": "object",
+  "required": [
+    "schema_version", "tracking_id", "title", "status", "milestone", "initial_owner", "owner",
+    "started_at", "updated_at", "primary_repository", "supporting_repositories",
+    "reference_repositories", "objective", "in_scope", "out_of_scope",
+    "contract_impact", "acceptance_evidence", "repositories", "depends_on",
+    "blocked_reason", "direction_exception", "handoff_history", "validation_results"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "tracking_id": { "type": "string", "pattern": "^MCP-[A-Z0-9]+-[A-Z0-9]+-[0-9]{3}$" },
+    "title": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["planned", "active", "blocked", "handoff_required", "completed", "cancelled"] },
+    "milestone": { "type": "string", "minLength": 1 },
+    "initial_owner": { "type": "string", "minLength": 1 },
+    "owner": { "type": "string", "minLength": 1 },
+    "started_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "primary_repository": { "type": "string", "minLength": 1 },
+    "supporting_repositories": { "type": "array", "maxItems": 2, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "reference_repositories": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "objective": { "type": "string", "minLength": 1 },
+    "in_scope": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "out_of_scope": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "contract_impact": { "type": "string", "minLength": 1 },
+    "acceptance_evidence": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "repositories": { "type": "object", "minProperties": 1 },
+    "depends_on": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+    "blocked_reason": { "type": ["string", "null"] },
+    "direction_exception": { "type": ["object", "null"] },
+    "handoff_history": { "type": "array", "items": { "type": "object" } },
+    "validation_results": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  },
+  "additionalProperties": false
+}

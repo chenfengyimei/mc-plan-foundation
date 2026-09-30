@@ -1,12 +1,17 @@
 [CmdletBinding()]
 param(
     [string]$DestinationRoot,
-    [switch]$Replace
+    [switch]$Replace,
+    [switch]$Check
 )
 
 $ErrorActionPreference = 'Stop'
 $skillName = 'mc-plan-development'
 $skillSource = Split-Path -Parent $PSScriptRoot
+
+if ($Replace -and $Check) {
+    throw '-Replace and -Check cannot be used together.'
+}
 
 if ([string]::IsNullOrWhiteSpace($DestinationRoot)) {
     if (-not [string]::IsNullOrWhiteSpace($env:CODEX_HOME)) {
@@ -17,16 +22,41 @@ if ([string]::IsNullOrWhiteSpace($DestinationRoot)) {
     }
 }
 
+function Get-SkillManifest {
+    param([string]$Root)
+
+    $entries = [System.Collections.Generic.List[string]]::new()
+    foreach ($file in (Get-ChildItem -LiteralPath $Root -Recurse -File | Sort-Object FullName)) {
+        $relative = [System.IO.Path]::GetRelativePath($Root, $file.FullName).Replace('\', '/')
+        $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+        $entries.Add("$relative=$hash")
+    }
+    return @($entries)
+}
+
 $destinationRootFull = [System.IO.Path]::GetFullPath($DestinationRoot)
 $skillsDirectory = Join-Path $destinationRootFull 'skills'
 $target = Join-Path $skillsDirectory $skillName
+
+if ($Check) {
+    if (-not (Test-Path -LiteralPath $target)) {
+        throw "Skill is not installed at $target"
+    }
+    $difference = @(Compare-Object (Get-SkillManifest $skillSource) (Get-SkillManifest $target))
+    if ($difference.Count -ne 0) {
+        throw "Installed $skillName is stale. Run this canonical installer with -Replace."
+    }
+    $version = (Get-Content -LiteralPath (Join-Path $target 'VERSION') -Raw).Trim()
+    Write-Output "$skillName $version is current at $target"
+    exit 0
+}
 
 if (Test-Path -LiteralPath $target) {
     if (-not $Replace) {
         throw "Skill already exists at $target. Re-run with -Replace to preserve it as a timestamped backup and install this version."
     }
 
-    $timestamp = Get-Date -Format 'yyyyMMddHHmmss'
+    $timestamp = Get-Date -Format 'yyyyMMddHHmmssfff'
     $backup = "$target.backup-$timestamp"
     Move-Item -LiteralPath $target -Destination $backup
     Write-Output "Previous skill moved to $backup"
@@ -35,8 +65,10 @@ if (Test-Path -LiteralPath $target) {
 New-Item -ItemType Directory -Path $skillsDirectory -Force | Out-Null
 Copy-Item -LiteralPath $skillSource -Destination $target -Recurse
 
-if (-not (Test-Path -LiteralPath (Join-Path $target 'SKILL.md'))) {
-    throw "Installation failed: SKILL.md is missing at $target"
+$difference = @(Compare-Object (Get-SkillManifest $skillSource) (Get-SkillManifest $target))
+if ($difference.Count -ne 0) {
+    throw "Installation failed: $target does not match the authoritative source."
 }
 
-Write-Output "Installed $skillName at $target"
+$version = (Get-Content -LiteralPath (Join-Path $target 'VERSION') -Raw).Trim()
+Write-Output "Installed $skillName $version at $target"

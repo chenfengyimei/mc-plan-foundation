@@ -8,6 +8,8 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 - `standards/`：所有仓库共同遵守的工程标准。
 - `decisions/`：不可覆盖的架构决策记录（ADR）；被替代时新增 ADR。
 - `memory/`：跨仓当前状态、活动计划、交接、风险和待决事项。
+- `memory/current/*.json`：项目注册表与当前全局方向。
+- `memory/workstreams/`：活动/完成工作流、仓库锁、提交和验证证据。
 - `templates/`：新仓库、计划、ADR、交接和发布检查模板。
 - `.codex/skills/mc-plan-development/`：MC Plan 多仓开发协作 Skill 的权威版本。
 
@@ -22,12 +24,15 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 
 Foundation v1.0 文档基线已完成并保存在本地 Git；尚未创建远程仓库，业务代码尚未开始。当前完成范围与后续缺口见 [F0 完整性审计](docs/f0-completeness-audit.md)，后续顺序见 [路线图](docs/roadmap.md)。
 
+所有写任务必须先按 [多仓协调模型](docs/coordination.md) 声明唯一主仓库和仓库锁；各项目固定开发顺序见对应 `docs/development-plan.md`。
+
 ## 验证
 
 在工作区根目录运行：
 
 ```powershell
 pwsh -File .\mc-plan-foundation\scripts\validate-workspace.ps1
+pwsh -File .\mc-plan-foundation\scripts\test-coordination.ps1
 ```
 
 该命令检查六仓必需文件、状态页、本地 Markdown 链接、JSON 解析、Schema ID、本地契约引用和 Skill 基线。

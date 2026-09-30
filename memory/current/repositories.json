@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schemas/repository-registry.v1.schema.json",
+  "schema_version": 1,
+  "coordination_ready": false,
+  "updated_at": "2026-09-30T20:08:25Z",
+  "repositories": [
+    {
+      "name": "mc-plan-foundation",
+      "path": "mc-plan-foundation",
+      "kind": "governance",
+      "visibility": "public",
+      "lifecycle": "active"
+    },
+    {
+      "name": "mc-plan-contracts",
+      "path": "mc-plan-contracts",
+      "kind": "contracts",
+      "visibility": "public",
+      "lifecycle": "active"
+    },
+    {
+      "name": "mc-plan-core",
+      "path": "mc-plan-core",
+      "kind": "service",
+      "visibility": "private",
+      "lifecycle": "active"
+    },
+    {
+      "name": "mc-plan-community",
+      "path": "mc-plan-community",
+      "kind": "service",
+      "visibility": "private",
+      "lifecycle": "active"
+    },
+    {
+      "name": "mc-plan-skin",
+      "path": "mc-plan-skin",
+      "kind": "application",
+      "visibility": "public",
+      "lifecycle": "active"
+    },
+    {
+      "name": "mc-plan-ops",
+      "path": "mc-plan-ops",
+      "kind": "operations",
+      "visibility": "private",
+      "lifecycle": "active"
+    }
+  ]
+}

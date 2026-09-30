@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-GOV-FOUNDATION-001",
+  "title": "建立 MC Plan 主方向与多仓协作治理",
+  "status": "active",
+  "milestone": "GOV",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-09-30T20:08:25Z",
+  "updated_at": "2026-09-30T20:08:25Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "建立唯一统筹中枢、强制工作流、动态项目注册表、开发路线和可同步 Skill。",
+  "in_scope": [
+    "Foundation 协调模型、标准、ADR、模板和校验脚本",
+    "mc-plan-development Skill v1.1",
+    "后续五个单仓开发路线工作流的统筹"
+  ],
+  "out_of_scope": [
+    "产品 API、事件或 SDK 变更",
+    "任何业务实现代码",
+    "远程仓库创建或推送"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "837444aea4357ad4c1f5fc851a3062ca7aa16b4d",
+      "branch": "docs/MCP-GOV-FOUNDATION-001-coordination",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}

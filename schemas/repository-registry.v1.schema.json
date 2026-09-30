@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.mc-plan.example/foundation/repository-registry.v1.schema.json",
+  "title": "MC Plan repository registry v1",
+  "type": "object",
+  "required": ["schema_version", "coordination_ready", "updated_at", "repositories"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "coordination_ready": { "type": "boolean" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "repositories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "kind", "visibility", "lifecycle"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^mc-plan-[a-z0-9-]+$" },
+          "path": { "type": "string", "pattern": "^mc-plan-[a-z0-9-]+$" },
+          "kind": { "enum": ["governance", "contracts", "service", "application", "operations", "module"] },
+          "visibility": { "enum": ["public", "private"] },
+          "lifecycle": { "enum": ["proposed", "approved", "active", "retired"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
