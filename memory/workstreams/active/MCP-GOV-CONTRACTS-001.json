@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-GOV-CONTRACTS-001",
+  "title": "定义 Contracts 固定开发路线",
+  "status": "active",
+  "milestone": "GOV",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-09-30T20:34:02Z",
+  "updated_at": "2026-09-30T20:34:02Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-foundation"],
+  "objective": "在 Contracts 仓库固化契约优先的开发阶段、依赖和验收命令。",
+  "in_scope": ["Contracts 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
+  "out_of_scope": ["产品 API 或 Schema 字段变更", "SDK 实现", "发布流水线"],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "57c4eaef8ea8a42226559534265357b1d768f851",
+      "branch": "docs/MCP-GOV-CONTRACTS-001-development-plan",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-GOV-FOUNDATION-001"],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
