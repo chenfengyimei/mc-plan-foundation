@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-GOV-SKIN-001",
   "title": "定义 Skin 固定开发路线",
-  "status": "active",
+  "status": "completed",
   "milestone": "GOV",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-09-30T20:52:38Z",
-  "updated_at": "2026-09-30T20:52:38Z",
+  "updated_at": "2026-09-30T20:56:04Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": ["mc-plan-foundation", "mc-plan-contracts", "mc-plan-core", "mc-plan-community"],
@@ -16,18 +16,26 @@
   "in_scope": ["Skin 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
   "out_of_scope": ["Skin 业务工程", "模型厂商选择", "公共接口字段变更"],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "Standalone、Official/Core 和 Community 发布被拆为明确阶段",
+    "每个集成工作流最多使用 Contracts 加一个业务辅助仓库",
+    "双模式、保留、Skin fixture 和故障路径验收被纳入完成条件"
+  ],
   "repositories": {
     "mc-plan-skin": {
       "base_commit": "068c2f8137cd50887a97c8d1b6d068acb4da93ab",
       "branch": "docs/MCP-GOV-SKIN-001-development-plan",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "0bf16feee0e91f42cd27849da3ef2e57ba6b75ee",
+      "final_commit": "0bf16feee0e91f42cd27849da3ef2e57ba6b75ee"
     }
   },
   "depends_on": ["MCP-GOV-FOUNDATION-001"],
   "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start and Continue validation passed",
+    "Workspace validation passed with 94 Markdown and 24 JSON files",
+    "git diff --cached --check passed"
+  ]
 }
