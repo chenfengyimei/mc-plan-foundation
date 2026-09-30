@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-GOV-COMMUNITY-001",
   "title": "定义 Community 固定开发路线",
-  "status": "active",
+  "status": "completed",
   "milestone": "GOV",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-09-30T20:47:03Z",
-  "updated_at": "2026-09-30T20:47:03Z",
+  "updated_at": "2026-09-30T20:50:40Z",
   "primary_repository": "mc-plan-community",
   "supporting_repositories": [],
   "reference_repositories": ["mc-plan-foundation", "mc-plan-contracts", "mc-plan-core", "mc-plan-ops"],
@@ -16,18 +16,26 @@
   "in_scope": ["Community 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
   "out_of_scope": ["Community 业务工程", "公共接口字段变更", "审核供应商选择"],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "F2 发布闭环与 F4 社区批次拥有独立固定顺序",
+    "Contracts/Ops 可写辅助和 Core/Skin 边界明确",
+    "正式社区首发完成条件没有因分批交付而缩水"
+  ],
   "repositories": {
     "mc-plan-community": {
       "base_commit": "daf0b58bfaf236214633a8d58af809f4dfb27d1c",
       "branch": "docs/MCP-GOV-COMMUNITY-001-development-plan",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "69ac5e9f4b171788f2c988d6c9ea6eb3e3c749d9",
+      "final_commit": "69ac5e9f4b171788f2c988d6c9ea6eb3e3c749d9"
     }
   },
   "depends_on": ["MCP-GOV-FOUNDATION-001"],
   "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start and Continue validation passed",
+    "Workspace validation passed with 93 Markdown and 23 JSON files",
+    "git diff --cached --check passed"
+  ]
 }
