@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-GOV-SKIN-001",
+  "title": "定义 Skin 固定开发路线",
+  "status": "active",
+  "milestone": "GOV",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-09-30T20:52:38Z",
+  "updated_at": "2026-09-30T20:52:38Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-foundation", "mc-plan-contracts", "mc-plan-core", "mc-plan-community"],
+  "objective": "在 Skin 仓库固化提供商决策、Standalone、Official 和 Community 发布阶段。",
+  "in_scope": ["Skin 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
+  "out_of_scope": ["Skin 业务工程", "模型厂商选择", "公共接口字段变更"],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "068c2f8137cd50887a97c8d1b6d068acb4da93ab",
+      "branch": "docs/MCP-GOV-SKIN-001-development-plan",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-GOV-FOUNDATION-001"],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
