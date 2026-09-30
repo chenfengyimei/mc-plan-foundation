@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-09-30T20:08:25Z",
-  "updated_at": "2026-09-30T20:08:25Z",
+  "updated_at": "2026-09-30T20:30:12Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -35,7 +35,7 @@
     "mc-plan-foundation": {
       "base_commit": "837444aea4357ad4c1f5fc851a3062ca7aa16b4d",
       "branch": "docs/MCP-GOV-FOUNDATION-001-coordination",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "7633d2c363be309ec7f86a1d7ddee69de97d24b7",
       "final_commit": null
     }
   },
@@ -43,5 +43,9 @@
   "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination preflight passed for MCP-GOV-FOUNDATION-001",
+    "Coordination validator tests passed: 14 cases",
+    "Workspace validation passed during governance bootstrap"
+  ]
 }
