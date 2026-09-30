@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-GOV-OPS-001",
   "title": "定义 Ops 固定开发路线",
-  "status": "active",
+  "status": "completed",
   "milestone": "GOV",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-09-30T20:58:31Z",
-  "updated_at": "2026-09-30T20:58:31Z",
+  "updated_at": "2026-09-30T21:02:39Z",
   "primary_repository": "mc-plan-ops",
   "supporting_repositories": [],
   "reference_repositories": ["mc-plan-foundation", "mc-plan-core", "mc-plan-community", "mc-plan-skin"],
@@ -16,18 +16,38 @@
   "in_scope": ["Ops 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
   "out_of_scope": ["真实生产环境", "Compose/Nginx 可运行配置", "密钥或域名选择"],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "docs/development-plan.md defines the real-input-first development, staging, production, recovery and scaling order",
+    "AGENTS.md blocks writes without an active coordinated workstream and names the repository plan",
+    "docs/STATUS.md exposes the development route and next gate"
+  ],
   "repositories": {
     "mc-plan-ops": {
       "base_commit": "1f4c313978f76571f0f8ab377191eafb67b4c174",
       "branch": "docs/MCP-GOV-OPS-001-development-plan",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "33ab6f36c8453388b5c9ead5aff462d5b3c9950a",
+      "final_commit": "33ab6f36c8453388b5c9ead5aff462d5b3c9950a"
     }
   },
   "depends_on": ["MCP-GOV-FOUNDATION-001"],
   "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    {
+      "command": "pwsh -File .\\mc-plan-foundation\\scripts\\validate-coordination.ps1 -TrackingId MCP-GOV-OPS-001 -Phase Continue",
+      "result": "passed",
+      "recorded_at": "2026-09-30T21:02:39Z"
+    },
+    {
+      "command": "pwsh -File .\\mc-plan-foundation\\scripts\\validate-workspace.ps1",
+      "result": "passed",
+      "recorded_at": "2026-09-30T21:02:39Z"
+    },
+    {
+      "command": "git diff --cached --check",
+      "result": "passed",
+      "recorded_at": "2026-09-30T21:02:39Z"
+    }
+  ]
 }
