@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-GOV-COMMUNITY-001",
+  "title": "定义 Community 固定开发路线",
+  "status": "active",
+  "milestone": "GOV",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-09-30T20:47:03Z",
+  "updated_at": "2026-09-30T20:47:03Z",
+  "primary_repository": "mc-plan-community",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-foundation", "mc-plan-contracts", "mc-plan-core", "mc-plan-ops"],
+  "objective": "在 Community 仓库分别固化 F2 资源闭环和 F4 完整社区的实现顺序。",
+  "in_scope": ["Community 开发计划", "AGENTS 工作流预检要求", "状态页开发计划入口"],
+  "out_of_scope": ["Community 业务工程", "公共接口字段变更", "审核供应商选择"],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-community": {
+      "base_commit": "daf0b58bfaf236214633a8d58af809f4dfb27d1c",
+      "branch": "docs/MCP-GOV-COMMUNITY-001-development-plan",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-GOV-FOUNDATION-001"],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
