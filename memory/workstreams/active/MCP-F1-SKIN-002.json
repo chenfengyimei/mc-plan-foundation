@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-002",
+  "title": "实现 Standalone 最小纵向链路的可独立部分",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-01T13:02:00Z",
+  "updated_at": "2026-10-01T13:02:00Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "在工程骨架上实现 Standalone 最小纵向链路中不依赖公共契约变更的部分：conversation、render-job、provider-adapter（确定性 Fake Provider）、candidate 隔离存储、skin-validator 接线、finalization（Standalone 存储成品）、retention-cleanup 与最小 Web 流程（创建→渲染→轮询→确认）；候选预览、最终下载、会话详情与匿名安全模式作为契约缺口记录，留待 Contracts 工作流。",
+  "in_scope": [
+    "API：POST /v1/conversations、POST /v1/conversations/{id}/renders、POST /v1/conversations/{id}/finalize、GET /v1/jobs/{id}（全部为已发布 0.1.0-draft 已定义操作），含 Idempotency-Key 指纹与 409 语义",
+    "conversation 模块：会话创建、初始消息、30 天过期、最多三次实际渲染的状态机接线",
+    "render-job 模块：BullMQ 异步任务、重试、取消、死信与标准错误分类落地",
+    "provider-adapter 接线：FakeProvider（开发/测试环境，返回已验证 fixture；生产模式禁止实例化）",
+    "candidate 模块：隔离存储（candidates/ 前缀、不可预测键）、24 小时过期元数据、SHA-256 与字节数",
+    "finalization：确认候选、最终 64×64/双层校验、Standalone 模式成品存储与幂等",
+    "retention-cleanup：周期清理任务（对话 30 天、候选与失败文件 24 小时）、清理失败重试、可控时钟测试",
+    "Web 最小流程：创建会话、请求渲染、渲染状态与次数显示、按候选 ID 确认成品；预览与下载在契约缺口补全前明确禁用并说明",
+    "契约缺口记录：候选预览字节、Standalone 最终下载、会话详情/消息、匿名安全模式"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema 或 SDK 修改（契约缺口只记录，另开 Contracts 主仓库工作流）",
+    "候选预览与最终下载的公开端点实现（等待契约补全）",
+    "Official 登录、Keycloak、Core 额度或积分、Community 发布、OAuth 社区授权",
+    "正式 AI 厂商调用、正式内容审核供应商、3D 预览库选择",
+    "生产域名、生产密钥、真实云资源、远程推送"
+  ],
+  "contract_impact": "none within this workflow; gaps are recorded for a sequential Contracts-primary workstream: candidate preview bytes, standalone final download, conversation detail/messages, and anonymous security mode semantics cannot be expressed by skin.yaml 0.1.0-draft",
+  "acceptance_evidence": [
+    "All four published contract operations are implemented and verified against skin.yaml 0.1.0-draft shapes (201/202/409/404 and problem+json errors)",
+    "Idempotency-Key fingerprints reject reuse with a different body and replay returns the original result without duplicating state",
+    "The render job runs end to end in integration tests: FakeProvider returns a validated fixture, the candidate is stored under the isolated candidates/ prefix with SHA-256 and 24-hour expiry, and the job reports candidate_id",
+    "Finalization re-validates 64x64/double-layer bytes, is idempotent, and in standalone mode stores the final skin without contacting any external service",
+    "Retention cleanup deletes expired conversations and candidates with an injectable clock, and cleanup failures enter a retry path",
+    "Concurrent render requests cannot exceed the three-attempt limit",
+    "The web minimal flow creates a conversation, requests renders, polls job status, displays attempt counts, and finalizes by candidate id with preview/download visibly disabled pending the contract gap",
+    "Contract gaps are recorded precisely in this workstream record and in the repository docs"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "c2042c35159eba68942028580261dbd39ca08b17",
+      "branch": "feat/MCP-F1-SKIN-002-standalone-chain",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-001",
+    "MCP-F1-FOUNDATION-004"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit 2026-10-01 Skin Standalone early development authorization, registered in ADR-0009",
+    "reason": "Implement the owner-approved restricted Skin Standalone minimal vertical chain while mc-plan-core remains the F1 primary project."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
