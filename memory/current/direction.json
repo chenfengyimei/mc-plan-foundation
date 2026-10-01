@@ -5,7 +5,7 @@
   "primary_repository": "mc-plan-core",
   "status": "planned",
   "objective": "建立 Keycloak 与 Core 的最小身份、资料、权限和审计闭环，为后续 Community 与 Skin 集成提供稳定基础。",
-  "entry_gate": "Foundation 与 Contracts 人工架构评审通过；在此之前不得启动业务实现工作流。",
+  "entry_gate": "由项目所有者明确授权的 Foundation/Contracts 架构评审工作流完成并记录通过；在此之前不得启动业务实现工作流。",
   "exit_criteria": [
     "Keycloak 邮箱身份流程与 Core issuer + subject 映射通过集成验收",
     "Identity/Profile、Developer App/Scope/PAT、Entitlement/Credits、Audit/Outbox 按 Core 开发计划形成可验证闭环",
@@ -16,5 +16,5 @@
     "mc-plan-contracts",
     "mc-plan-ops"
   ],
-  "updated_at": "2026-09-30T21:05:08Z"
+  "updated_at": "2026-10-01T10:18:26Z"
 }

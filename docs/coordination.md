@@ -16,7 +16,7 @@
 
 公共接口仍以 Contracts 为准，长期跨仓决策仍以 ADR 为准。
 
-无法自动发现仓库 Skill 的开发工具，必须使用 `templates/session-start-prompt.md` 启动会话，并直接读取 Foundation 中的权威 Skill。粘贴提示词只负责引导读取，不能覆盖机器可读的当前方向或活动工作流。
+无法自动发现仓库 Skill 的开发工具，必须使用 `templates/session-start-prompt.md` 启动会话，并直接读取 Foundation 中的权威 Skill。开局提示词可以保存项目所有者对“创建下一个合法工作流、完成架构门槛后顺序进入主方向”的明确授权，但不能覆盖机器可读的当前方向、活动锁或仓库边界。
 
 ## 目录和状态
 

@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T10:18:26Z",
-  "updated_at": "2026-10-01T10:18:26Z",
+  "updated_at": "2026-10-01T10:26:09Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -49,5 +49,13 @@
     "reason": "Repair governance instructions that stopped at read-only review despite the owner's intent to actively improve the architecture."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start and Continue validation passed",
+    "Workspace validation passed for 6 active repositories, 97 Markdown files, and 27 JSON files",
+    "Skill quick validation and 18 behavior cases passed, including the authorized gate regression",
+    "Contract validation passed for 13 JSON schemas/events, 3 OpenAPI documents, and 15 operationIds",
+    "Bootstrap prompt authorization assertions passed",
+    "Skill replacement stores backups outside the discovery directory",
+    "User-level Skill 1.1.2 matches Foundation and exactly one copy is discoverable"
+  ]
 }

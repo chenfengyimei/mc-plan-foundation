@@ -70,7 +70,9 @@ if (Test-Path -LiteralPath $target) {
     }
 
     $timestamp = Get-Date -Format 'yyyyMMddHHmmssfff'
-    $backup = "$target.backup-$timestamp"
+    $backupDirectory = Join-Path $destinationRootFull 'skill-backups'
+    New-Item -ItemType Directory -Path $backupDirectory -Force | Out-Null
+    $backup = Join-Path $backupDirectory "$skillName-$timestamp"
     Move-Item -LiteralPath $target -Destination $backup
     Write-Output "Previous skill moved to $backup"
 }
