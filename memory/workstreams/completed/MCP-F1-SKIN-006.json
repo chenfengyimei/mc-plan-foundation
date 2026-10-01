@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-006",
   "title": "恢复审计：SKIN-003 关单后遗留修改的归属认证与清理",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-02T01:40:00Z",
-  "updated_at": "2026-10-02T01:40:00Z",
+  "updated_at": "2026-10-02T01:52:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -44,8 +44,8 @@
     "mc-plan-skin": {
       "base_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
       "branch": "fix/MCP-F1-SKIN-006-recover-untracked-work",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
+      "final_commit": "061b619e0f4809ba028038622544fe84c908b4e9"
     }
   },
   "depends_on": [
@@ -58,5 +58,12 @@
     "reason": "Owner-directed recovery audit of post-SKIN-003 leftover modifications that were blocking CORE-001; no new features, no public contract change."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "逐文件归属审计完成（九个所有者列名文件）：.gitignore、apps/web/next-env.d.ts、apps/web/src/components/creation-flow.tsx、scripts/start-demo.mjs 均为已跟踪的正式成果（保留）；apps/web/render-front-preview.mjs、apps/web/skin-front-preview.png、scripts/probe-auth.mjs、scripts/probe-image-api.mjs、scripts/probe-llm.mjs 已在前序收尾中作为可重建临时产物删除（磁盘核实不存在）",
+    "已跟踪文件密钥扫描完成：无 sk- 格式 API Key、无私钥块、无 Cookie 值、无个人数据（'cookie' 命中均为 pino redact 路径/生成契约 schema/lockfile 依赖名，非泄漏）",
+    "api.deepseek.com 端点确认仅存在于 gitignored 的 apps/worker/.env，已跟踪文件零引用",
+    ".gitignore 覆盖验证通过：apps/worker/.env、apps/api/.env（.env 模式）、apps/web/src/app/demo-preview/（本地演示路由）、data/（生成物）全部被忽略",
+    "mc-plan-skin 工作树认证为干净（HEAD=061b619，无未提交修改、无未归属文件），CORE-001 可恢复 Finish",
+    "pnpm check:full 全绿（exit 0）：prettier、11 项目构建、ESLint 零警告、严格类型检查、65+ 单元测试、契约一致性、6/6 fixture、API 集成 7/7、worker 集成 5/5、Playwright 全链路冒烟"
+  ]
 }
