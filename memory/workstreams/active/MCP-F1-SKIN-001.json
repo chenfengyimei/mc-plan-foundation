@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-001",
+  "title": "建立 Skin 可运行工程骨架",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-01T12:05:00Z",
+  "updated_at": "2026-10-01T12:05:00Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "建立可安装、可构建、可启动、可验证的 mc-plan-skin pnpm/TypeScript 工程骨架：apps/web(Next.js)、apps/api(NestJS)、apps/worker(BullMQ) 与 packages/config、contracts、skin-core、skin-validator、provider-sdk、test-fixtures，形成真实 lint、format、typecheck、unit、integration、build、Playwright 冒烟、契约类型生成与 Minecraft 皮肤 fixture 校验命令；不实现业务纵向链路端点。",
+  "in_scope": [
+    "pnpm workspace、TypeScript 严格模式、ESLint/Prettier 与结构化日志、健康检查、环境变量 Schema 验证基线",
+    "apps/web 最小可运行页面与构建；apps/api 配置校验与私有健康探针；apps/worker BullMQ worker 骨架",
+    "packages/config 运行模式与环境解析；packages/contracts 从已发布 0.1.0-draft 契约生成的客户端类型；packages/skin-core 领域类型基线；packages/skin-validator PNG/64×64/SHA-256 校验；packages/provider-sdk 厂商无关接口与确定性 Fake Provider；packages/test-fixtures 皮肤 fixture 与校验脚本",
+    "Prisma/PostgreSQL 基线与 testcontainers 集成测试；Vitest 单测；Playwright 冒烟",
+    "AGENTS.md 补充真实验收命令；更新 STATUS.md 与 README"
+  ],
+  "out_of_scope": [
+    "conversation、render、candidate、finalize 等公共业务端点实现",
+    "公共 OpenAPI、JSON Schema 或 SDK 修改",
+    "Official 登录、Core 额度、Community 发布、Keycloak、真实 AI 厂商、正式内容审核",
+    "3D 预览库选择、生产域名、生产密钥、真实云资源、远程推送"
+  ],
+  "contract_impact": "none; packages/contracts only generates client types from the published 0.1.0-draft contract and does not modify it",
+  "acceptance_evidence": [
+    "pnpm install completes with a committed lockfile and every declared command exists and runs",
+    "lint, format:check, and typecheck pass with zero errors under TypeScript strict mode",
+    "unit tests cover config, skin-validator, provider-sdk (including deterministic fake provider), and skin-core domain invariants",
+    "PostgreSQL and Redis testcontainers integration tests pass against real containers",
+    "All apps build successfully and the Playwright smoke test drives the web app against the running API health endpoint",
+    "Contract type generation from the published skin.yaml succeeds and compiles; the fixture validation script accepts valid 64x64 fixtures and rejects non-PNG, wrong-size, and corrupted samples"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "0bf16feee0e91f42cd27849da3ef2e57ba6b75ee",
+      "branch": "feat/MCP-F1-SKIN-001-engineering-skeleton",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-004"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit 2026-10-01 Skin Standalone early development authorization, registered in ADR-0009",
+    "reason": "Build the owner-approved restricted Skin Standalone engineering skeleton while mc-plan-core remains the F1 primary project."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
