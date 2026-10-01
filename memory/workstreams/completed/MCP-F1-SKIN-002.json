@@ -3,7 +3,7 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-002",
   "title": "实现 Standalone 最小纵向链路的可独立部分",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
