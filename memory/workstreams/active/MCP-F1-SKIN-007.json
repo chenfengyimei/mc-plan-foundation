@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-01T18:55:21Z",
-  "updated_at": "2026-10-01T20:31:00Z",
+  "updated_at": "2026-10-01T20:33:16Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -51,7 +51,7 @@
     "mc-plan-skin": {
       "base_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
       "branch": "feat/MCP-F1-SKIN-007-design-v3",
-      "last_checkpoint_commit": "7a64fa4d326c7bf7e35ed07ba637c9f32667c1b2",
+      "last_checkpoint_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "final_commit": null
     }
   },
@@ -75,6 +75,9 @@
     "Automated visual-complexity regression passed: the rich material/pattern design exceeded the smooth baseline by more than 35 opaque RGB colors and exceeded 90 opaque RGB colors total",
     "Manual inspection completed against a reproducible gitignored 16x32 front preview: oversized 2x2 eyes were reduced to classic one-row eyes and generic rectangular overlays were replaced by semantic hat/shoulder/cuff/knee shapes",
     "pnpm check passed end to end: formatting, 11-project build, ESLint, strict typecheck, all unit tests, skin contract consistency and 6/6 fixture validation",
-    "Implementation checkpoint committed in mc-plan-skin as 7a64fa4d326c7bf7e35ed07ba637c9f32667c1b2"
+    "Implementation checkpoint committed in mc-plan-skin as 7a64fa4d326c7bf7e35ed07ba637c9f32667c1b2",
+    "Initial Playwright attempts exposed two external-state issues without code assertion failures: a prior GLM/Codely demo stack twice occupied ports 3100/4000; after isolation, the local apps/worker/.env selected the LLM adapter and left the render running beyond 60 seconds",
+    "E2E child environment now explicitly forces SKIN_PROVIDER=fake; focused pnpm test:e2e passed the real PostgreSQL+Redis vertical chain in 16.5 seconds despite the local demo .env selecting LLM",
+    "E2E isolation checkpoint committed in mc-plan-skin as 787bc34a2965553e16543aa72b3d80dfd4aa03b6"
   ]
 }
