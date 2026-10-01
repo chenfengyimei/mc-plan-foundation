@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-002",
   "title": "修正跨会话启动授权与 Skill 发现",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T10:18:26Z",
-  "updated_at": "2026-10-01T10:26:09Z",
+  "updated_at": "2026-10-01T10:28:14Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -30,13 +30,20 @@
     "远程仓库创建或推送"
   ],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "The cross-tool bootstrap prompt contains explicit owner authorization to create and execute the gate-closing review workflow without requesting duplicate approval",
+    "The prompt requires Foundation review, separate Contracts changes, and Core skeleton work to run sequentially with each previous workflow closed first",
+    "The F1 architecture review checklist defines ten evidence-backed questions and objective pass conditions",
+    "The current direction and status explain the auditable owner-authorized gate-closing path",
+    "Skill 1.1.2 stores backups outside the discovery directory and exactly one user-level copy is discoverable",
+    "An authorized-gate behavior case prevents regression to read-only reporting"
+  ],
   "repositories": {
     "mc-plan-foundation": {
       "base_commit": "4aaeef8332093773be0399673e26a4b7c0272691",
       "branch": "fix/MCP-F1-FOUNDATION-002-session-bootstrap",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "972c0513f3b384a62bc662eb869ba507d3051a48",
+      "final_commit": "972c0513f3b384a62bc662eb869ba507d3051a48"
     }
   },
   "depends_on": [
