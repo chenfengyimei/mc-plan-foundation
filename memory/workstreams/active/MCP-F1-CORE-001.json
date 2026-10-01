@@ -45,13 +45,13 @@
     "mc-plan-core": {
       "base_commit": "326c0c8f21356169ab51d166d29379799e56cf99",
       "branch": "feat/MCP-F1-CORE-001-runtime-skeleton",
-      "last_checkpoint_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
+      "last_checkpoint_commit": null,
       "final_commit": null
     },
     "mc-plan-contracts": {
       "base_commit": "440dbdcc02c702d37a6f9b720853d4a80b78cb5c",
       "branch": "docs/MCP-F1-CORE-001-redocly-command",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
       "final_commit": null
     }
   },
