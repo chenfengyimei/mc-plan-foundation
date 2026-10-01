@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-001",
   "title": "建立 Skin 可运行工程骨架",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T12:05:00Z",
-  "updated_at": "2026-10-01T12:56:30Z",
+  "updated_at": "2026-10-01T12:57:30Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -46,7 +46,7 @@
       "base_commit": "0bf16feee0e91f42cd27849da3ef2e57ba6b75ee",
       "branch": "feat/MCP-F1-SKIN-001-engineering-skeleton",
       "last_checkpoint_commit": "c2042c35159eba68942028580261dbd39ca08b17",
-      "final_commit": null
+      "final_commit": "c2042c35159eba68942028580261dbd39ca08b17"
     }
   },
   "depends_on": [
