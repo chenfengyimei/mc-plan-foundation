@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T11:02:39Z",
-  "updated_at": "2026-10-01T11:02:39Z",
+  "updated_at": "2026-10-01T11:05:22Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -45,7 +45,7 @@
     "mc-plan-core": {
       "base_commit": "326c0c8f21356169ab51d166d29379799e56cf99",
       "branch": "feat/MCP-F1-CORE-001-runtime-skeleton",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
       "final_commit": null
     },
     "mc-plan-contracts": {
@@ -61,5 +61,10 @@
   "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start validation passed with Core primary and Contracts as the only supporting repository",
+    "Contracts Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents, and 15 operationIds",
+    "Redocly recommended lint passed for all 3 OpenAPI documents with the explicit redocly binary",
+    "Contracts validation command fix committed as f722f6d41499d38602235b4cf8226a5627f0f32f"
+  ]
 }
