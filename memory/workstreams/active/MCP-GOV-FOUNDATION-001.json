@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-09-30T20:08:25Z",
-  "updated_at": "2026-09-30T20:30:12Z",
+  "updated_at": "2026-10-01T00:20:20Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -41,11 +41,19 @@
   },
   "depends_on": [],
   "blocked_reason": null,
-  "direction_exception": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan owner via MCP-GOV implementation request",
+    "reason": "Complete and validate the Foundation governance workstream after switching the next global direction to F1/Core."
+  },
   "handoff_history": [],
   "validation_results": [
     "Coordination preflight passed for MCP-GOV-FOUNDATION-001",
     "Coordination validator tests passed: 14 cases",
-    "Workspace validation passed during governance bootstrap"
+    "Workspace validation passed for 6 active repositories, 96 Markdown files, and 25 JSON files",
+    "Skill quick validation and 17 behavior cases passed",
+    "Skill install, stale-copy rejection, backup replacement, and user-level version check passed",
+    "Contract validation passed for 13 JSON schemas/events, 3 OpenAPI documents, and 15 operationIds",
+    "Redocly validated all 3 OpenAPI documents"
   ]
 }

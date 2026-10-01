@@ -1,8 +1,8 @@
 {
   "$schema": "../../schemas/repository-registry.v1.schema.json",
   "schema_version": 1,
-  "coordination_ready": false,
-  "updated_at": "2026-09-30T20:08:25Z",
+  "coordination_ready": true,
+  "updated_at": "2026-09-30T21:05:08Z",
   "repositories": [
     {
       "name": "mc-plan-foundation",

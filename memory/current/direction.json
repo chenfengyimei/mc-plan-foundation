@@ -1,23 +1,20 @@
 {
   "$schema": "../../schemas/direction.v1.schema.json",
   "schema_version": 1,
-  "milestone": "GOV",
-  "primary_repository": "mc-plan-foundation",
-  "status": "active",
-  "objective": "建立主方向、仓库锁、工作流记录、开发路线和 Skill 强制校验。",
-  "entry_gate": "Foundation F0 本地基线已完成。",
+  "milestone": "F1",
+  "primary_repository": "mc-plan-core",
+  "status": "planned",
+  "objective": "建立 Keycloak 与 Core 的最小身份、资料、权限和审计闭环，为后续 Community 与 Skin 集成提供稳定基础。",
+  "entry_gate": "Foundation 与 Contracts 人工架构评审通过；在此之前不得启动业务实现工作流。",
   "exit_criteria": [
-    "六仓开发计划与 AGENTS 工作流要求完成",
-    "协调校验器和 Skill 行为测试通过",
-    "用户级 Skill 与 Foundation 权威版本一致",
-    "全局方向切换到 F1 / mc-plan-core"
+    "Keycloak 邮箱身份流程与 Core issuer + subject 映射通过集成验收",
+    "Identity/Profile、Developer App/Scope/PAT、Entitlement/Credits、Audit/Outbox 按 Core 开发计划形成可验证闭环",
+    "公共接口先在 Contracts 定义、验证并记录兼容性",
+    "Ops 提供与真实 Core 镜像、端口、健康检查和迁移命令一致的开发与预发布基础"
   ],
   "allowed_supporting_repositories": [
     "mc-plan-contracts",
-    "mc-plan-core",
-    "mc-plan-community",
-    "mc-plan-skin",
     "mc-plan-ops"
   ],
-  "updated_at": "2026-09-30T20:08:25Z"
+  "updated_at": "2026-09-30T21:05:08Z"
 }
