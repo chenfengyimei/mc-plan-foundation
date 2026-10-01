@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T10:40:15Z",
-  "updated_at": "2026-10-01T10:51:18Z",
+  "updated_at": "2026-10-01T11:00:07Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -42,7 +42,7 @@
     "mc-plan-foundation": {
       "base_commit": "8d7c47b7012e0a46c925765030a2eae0efb08973",
       "branch": "docs/MCP-F1-FOUNDATION-003-architecture-review",
-      "last_checkpoint_commit": "1d5ed710ef9ca45e7cd36317c3a1092086dd916c",
+      "last_checkpoint_commit": "8324c48b3891bc394817feccff9883f3300c3c55",
       "final_commit": null
     }
   },
@@ -60,6 +60,12 @@
     "Coordination Start validation passed with one active workstream and no lock conflicts",
     "Workspace validation passed for 6 active repositories, 100 Markdown files, and 28 JSON files",
     "Coordination regression tests passed all 14 cases",
-    "Architecture review baseline committed as 1d5ed710ef9ca45e7cd36317c3a1092086dd916c"
+    "Architecture review baseline committed as 1d5ed710ef9ca45e7cd36317c3a1092086dd916c",
+    "F1 gate state and review evidence committed as 8324c48b3891bc394817feccff9883f3300c3c55",
+    "Coordination Continue validation passed before gate closure",
+    "Skill 1.1.2 canonical install check passed",
+    "Contracts Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents, and 15 operationIds",
+    "Redocly recommended lint passed for Core, Community, and Skin OpenAPI documents",
+    "Contracts, Core, and Ops reference repositories remained clean"
   ]
 }
