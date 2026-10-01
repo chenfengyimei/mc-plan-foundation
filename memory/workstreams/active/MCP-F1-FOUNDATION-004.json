@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-004",
+  "title": "登记 Skin Standalone 为 F1 受限准备方向",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-01T11:46:00Z",
+  "updated_at": "2026-10-01T11:46:00Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-skin",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "以治理记录登记项目所有者已批准的 Skin Standalone 提前建设授权：mc-plan-skin 作为 F1 中受限的 Standalone 准备方向，允许且仅允许不依赖 Core、Community、Keycloak 的工程骨架与最小纵向链路；保持 mc-plan-core 为 F1 全局主要项目，不宣布 F3 开始，不绕过 Core、Community 的 Official 集成门槛。",
+  "in_scope": [
+    "新增 ADR-0009：提前建设的范围、原因、限制和退出条件",
+    "direction.json 登记受限准备项目并扩展 direction.v1 schema 的可选字段",
+    "更新路线图、组合状态、Foundation 状态页与协调模型说明",
+    "记录与活动 MCP-F1-CORE-001 工作流无锁交集的治理验证证据"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema、事件、OAuth scope 或 SDK 修改",
+    "mc-plan-skin、mc-plan-core、mc-plan-community 业务实现",
+    "正式 AI 提供商、3D 预览库、Official 登录或额度集成选择",
+    "远程仓库、推送、密钥、生产域名和真实生产值"
+  ],
+  "contract_impact": "none; registration-only governance change; no public contract surface is added or modified",
+  "acceptance_evidence": [
+    "ADR-0009 records the owner authorization, allowed scope, exclusions, and re-evaluation conditions",
+    "direction.json registers mc-plan-skin as a restricted F1 preparation project with a machine-readable optional schema field while mc-plan-core remains the F1 primary repository",
+    "roadmap, portfolio, and Foundation status reflect the restricted preparation direction without announcing F3 or bypassing Official integration gates",
+    "Coordination Start and Continue validation pass with no lock overlap against the active MCP-F1-CORE-001 workflow",
+    "Workspace validation and coordination regression tests pass on the completed branch"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "150a74df51abc060070681af12b2a5d437f91d69",
+      "branch": "docs/MCP-F1-FOUNDATION-004-skin-standalone-direction",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit 2026-10-01 Skin Standalone early development authorization",
+    "reason": "Register the owner-approved restricted Skin Standalone preparation direction in Foundation governance while mc-plan-core remains the F1 primary project."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
