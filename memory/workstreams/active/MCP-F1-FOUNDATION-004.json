@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T11:46:00Z",
-  "updated_at": "2026-10-01T11:46:00Z",
+  "updated_at": "2026-10-01T12:00:00Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -23,7 +23,8 @@
     "新增 ADR-0009：提前建设的范围、原因、限制和退出条件",
     "direction.json 登记受限准备项目并扩展 direction.v1 schema 的可选字段",
     "更新路线图、组合状态、Foundation 状态页与协调模型说明",
-    "记录与活动 MCP-F1-CORE-001 工作流无锁交集的治理验证证据"
+    "记录与活动 MCP-F1-CORE-001 工作流无锁交集的治理验证证据",
+    "修正 validate-workspace.ps1 对 node_modules 第三方 Markdown 的误报（首个 pnpm 依赖安装后工作区验证的阻塞项）"
   ],
   "out_of_scope": [
     "公共 OpenAPI、JSON Schema、事件、OAuth scope 或 SDK 修改",
@@ -43,7 +44,7 @@
     "mc-plan-foundation": {
       "base_commit": "150a74df51abc060070681af12b2a5d437f91d69",
       "branch": "docs/MCP-F1-FOUNDATION-004-skin-standalone-direction",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "4d5fd0cbebf71f281f1c7b814f7377b415960a53",
       "final_commit": null
     }
   },
@@ -57,5 +58,11 @@
     "reason": "Register the owner-approved restricted Skin Standalone preparation direction in Foundation governance while mc-plan-core remains the F1 primary project."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start validation passed with no lock overlap against active MCP-F1-CORE-001 (locks: foundation here, core+contracts there)",
+    "Coordination regression tests passed all 14 cases",
+    "Workspace validation passed for 6 active repositories, 102 Markdown files, and 30 JSON files after excluding vendored node_modules from the markdown link scan",
+    "Governance registration commit: ce130b3a56dc341186a83c80881032030fdc7567 (ADR-0009, direction schema, direction.json, roadmap, portfolio, STATUS, coordination, README)",
+    "Validator fix commit: 4d5fd0cbebf71f281f1c7b814f7377b415960a53 (validate-workspace.ps1 node_modules exclusion)"
+  ]
 }
