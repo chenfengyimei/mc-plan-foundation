@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-003",
+  "title": "Skin 契约无关硬化：失败重试、2D 预览组件与缺口补录",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-01T13:47:00Z",
+  "updated_at": "2026-10-01T13:47:00Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "在不触碰公共契约的前提下完成三项硬化：①渲染与清理 worker 的 BullMQ 重试/退避配置与死信验证（testing.md 必测不变量）；②可测试的 2D 像素预览组件与解码纯函数（为 3D 替换保留接口；数据源接线留待契约补全后的 SKIN-004）；③把“用户提前删除会话”补进契约缺口记录。",
+  "in_scope": [
+    "apps/worker 渲染与清理 worker 的 defaultJobOptions（attempts、指数退避）与失败状态集成测试（真实 Redis + PostgreSQL）",
+    "apps/web 的 skin-preview 解码纯函数（64×64 基础层/overlay 分离，Steve/Alex 语义）与 SkinPreview React 组件（canvas，2D 实现 + 3D 替换接口），fixture 驱动单元测试",
+    "docs/STATUS.md 与 docs/development-plan.md 的契约缺口清单补录会话删除操作"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema 或 SDK 修改（包括候选预览、下载、会话详情/删除的端点实现）",
+    "Official 登录、Keycloak、Core 额度、Community 发布、正式 AI 厂商、3D 库选择",
+    "生产域名、生产密钥、真实云资源、远程推送"
+  ],
+  "contract_impact": "none; preview/download/detail/delete operations remain recorded gaps for the sequential Contracts-primary workstream",
+  "acceptance_evidence": [
+    "Render worker retries retryable provider errors with exponential backoff (attempts=3) and marks the job row FAILED with the provider error code only after retries are exhausted, verified against real Redis and PostgreSQL",
+    "Retention cleanup failures retry through BullMQ rather than disappearing",
+    "The 2D preview decoder separates base and overlay pixels for a committed 64×64 fixture and the SkinPreview component exposes a swappable renderer interface",
+    "The contract gap list includes user-initiated conversation deletion alongside preview, download, conversation detail, and anonymous security mode",
+    "pnpm check:full passes end to end"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "b1dd27960d40428c77066e578273e08a5b5f4aad",
+      "branch": "feat/MCP-F1-SKIN-003-retry-and-preview-hardening",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit 2026-10-01 Skin Standalone early development authorization, registered in ADR-0009",
+    "reason": "Complete contract-independent hardening of the restricted Skin Standalone chain while mc-plan-core remains the F1 primary project."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
