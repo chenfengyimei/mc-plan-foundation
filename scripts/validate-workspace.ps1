@@ -52,7 +52,8 @@ foreach ($directory in (Get-ChildItem -LiteralPath $root -Directory -Filter 'mc-
 $markdownFiles = Get-ChildItem -LiteralPath $root -Recurse -Force -File -Filter '*.md' |
     Where-Object {
         $_.FullName -notmatch '[\\/]\.git[\\/]' -and
-        $_.FullName -notmatch '[\\/]\.validation[\\/]'
+        $_.FullName -notmatch '[\\/]\.validation[\\/]' -and
+        $_.FullName -notmatch '[\\/]node_modules[\\/]'
     }
 
 foreach ($file in $markdownFiles) {
