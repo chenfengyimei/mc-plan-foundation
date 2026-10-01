@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T00:25:50Z",
-  "updated_at": "2026-10-01T00:25:50Z",
+  "updated_at": "2026-10-01T00:29:27Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [],
@@ -41,5 +41,13 @@
     "reason": "Repair a validation defect discovered during final acceptance before starting Core implementation."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start and Continue validation passed",
+    "Workspace validation passed with the maintenance workstream active",
+    "Skill quick validation passed for version 1.1.1",
+    "An installed copy converted from LF to CRLF remained current",
+    "A semantic file change was rejected as stale",
+    "Replace preserved the stale copy as a timestamped backup and restored a current copy",
+    "The user-level Skill was backed up, upgraded to 1.1.1 and passed the canonical version check"
+  ]
 }

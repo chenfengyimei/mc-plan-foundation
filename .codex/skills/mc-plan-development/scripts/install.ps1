@@ -25,10 +25,23 @@ if ([string]::IsNullOrWhiteSpace($DestinationRoot)) {
 function Get-SkillManifest {
     param([string]$Root)
 
+    $textExtensions = @(
+        '', '.bat', '.cfg', '.cmd', '.csv', '.ini', '.js', '.json', '.md',
+        '.ps1', '.py', '.sh', '.toml', '.ts', '.txt', '.xml', '.yaml', '.yml'
+    )
     $entries = [System.Collections.Generic.List[string]]::new()
     foreach ($file in (Get-ChildItem -LiteralPath $Root -Recurse -File | Sort-Object FullName)) {
         $relative = [System.IO.Path]::GetRelativePath($Root, $file.FullName).Replace('\', '/')
-        $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+        if ($textExtensions -contains $file.Extension.ToLowerInvariant()) {
+            $text = [System.IO.File]::ReadAllText($file.FullName)
+            $normalized = $text.Replace("`r`n", "`n").Replace("`r", "`n")
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($normalized)
+            $hashBytes = [System.Security.Cryptography.SHA256]::HashData($bytes)
+            $hash = [Convert]::ToHexString($hashBytes).ToLowerInvariant()
+        }
+        else {
+            $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+        }
         $entries.Add("$relative=$hash")
     }
     return @($entries)
