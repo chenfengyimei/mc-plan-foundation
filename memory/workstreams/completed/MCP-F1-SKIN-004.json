@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-004",
   "title": "LLM 结构化皮肤生成适配器（文本模型直出设计 JSON）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-02T00:46:00Z",
-  "updated_at": "2026-10-02T00:46:00Z",
+  "updated_at": "2026-10-02T01:30:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -43,8 +43,8 @@
     "mc-plan-skin": {
       "base_commit": "f00cadf7e06843c9963c47cd7b5d32ffd89c07ee",
       "branch": "feat/MCP-F1-SKIN-004-llm-structured-provider",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "c1debfcd3a2772c5fd776e25a416eb150f5f6b66",
+      "final_commit": "c1debfcd3a2772c5fd776e25a416eb150f5f6b66"
     }
   },
   "depends_on": [
@@ -57,5 +57,12 @@
     "reason": "Implement the owner-confirmed text-model structured skin generation adapter as a demo/development provider while mc-plan-core remains the F1 primary project; Q-001 vendor decision stays open."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "pnpm check:full passed end to end (exit 0): prettier, 11-project build, ESLint zero warnings, strict typecheck, 65 unit tests (incl. 7 new LLM adapter tests), contract consistency, 6/6 fixtures, API integration 7/7, worker integration 5/5 (incl. real-Redis retry-to-dead-letter test), Playwright full-chain smoke",
+    "LlmStructuredSkinProvider verified with mocked LLM: well-formed design JSON renders a 64x64 PNG passing validateSkinImage with second layer; malformed JSON yields PROVIDER_INVALID_RESPONSE; refusal yields PROVIDER_CONTENT_REJECTED; production instantiation refused",
+    "Deterministic rendering verified: identical designs produce identical SHA-256 output",
+    "Worker SKIN_PROVIDER=llm wiring reads SKIN_LLM_BASE_URL/API_KEY/MODEL from environment; keys excluded from logs via pino redact and never committed",
+    "Local demo borrows the machine's own Codely CLI LiteLLM credential at runtime via start-demo.mjs (documented as demo-only); no vendor binding for Q-001",
+    "Work commit: c1debfc (21 files: llm-structured-provider, openai-compat-llm-client, skin-design renderer, worker provider wiring, tests, docs)"
+  ]
 }
