@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-001",
   "title": "修复 Skill 摘要的跨换行兼容性",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T00:25:50Z",
-  "updated_at": "2026-10-01T00:29:27Z",
+  "updated_at": "2026-10-01T00:30:37Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [],
@@ -24,13 +24,18 @@
     "远程仓库或推送"
   ],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "Text manifests normalize CRLF, LF and lone CR before SHA-256 while non-text assets retain byte hashes",
+    "A line-ending-only installed-copy change remains current and a semantic change is still rejected",
+    "Replacement creates a timestamped backup before installing the authoritative copy",
+    "The user-level Skill is version 1.1.1 and matches the Foundation authority"
+  ],
   "repositories": {
     "mc-plan-foundation": {
       "base_commit": "4f674a64394cbad5a1b446ddde1ca8c314b38c00",
       "branch": "fix/MCP-F1-FOUNDATION-001-skill-digest",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "ed2ee89b1b8d8fb714eec64dc8d4cb95e5adcc0f",
+      "final_commit": "ed2ee89b1b8d8fb714eec64dc8d4cb95e5adcc0f"
     }
   },
   "depends_on": ["MCP-GOV-FOUNDATION-001"],
