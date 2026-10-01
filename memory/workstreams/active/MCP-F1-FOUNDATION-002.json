@@ -1,0 +1,53 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-002",
+  "title": "修正跨会话启动授权与 Skill 发现",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-01T10:18:26Z",
+  "updated_at": "2026-10-01T10:18:26Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-ops"
+  ],
+  "objective": "让新会话在门槛未关闭时获得明确授权去评审和完善架构，并避免 Skill 备份被自动发现为重复 Skill。",
+  "in_scope": [
+    "跨工具会话开局提示词的授权和连续工作流语义",
+    "F1 架构评审检查表",
+    "当前方向入口门槛的可审计关闭方式",
+    "Skill 安装器备份目录与补丁版本"
+  ],
+  "out_of_scope": [
+    "实际执行 F1 架构评审",
+    "Core 工程或业务实现",
+    "产品 API、Schema、事件或 SDK 变更",
+    "远程仓库创建或推送"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "4aaeef8332093773be0399673e26a4b7c0272691",
+      "branch": "fix/MCP-F1-FOUNDATION-002-session-bootstrap",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan owner via request to correct the blocked session prompt",
+    "reason": "Repair governance instructions that stopped at read-only review despite the owner's intent to actively improve the architecture."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
