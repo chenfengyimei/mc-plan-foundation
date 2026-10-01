@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-005",
+  "title": "皮肤设计 schema v2 与渲染器升级（提升生成质量）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-02T01:40:00Z",
+  "updated_at": "2026-10-02T01:40:00Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "项目所有者反馈 LLM 生成皮肤效果差（纯色块）。升级设计 schema 与渲染器：发型系统、脸部细节（眉/眼/嘴）、服装层次（围巾/腰带/靴子）、每面边缘着色与顶部提亮、few-shot 提示引导 LLM 输出更丰富设计。全部为 provider-sdk 内部实现，不触碰公共契约。",
+  "in_scope": [
+    "SkinDesign schema v2：hair{color,style}、face{eyeStyle,eyebrowColor}、clothing{scarf,belt,boots}、皮肤色调独立",
+    "渲染器 v2：发型覆盖（头顶/侧上/刘海）、2×2 眼睛+眉毛、围巾绕脖、腰带、靴子、每面边缘加深",
+    "LLM 提示升级：few-shot 高质量示例设计 + v2 schema 描述",
+    "单元测试更新：确定性、合法性、overlay 语义保持"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema 或 SDK 修改",
+    "图像生成模型接入、3D 预览库",
+    "Q-001 正式厂商绑定（仍是开发/演示适配器）"
+  ],
+  "contract_impact": "none; provider internals only",
+  "acceptance_evidence": [
+    "v2 schema 校验丰富设计（发型/围巾/腰带/靴子/眉毛）",
+    "渲染器输出通过 validateSkinImage（64×64、双层存在）",
+    "确定性保持：同设计同 SHA-256",
+    "few-shot 提示下 mock LLM 输出的设计渲染出含头发/围巾细节的皮肤（像素级断言）",
+    "pnpm check:full 全绿"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "c1debfcd3a2772c5fd776e25a416eb150f5f6b66",
+      "branch": "feat/MCP-F1-SKIN-005-design-v2",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-004"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit 2026-10-01 Skin Standalone early development authorization (registered in ADR-0009)",
+    "reason": "Owner feedback on demo quality; internal renderer/schema upgrade without public contract change."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
