@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-006",
+  "title": "恢复审计：SKIN-003 关单后遗留修改的归属认证与清理",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-02T01:40:00Z",
+  "updated_at": "2026-10-02T01:40:00Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "项目所有者反馈 SKIN-003 关单后存在未归属遗留修改（探测脚本、临时预览产物等）并阻塞 CORE-001。经核实工作树已清空（遗留文件已在 SKIN-004/005 收尾中处理），本工作流做正式的逐文件归属审计：确认九个列名文件的当前处置状态、扫描已跟踪文件中的密钥/个人数据泄漏、验证 .gitignore 对敏感文件的覆盖、认证 skin 状态可支撑 CORE-001 Finish。",
+  "in_scope": [
+    "逐文件核实所有者列出的九个文件的当前处置（存在性/跟踪状态/是否已随 SKIN-004/005 提交或删除）",
+    "已跟踪文件密钥扫描：API Key、Token、Cookie、真实服务地址、个人数据",
+    ".gitignore 覆盖验证：.env 文件、data/ 生成物、demo-preview 本地路由",
+    "审计结论写入本记录，认证 skin 状态不阻塞 CORE-001 Finish",
+    "如发现真实遗留问题：归属修复并小步提交"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema 或 SDK 修改",
+    "Contracts、Core、Community、Ops 的任何修改",
+    "新功能开发（LLM 适配器质量迭代等另开工作流）",
+    "Q-001 正式厂商绑定"
+  ],
+  "contract_impact": "none; audit and attestation only, no public API surface change",
+  "acceptance_evidence": [
+    "Nine owner-listed files each have a documented disposition (committed in SKIN-004/005, or deleted as rebuildable temp artifacts)",
+    "Tracked-file secret scan completed: no API keys, tokens, cookies, personal data, or real service credentials in any tracked file",
+    ".gitignore verified to cover apps/worker/.env, apps/api/.env, data/ generated artifacts, and the local demo-preview route",
+    "mc-plan-skin working tree certified clean at a recorded commit, unblocking CORE-001 Finish",
+    "pnpm check:full passes end to end on the certified state"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
+      "branch": "fix/MCP-F1-SKIN-006-recover-untracked-work",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-005"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit recovery instruction (2026-10-02), referencing ADR-0009 restricted Skin Standalone authorization",
+    "reason": "Owner-directed recovery audit of post-SKIN-003 leftover modifications that were blocking CORE-001; no new features, no public contract change."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
