@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-004",
+  "title": "LLM 结构化皮肤生成适配器（文本模型直出设计 JSON）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-02T00:46:00Z",
+  "updated_at": "2026-10-02T00:46:00Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "实现 LlmStructuredSkinProvider：多模态文本模型直接输出结构化皮肤设计 JSON（分区调色板+图案），由确定性渲染器生成 64×64 PNG 并通过 skin-validator 校验。项目所有者已明确确认该路线（文本模型直出，非图像生成模型）。此为开发/演示适配器，不构成 Q-001 正式厂商绑定（正式绑定仍需基准 ADR）。",
+  "in_scope": [
+    "皮肤设计 JSON schema（zod：分区调色板、图案、确认项）与确定性渲染器（JSON → 64×64 PNG，明暗、人脸模板、overlay 填充）",
+    "LlmStructuredSkinProvider：OpenAI 兼容 chat 接口（注入式 HTTP 客户端，可离线测试）、JSON 解析与 schema 校验、标准错误映射（无效响应重试、内容拒绝不重试、超时重试）、usage 与 providerCallId",
+    "worker SKIN_PROVIDER=llm|fake 配置与 LLM 连接配置（base/key/model 环境变量，密钥不进 Git/日志）",
+    "单元测试：schema 校验、渲染确定性（同输入同 SHA）、渲染产物通过 validateSkinImage、mock LLM（成功/格式错误/内容拒绝）"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema 或 SDK 修改",
+    "Q-001 正式厂商绑定与基准 ADR（本适配器标注为开发/演示用途）",
+    "Official 登录、Keycloak、Core 额度、Community 发布",
+    "图像生成模型接入（如需另开工作流）、3D 预览库、生产配置"
+  ],
+  "contract_impact": "none; provider internals only, no public API surface change",
+  "acceptance_evidence": [
+    "Skin design schema validates LLM JSON output and rejects malformed designs",
+    "The deterministic renderer produces identical SHA-256 for identical designs and its output passes validateSkinImage (64x64, second layer present, Steve/Alex)",
+    "LlmStructuredSkinProvider with a mocked LLM returns valid PNG for well-formed JSON, PROVIDER_INVALID_RESPONSE for malformed output (retryable), and PROVIDER_CONTENT_REJECTED for refusals (non-retryable)",
+    "Worker SKIN_PROVIDER=llm wiring reads connection settings from environment with keys excluded from logs and Git",
+    "pnpm check:full passes end to end"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "f00cadf7e06843c9963c47cd7b5d32ffd89c07ee",
+      "branch": "feat/MCP-F1-SKIN-004-llm-structured-provider",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit 2026-10-01 Skin Standalone early development authorization and 2026-10-02 confirmation of the text-model route (registered in ADR-0009 restrictions: still not a Q-001 vendor binding)",
+    "reason": "Implement the owner-confirmed text-model structured skin generation adapter as a demo/development provider while mc-plan-core remains the F1 primary project; Q-001 vendor decision stays open."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
