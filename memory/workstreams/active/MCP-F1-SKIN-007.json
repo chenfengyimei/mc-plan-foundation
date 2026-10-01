@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-01T18:55:21Z",
-  "updated_at": "2026-10-01T19:12:00Z",
+  "updated_at": "2026-10-01T20:20:21Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -49,7 +49,7 @@
     "mc-plan-skin": {
       "base_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
       "branch": "feat/MCP-F1-SKIN-007-design-v3",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "7a64fa4d326c7bf7e35ed07ba637c9f32667c1b2",
       "final_commit": null
     }
   },
@@ -65,5 +65,14 @@
   "handoff_history": [
     "2026-10-01T18:55:21Z: Project owner transferred ongoing mc-plan-skin development from the prior GLM session to Codex because generated skin quality remained unsatisfactory; Codex accepted the new bounded v3 workstream from clean main 061b619."
   ],
-  "validation_results": []
+  "validation_results": [
+    "Canonical mc-plan-development Skill 1.1.2 matched the Foundation authoritative copy; coordination Start passed with Skin as the only locked repository and no overlap with CORE-001 Core+Contracts locks",
+    "Coordination Continue passed after explicitly adding the 2D left-leg overlay UV fidelity fix to scope",
+    "Provider SDK strict TypeScript typecheck passed and focused Vitest suites passed: provider-sdk 19/19 tests; web preview 5/5 tests",
+    "v3 renderer regression passed for both Steve and Alex layouts: decoded 64x64 PNG valid, second layer present, deterministic bytes/hash, schema bounds enforced",
+    "Automated visual-complexity regression passed: the rich material/pattern design exceeded the smooth baseline by more than 35 opaque RGB colors and exceeded 90 opaque RGB colors total",
+    "Manual inspection completed against a reproducible gitignored 16x32 front preview: oversized 2x2 eyes were reduced to classic one-row eyes and generic rectangular overlays were replaced by semantic hat/shoulder/cuff/knee shapes",
+    "pnpm check passed end to end: formatting, 11-project build, ESLint, strict typecheck, all unit tests, skin contract consistency and 6/6 fixture validation",
+    "Implementation checkpoint committed in mc-plan-skin as 7a64fa4d326c7bf7e35ed07ba637c9f32667c1b2"
+  ]
 }
