@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-003",
   "title": "完成 F1 架构评审并关闭实现入口门槛",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T10:40:15Z",
-  "updated_at": "2026-10-01T11:00:07Z",
+  "updated_at": "2026-10-01T11:00:50Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -30,20 +30,20 @@
     "Community、Skin 或其他后续项目开发",
     "远程仓库、推送、密钥、生产域名和真实生产值"
   ],
-  "contract_impact": "review-only; any required public contract change must be executed later in a Contracts-primary workstream",
+  "contract_impact": "review-only; no public contract changed; the first Core slice remains contract-neutral",
   "acceptance_evidence": [
-    "The ten F1 architecture review questions have current file evidence and no unresolved contradictions",
-    "Durable identity lifecycle and cross-runtime ownership choices are recorded in an accepted ADR",
-    "Foundation defines an executable first Core slice, verification layers, rollback boundaries, and operational inputs",
-    "Risks and open questions name owners and decision gates without blocking the approved skeleton scope",
-    "Workspace and coordination validation pass before the review gate is closed"
+    "Ten review questions are answered with current repository evidence in docs/f1-architecture-review.md",
+    "ADR-0008 records verified-email, deactivation, rebinding, recovery, and provider migration boundaries",
+    "docs/f1-core-first-slice.md defines executable runtime, verification, migration, and rollback boundaries",
+    "Risks R-007 through R-010 and current open questions identify owners and non-blocking decision gates",
+    "F1 direction is active and portfolio/status records point to MCP-F1-CORE-001 as the next workflow"
   ],
   "repositories": {
     "mc-plan-foundation": {
       "base_commit": "8d7c47b7012e0a46c925765030a2eae0efb08973",
       "branch": "docs/MCP-F1-FOUNDATION-003-architecture-review",
       "last_checkpoint_commit": "8324c48b3891bc394817feccff9883f3300c3c55",
-      "final_commit": null
+      "final_commit": "8324c48b3891bc394817feccff9883f3300c3c55"
     }
   },
   "depends_on": [
@@ -57,15 +57,14 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Coordination Start validation passed with one active workstream and no lock conflicts",
+    "Coordination Start and Continue validation passed with no lock conflicts",
     "Workspace validation passed for 6 active repositories, 100 Markdown files, and 28 JSON files",
     "Coordination regression tests passed all 14 cases",
-    "Architecture review baseline committed as 1d5ed710ef9ca45e7cd36317c3a1092086dd916c",
-    "F1 gate state and review evidence committed as 8324c48b3891bc394817feccff9883f3300c3c55",
-    "Coordination Continue validation passed before gate closure",
     "Skill 1.1.2 canonical install check passed",
     "Contracts Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents, and 15 operationIds",
     "Redocly recommended lint passed for Core, Community, and Skin OpenAPI documents",
-    "Contracts, Core, and Ops reference repositories remained clean"
+    "Contracts, Core, and Ops reference repositories remained clean",
+    "Architecture baseline commit: 1d5ed710ef9ca45e7cd36317c3a1092086dd916c",
+    "Gate approval commit: 8324c48b3891bc394817feccff9883f3300c3c55"
   ]
 }
