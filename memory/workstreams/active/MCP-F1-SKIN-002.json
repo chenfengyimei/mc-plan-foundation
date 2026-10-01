@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T13:02:00Z",
-  "updated_at": "2026-10-01T13:02:00Z",
+  "updated_at": "2026-10-01T13:24:30Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -52,8 +52,8 @@
     "mc-plan-skin": {
       "base_commit": "c2042c35159eba68942028580261dbd39ca08b17",
       "branch": "feat/MCP-F1-SKIN-002-standalone-chain",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "b1dd27960d40428c77066e578273e08a5b5f4aad",
+      "final_commit": "b1dd27960d40428c77066e578273e08a5b5f4aad"
     }
   },
   "depends_on": [
@@ -67,5 +67,15 @@
     "reason": "Implement the owner-approved restricted Skin Standalone minimal vertical chain while mc-plan-core remains the F1 primary project."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "pnpm check passed end to end: prettier, workspace build of all 11 projects, ESLint zero warnings, strict TypeScript typecheck, and 57 unit tests across 8 suites",
+    "Contract consistency check passed against skin.yaml 0.1.0-draft after regenerating committed artifacts in raw generator output (prettier no longer touches generated files)",
+    "API contract integration tests passed 7/7 against real testcontainers PostgreSQL + Redis: 201/202/409/404 shapes per contract, Idempotency-Key replay and conflict semantics, three-attempt limit with exactly 3 of 5 concurrent renders accepted, finalize flows with duplicate confirmation conflict",
+    "Worker chain integration tests passed 4/4 against a real testcontainers PostgreSQL: FakeProvider render stored a validated candidate under the isolated candidates/ prefix with SHA-256 and 24-hour expiry, invalid provider bytes marked the job SKIN_VALIDATION_FAILED, finalize re-validated and stored the final skin with FinalizedSkin row and COMPLETED status, retention cleanup with injectable clock deleted expired candidates and conversations while keeping active ones",
+    "Playwright end-to-end smoke passed (17.4s): real PostgreSQL + Redis containers, API dist and worker dist running, browser flow created a conversation, requested a render, watched the render job report succeeded with a candidate, confirmed the product, and the finalize job reached succeeded",
+    "Prisma baseline migration moved to the new shared @mc-plan/skin-db package and extended with 20261001130522_standalone_chain (RenderJobKind/prompt, FinalizedSkin, IdempotencyRecord); migration:validate passes",
+    "Structure adjustment documented: schema and generated client centralized in packages/db because the API and worker processes share one database; concurrent render acceptance uses the unique (conversation_id, attempt) constraint with re-read retries plus attemptsUsed increment",
+    "Contract gaps recorded precisely in docs/STATUS.md and docs/development-plan.md: candidate preview bytes, standalone final download, conversation detail/messages, anonymous security mode semantics",
+    "Work commit: b1dd279 (58 files, chain implementation, tests, docs, and gitignore for generated clients)"
+  ]
 }
