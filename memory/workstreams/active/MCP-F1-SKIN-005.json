@@ -40,7 +40,7 @@
   ],
   "repositories": {
     "mc-plan-skin": {
-      "base_commit": "c1debfcd3a2772c5fd776e25a416eb150f5f6b66",
+      "base_commit": "07daae84c12a38f153066c3541455b8141b4815c",
       "branch": "feat/MCP-F1-SKIN-005-design-v2",
       "last_checkpoint_commit": null,
       "final_commit": null
