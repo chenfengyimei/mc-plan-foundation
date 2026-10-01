@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-007",
+  "title": "皮肤设计 schema v3 与材质化像素渲染升级",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex",
+  "owner": "Codex",
+  "started_at": "2026-10-01T18:55:21Z",
+  "updated_at": "2026-10-01T18:55:21Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "项目所有者明确反馈现有 v2 生成效果仍不理想并将 Skin 开发交接给 Codex。将内部 SkinDesign 升级为 v3，以确定性的材质明暗、细粒度纹理、多尺度对称花纹、服装剪裁和更自然的脸部/头发像素工艺显著降低大色块感，同时保持合法 64×64 Minecraft 布局、Steve/Alex 兼容和开发/演示适配器边界。",
+  "in_scope": [
+    "SkinDesign schema v3：材质、阴影强度、纹理密度、扩展花纹与服装细节的有界内部表达",
+    "渲染器 v3：逐面光照、确定性纹理、对称/条纹/渐变/棋盘/斜纹等像素花纹与部位连续性",
+    "头发、脸部、上衣、袖口、裤装、鞋靴和 overlay 的像素细节工艺升级",
+    "LLM system prompt 与 few-shot 示例升级，引导输出主题一致且细节丰富的 v3 JSON",
+    "离线单元与视觉回归断言：合法布局、确定性、色彩/纹理复杂度、Steve/Alex 和 overlay 语义",
+    "在仓库内生成可重建的视觉基准样例用于人工检查，不提交临时运行产物"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema、事件或 SDK 修改",
+    "Contracts、Core、Community、Ops 的任何修改",
+    "图像生成模型、3D 预览库或正式 AI 厂商绑定",
+    "Official 登录、额度、积分、Community 发布或新下载/预览端点",
+    "生产密钥、真实用户数据或对外厂商承诺"
+  ],
+  "contract_impact": "none; provider-sdk internal design schema and deterministic renderer only",
+  "acceptance_evidence": [
+    "v3 rich designs parse while malformed colors, excessive pattern counts and out-of-range texture controls are rejected",
+    "reference designs render valid 64x64 Steve and Alex skins with second-layer semantics and deterministic SHA-256 output",
+    "automated visual-complexity assertions demonstrate materially more local color variation and motif coverage than the v2 baseline",
+    "LLM prompt and mock provider path produce a v3 design with material texture, garment detail and multiple coordinated motifs",
+    "pnpm check:full passes end to end",
+    "coordination Start, Continue and Finish validations pass and the final commit is fast-forwarded to local main"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
+      "branch": "feat/MCP-F1-SKIN-007-design-v3",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-006"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit Skin development handoff and quality-improvement request (2026-10-02), within ADR-0009 restricted Skin Standalone authorization",
+    "reason": "Owner-directed internal quality improvement to the already-authorized Standalone provider and deterministic renderer; no public contract, production provider or Official integration change."
+  },
+  "handoff_history": [
+    "2026-10-01T18:55:21Z: Project owner transferred ongoing mc-plan-skin development from the prior GLM session to Codex because generated skin quality remained unsatisfactory; Codex accepted the new bounded v3 workstream from clean main 061b619."
+  ],
+  "validation_results": []
+}
