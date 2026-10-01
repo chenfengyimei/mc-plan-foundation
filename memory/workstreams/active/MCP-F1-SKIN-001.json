@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T12:05:00Z",
-  "updated_at": "2026-10-01T12:05:00Z",
+  "updated_at": "2026-10-01T12:56:30Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -45,7 +45,7 @@
     "mc-plan-skin": {
       "base_commit": "0bf16feee0e91f42cd27849da3ef2e57ba6b75ee",
       "branch": "feat/MCP-F1-SKIN-001-engineering-skeleton",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "c2042c35159eba68942028580261dbd39ca08b17",
       "final_commit": null
     }
   },
@@ -59,5 +59,16 @@
     "reason": "Build the owner-approved restricted Skin Standalone engineering skeleton while mc-plan-core remains the F1 primary project."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "pnpm install completed with a committed lockfile (720 entries passing pnpm supply-chain policies) using pnpm 11.19.0 on Node 24.15",
+    "pnpm check passed end to end: prettier, workspace build of all 10 projects, ESLint with zero warnings, strict TypeScript typecheck, and 58 unit tests",
+    "Contract consistency check passed: client types regenerated from skin.yaml 0.1.0-draft match all 4 committed generated artifacts",
+    "Minecraft skin fixture validation passed 6/6: valid Steve/Alex accepted with metadata, non-PNG, 32x32, corrupted, and single-layer samples rejected with the declared error codes",
+    "API integration test passed against a real testcontainers PostgreSQL: committed baseline migration deployed from scratch, readiness reported current, and Conversation/ConversationMessage/RenderJob/Candidate rows round-tripped",
+    "Worker integration test passed against a real testcontainers Redis: 3 BullMQ jobs processed order-independently and an invalid payload job entered the failed state",
+    "Playwright smoke passed: real PostgreSQL container + API dist + Next.js dev served the page, the same-origin /api proxy returned 200, and the health badge rendered 正常 under standalone mode",
+    "Prisma baseline migration 20261001123216_skin_baseline committed; prisma validate and migration directory integrity checks pass",
+    "Engineering deviations documented in AGENTS.md: Nest 12 requires explicit app.init(); API e2e/integration tests run against compiled dist; Next.js dev requires allowedDevOrigins for localhost/127.0.0.1 parity",
+    "Work commits: c69646b (workspace toolchain), 500be15 (six packages), 2c84f06 (three apps), c2042c3 (docs)"
+  ]
 }
