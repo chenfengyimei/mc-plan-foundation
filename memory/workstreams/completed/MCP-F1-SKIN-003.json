@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-003",
   "title": "Skin 契约无关硬化：失败重试、2D 预览组件与缺口补录",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T13:47:00Z",
-  "updated_at": "2026-10-01T13:47:00Z",
+  "updated_at": "2026-10-01T14:10:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -41,8 +41,8 @@
     "mc-plan-skin": {
       "base_commit": "b1dd27960d40428c77066e578273e08a5b5f4aad",
       "branch": "feat/MCP-F1-SKIN-003-retry-and-preview-hardening",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "f00cadf7e06843c9963c47cd7b5d32ffd89c07ee",
+      "final_commit": "f00cadf7e06843c9963c47cd7b5d32ffd89c07ee"
     }
   },
   "depends_on": [
@@ -55,5 +55,13 @@
     "reason": "Complete contract-independent hardening of the restricted Skin Standalone chain while mc-plan-core remains the F1 primary project."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "pnpm check:full passed end to end (exit 0): prettier, 11-project workspace build, ESLint zero warnings, strict typecheck, 65 unit tests (incl. 4 new web preview-decoder tests), contract consistency, 6/6 fixture validation, API contract integration 7/7, worker chain integration including the new retry test, and the Playwright full-chain smoke",
+    "Retry semantics: render worker with queue-level SKIN_RETRYABLE_JOB_OPTIONS (3 attempts, exponential 2s backoff) verified against real Redis + PostgreSQL — a provider that always returns PROVIDER_RATE_LIMITED produced exactly 3 provider calls, landed the BullMQ job in the failed (dead-letter) state with attemptsMade=3, and left the RenderJob row FAILED with the final provider error code",
+    "Domain failures (bytes failing 64x64 validation) are marked FAILED with SKIN_VALIDATION_FAILED and thrown so they also reach the dead-letter state",
+    "The 2D preview decoder composes a 16x32 front view from committed fixtures with base/overlay separation, Alex 3px arms leave the outer arm column transparent while Steve 4px do not, and non-64x64 input is rejected",
+    "SkinPreview component exposes a swappable renderer prop ('2d' today; 3D library can replace it via the same interface after the Q-011 ADR)",
+    "Contract gap list now includes user-initiated conversation deletion (docs/STATUS.md, docs/development-plan.md)",
+    "Work commit: f00cadf (19 files: worker-factory + queue retry options, preview lib/component/tests, docs)"
+  ]
 }
