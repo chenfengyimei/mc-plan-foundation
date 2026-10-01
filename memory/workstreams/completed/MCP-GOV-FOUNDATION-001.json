@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-GOV-FOUNDATION-001",
   "title": "建立 MC Plan 主方向与多仓协作治理",
-  "status": "active",
+  "status": "completed",
   "milestone": "GOV",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-09-30T20:08:25Z",
-  "updated_at": "2026-10-01T00:20:20Z",
+  "updated_at": "2026-10-01T00:21:37Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -30,13 +30,20 @@
     "远程仓库创建或推送"
   ],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "The registry, current direction, active/completed workstream protocol, schemas and read-only validator are present and machine-validated",
+    "Contracts, Core, Community, Skin and Ops each have a repository-specific development plan and enforced AGENTS preflight",
+    "The coordination suite covers 14 normal, conflict, lifecycle, takeover and new-module cases",
+    "mc-plan-development 1.1.0 passed structure and behavior validation and its user-level copy matches the Foundation authority",
+    "The cross-tool session prompt names the authoritative Skill and requires one workstream at a time for Codex, GPT Work and Codely/GLM environments",
+    "The next global direction is F1 / mc-plan-core in planned state behind the Foundation and Contracts human architecture review gate"
+  ],
   "repositories": {
     "mc-plan-foundation": {
       "base_commit": "837444aea4357ad4c1f5fc851a3062ca7aa16b4d",
       "branch": "docs/MCP-GOV-FOUNDATION-001-coordination",
-      "last_checkpoint_commit": "7633d2c363be309ec7f86a1d7ddee69de97d24b7",
-      "final_commit": null
+      "last_checkpoint_commit": "e0bf9d2e475aed3305f516e7de03611cb02c5ece",
+      "final_commit": "e0bf9d2e475aed3305f516e7de03611cb02c5ece"
     }
   },
   "depends_on": [],
