@@ -1,0 +1,45 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-001",
+  "title": "修复 Skill 摘要的跨换行兼容性",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "MC Plan maintainer",
+  "owner": "MC Plan maintainer",
+  "started_at": "2026-10-01T00:25:50Z",
+  "updated_at": "2026-10-01T00:25:50Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [],
+  "objective": "让 Skill 版本摘要在 Windows CRLF 与 LF 工作树之间保持稳定，同时继续检测真实内容差异。",
+  "in_scope": [
+    "安装器文本文件摘要规范化",
+    "Skill 补丁版本升级",
+    "换行差异、真实过期和备份替换回归测试"
+  ],
+  "out_of_scope": [
+    "业务代码",
+    "产品契约",
+    "远程仓库或推送"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "4f674a64394cbad5a1b446ddde1ca8c314b38c00",
+      "branch": "fix/MCP-F1-FOUNDATION-001-skill-digest",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-GOV-FOUNDATION-001"],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan owner via request to complete and improve the governance task",
+    "reason": "Repair a validation defect discovered during final acceptance before starting Core implementation."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
