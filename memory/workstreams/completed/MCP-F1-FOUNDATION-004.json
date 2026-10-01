@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-004",
   "title": "登记 Skin Standalone 为 F1 受限准备方向",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T11:46:00Z",
-  "updated_at": "2026-10-01T12:00:00Z",
+  "updated_at": "2026-10-01T12:03:00Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -45,7 +45,7 @@
       "base_commit": "150a74df51abc060070681af12b2a5d437f91d69",
       "branch": "docs/MCP-F1-FOUNDATION-004-skin-standalone-direction",
       "last_checkpoint_commit": "4d5fd0cbebf71f281f1c7b814f7377b415960a53",
-      "final_commit": null
+      "final_commit": "8ea87fe8bdf47a8120755f8427c6088468953e3f"
     }
   },
   "depends_on": [
@@ -63,6 +63,8 @@
     "Coordination regression tests passed all 14 cases",
     "Workspace validation passed for 6 active repositories, 102 Markdown files, and 30 JSON files after excluding vendored node_modules from the markdown link scan",
     "Governance registration commit: ce130b3a56dc341186a83c80881032030fdc7567 (ADR-0009, direction schema, direction.json, roadmap, portfolio, STATUS, coordination, README)",
-    "Validator fix commit: 4d5fd0cbebf71f281f1c7b814f7377b415960a53 (validate-workspace.ps1 node_modules exclusion)"
+    "Validator fix commit: 4d5fd0cbebf71f281f1c7b814f7377b415960a53 (validate-workspace.ps1 node_modules exclusion)",
+    "Coordination Continue validation passed after the checkpoint commit",
+    "Reference repositories mc-plan-skin, mc-plan-contracts, mc-plan-core, mc-plan-community, and mc-plan-ops remained untouched by this workflow"
   ]
 }
