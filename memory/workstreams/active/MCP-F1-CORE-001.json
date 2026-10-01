@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-001",
   "title": "建立 Core 可运行工程骨架与运行纵向链路",
-  "status": "active",
+  "status": "blocked",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T11:02:39Z",
-  "updated_at": "2026-10-01T11:05:22Z",
+  "updated_at": "2026-10-01T16:14:30Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -45,7 +45,7 @@
     "mc-plan-core": {
       "base_commit": "326c0c8f21356169ab51d166d29379799e56cf99",
       "branch": "feat/MCP-F1-CORE-001-runtime-skeleton",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "cffc685182479a4ffe1acbbccb21763a6bddc5c9",
       "final_commit": null
     },
     "mc-plan-contracts": {
@@ -58,13 +58,22 @@
   "depends_on": [
     "MCP-F1-FOUNDATION-003"
   ],
-  "blocked_reason": null,
+  "blocked_reason": "Core implementation and acceptance are complete, but coordination Continue/Finish is blocked by uncommitted mc-plan-skin changes from another session without an active Skin lock. The project owner directed this Core session not to modify that work. Unblock when the owning session registers a valid lock or leaves mc-plan-skin clean, then rerun Continue and Finish.",
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
     "Coordination Start validation passed with Core primary and Contracts as the only supporting repository",
     "Contracts Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents, and 15 operationIds",
     "Redocly recommended lint passed for all 3 OpenAPI documents with the explicit redocly binary",
-    "Contracts validation command fix committed as f722f6d41499d38602235b4cf8226a5627f0f32f"
+    "Contracts validation command fix committed as f722f6d41499d38602235b4cf8226a5627f0f32f",
+    "Core frozen install and pnpm peer validation passed with Node 24-aligned types and explicit peer/build-script policy",
+    "Core pnpm check:full passed: formatting, ESLint, strict typecheck, 17 unit tests, 3 health end-to-end tests, architecture boundaries, Prisma schema and forward-only migration validation, standalone contract lock validation, TypeScript build, and 1 isolated PostgreSQL integration test",
+    "Core source contract verification passed for 5 locked files at mc-plan-contracts 0.1.0-draft",
+    "Core runtime image mc-plan-core:mcp-f1-core-001 built successfully from Node 24.15.0 with OpenSSL, non-root node user, container listener, liveness healthcheck, and fail-closed migration entrypoint",
+    "Disposable Docker vertical validation passed: image migration applied 20261001110500_identity_boundary to isolated PostgreSQL, liveness returned up, readiness returned database up and migrations current, and all temporary resources were removed",
+    "Contracts Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents, and 15 operationIds using requirements-validation.txt",
+    "Redocly recommended lint passed for all 3 OpenAPI documents after the documented launcher fix",
+    "Core implementation committed as cffc685182479a4ffe1acbbccb21763a6bddc5c9",
+    "Coordination Continue remains blocked only by unrelated uncommitted mc-plan-skin changes owned by another session; this workstream did not modify Skin"
   ]
 }
