@@ -10,6 +10,8 @@
 
 F1 先按 `docs/f1-core-first-slice.md` 建立配置、数据库迁移、私有健康探针、OIDC 验证端口和可观测性入口；该切片不实现公共业务 API。之后按“契约预发布 → IdentityLink/Profile 生产者 → SDK → 消费者 → Ops”的顺序逐步闭环，不能把完整 F1 范围塞入一次工作流。
 
+经项目所有者批准（ADR-0009），F1 期间 `mc-plan-skin` 作为受限 Standalone 准备方向并行推进：仅允许不依赖 Core、Community、Keycloak 的工程骨架与 Standalone 最小纵向链路（确定性 Fake Provider、可替换 2D 预览），不得绑定正式厂商、3D 库或实现 Official 集成；这不改变 F3 的开始条件。
+
 ## F2 — Community 资源发布闭环
 
 完成上传会话、文件校验、通用资源模型、皮肤类型 Schema、机器审核、发布、详情、下载、作者页和删除保留流程。

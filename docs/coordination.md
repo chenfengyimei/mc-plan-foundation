@@ -9,7 +9,7 @@
 | 记录 | 真相内容 | 不记录 |
 |---|---|---|
 | `memory/current/repositories.json` | 已知项目、路径、类型、可见性和生命周期 | 任务进展、接口字段 |
-| `memory/current/direction.json` | 当前全局里程碑、主要项目、入口和退出门槛 | 单次任务细节 |
+| `memory/current/direction.json` | 当前全局里程碑、主要项目、入口和退出门槛、受限准备项目 | 单次任务细节 |
 | `memory/workstreams/` | 会话主方向、锁、提交、验证、阻塞和交接 | 长期产品决策 |
 | `memory/current/portfolio.md` | 跨仓里程碑摘要 | 每次提交和审查讨论 |
 | 各仓 `docs/STATUS.md` | 单仓里程碑状态 | 其他仓实现状态 |

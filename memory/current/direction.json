@@ -16,5 +16,20 @@
     "mc-plan-contracts",
     "mc-plan-ops"
   ],
-  "updated_at": "2026-10-01T10:55:27Z"
+  "restricted_preparation_projects": [
+    {
+      "repository": "mc-plan-skin",
+      "scope": "F1 期间提前建设不依赖 Core、Community、Keycloak 的 Standalone 工程骨架与最小纵向链路（确定性 Fake Provider、可替换 2D 预览）；不开启 F3",
+      "exclusions": [
+        "不绑定正式 AI 提供商（Q-001 未决）",
+        "不绑定 3D 预览库（Q-011 未决）",
+        "不发明结构化创作意图字段（Q-012 未决）",
+        "不实现 Official 登录、额度、积分或 Community 自动发布",
+        "不复制公共契约类型；契约缺口按 Contracts 先行顺序另开工作流"
+      ],
+      "authorized_by": "MC Plan project owner（2026-10-01 显式授权）",
+      "adr": "decisions/0009-skin-standalone-restricted-preparation.md"
+    }
+  ],
+  "updated_at": "2026-10-01T11:52:00Z"
 }

@@ -26,7 +26,7 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 
 ## 当前阶段
 
-Foundation v1.0 文档与多仓治理基线已完成并保存在本地 Git；尚未创建远程仓库。`MCP-F1-FOUNDATION-003` 已完成项目所有者授权的十项架构评审，当前全局方向为活动的 `F1 / mc-plan-core`，下一工作流按 [Core 第一可运行切片](docs/f1-core-first-slice.md) 建立底层工程骨架。当前完成范围与后续缺口见 [F0 完整性审计](docs/f0-completeness-audit.md)，后续顺序见 [路线图](docs/roadmap.md)。
+Foundation v1.0 文档与多仓治理基线已完成并保存在本地 Git；尚未创建远程仓库。`MCP-F1-FOUNDATION-003` 已完成项目所有者授权的十项架构评审，当前全局方向为活动的 `F1 / mc-plan-core`，下一工作流按 [Core 第一可运行切片](docs/f1-core-first-slice.md) 建立底层工程骨架。`MCP-F1-FOUNDATION-004` 已按 [ADR-0009](decisions/0009-skin-standalone-restricted-preparation.md) 登记 `mc-plan-skin` 为 F1 受限 Standalone 准备方向。当前完成范围与后续缺口见 [F0 完整性审计](docs/f0-completeness-audit.md)，后续顺序见 [路线图](docs/roadmap.md)。
 
 所有写任务必须先按 [多仓协调模型](docs/coordination.md) 声明唯一主仓库和仓库锁；各项目固定开发顺序见对应 `docs/development-plan.md`。
 

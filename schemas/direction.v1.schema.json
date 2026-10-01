@@ -13,6 +13,22 @@
     "entry_gate": { "type": "string", "minLength": 1 },
     "exit_criteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
     "allowed_supporting_repositories": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "restricted_preparation_projects": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": ["repository", "scope", "exclusions", "authorized_by"],
+        "properties": {
+          "repository": { "type": "string", "minLength": 1 },
+          "scope": { "type": "string", "minLength": 1 },
+          "exclusions": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "authorized_by": { "type": "string", "minLength": 1 },
+          "adr": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
     "updated_at": { "type": "string", "format": "date-time" }
   },
   "additionalProperties": false
