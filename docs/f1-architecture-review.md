@@ -23,6 +23,16 @@ Tracking ID：`MCP-F1-FOUNDATION-003`
 
 本评审没有修改 Contracts，也没有批准实现未冻结的 Developer App、PAT、角色、奖励或事件表面。`MCP-F1-CORE-001` 可在 `contract_impact: none` 的边界内建立基础工程与运行链路；首次实现 `/v1/me` 或其他公共业务能力前，必须确认 `0.1.0-draft` 是否需要锁定为预发布版本，若需要则顺序创建 Contracts 主工作流。
 
+只读验证中，Python 契约检查和显式 `redocly` binary 均通过。Contracts 文档现有 `pnpm dlx @redocly/cli` 写法在当前 CLI 因多 binary 选择失败，但 `pnpm --package=@redocly/cli dlx redocly lint "openapi/*.yaml"` 成功；这属于验证工具启动兼容性，不是公共契约变化，将作为 `MCP-F1-CORE-001` 的 Contracts 辅助仓库首个修正。
+
 ## 门槛结论
 
 现有重大待决事项均不改变第一 Core 骨架切片的产品范围、法律、许可、隐私、预算或外部账户选择。完成 Foundation 校验并关闭本工作流后，F1 状态可改为 `active`，并顺序启动 `MCP-F1-CORE-001`。
+
+## 实际验证
+
+- Foundation workspace validation：6 个 active repositories、100 个 Markdown、28 个 JSON，通过。
+- Coordination regression：14 个用例全部通过。
+- Contracts Python validation：13 个 JSON Schema/事件、13 个唯一 `$id`、3 份 OpenAPI、15 个 operationId，通过。
+- Redocly：Core、Community、Skin 三份 OpenAPI 全部通过 recommended rules。
+- 只读参考仓库在评审工作流中保持无改动。
