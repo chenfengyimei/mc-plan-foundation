@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-005",
   "title": "皮肤设计 schema v2 与渲染器升级（提升生成质量）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-02T01:40:00Z",
-  "updated_at": "2026-10-02T01:40:00Z",
+  "updated_at": "2026-10-02T01:52:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -42,8 +42,8 @@
     "mc-plan-skin": {
       "base_commit": "07daae84c12a38f153066c3541455b8141b4815c",
       "branch": "feat/MCP-F1-SKIN-005-design-v2",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "061b619e0f4809ba028038622544fe84c908b4e9",
+      "final_commit": "061b619e0f4809ba028038622544fe84c908b4e9"
     }
   },
   "depends_on": [
@@ -56,5 +56,12 @@
     "reason": "Owner feedback on demo quality; internal renderer/schema upgrade without public contract change."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "pnpm check:full passed end to end (exit 0): prettier, 11-project build, ESLint zero warnings, strict typecheck, 65+ unit tests, contract consistency, 6/6 fixtures, API integration 7/7, worker integration 5/5, Playwright full-chain smoke",
+    "v2 schema validated: hair{style,fringe_rows}, face{eye_style,mouth}, clothing{scarf,belt,boots,sleeve_length} all parsed and defaulted correctly",
+    "Deterministic rendering verified: identical designs produce identical SHA-256 output",
+    "v2 renders pass validateSkinImage: 64x64, second layer present via overlay pairs, Steve/Alex arm widths respected",
+    "Few-shot prompt guides the LLM to v2 schema with hair/face/clothing richness (verified via live DeepSeek render in the running demo)",
+    "Work commit: 061b619 (4 files: skin-design v2 schema+renderer, llm-structured-provider prompt upgrade, tests)"
+  ]
 }
