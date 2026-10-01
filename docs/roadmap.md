@@ -8,6 +8,8 @@
 
 部署 Keycloak，完成内部用户映射、公开资料、开发者应用、scope、每日额度、积分账本和审计。发布 Core v1 契约与 TypeScript SDK。
 
+F1 先按 `docs/f1-core-first-slice.md` 建立配置、数据库迁移、私有健康探针、OIDC 验证端口和可观测性入口；该切片不实现公共业务 API。之后按“契约预发布 → IdentityLink/Profile 生产者 → SDK → 消费者 → Ops”的顺序逐步闭环，不能把完整 F1 范围塞入一次工作流。
+
 ## F2 — Community 资源发布闭环
 
 完成上传会话、文件校验、通用资源模型、皮肤类型 Schema、机器审核、发布、详情、下载、作者页和删除保留流程。

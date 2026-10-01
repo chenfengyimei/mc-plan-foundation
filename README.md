@@ -13,6 +13,8 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 - `templates/`：新仓库、计划、ADR、交接和发布检查模板。
 - `templates/session-start-prompt.md`：供 Codex、GPT Work、Codely/GLM 等新会话使用的跨工具开局提示词。
 - `templates/f1-architecture-review-checklist.md`：关闭 F1 人工架构评审门槛时必须逐项引用证据的检查表。
+- `docs/f1-architecture-review.md`：最近一次 F1 评审的十项证据、契约判断和门槛结论。
+- `docs/f1-core-first-slice.md`：门槛关闭后第一个 Core 工程切片的运行、测试与回退边界。
 - `.codex/skills/mc-plan-development/`：MC Plan 多仓开发协作 Skill 的权威版本。
 
 ## 真相层级

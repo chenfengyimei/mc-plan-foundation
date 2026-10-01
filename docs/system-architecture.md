@@ -24,6 +24,8 @@ Keycloak ---------> Core API
 
 Nginx 只负责 TLS、域名路由、基础限流和请求尺寸保护，不承担业务授权。Keycloak 负责凭证和 OIDC；Core 负责 MC Plan 业务用户与全局权益；Community 负责公开资源与社区关系；Skin 负责创作会话和生成流程。
 
+Contracts 不在请求路径中运行，它是公共 OpenAPI、Schema、事件和 SDK 表面的唯一真相。Ops 不拥有业务语义或应用源码，只把应用仓库已经验证的镜像、端口、探针、迁移命令和配置键组合为官方环境。应用仓库拥有自己的公共自部署入口；Foundation 只保存跨仓长期边界和门槛。
+
 ## 数据所有权
 
 | 数据 | 权威系统 | 其他系统允许保存 |
@@ -47,6 +49,14 @@ Nginx 只负责 TLS、域名路由、基础限流和请求尺寸保护，不承�
 ## 初始技术形态
 
 Core、Community 和 Skin 均采用模块化单体，而不是提前拆微服务。模块边界、数据所有权和事件契约必须清楚，使高负载模块未来可以独立拆分而不改变外部语义。
+
+## Core 依赖与事务方向
+
+- HTTP、CLI、队列消费者等入站适配器只能调用应用端口；领域模块不依赖 NestJS、Prisma、Keycloak SDK 或其他仓库源码。
+- PostgreSQL、Redis、OIDC、通知和遥测适配器实现应用端口。Redis 只承载缓存、锁提示或异步工作，不是身份、额度、账本或审计真相。
+- `identity-link` 是 Profile 和业务授权解析用户的前置模块；Developer App/PAT 依赖授权策略；Entitlement 与 Credits 各自拥有规则，消费编排器只通过它们的应用端口选择一种资金来源。
+- Audit 与 Outbox 是业务写入调用的追加端口，不能反向调用业务模块。需要原子性的领域写入、审计和 outbox 在同一个 Core PostgreSQL unit of work 中提交。
+- 跨模块应用流程可以协调多个模块仓库端口，但不得越过端口直接写其他模块表。无法在一个 Core 数据库事务中安全完成的外部动作使用 outbox、幂等消费者和补偿，而不是分布式事务。
 
 ## 可扩展路径
 

@@ -22,3 +22,14 @@ TypeScript 单元/集成测试使用 Vitest，浏览器流程使用 Playwright�
 - 候选 24 小时、对话 30 天、删除文件 7 天等清理规则可验证。
 - 已发布版本和许可快照不可变。
 - 失败任务能够安全重试或进入可处理的死信状态。
+
+## Core F1 分层门槛
+
+- 架构测试：领域层不导入 NestJS/Prisma，模块不能越过应用端口写其他模块表，仓库间没有源码依赖。
+- 配置测试：缺少数据库/OIDC 必需配置、危险环境组合和非法 URL 均在启动前失败；错误输出不包含秘密。
+- OIDC 边界测试：有效 token、过期、not-before、错误 audience、未知 issuer、未知 signing key、未验证邮箱和停用业务状态。
+- 数据库集成：从空库迁移、从上一受支持版本升级、并发 IdentityLink 唯一性、幂等键请求指纹和事务回滚。
+- 账本/额度集成：跨日边界、并发消费、免费额度到积分回退、余额不足、补偿退款、outbox 原子性和核对差异。
+- 运维验收：liveness 不受依赖故障影响，readiness 在数据库或迁移异常时失败，恢复环境不会发送真实通知或调用外部提供商。
+
+每个仓库必须把实际存在的 lint、typecheck、unit、integration、contract、migration 和 end-to-end 命令写入自身 `AGENTS.md`；计划名不能作为通过证据。
