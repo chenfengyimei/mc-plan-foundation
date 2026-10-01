@@ -8,7 +8,7 @@
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T10:40:15Z",
-  "updated_at": "2026-10-01T10:40:15Z",
+  "updated_at": "2026-10-01T10:51:18Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -42,7 +42,7 @@
     "mc-plan-foundation": {
       "base_commit": "8d7c47b7012e0a46c925765030a2eae0efb08973",
       "branch": "docs/MCP-F1-FOUNDATION-003-architecture-review",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "1d5ed710ef9ca45e7cd36317c3a1092086dd916c",
       "final_commit": null
     }
   },
@@ -56,5 +56,10 @@
     "reason": "Close the owner-authorized F1 architecture gate before any Core business implementation begins."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Coordination Start validation passed with one active workstream and no lock conflicts",
+    "Workspace validation passed for 6 active repositories, 100 Markdown files, and 28 JSON files",
+    "Coordination regression tests passed all 14 cases",
+    "Architecture review baseline committed as 1d5ed710ef9ca45e7cd36317c3a1092086dd916c"
+  ]
 }
