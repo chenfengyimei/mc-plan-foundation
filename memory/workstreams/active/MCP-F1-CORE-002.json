@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T21:19:46Z",
-  "updated_at": "2026-10-02T21:46:00Z",
+  "updated_at": "2026-10-02T22:28:18Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts",
@@ -59,7 +59,7 @@
     "mc-plan-ops": {
       "base_commit": "33ab6f36c8453388b5c9ead5aff462d5b3c9950a",
       "branch": "feat/MCP-F1-CORE-002-keycloak-dev",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "666565b477863c90974222e90444be2e7028c12a",
       "final_commit": null
     }
   },
@@ -81,6 +81,9 @@
     "Core isolated PostgreSQL integration suite passed 2/2; twelve concurrent first-logins converged to one user, one IdentityLink, one Profile, one audit and one internal unpublished outbox record, with repeat-login idempotency and suspended-account rejection",
     "Core contract verification passed for 5 locked files at Contracts 0.1.0-alpha.1 and the producer response passed the locked PublicActor JSON Schema",
     "Core runtime image mc-plan-core:mcp-f1-core-002 built successfully as a non-root Node 24 image",
-    "Core implementation checkpoint committed as 30382fd34ff7c67da978358fc247c05221bddb22"
+    "Core implementation checkpoint committed as 30382fd34ff7c67da978358fc247c05221bddb22",
+    "Ops checkpoint 666565b477863c90974222e90444be2e7028c12a pins Keycloak 26.8.0, PostgreSQL 17.10 and Mailpit 1.31.3 in a loopback-only non-production composition with independent Core and Keycloak databases/users and local-only placeholder credentials",
+    "Fresh-volume runtime acceptance passed: Authorization Code plus PKCE S256 issued an RS256 token whose signature, issuer, audience, expiry, verified-email and subject claims were accepted by Core; twelve concurrent GET /v1/me responses converged to user a360cfcb-d4f7-4266-a1a2-7af456935c3e",
+    "The real runtime acceptance applied both forward migrations, passed Core liveness/readiness, verified exact PublicActor fields, verified separate database identities, and the static gate found no real-secret signatures"
   ]
 }
