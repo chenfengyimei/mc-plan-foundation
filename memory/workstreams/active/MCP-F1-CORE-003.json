@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-003",
+  "title": "实现 Core 业务角色、scope、Developer App 与 PAT 生命周期",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely",
+  "owner": "Codely",
+  "started_at": "2026-10-02T23:59:22Z",
+  "updated_at": "2026-10-02T23:59:22Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-foundation"
+  ],
+  "reference_repositories": [
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按 Core 开发计划固定顺序第 4 步，以契约先行方式完整实现业务角色、授权 scope、Developer App 与只保存哈希的 PAT 生命周期，其中 PAT 默认最长有效期为 30 天（Q-007 已由项目所有者于 2026-10-03 决策）。",
+  "in_scope": [
+    "Contracts 先行锁定 Core 0.1.0-alpha.2：Developer App、scope 词汇与 PAT 生命周期的新公共表面，含显式 4xx、唯一 operationId、对 0.1.0-alpha.1 的兼容性分类与机器校验脚本演进",
+    "GET /v1/me 保持既有 OIDC 语义并新增 personal access token 替代认证方式（兼容新增，不改变 alpha.1 字段与响应）",
+    "Core 前向只增迁移：McPlanUser 业务角色列、developer_apps 与 personal_access_tokens 表（PAT 只存 HMAC 哈希与标识前缀，不存明文）",
+    "Core authorization 模块：请求主体解析（OIDC 与 PAT 双通道）、scope 目录与资源无关的 scope/角色策略",
+    "Core developer-app 模块：应用登记、回调地址校验（生产 HTTPS 精确匹配、开发回环豁免）、scope 审批与撤销、机密客户端密钥只显示一次",
+    "Core token-metadata 模块：PAT 签发（scope 不得超出创建者当前 scope、默认最长 30 天）、元数据列举、撤销、过期强制、最后使用时间记录",
+    "高风险写入（应用创建、扩权、撤销、PAT 创建与撤销）沿用 CORE-002 的事务审计与内部 outbox 模式",
+    "Foundation memory/open-questions.md 记录 Q-007 已决（30 天，项目所有者，2026-10-03）",
+    "Developer App 的 Keycloak OIDC 客户端自动下发边界如实记录：本轮 Ops 只读，realm 无 Core 管理服务客户端，自动下发顺延到后续需要 Ops 配合的切片"
+  ],
+  "out_of_scope": [
+    "每日权益、积分账本、奖励、退款、计费或完整审计/outbox 发布验收（开发计划第 5-7 步）",
+    "SDK 生成与消费者实现、Community/Skin/Official 集成",
+    "管理员管理接口与角色分配公共接口（未获授权；本切片角色经数据库设置并在测试中验证）",
+    "决定 Q-003/Q-004/Q-006 等其他产品值，或生产域名、邮件、密钥",
+    "修改 MCP-F1-SKIN-008 的分支、记录或运行环境",
+    "创建远程仓库、推送或部署"
+  ],
+  "contract_impact": "compatible prerelease addition: Contracts locks Core 0.1.0-alpha.2 with new Developer App, PAT and scope surfaces before producer implementation; 0.1.0-alpha.1 fields, responses and OIDC semantics stay unchanged while GET /v1/me gains a compatible personal-access-token alternative security scheme",
+  "acceptance_evidence": [
+    "Contracts Python and Redocly validation pass with the evolved machine gates for 0.1.0-alpha.2",
+    "Core format, lint, typecheck, unit, integration, end-to-end, architecture, migration, contract and build validations pass, plus the runtime image build",
+    "PAT plaintext is returned only at creation; storage keeps only HMAC hash plus prefix; revoked or expired tokens are rejected",
+    "A PAT's scopes never exceed its creator's current scopes and its validity never exceeds the decided 30-day default maximum",
+    "Business-role enforcement rejects non-DEVELOPER/non-ADMIN principals on high-risk writes with the contract ROLE_REQUIRED problem",
+    "Developer app redirect URIs enforce exact match with HTTPS or loopback development exemption and secrets are displayed exactly once",
+    "High-risk writes produce transactional audit and internal outbox records",
+    "Q-007 is recorded as decided in Foundation open questions"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "b684ac88f5a07dd261844993e794b6a8d98e6a75",
+      "branch": "feat/MCP-F1-CORE-003-developer-app-pat",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "070b00ae27bda4c3ec2d5cdd08cece626c8878a7",
+      "branch": "feat/MCP-F1-CORE-003-core-prerelease",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-foundation": {
+      "base_commit": "80fe8c170c8f1fc49c7826aa7e9ac24f3ace3022",
+      "branch": "docs/MCP-F1-CORE-003-q007-record",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-002",
+    "MCP-F1-FOUNDATION-006"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
