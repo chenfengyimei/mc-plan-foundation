@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T21:19:46Z",
-  "updated_at": "2026-10-02T21:29:00Z",
+  "updated_at": "2026-10-02T21:46:00Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts",
@@ -34,7 +34,7 @@
     "生产域名、生产邮件、腾讯云正式环境、真实密钥、远程仓库、推送或部署",
     "按邮箱合并、身份重绑、账号恢复、第二身份、正式 IdP 迁移或跨服务事件发布"
   ],
-  "contract_impact": "compatible prerelease lock: promote the existing draft GET /v1/me and PublicActor surface to the first implementable Core prerelease, add only explicit authentication/business-account rejection responses, and preserve the public actor field boundary",
+  "contract_impact": "compatible prerelease lock: promote the existing draft GET /v1/me and PublicActor surface to the first implementable Core prerelease, add explicit authentication, insufficient-scope and business-account rejection responses, and preserve the public actor field boundary",
   "acceptance_evidence": [
     "Contracts Python and Redocly validation pass with unique operationId, resolved references, explicit scope/error responses and recorded compatibility classification",
     "Core format, lint, typecheck, unit, integration, end-to-end, architecture, migration, contract and build validations pass",
@@ -47,13 +47,13 @@
     "mc-plan-core": {
       "base_commit": "cffc685182479a4ffe1acbbccb21763a6bddc5c9",
       "branch": "feat/MCP-F1-CORE-002-identity-me",
-      "last_checkpoint_commit": "af58437f2f58a7c3876c9327d98df82fe9689c96",
+      "last_checkpoint_commit": "30382fd34ff7c67da978358fc247c05221bddb22",
       "final_commit": null
     },
     "mc-plan-contracts": {
       "base_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
       "branch": "feat/MCP-F1-CORE-002-core-prerelease",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "f9ad077de7e031c2679909b8ad27dcf4e9b2340e",
       "final_commit": null
     },
     "mc-plan-ops": {
@@ -72,9 +72,15 @@
   "handoff_history": [],
   "validation_results": [
     "Coordination Start passed with Core as primary, Contracts and Ops as the only supporting repositories, and the independent Skin-only lock unchanged",
-    "Contracts 0.1.0-alpha.1 locked GET /v1/me, profile:read, PublicActor, AUTHENTICATION_REQUIRED and ACCOUNT_UNAVAILABLE as a prerelease compatible convergence from the unpublished draft",
+    "Contracts 0.1.0-alpha.1 locked GET /v1/me, profile:read, PublicActor, AUTHENTICATION_REQUIRED, INSUFFICIENT_SCOPE and ACCOUNT_UNAVAILABLE as a prerelease compatible convergence from the unpublished draft",
     "Isolated Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents and 15 unique operationIds, including machine checks for scopes, error examples, PublicActor privacy and compatibility classification",
     "Redocly recommended lint passed for all Core, Community and Skin OpenAPI documents",
-    "Contracts checkpoint committed as af58437f2f58a7c3876c9327d98df82fe9689c96 before producer implementation"
+    "Contracts initial checkpoint af58437f2f58a7c3876c9327d98df82fe9689c96 and final forbidden-scope refinement f9ad077de7e031c2679909b8ad27dcf4e9b2340e were committed before producer implementation",
+    "Core format, lint, strict typecheck, build, architecture and two forward-only migration validations passed",
+    "Core unit suite passed 21/21 and HTTP end-to-end suite passed 7/7, covering local-signature token rejection, profile:read, PublicActor-only responses and stable Problem Details",
+    "Core isolated PostgreSQL integration suite passed 2/2; twelve concurrent first-logins converged to one user, one IdentityLink, one Profile, one audit and one internal unpublished outbox record, with repeat-login idempotency and suspended-account rejection",
+    "Core contract verification passed for 5 locked files at Contracts 0.1.0-alpha.1 and the producer response passed the locked PublicActor JSON Schema",
+    "Core runtime image mc-plan-core:mcp-f1-core-002 built successfully as a non-root Node 24 image",
+    "Core implementation checkpoint committed as 30382fd34ff7c67da978358fc247c05221bddb22"
   ]
 }
