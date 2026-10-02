@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codely",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T19:45:00Z",
+  "updated_at": "2026-10-02T21:45:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -68,25 +68,50 @@
     "mc-plan-skin": {
       "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
-      "last_checkpoint_commit": "968ea7265eeb7c1263d3643b1b4a2d624c2d852d",
+      "last_checkpoint_commit": "a861be954d238e27bd89bb4d523af55e6a0f6e9a",
       "final_commit": null
     }
   },
   "depends_on": [
     "MCP-F1-SKIN-007"
   ],
-  "blocked_reason": "The configured local LLM endpoint last returned HTTP 402, which blocks final real-candidate acceptance but does not block the now-active provider startup, honest error-state and Web experience work. Finish still requires restored provider quota/payment plus a successful controlled real-provider render and manual visual approval.",
+  "blocked_reason": "The HTTP 402 quota blocker is resolved: the local demo provider was switched to Zhipu GLM and controlled real-provider renders now succeed end-to-end. The reported snow-explorer prompt produced structurally valid 64x64 two-layer Steve/Alex candidates with zero validation issues and no MISSING_SECOND_LAYER, but none has passed the owner's manual visual acceptance yet: glm-5.3-flash with reasoning_effort=low scored about 2/10 (flat template-like blocks) and glm-5.3 with high effort scored about 4/10 (real craft improvement but poor prompt semantics). Finish remains blocked only on the owner accepting a controlled-prompt candidate or directing a model/prompt strategy change; the provider endpoint now returns HTTP 200.",
   "direction_exception": {
     "category": "foundation-governance",
     "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D preview, visible animation playback, a real generation flow and a complete interface redesign (2026-10-03)",
     "reason": "Owner-directed correction of the Standalone creation experience. The work reuses the existing provider-neutral configurable adapter rather than selecting a production vendor, keeps Fake explicit, changes no public contract, introduces no third-party 3D runtime and does not implement Official integration."
   },
   "handoff_history": [
-    "2026-10-02T10:00:49Z: Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34.",
-    "2026-10-02T16:01:42Z: Work resumed after the owner explicitly requested that online preview become rotatable 3D. Scope expanded within Skin to a replaceable first-party CSS 3D component with no third-party library or public contract change; the provider HTTP 402 remains a separate final visual-benchmark dependency rather than blocking preview work.",
-    "2026-10-02T17:07:48Z: Owner requested visible animation playback and supplied gothic_skin_viewer.html as a local interaction reference. Work resumed to add first-party idle/walk/run/fly rig motion and controls without importing its skinview3d CDN dependency; HTTP 402 remains a later real-provider benchmark dependency.",
-    "2026-10-02T18:55:56Z: Owner rejected the identical Fake Provider fixtures, explicitly requested the real generation flow and asked for the entire project interface to be made visually complete. Codex resumed the existing locked Skin workstream to add an explicit real-provider startup path, honest provider/error states and a cohesive responsive studio redesign; provider billing remains an external acceptance dependency rather than permission to fall back silently.",
-    "2026-10-02T19:45:00Z: Owner directed the Codely session to continue from the Codex breakpoint. Codely completed the in-flight studio implementation: finished the missing Pixel Foundry design system in globals.css, aligned Playwright assertions with machine-state classes, fixed the preview-bytes type narrowing that had blocked the web build, reran pnpm check:fully fully green with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200, and committed the checkpoint as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; the provider HTTP 402 remains the only final real-candidate acceptance dependency."
+    {
+      "at": "2026-10-02T10:00:49Z",
+      "from_owner": "MC Plan project owner",
+      "to_owner": "Codex",
+      "reason": "Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34."
+    },
+    {
+      "at": "2026-10-02T16:01:42Z",
+      "from_owner": "Codex",
+      "to_owner": "Codex",
+      "reason": "Work resumed after the owner explicitly requested that online preview become rotatable 3D. Scope expanded within Skin to a replaceable first-party CSS 3D component with no third-party library or public contract change; the provider HTTP 402 remains a separate final visual-benchmark dependency rather than blocking preview work."
+    },
+    {
+      "at": "2026-10-02T17:07:48Z",
+      "from_owner": "Codex",
+      "to_owner": "Codex",
+      "reason": "Owner requested visible animation playback and supplied gothic_skin_viewer.html as a local interaction reference. Work resumed to add first-party idle/walk/run/fly rig motion and controls without importing its skinview3d CDN dependency; HTTP 402 remains a later real-provider benchmark dependency."
+    },
+    {
+      "at": "2026-10-02T18:55:56Z",
+      "from_owner": "Codex",
+      "to_owner": "Codex",
+      "reason": "Owner rejected the identical Fake Provider fixtures, explicitly requested the real generation flow and asked for the entire project interface to be made visually complete. Codex resumed the existing locked Skin workstream to add an explicit real-provider startup path, honest provider/error states and a cohesive responsive studio redesign; provider billing remains an external acceptance dependency rather than permission to fall back silently."
+    },
+    {
+      "at": "2026-10-02T19:45:00Z",
+      "from_owner": "Codex",
+      "to_owner": "Codely",
+      "reason": "Owner directed the Codely session to continue from the Codex breakpoint. Codely completed the in-flight studio implementation: finished the missing Pixel Foundry design system in globals.css, aligned Playwright assertions with machine-state classes, fixed the preview-bytes type narrowing that had blocked the web build, reran pnpm check:full fully green with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200, and committed the checkpoint as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; the provider HTTP 402 remains the only final real-candidate acceptance dependency."
+    }
   ],
   "validation_results": [
     "Canonical mc-plan-development Skill 1.1.2 matched the Foundation authoritative copy; coordination Start and the later scope-expansion Continue validations passed with Skin as the only locked product repository",
@@ -120,6 +145,12 @@
     "Playwright smoke assertions aligned with the redesigned markup: render and finalize machine states asserted via the render-succeeded and finalize-succeeded classes and the render-button regex matches the new 请求真实渲染 label; the full vertical chain passed 1/1 on the self-contained Fake Provider stack with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200",
     "Fixed the TS2322 preview-bytes narrowing failure that had blocked the apps/web build by extracting a selectedPreviewBytes local; the strict web typecheck and build pass",
     "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
-    "Real provider flow and workbench checkpoint committed in mc-plan-skin as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; no public contract, database migration, provider binding or secret changed"
+    "Real provider flow and workbench checkpoint committed in mc-plan-skin as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; no public contract, database migration, provider binding or secret changed",
+    "GLM integration hardened: removed the two hardcoded 30s timeoutMs overrides inside LlmStructuredSkinProvider that silently defeated the client default; added SKIN_LLM_TIMEOUT_MS (default 30000) and SKIN_LLM_REASONING_EFFORT (OpenAI o-series-compatible top-level passthrough) with worker wiring, and documented both optional env vars in README",
+    "GLM API behavior established by sanitized probes: glm-5.3 and glm-5.3-flash are forced-thinking models (thinking.type only accepts enabled; disabled or low values fail with error 1210) and reasoning_effort at the request top level controls depth (low/high/max); default max thinking exceeded five minutes and was cut by the gateway, while reasoning_effort=low returned a complete legal v4 blueprint in 52 seconds",
+    "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, unit tests 89/89 across nine suites (config 15 including new timeout and reasoning-effort cases, provider-sdk 30 including 3 new OpenAiCompatLlmClient tests, skin-core 12, skin-validator 12, web 7, test-fixtures 4, api 4, worker 3, contracts 2), contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
+    "Real-provider benchmark with the reported snow-explorer prompt succeeded end-to-end on GLM: Alex candidate 436b1d85 (sha256 18cc6a80601fb73bf309c70ce6ec8b12408dbed9114c6e024ffab4233287ed59, 1126 bytes, 81 seconds) and Steve candidate b6d56b7a (sha256 c17e2f01e0bc0308a741f73fc6cb60f6a05309b76cf282ad0cb5168c898d07c4, 1315 bytes) both validate as legal 64x64 two-layer skins with zero issues and no MISSING_SECOND_LAYER",
+    "Quality comparison for owner acceptance: glm-5.3-flash with reasoning_effort=low scored about 2/10 (flat template-like blocks, missing scarf and hair); glm-5.3 with high effort (candidate 9474eb65, sha256 6b554711806571a9d8d59102de7e772e3c268118933cad68b203f7c3190ca885, 2072 bytes, 8m51s) scored about 4/10 with genuine craft improvement (facial features, texture, layered shading) but poor prompt semantics (scarf misplaced, non-snow palette); neither candidate has reached manual-acceptance quality yet",
+    "Real provider timeout and reasoning-effort checkpoint committed in mc-plan-skin as a861be954d238e27bd89bb4d523af55e6a0f6e9a; the owner-visible demo stack runs resident via pnpm start:real with GLM-5.3 plus high effort and no 402 responses; no public contract, database migration, production-provider binding or secret changed"
   ]
 }
