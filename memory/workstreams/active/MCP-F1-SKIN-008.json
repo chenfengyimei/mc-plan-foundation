@@ -6,9 +6,9 @@
   "status": "active",
   "milestone": "F1",
   "initial_owner": "Codex",
-  "owner": "Codex",
+  "owner": "Codely",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T18:55:56Z",
+  "updated_at": "2026-10-02T19:45:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -68,7 +68,7 @@
     "mc-plan-skin": {
       "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
-      "last_checkpoint_commit": "b7541447ea30e1e40c0176187ef9c18219499d15",
+      "last_checkpoint_commit": "968ea7265eeb7c1263d3643b1b4a2d624c2d852d",
       "final_commit": null
     }
   },
@@ -85,7 +85,8 @@
     "2026-10-02T10:00:49Z: Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34.",
     "2026-10-02T16:01:42Z: Work resumed after the owner explicitly requested that online preview become rotatable 3D. Scope expanded within Skin to a replaceable first-party CSS 3D component with no third-party library or public contract change; the provider HTTP 402 remains a separate final visual-benchmark dependency rather than blocking preview work.",
     "2026-10-02T17:07:48Z: Owner requested visible animation playback and supplied gothic_skin_viewer.html as a local interaction reference. Work resumed to add first-party idle/walk/run/fly rig motion and controls without importing its skinview3d CDN dependency; HTTP 402 remains a later real-provider benchmark dependency.",
-    "2026-10-02T18:55:56Z: Owner rejected the identical Fake Provider fixtures, explicitly requested the real generation flow and asked for the entire project interface to be made visually complete. Codex resumed the existing locked Skin workstream to add an explicit real-provider startup path, honest provider/error states and a cohesive responsive studio redesign; provider billing remains an external acceptance dependency rather than permission to fall back silently."
+    "2026-10-02T18:55:56Z: Owner rejected the identical Fake Provider fixtures, explicitly requested the real generation flow and asked for the entire project interface to be made visually complete. Codex resumed the existing locked Skin workstream to add an explicit real-provider startup path, honest provider/error states and a cohesive responsive studio redesign; provider billing remains an external acceptance dependency rather than permission to fall back silently.",
+    "2026-10-02T19:45:00Z: Owner directed the Codely session to continue from the Codex breakpoint. Codely completed the in-flight studio implementation: finished the missing Pixel Foundry design system in globals.css, aligned Playwright assertions with machine-state classes, fixed the preview-bytes type narrowing that had blocked the web build, reran pnpm check:fully fully green with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200, and committed the checkpoint as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; the provider HTTP 402 remains the only final real-candidate acceptance dependency."
   ],
   "validation_results": [
     "Canonical mc-plan-development Skill 1.1.2 matched the Foundation authoritative copy; coordination Start and the later scope-expansion Continue validations passed with Skin as the only locked product repository",
@@ -114,6 +115,11 @@
     "A transient Windows Vitest worker exit 3221226505 occurred during the first full run; isolated API integration immediately passed 7/7 and the subsequent complete pnpm check:full passed",
     "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests including provider 27/27 and web preview 7/7, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
     "Animated 3D preview checkpoint committed in mc-plan-skin as b7541447ea30e1e40c0176187ef9c18219499d15; no public contract, database, provider binding or secret changed",
-    "Workstream returned to blocked after completing the owner-requested animation scope; the only remaining unblock condition is the previously recorded real-provider HTTP 402 benchmark dependency"
+    "Workstream returned to blocked after completing the owner-requested animation scope; the only remaining unblock condition is the previously recorded real-provider HTTP 402 benchmark dependency",
+    "Codely takeover from the Codex breakpoint closed the stylesheet gap: the complete Pixel Foundry responsive design system (topbar status chips, hero, workflow rail, two-column workbench, render-queue state colors, finalize states, focus-visible and reduced-motion support) with no third-party CSS or 3D runtime",
+    "Playwright smoke assertions aligned with the redesigned markup: render and finalize machine states asserted via the render-succeeded and finalize-succeeded classes and the render-button regex matches the new 请求真实渲染 label; the full vertical chain passed 1/1 on the self-contained Fake Provider stack with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200",
+    "Fixed the TS2322 preview-bytes narrowing failure that had blocked the apps/web build by extracting a selectedPreviewBytes local; the strict web typecheck and build pass",
+    "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
+    "Real provider flow and workbench checkpoint committed in mc-plan-skin as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; no public contract, database migration, provider binding or secret changed"
   ]
 }
