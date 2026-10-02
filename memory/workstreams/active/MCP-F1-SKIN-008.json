@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-008",
+  "title": "逐像素皮肤蓝图与非模板化渲染",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex",
+  "owner": "Codex",
+  "started_at": "2026-10-02T10:00:49Z",
+  "updated_at": "2026-10-02T10:00:49Z",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops"
+  ],
+  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；同时从协议上保证第二层非空，消除已确认的 MISSING_SECOND_LAYER 首次失败。",
+  "in_scope": [
+    "内部 SkinDesign v4：受限调色板、头部/躯干/左右手臂/左右腿的正反面逐像素网格以及透明 overlay 网格",
+    "通用 UV 映射器：把模型提交的像素网格确定性映射到 Steve/Alex 64x64 布局，侧面由边缘像素连续延展，顶底面使用部件基础色",
+    "删除由 outerwear、belt、boots、collar 等服装枚举驱动的固定构图和渲染分支",
+    "重写 LLM system prompt，使用格式片段而非单一完整人物示例，明确要求依据用户描述自行构图并保证 overlay 至少一个非透明像素",
+    "schema 级网格尺寸、调色板引用、透明语义和非空 overlay 校验",
+    "离线回归：合法 Steve/Alex、确定性、第二层必有内容、错误网格拒绝，以及同调色板不同像素蓝图产生显著不同结构",
+    "使用用户报告的提示词做一次受控本地真实 Provider 基准并人工检查候选，不提交密钥、提示词数据或临时运行产物"
+  ],
+  "out_of_scope": [
+    "公共 OpenAPI、JSON Schema、事件、数据库迁移或 SDK 修改",
+    "Contracts、Core、Community、Ops 的任何修改",
+    "图像生成模型、第三方 3D 预览库、Official 集成或生产厂商绑定",
+    "在数据库中持久化内部设计 JSON 或新增面向用户的调试接口",
+    "生产密钥、真实用户数据或对外厂商承诺"
+  ],
+  "contract_impact": "none; internal provider design protocol and deterministic UV renderer only",
+  "acceptance_evidence": [
+    "v4 schema accepts dimensionally correct component grids and rejects malformed rows, unknown palette symbols and an entirely transparent overlay",
+    "Steve and Alex reference blueprints render legal 64x64 PNGs with non-empty second layer and deterministic bytes",
+    "two blueprints using the same palette but different pixel maps produce materially different structural masks without garment enum branches",
+    "LLM prompt contains no complete snow-explorer example or outerwear/belt/boots template and provider tests exercise the v4 pixel protocol",
+    "controlled local render of the reported prompt succeeds without MISSING_SECOND_LAYER and is manually inspected for prompt-specific composition",
+    "pnpm check:full passes end to end",
+    "coordination Start, Continue and Finish validations pass and the final commit is fast-forwarded to local main"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
+      "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-007"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and request to continue the handed-off development (2026-10-02), within ADR-0009 restricted Skin Standalone authorization",
+    "reason": "Owner-directed correction of the already-authorized internal Standalone provider and deterministic renderer; no public contract, production provider or Official integration change."
+  },
+  "handoff_history": [
+    "2026-10-02T10:00:49Z: Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34."
+  ],
+  "validation_results": []
+}
