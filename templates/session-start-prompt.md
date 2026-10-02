@@ -1,6 +1,6 @@
 # MC Plan 跨工具开发会话开局提示词
 
-用途：在 Codex、ChatGPT Work、Tuanjie Codely（包括 GLM-5.3）或其他具备本地文件与 Git 能力的开发代理中启动新的 MC Plan 会话。将下方“可复制提示词”完整发送给新会话，再补充本次具体目标；不要只发送某个子仓库的需求。发送本提示词代表项目所有者授予下文明确列出的启动权限。
+用途：在无法由 `$mc-plan-orchestrator` 根据实时状态生成专用提示词时，作为 Codex、ChatGPT Work、Tuanjie Codely（包括 GLM-5.3）或其他具备本地文件与 Git 能力的开发代理的后备开局模板。正常情况下，先把 `templates/orchestration-brief.md` 的简短目标交给主会话，再使用它生成的专用提示词。发送本模板代表项目所有者授予下文明确列出的启动权限。
 
 ## 可复制提示词
 
@@ -8,8 +8,8 @@
 
 在进行任何写操作前，必须完成以下只读启动流程，并向我简要报告读取结果：
 
-1. 完整读取权威协作 Skill：`D:\xm\MC\mc-plan-foundation\.codex\skills\mc-plan-development\SKILL.md`，以及该文件要求的相关 `references/`。这是跨工具的权威规则；即使当前工具不能自动加载 Skill，也必须把它作为操作协议执行。
-2. 如当前环境支持用户级 Codex Skill，再检查 `C:\Users\cy\.codex\skills\mc-plan-development\SKILL.md` 是否存在且与权威版本一致；权威版本永远以 Foundation 中的副本为准。非 Codex 工具不得因为没有用户级副本而跳过第 1 步。
+1. 完整读取权威统筹 Skill：`D:\xm\MC\mc-plan-foundation\.codex\skills\mc-plan-orchestrator\SKILL.md`，以及权威开发 Skill：`D:\xm\MC\mc-plan-foundation\.codex\skills\mc-plan-development\SKILL.md`。写操作必须继续读取开发 Skill 要求的相关 `references/`。即使当前工具不能自动加载 Skill，也必须把它们作为本地操作协议执行。
+2. 如当前环境支持用户级 Codex Skill，再检查 `C:\Users\cy\.codex\skills\mc-plan-orchestrator\SKILL.md` 与 `C:\Users\cy\.codex\skills\mc-plan-development\SKILL.md` 是否存在且与各自权威版本一致；权威版本永远以 Foundation 中的副本为准。非 Codex 工具不得因为没有用户级副本而跳过第 1 步。
 3. 读取：
    - `mc-plan-foundation/memory/current/repositories.json`
    - `mc-plan-foundation/memory/current/direction.json`

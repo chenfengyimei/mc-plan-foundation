@@ -12,10 +12,12 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 - `memory/workstreams/`：活动/完成工作流、仓库锁、提交和验证证据。
 - `templates/`：新仓库、计划、ADR、交接和发布检查模板。
 - `templates/session-start-prompt.md`：供 Codex、GPT Work、Codely/GLM 等新会话使用的跨工具开局提示词。
+- `templates/orchestration-brief.md`：只需目标、工具/模型和限制的主会话简报模板。
 - `templates/f1-architecture-review-checklist.md`：关闭 F1 人工架构评审门槛时必须逐项引用证据的检查表。
 - `docs/f1-architecture-review.md`：最近一次 F1 评审的十项证据、契约判断和门槛结论。
 - `docs/f1-core-first-slice.md`：门槛关闭后第一个 Core 工程切片的运行、测试与回退边界。
 - `.codex/skills/mc-plan-development/`：MC Plan 多仓开发协作 Skill 的权威版本。
+- `.codex/skills/mc-plan-orchestrator/`：读取实时状态、生成派工提示词、统筹会话、恢复未完成工作和规划后续路线的主会话 Skill 权威版本。
 
 ## 真相层级
 
@@ -26,7 +28,7 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 
 ## 当前阶段
 
-Foundation v1.0 文档与多仓治理基线已完成并保存在本地 Git；尚未创建远程仓库。`MCP-F1-FOUNDATION-003` 已完成项目所有者授权的十项架构评审，当前全局方向为活动的 `F1 / mc-plan-core`，下一工作流按 [Core 第一可运行切片](docs/f1-core-first-slice.md) 建立底层工程骨架。`MCP-F1-FOUNDATION-004` 已按 [ADR-0009](decisions/0009-skin-standalone-restricted-preparation.md) 登记 `mc-plan-skin` 为 F1 受限 Standalone 准备方向。当前完成范围与后续缺口见 [F0 完整性审计](docs/f0-completeness-audit.md)，后续顺序见 [路线图](docs/roadmap.md)。
+Foundation v1.0 文档与多仓治理基线已完成并保存在本地 Git；尚未创建远程仓库。`MCP-F1-FOUNDATION-003` 已完成项目所有者授权的十项架构评审，当前全局方向为活动的 `F1 / mc-plan-core`。`MCP-F1-CORE-001` 的第一可运行工程切片已经实现并验证，但协调记录仍待原工作流完成关闭和本地集成；`MCP-F1-SKIN-008` 正在 ADR-0009 的受限范围内改进 Standalone 逐像素生成质量。`MCP-F1-FOUNDATION-005` 增加了主会话统筹 Skill，使后续派工先核对实时锁、提交和完成层级。当前组合状态见 [项目组合状态](memory/current/portfolio.md)，后续顺序见 [路线图](docs/roadmap.md)。
 
 所有写任务必须先按 [多仓协调模型](docs/coordination.md) 声明唯一主仓库和仓库锁；各项目固定开发顺序见对应 `docs/development-plan.md`。
 

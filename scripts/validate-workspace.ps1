@@ -109,17 +109,28 @@ foreach ($file in $contractFiles) {
     }
 }
 
-$skill = Join-Path $root 'mc-plan-foundation/.codex/skills/mc-plan-development/SKILL.md'
-if (-not (Test-Path -LiteralPath $skill)) {
-    $errors.Add('mc-plan-development SKILL.md is missing.')
-}
-else {
+$expectedSkills = @('mc-plan-development', 'mc-plan-orchestrator')
+foreach ($skillName in $expectedSkills) {
+    $skillRoot = Join-Path $root "mc-plan-foundation/.codex/skills/$skillName"
+    $skill = Join-Path $skillRoot 'SKILL.md'
+    if (-not (Test-Path -LiteralPath $skill)) {
+        $errors.Add("$skillName SKILL.md is missing.")
+        continue
+    }
+
     $skillText = Get-Content -LiteralPath $skill -Raw
-    if ($skillText -notmatch '(?m)^name:\s+mc-plan-development\s*$') {
-        $errors.Add('Skill frontmatter name is missing or invalid.')
+    $escapedSkillName = [regex]::Escape($skillName)
+    if ($skillText -notmatch "(?m)^name:\s+$escapedSkillName\s*$") {
+        $errors.Add("$skillName frontmatter name is missing or invalid.")
     }
     if ($skillText -notmatch '(?m)^description:\s+\S+') {
-        $errors.Add('Skill frontmatter description is missing.')
+        $errors.Add("$skillName frontmatter description is missing.")
+    }
+
+    foreach ($requiredSkillFile in @('VERSION', 'agents/openai.yaml', 'scripts/install.ps1')) {
+        if (-not (Test-Path -LiteralPath (Join-Path $skillRoot $requiredSkillFile))) {
+            $errors.Add("$skillName is missing $requiredSkillFile.")
+        }
     }
 }
 

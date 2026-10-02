@@ -1,0 +1,6 @@
+interface:
+  display_name: "MC Plan Orchestrator"
+  short_description: "Generate dispatch prompts and coordinate MC Plan work"
+  default_prompt: "Use $mc-plan-orchestrator to turn my short MC Plan goal into a current-state-aware dispatch prompt and follow-up plan."
+policy:
+  allow_implicit_invocation: true
