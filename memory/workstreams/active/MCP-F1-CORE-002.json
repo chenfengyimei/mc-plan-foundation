@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T21:19:46Z",
-  "updated_at": "2026-10-02T22:28:18Z",
+  "updated_at": "2026-10-02T22:35:45Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts",
@@ -53,13 +53,13 @@
     "mc-plan-contracts": {
       "base_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
       "branch": "feat/MCP-F1-CORE-002-core-prerelease",
-      "last_checkpoint_commit": "f9ad077de7e031c2679909b8ad27dcf4e9b2340e",
+      "last_checkpoint_commit": "070b00ae27bda4c3ec2d5cdd08cece626c8878a7",
       "final_commit": null
     },
     "mc-plan-ops": {
       "base_commit": "33ab6f36c8453388b5c9ead5aff462d5b3c9950a",
       "branch": "feat/MCP-F1-CORE-002-keycloak-dev",
-      "last_checkpoint_commit": "666565b477863c90974222e90444be2e7028c12a",
+      "last_checkpoint_commit": "ff0eeb7ff61301af762ba05ab58459b6c707577e",
       "final_commit": null
     }
   },
@@ -83,7 +83,10 @@
     "Core runtime image mc-plan-core:mcp-f1-core-002 built successfully as a non-root Node 24 image",
     "Core implementation checkpoint committed as 30382fd34ff7c67da978358fc247c05221bddb22",
     "Ops checkpoint 666565b477863c90974222e90444be2e7028c12a pins Keycloak 26.8.0, PostgreSQL 17.10 and Mailpit 1.31.3 in a loopback-only non-production composition with independent Core and Keycloak databases/users and local-only placeholder credentials",
-    "Fresh-volume runtime acceptance passed: Authorization Code plus PKCE S256 issued an RS256 token whose signature, issuer, audience, expiry, verified-email and subject claims were accepted by Core; twelve concurrent GET /v1/me responses converged to user a360cfcb-d4f7-4266-a1a2-7af456935c3e",
-    "The real runtime acceptance applied both forward migrations, passed Core liveness/readiness, verified exact PublicActor fields, verified separate database identities, and the static gate found no real-secret signatures"
+    "Fresh-volume runtime acceptance passed: Authorization Code plus PKCE S256 issued an RS256 token whose signature, issuer, audience, expiry, verified-email and subject claims were accepted by Core; twelve concurrent GET /v1/me responses converged to user c991f7fa-6052-49f3-9c6c-e83b4077cabc",
+    "The real runtime acceptance applied both forward migrations, passed Core liveness/readiness, verified exact PublicActor fields and a generated Explorer nickname, and found exactly one user, IdentityLink, Profile, audit record and unpublished internal outbox record",
+    "Final Contracts validation passed for 13 schemas/events, 13 unique ids, 3 OpenAPI documents and 15 unique operationIds; Redocly recommended lint passed all three APIs; compatibility evidence was committed as 070b00ae27bda4c3ec2d5cdd08cece626c8878a7",
+    "Final Core format, lint, typecheck, 21 unit tests, 2 isolated PostgreSQL integration tests, 7 HTTP end-to-end tests, architecture, 2 forward-only migrations, locked-contract test and build all passed; the non-root runtime image starts as node and reports live plus ready with current migrations",
+    "Final Ops static validation passed pinned-image, compose parsing, independent database identity, realm/client mapper, loopback, local SMTP, PKCE S256 and no-real-secret gates; final acceptance assertions were committed as ff0eeb7ff61301af762ba05ab58459b6c707577e"
   ]
 }
