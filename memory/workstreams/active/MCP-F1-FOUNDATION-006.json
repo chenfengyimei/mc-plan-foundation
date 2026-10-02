@@ -8,7 +8,7 @@
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-02T23:09:01Z",
-  "updated_at": "2026-10-02T23:09:01Z",
+  "updated_at": "2026-10-02T23:12:00Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [
     "mc-plan-core"
@@ -53,7 +53,7 @@
     "mc-plan-core": {
       "base_commit": "30382fd34ff7c67da978358fc247c05221bddb22",
       "branch": "docs/MCP-F1-FOUNDATION-006-status-correction",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "b684ac88f5a07dd261844993e794b6a8d98e6a75",
       "final_commit": null
     }
   },
@@ -67,5 +67,10 @@
     "reason": "Foundation-primary governance correction that records the completed MCP-F1-CORE-002 status facts; it preserves mc-plan-core as the F1 primary product direction, changes no public contract or business code, and takes over no other workstream."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Canonical mc-plan-development 1.1.2 and mc-plan-orchestrator 1.0.0 matched their installed user-level copies via install.ps1 -Check",
+    "Preflight verified the snapshot live: direction F1 with primary mc-plan-core; the only other active workstream MCP-F1-SKIN-008 locks only mc-plan-skin; six worktrees clean with no remotes; Foundation main d5112e3584d6c9a16c086dc503b0c0b8384baf5f, Core main 30382fd34ff7c67da978358fc247c05221bddb22, Contracts main 070b00ae27bda4c3ec2d5cdd08cece626c8878a7, Ops main ff0eeb7ff61301af762ba05ab58459b6c707577e; CORE-002 final commits are reachable from local mains with its short-lived branches already deleted; FOUNDATION-004 and FOUNDATION-005 exist in completed and were not reused; MCP-F1-FOUNDATION-006 was confirmed as the next unused Foundation number",
+    "Coordination Start passed with Foundation as primary, Core as the only supporting repository, and the independent Skin-only lock unchanged",
+    "Core docs correction committed on its branch: STATUS.md marks the identity slice complete with the implemented boundary and the Developer App/scope/PAT next step (c73705b), and development-plan.md marks fixed-order step 3 complete and step 4 as the next phase (b684ac8)"
+  ]
 }
