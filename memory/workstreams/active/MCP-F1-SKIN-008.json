@@ -2,13 +2,13 @@
   "$schema": "../../../schemas/workstream.v1.schema.json",
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-008",
-  "title": "逐像素皮肤蓝图与非模板化渲染",
+  "title": "逐像素皮肤蓝图与交互式 3D 预览",
   "status": "active",
   "milestone": "F1",
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T12:01:30Z",
+  "updated_at": "2026-10-02T16:01:42Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -18,7 +18,7 @@
     "mc-plan-community",
     "mc-plan-ops"
   ],
-  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；同时从协议上保证第二层非空，消除已确认的 MISSING_SECOND_LAYER 首次失败。",
+  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；同时从协议上保证第二层非空，并把候选在线预览升级为可拖拽旋转的无第三方依赖 3D 角色视图。",
   "in_scope": [
     "内部 SkinDesign v4：受限调色板、头部/躯干/左右手臂/左右腿的正反面逐像素网格以及透明 overlay 网格",
     "通用 UV 映射器：把模型提交的像素网格确定性映射到 Steve/Alex 64x64 布局，侧面由边缘像素连续延展，顶底面使用部件基础色",
@@ -27,12 +27,15 @@
     "schema 级网格尺寸、调色板引用、透明语义和非空 overlay 校验",
     "离线回归：合法 Steve/Alex、确定性、第二层必有内容、错误网格拒绝，以及同调色板不同像素蓝图产生显著不同结构",
     "使用用户报告的提示词做一次受控本地真实 Provider 基准并人工检查候选，不提交密钥、提示词数据或临时运行产物",
-    "让 Playwright 自包含栈的 API/Web 端口可通过测试环境变量覆盖，以便在既有本地演示服务仍占用默认端口时完成隔离纵向验证"
+    "让 Playwright 自包含栈的 API/Web 端口可通过测试环境变量覆盖，以便在既有本地演示服务仍占用默认端口时完成隔离纵向验证",
+    "以 CSS 3D 六面体和原始 Minecraft UV 区域实现候选角色预览，不引入或绑定第三方 3D 库",
+    "鼠标、触摸和键盘均可左右旋转并有限度俯仰；支持重置视角、Steve/Alex 手臂宽度以及基础层与第二层",
+    "用纯函数单测和 Playwright 指针交互验证 UV 几何、模型规格与旋转状态"
   ],
   "out_of_scope": [
     "公共 OpenAPI、JSON Schema、事件、数据库迁移或 SDK 修改",
     "Contracts、Core、Community、Ops 的任何修改",
-    "图像生成模型、第三方 3D 预览库、Official 集成或生产厂商绑定",
+    "图像生成模型、第三方 3D 预览库、WebGL 引擎绑定、Official 集成或生产厂商绑定",
     "在数据库中持久化内部设计 JSON 或新增面向用户的调试接口",
     "生产密钥、真实用户数据或对外厂商承诺"
   ],
@@ -43,6 +46,8 @@
     "two blueprints using the same palette but different pixel maps produce materially different structural masks without garment enum branches",
     "LLM prompt contains no complete snow-explorer example or outerwear/belt/boots template and provider tests exercise the v4 pixel protocol",
     "controlled local render of the reported prompt succeeds without MISSING_SECOND_LAYER and is manually inspected for prompt-specific composition",
+    "candidate preview renders a complete rotatable 3D Steve/Alex model from the original 64x64 PNG, including outer layers, without a third-party 3D runtime",
+    "mouse or touch dragging changes yaw and keyboard controls plus reset remain accessible; Playwright verifies the interaction on the self-contained Fake Provider stack",
     "pnpm check:full passes end to end",
     "coordination Start, Continue and Finish validations pass and the final commit is fast-forwarded to local main"
   ],
@@ -50,7 +55,7 @@
     "mc-plan-skin": {
       "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "82616ddbc65143cb4095b37785a420000370ea1f",
       "final_commit": null
     }
   },
@@ -60,11 +65,24 @@
   "blocked_reason": null,
   "direction_exception": {
     "category": "foundation-governance",
-    "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and request to continue the handed-off development (2026-10-02), within ADR-0009 restricted Skin Standalone authorization",
-    "reason": "Owner-directed correction of the already-authorized internal Standalone provider and deterministic renderer; no public contract, production provider or Official integration change."
+    "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result, request to continue the handed-off development, and explicit request for a rotatable 3D online preview (2026-10-03)",
+    "reason": "Owner-directed correction of the Standalone candidate experience. The preview remains a replaceable local component, uses no third-party 3D library, changes no public contract, and does not bind a production provider or implement Official integration."
   },
   "handoff_history": [
-    "2026-10-02T10:00:49Z: Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34."
+    "2026-10-02T10:00:49Z: Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34.",
+    "2026-10-02T16:01:42Z: Work resumed after the owner explicitly requested that online preview become rotatable 3D. Scope expanded within Skin to a replaceable first-party CSS 3D component with no third-party library or public contract change; the provider HTTP 402 remains a separate final visual-benchmark dependency rather than blocking preview work."
   ],
-  "validation_results": []
+  "validation_results": [
+    "Canonical mc-plan-development Skill 1.1.2 matched the Foundation authoritative copy; coordination Start and the later scope-expansion Continue validations passed with Skin as the only locked product repository",
+    "Root cause reproduced from local demo data: attempt 1 failed MISSING_SECOND_LAYER and candidate 6b8f479c came from the fixed garment enum renderer plus the sole snow-explorer example",
+    "Removed outerwear, collar, belt, boots, hard-coded hair/face and other garment-semantic renderer branches; v4 now uses component pixel grids and generic UV mapping",
+    "Added draft/detail/final quality stages: concept-led blueprint, compact row refinement, deterministic boundary-derived fallback and schema guarantees for palette use, row variation and non-empty multi-component overlay",
+    "Provider SDK strict typecheck and 27/27 focused tests passed, including Steve/Alex validity, deterministic bytes, same-palette structural divergence, flat-draft enrichment, JSON recovery and provider error classification",
+    "pnpm check:full passed from the final committed implementation with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
+    "Playwright E2E ports are configurable while retaining 4000/3100 defaults, allowing the self-contained Fake Provider stack to validate alongside the owner-visible GLM/Codely demo stack",
+    "Implementation checkpoint committed in mc-plan-skin as 82616ddbc65143cb4095b37785a420000370ea1f",
+    "Controlled iterations with the reported prompt exposed and fixed empty-overlay handling, trailing-JSON parsing and overlong per-pixel refinement output; a pre-final 610-byte candidate was rejected by manual inspection as still too flat",
+    "Final current-pipeline benchmark could not start because the configured LLM endpoint consistently returns HTTP 402; direct sanitized probe confirmed the exact status, and HTTP failures are now classified as PROVIDER_UNAVAILABLE rather than mislabeled PROVIDER_TIMEOUT",
+    "No public contract, database migration, production-provider binding or secret changed; the provider HTTP 402 still prevents the final real-model visual benchmark but does not block the owner-requested local 3D preview implementation"
+  ]
 }
