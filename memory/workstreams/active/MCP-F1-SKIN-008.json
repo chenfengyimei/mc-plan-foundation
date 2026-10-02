@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T10:00:49Z",
+  "updated_at": "2026-10-02T12:01:30Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -26,7 +26,8 @@
     "重写 LLM system prompt，使用格式片段而非单一完整人物示例，明确要求依据用户描述自行构图并保证 overlay 至少一个非透明像素",
     "schema 级网格尺寸、调色板引用、透明语义和非空 overlay 校验",
     "离线回归：合法 Steve/Alex、确定性、第二层必有内容、错误网格拒绝，以及同调色板不同像素蓝图产生显著不同结构",
-    "使用用户报告的提示词做一次受控本地真实 Provider 基准并人工检查候选，不提交密钥、提示词数据或临时运行产物"
+    "使用用户报告的提示词做一次受控本地真实 Provider 基准并人工检查候选，不提交密钥、提示词数据或临时运行产物",
+    "让 Playwright 自包含栈的 API/Web 端口可通过测试环境变量覆盖，以便在既有本地演示服务仍占用默认端口时完成隔离纵向验证"
   ],
   "out_of_scope": [
     "公共 OpenAPI、JSON Schema、事件、数据库迁移或 SDK 修改",
