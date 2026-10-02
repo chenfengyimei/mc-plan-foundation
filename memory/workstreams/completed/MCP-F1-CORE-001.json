@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-001",
   "title": "建立 Core 可运行工程骨架与运行纵向链路",
-  "status": "blocked",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "MC Plan maintainer",
   "owner": "MC Plan maintainer",
   "started_at": "2026-10-01T11:02:39Z",
-  "updated_at": "2026-10-01T16:14:30Z",
+  "updated_at": "2026-10-02T17:54:53Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -46,19 +46,19 @@
       "base_commit": "326c0c8f21356169ab51d166d29379799e56cf99",
       "branch": "feat/MCP-F1-CORE-001-runtime-skeleton",
       "last_checkpoint_commit": "cffc685182479a4ffe1acbbccb21763a6bddc5c9",
-      "final_commit": null
+      "final_commit": "cffc685182479a4ffe1acbbccb21763a6bddc5c9"
     },
     "mc-plan-contracts": {
       "base_commit": "440dbdcc02c702d37a6f9b720853d4a80b78cb5c",
       "branch": "docs/MCP-F1-CORE-001-redocly-command",
       "last_checkpoint_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
-      "final_commit": null
+      "final_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f"
     }
   },
   "depends_on": [
     "MCP-F1-FOUNDATION-003"
   ],
-  "blocked_reason": "Core implementation and acceptance are complete, but coordination Continue/Finish is blocked by uncommitted mc-plan-skin changes from another session without an active Skin lock. The project owner directed this Core session not to modify that work. Unblock when the owning session registers a valid lock or leaves mc-plan-skin clean, then rerun Continue and Finish.",
+  "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
@@ -74,6 +74,8 @@
     "Contracts Python validation passed for 13 JSON schemas/events, 13 unique ids, 3 OpenAPI documents, and 15 operationIds using requirements-validation.txt",
     "Redocly recommended lint passed for all 3 OpenAPI documents after the documented launcher fix",
     "Core implementation committed as cffc685182479a4ffe1acbbccb21763a6bddc5c9",
-    "Coordination Continue remains blocked only by unrelated uncommitted mc-plan-skin changes owned by another session; this workstream did not modify Skin"
+    "Coordination Continue was previously blocked only by unrelated uncommitted mc-plan-skin changes owned by another session; this workstream did not modify Skin",
+    "Coordination Continue passed on 2026-10-03 after the independent MCP-F1-SKIN-008 workstream registered the Skin-only lock; Core + Contracts and Skin lock sets do not overlap",
+    "Final repository commits recorded as Core cffc685182479a4ffe1acbbccb21763a6bddc5c9 and Contracts f722f6d41499d38602235b4cf8226a5627f0f32f"
   ]
 }
