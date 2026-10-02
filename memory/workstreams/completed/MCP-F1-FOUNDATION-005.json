@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-005",
   "title": "建立 MC Plan 主会话统筹 Skill",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T11:51:25Z",
-  "updated_at": "2026-10-02T16:08:41Z",
+  "updated_at": "2026-10-02T16:10:00Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -45,7 +45,7 @@
       "base_commit": "3289fdfbda5009b2602aaef4d950c4348f2d7289",
       "branch": "feat/MCP-F1-FOUNDATION-005-orchestrator-skill",
       "last_checkpoint_commit": "0a098d1abd55233c54a344a9b3767238280d16f0",
-      "final_commit": null
+      "final_commit": "2a66200cc307f02ca98c5cd72dc26efd7cc247dc"
     }
   },
   "depends_on": [
