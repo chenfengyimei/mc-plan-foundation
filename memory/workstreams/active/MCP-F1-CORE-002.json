@@ -1,0 +1,74 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-002",
+  "title": "建立 Core 身份与公开资料最小纵向链路",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex",
+  "owner": "Codex",
+  "started_at": "2026-10-02T21:19:46Z",
+  "updated_at": "2026-10-02T21:19:46Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-ops"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "完成 Core 预发布契约、Keycloak 本地开发环境、幂等 IdentityLink、最小 Profile 与 GET /v1/me 的真实可运行身份纵向链路。",
+  "in_scope": [
+    "在 Contracts 锁定首个可实现的 Core 预发布契约及兼容分类，GET /v1/me 只返回公共 Actor",
+    "在 Ops 建立使用独立 PostgreSQL 数据库与用户、本地邮件接收和占位秘密的非生产 Keycloak/Core 开发组合",
+    "在 Core 验证 token signature、issuer、audience、expiry 与 email_verified 后，以 (issuer, subject) 唯一映射稳定 MC Plan 用户 ID",
+    "在单一 Core PostgreSQL 事务中幂等创建 IdentityLink、最小 Profile 与必要审计记录，不发布未经 Contracts 定义的跨服务事件",
+    "为首次并发登录、业务账号状态、重复登录、公开响应字段和契约一致性提供自动化测试",
+    "使用真实 Keycloak 开发环境完成受控测试客户端认证到 GET /v1/me 的集成验收，同时保留本地签名 issuer 快速测试"
+  ],
+  "out_of_scope": [
+    "Developer App、PAT、业务角色、管理员接口、每日权益、积分账本、奖励、退款或计费",
+    "Community、Skin 或 Official Skin 登录集成以及 SDK/消费者实现",
+    "生产域名、生产邮件、腾讯云正式环境、真实密钥、远程仓库、推送或部署",
+    "按邮箱合并、身份重绑、账号恢复、第二身份、正式 IdP 迁移或跨服务事件发布"
+  ],
+  "contract_impact": "compatible prerelease lock: promote the existing draft GET /v1/me and PublicActor surface to the first implementable Core prerelease, add only explicit authentication/business-account rejection responses, and preserve the public actor field boundary",
+  "acceptance_evidence": [
+    "Contracts Python and Redocly validation pass with unique operationId, resolved references, explicit scope/error responses and recorded compatibility classification",
+    "Core format, lint, typecheck, unit, integration, end-to-end, architecture, migration, contract and build validations pass",
+    "Concurrent first login converges to one McPlanUser, one IdentityLink and one Profile without orphan users",
+    "GET /v1/me returns only the public Actor contract and rejects invalid tokens, unverified email and disallowed Core account status",
+    "A real local Keycloak token reaches Core GET /v1/me through the Ops development combination with isolated databases, valid probes and no real secrets",
+    "The Core runtime image builds and its liveness/readiness endpoints pass after explicit migration"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "cffc685182479a4ffe1acbbccb21763a6bddc5c9",
+      "branch": "feat/MCP-F1-CORE-002-identity-me",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "f722f6d41499d38602235b4cf8226a5627f0f32f",
+      "branch": "feat/MCP-F1-CORE-002-core-prerelease",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-ops": {
+      "base_commit": "33ab6f36c8453388b5c9ead5aff462d5b3c9950a",
+      "branch": "feat/MCP-F1-CORE-002-keycloak-dev",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-003",
+    "MCP-F1-CORE-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
