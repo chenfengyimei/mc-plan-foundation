@@ -12,6 +12,6 @@
 
 F1 评审：`MCP-F1-FOUNDATION-003` 按十项检查表补齐身份生命周期 ADR、Core 事务/运行边界、第一可运行切片、测试回退、风险和待决门槛；Foundation、协调与只读契约验证通过。
 
-当前方向：`F1 / mc-plan-core`，状态为活动。`MCP-F1-CORE-001` 的工程实现和验收已经完成，但原工作流仍须重新核对阻塞条件、完成协调关闭并集成本地 `main`；这不等于 F1 Core 产品里程碑完成。`MCP-F1-SKIN-008` 正在 ADR-0009 的 F1 受限 Standalone 范围内改进逐像素生成质量，不开启 F3。
+当前方向：`F1 / mc-plan-core`，状态为活动。`MCP-F1-CORE-001` 的工程实现和验收已经完成，但原工作流仍须重新核对阻塞条件、完成协调关闭并集成本地 `main`；这不等于 F1 Core 产品里程碑完成。`MCP-F1-SKIN-008` 正在 ADR-0009 的 F1 受限 Standalone 范围内改进逐像素生成质量与可旋转 3D 预览，不开启 F3。
 
 待决事项统一记录在 `memory/open-questions.md`，具体工作以后由 GitHub Issue/PR 跟踪。
