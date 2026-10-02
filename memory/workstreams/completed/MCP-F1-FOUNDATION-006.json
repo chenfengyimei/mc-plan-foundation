@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-006",
   "title": "按已完成的 CORE-002 校正组合状态与 Core 状态文档",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-02T23:09:01Z",
-  "updated_at": "2026-10-02T23:19:26Z",
+  "updated_at": "2026-10-02T23:20:30Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [
     "mc-plan-core"
@@ -48,13 +48,13 @@
       "base_commit": "d5112e3584d6c9a16c086dc503b0c0b8384baf5f",
       "branch": "docs/MCP-F1-FOUNDATION-006-status-correction",
       "last_checkpoint_commit": "38463b79a03124fab5c0223a43b0d14df370fac3",
-      "final_commit": null
+      "final_commit": "08c0c08cac2f6bdaa86befcfdf2a2b2eecab0907"
     },
     "mc-plan-core": {
       "base_commit": "30382fd34ff7c67da978358fc247c05221bddb22",
       "branch": "docs/MCP-F1-FOUNDATION-006-status-correction",
       "last_checkpoint_commit": "b684ac88f5a07dd261844993e794b6a8d98e6a75",
-      "final_commit": null
+      "final_commit": "b684ac88f5a07dd261844993e794b6a8d98e6a75"
     }
   },
   "depends_on": [
@@ -82,6 +82,7 @@
     "Core pnpm test:contract with MC_PLAN_CONTRACTS_DIR=..\\mc-plan-contracts FAILED with contract drift on openapi/core.yaml for the same CRLF reason on the read-only Contracts worktree: byte-level comparison proves all 5 locked files at Contracts 070b00a still hash exactly to the locked digests after LF normalization (3f7cea25... for openapi/core.yaml and 4 more MATCHes), so there is zero contract content drift",
     "Supplementary Core contract verification against a byte-faithful LF extraction (git -c core.autocrlf=false archive) of the locked Contracts commit 070b00ae27bda4c3ec2d5cdd08cece626c8878a7 passed completely: verify-contracts accepted 5 files at 0.1.0-alpha.1 and the contract vitest suite passed 1/1; no read-only repository was modified",
     "Core docker build --target runtime was executed as additional evidence even though a docs-only change involves no container source; it completed successfully with exit 0 and exported the runtime image (manifest sha256:1b86cac98aadd6376613da890ed5a70438710bf88b7f6c42cbe46ddc83bf1e13)",
-    "Six-repository consistency confirmed: Foundation and Core on their FOUNDATION-006 branches with clean trees, Contracts/Community/Ops clean on main at 070b00a/69ac5e9f/ff0eeb7, no remotes anywhere, Skin untouched by this workstream on its own locked branch feat/MCP-F1-SKIN-008-pixel-blueprint-v4"
+    "Six-repository consistency confirmed: Foundation and Core on their FOUNDATION-006 branches with clean trees, Contracts/Community/Ops clean on main at 070b00a/69ac5e9f/ff0eeb7, no remotes anywhere, Skin untouched by this workstream on its own locked branch feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
+    "Final commits recorded as Foundation 08c0c08cac2f6bdaa86befcfdf2a2b2eecab0907 and Core b684ac88f5a07dd261844993e794b6a8d98e6a75; no repository outside the declared Foundation-primary and Core-supporting scope was written, and the Skin workstream branch, record and runtime were left untouched"
   ]
 }
