@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-005",
+  "title": "建立 MC Plan 主会话统筹 Skill",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex",
+  "owner": "Codex",
+  "started_at": "2026-10-02T11:51:25Z",
+  "updated_at": "2026-10-02T11:51:25Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "建立 mc-plan-orchestrator 权威 Skill，使主会话能够从 Foundation 实时状态生成跨 Codex、ChatGPT Work、Codely/GLM 和其他代理可执行的派工提示词，核对多仓进度，恢复未完成工作流，并规划不冲突的后续开发顺序。",
+  "in_scope": [
+    "定义统筹 Skill 与 mc-plan-development 实施 Skill 的职责边界和组合方式",
+    "建立简短目标到完整派工提示词的生成协议，并适配 Codex、ChatGPT Work、Codely/GLM 和通用文件/Git 代理",
+    "建立基于实时 Git、当前方向、活动锁、状态页和验证证据的进度核对、异常恢复与后续路线协议",
+    "提供简要需求模板、静态行为评测、UI 元数据和确定性用户级安装脚本",
+    "更新 Foundation 的 Skill 索引与协调说明，并安装验证用户级副本"
+  ],
+  "out_of_scope": [
+    "修改任何产品 HTTP API、JSON Schema、事件、SDK 或业务实现",
+    "修改 Contracts、Core、Community、Skin 或 Ops 仓库",
+    "替代活动工作流记录、自动解除仓库锁或绕过用户授权向其他会话发送消息",
+    "创建远程仓库、推送、部署、写入生产密钥或生产配置"
+  ],
+  "contract_impact": "none; Foundation-only orchestration Skill and documentation",
+  "acceptance_evidence": [
+    "mc-plan-orchestrator has a concise entrypoint and focused references for dispatch prompts, progress recovery, and portfolio planning",
+    "a short user brief can be expanded into a current-state-aware prompt without granting authority beyond the user request",
+    "the Skill distinguishes implementation complete, workflow complete, merged, and product complete states using repository evidence",
+    "behavior cases cover lock conflicts, stale blockers, dirty repositories, safe concurrency, external agents, future modules, and read-only status requests",
+    "official Skill validation, deterministic install/check/replace tests, workspace validation, and coordination tests pass"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "3289fdfbda5009b2602aaef4d950c4348f2d7289",
+      "branch": "feat/MCP-F1-FOUNDATION-005-orchestrator-skill",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-004"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via explicit request to create a main-session orchestration Skill for prompt generation, progress coordination, incomplete-work recovery, and future planning (2026-10-02)",
+    "reason": "Foundation governance maintenance that enables bounded coordination while preserving mc-plan-core as the F1 primary product direction."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
