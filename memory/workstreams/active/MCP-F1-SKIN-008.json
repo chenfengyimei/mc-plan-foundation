@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codely",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T21:45:00Z",
+  "updated_at": "2026-10-02T23:22:00Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -68,14 +68,14 @@
     "mc-plan-skin": {
       "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
-      "last_checkpoint_commit": "a861be954d238e27bd89bb4d523af55e6a0f6e9a",
+      "last_checkpoint_commit": "9a061355a76e29076b5b9268183a7f31b5caa9ca",
       "final_commit": null
     }
   },
   "depends_on": [
     "MCP-F1-SKIN-007"
   ],
-  "blocked_reason": "The HTTP 402 quota blocker is resolved: the local demo provider was switched to Zhipu GLM and controlled real-provider renders now succeed end-to-end. The reported snow-explorer prompt produced structurally valid 64x64 two-layer Steve/Alex candidates with zero validation issues and no MISSING_SECOND_LAYER, but none has passed the owner's manual visual acceptance yet: glm-5.3-flash with reasoning_effort=low scored about 2/10 (flat template-like blocks) and glm-5.3 with high effort scored about 4/10 (real craft improvement but poor prompt semantics). Finish remains blocked only on the owner accepting a controlled-prompt candidate or directing a model/prompt strategy change; the provider endpoint now returns HTTP 200.",
+  "blocked_reason": "The owner authorized one bounded prompt-protocol improvement round and it is implemented, tested and committed (word-by-word description adherence, garment-to-region anchoring, front/back band consistency, overlay edge alignment, refusal misclassification fix). The bounded real validation then hit a model-tier quality ceiling rather than a protocol defect: glm-5.3 (full) is persistently rate-limited with HTTP 429 on the current free key, so the validation ran on glm-5.3-flash with reasoning_effort=low, where the final candidate 90616ed2 is structurally valid (64x64, two-layer, zero issues, 30 seconds) but scores about 1/10 on the owner's acceptance criteria (no cold/snow palette, no blue scarf at the neck, generic template look). The flash+low tier demonstrably does not execute the strengthened protocol. Finish remains blocked on the owner's manual acceptance, which has not been granted; per the owner's directive the session stopped drawing cards and records this as the quality ceiling of the current model/prompt-protocol combination. The main session should decide whether to move to the provider benchmark ADR (Q-001).",
   "direction_exception": {
     "category": "foundation-governance",
     "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D preview, visible animation playback, a real generation flow and a complete interface redesign (2026-10-03)",
@@ -151,6 +151,13 @@
     "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, unit tests 89/89 across nine suites (config 15 including new timeout and reasoning-effort cases, provider-sdk 30 including 3 new OpenAiCompatLlmClient tests, skin-core 12, skin-validator 12, web 7, test-fixtures 4, api 4, worker 3, contracts 2), contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
     "Real-provider benchmark with the reported snow-explorer prompt succeeded end-to-end on GLM: Alex candidate 436b1d85 (sha256 18cc6a80601fb73bf309c70ce6ec8b12408dbed9114c6e024ffab4233287ed59, 1126 bytes, 81 seconds) and Steve candidate b6d56b7a (sha256 c17e2f01e0bc0308a741f73fc6cb60f6a05309b76cf282ad0cb5168c898d07c4, 1315 bytes) both validate as legal 64x64 two-layer skins with zero issues and no MISSING_SECOND_LAYER",
     "Quality comparison for owner acceptance: glm-5.3-flash with reasoning_effort=low scored about 2/10 (flat template-like blocks, missing scarf and hair); glm-5.3 with high effort (candidate 9474eb65, sha256 6b554711806571a9d8d59102de7e772e3c268118933cad68b203f7c3190ca885, 2072 bytes, 8m51s) scored about 4/10 with genuine craft improvement (facial features, texture, layered shading) but poor prompt semantics (scarf misplaced, non-snow palette); neither candidate has reached manual-acceptance quality yet",
-    "Real provider timeout and reasoning-effort checkpoint committed in mc-plan-skin as a861be954d238e27bd89bb4d523af55e6a0f6e9a; the owner-visible demo stack runs resident via pnpm start:real with GLM-5.3 plus high effort and no 402 responses; no public contract, database migration, production-provider binding or secret changed"
+    "Real provider timeout and reasoning-effort checkpoint committed in mc-plan-skin as a861be954d238e27bd89bb4d523af55e6a0f6e9a; the owner-visible demo stack runs resident via pnpm start:real with GLM-5.3 plus high effort and no 402 responses; no public contract, database migration, production-provider binding or secret changed",
+    "Owner rejected the three benchmark candidates and authorized one bounded prompt-protocol improvement; protocol strengthened and committed as 6030deb (word-by-word color/garment adherence with theme-derived palette, garment-to-region band anchoring, back/front row-band consistency, overlay edge alignment, expanded pre-output self-check, same rules in the refinement prompt and per-request user message; provider-neutral, theme-agnostic, still v4 schema)",
+    "Bounded-round deterministic tests committed as 0a8e858: the design system prompt carries the new clauses, three different themes (flame mage, deep-sea engineer, meadow bard) flow verbatim into the request with the per-word requirement and succeed, and the refinement prompt carries the anchoring and theme-color rules; provider-sdk unit tests 33/33",
+    "Two full pnpm check:full runs passed this round with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200 (format, build, lint, strict typecheck, unit, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5, Playwright 1/1); coordination Continue validation passed before and after the changes",
+    "Bounded real validation attempts: glm-5.3 with high effort was persistently rejected with HTTP 429 rate limiting on the free key (three pipeline retries failed in about 10 seconds and a lightweight probe still returned 429 after six minutes), so the round switched to glm-5.3-flash with low effort for clean single-variable comparison against the old flash baseline",
+    "Discovered and fixed a refusal misclassification defect: thinking models prepend disclaimers such as 无法直接绘制图像 before an otherwise legal v4 JSON, and the old refusal-first ordering discarded them as PROVIDER_CONTENT_REJECTED; the provider now parses first and classifies refusal only when no valid payload can be extracted (fix plus regression test committed as 9a06135; the previously rejected snow-explorer render then succeeded)",
+    "Final bounded validation render succeeded in 30 seconds: candidate 90616ed2 on conversation 3b4e9b48 (sha256 96e424a83b4dc5bbd7aa59dd788786f28cb3f0b92e154ccfaf7cf5e3a2b5430c, 1643 bytes) validates as a legal 64x64 two-layer Alex skin with zero issues, but manual visual inspection scores about 1/10 against the owner's acceptance criteria (no cold/snow palette, no blue scarf at the neck, layer misalignment, generic template look) - the flash+low tier does not execute the strengthened protocol",
+    "Per the owner's directive the session stopped drawing cards after the bounded round, kept the verified commits, and records the current model/prompt-protocol combination as the quality ceiling; the demo stack remains resident via pnpm start:real with the candidate inspectable at http://127.0.0.1:3100 in conversation 3b4e9b48; no public contract, database migration, production-provider binding or secret changed"
   ]
 }
