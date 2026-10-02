@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-008",
   "title": "逐像素皮肤蓝图与交互式 3D 预览",
-  "status": "active",
+  "status": "blocked",
   "milestone": "F1",
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T16:01:42Z",
+  "updated_at": "2026-10-02T16:30:17Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,7 +39,7 @@
     "在数据库中持久化内部设计 JSON 或新增面向用户的调试接口",
     "生产密钥、真实用户数据或对外厂商承诺"
   ],
-  "contract_impact": "none; internal provider design protocol and deterministic UV renderer only",
+  "contract_impact": "none; internal provider design protocol, deterministic UV renderer and local candidate preview only",
   "acceptance_evidence": [
     "v4 schema accepts dimensionally correct component grids and rejects malformed rows, unknown palette symbols and an entirely transparent overlay",
     "Steve and Alex reference blueprints render legal 64x64 PNGs with non-empty second layer and deterministic bytes",
@@ -55,14 +55,14 @@
     "mc-plan-skin": {
       "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
-      "last_checkpoint_commit": "82616ddbc65143cb4095b37785a420000370ea1f",
+      "last_checkpoint_commit": "3300f6380654b34f32b802a5d106ed73c3106cad",
       "final_commit": null
     }
   },
   "depends_on": [
     "MCP-F1-SKIN-007"
   ],
-  "blocked_reason": null,
+  "blocked_reason": "The v4 pipeline and interactive 3D preview are implemented, committed and fully validated. Finish remains blocked only because the configured local LLM endpoint returns HTTP 402 before the required controlled real-provider benchmark. Restore provider quota/payment, rerun the reported Alex prompt, manually approve the candidate, then run coordination Finish and merge.",
   "direction_exception": {
     "category": "foundation-governance",
     "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result, request to continue the handed-off development, and explicit request for a rotatable 3D online preview (2026-10-03)",
@@ -83,6 +83,12 @@
     "Implementation checkpoint committed in mc-plan-skin as 82616ddbc65143cb4095b37785a420000370ea1f",
     "Controlled iterations with the reported prompt exposed and fixed empty-overlay handling, trailing-JSON parsing and overlong per-pixel refinement output; a pre-final 610-byte candidate was rejected by manual inspection as still too flat",
     "Final current-pipeline benchmark could not start because the configured LLM endpoint consistently returns HTTP 402; direct sanitized probe confirmed the exact status, and HTTP failures are now classified as PROVIDER_UNAVAILABLE rather than mislabeled PROVIDER_TIMEOUT",
-    "No public contract, database migration, production-provider binding or secret changed; the provider HTTP 402 still prevents the final real-model visual benchmark but does not block the owner-requested local 3D preview implementation"
+    "No public contract, database migration, production-provider binding or secret changed; the provider HTTP 402 still prevents the final real-model visual benchmark but does not block the owner-requested local 3D preview implementation",
+    "Replaced the 2D front canvas with a dependency-free CSS 3D model using all six canonical UV faces per body part, separate outer-layer cuboids and correct Steve/Alex arm geometry",
+    "Added mouse and touch dragging, arrow-key rotation, Home/reset controls, bounded pitch, accessible labels and a polished dark creation-studio visual treatment",
+    "Web preview unit tests passed 5/5 for six-part UV geometry, 64x64 bounds, Alex symmetry and rotation behavior; Playwright verified a real mouse drag changes yaw and reset restores the default view",
+    "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests including provider 27/27 and web preview 5/5, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
+    "Interactive 3D preview and visual refresh committed in mc-plan-skin as 3300f6380654b34f32b802a5d106ed73c3106cad; visual QA used the self-contained Fake Provider candidate and confirmed perspective, side faces and outer layers",
+    "Workstream is intentionally blocked rather than finished: the external HTTP 402 condition still prevents the required final real-provider visual benchmark"
   ]
 }
