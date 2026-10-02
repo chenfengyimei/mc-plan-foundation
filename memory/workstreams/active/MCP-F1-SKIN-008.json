@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-008",
   "title": "逐像素皮肤蓝图与动态 3D 预览",
-  "status": "blocked",
+  "status": "active",
   "milestone": "F1",
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T17:27:47Z",
+  "updated_at": "2026-10-02T18:55:56Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -18,7 +18,7 @@
     "mc-plan-community",
     "mc-plan-ops"
   ],
-  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；同时从协议上保证第二层非空，并把候选在线预览升级为可拖拽旋转、可播放姿态动画的无第三方依赖 3D 角色视图。",
+  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；从协议上保证第二层非空，把候选在线预览升级为可拖拽旋转、可播放姿态动画的无第三方依赖 3D 角色视图；并让本地真实 Provider 流程与整站创作界面达到可辨识、可解释、可实际使用的产品完成度。",
   "in_scope": [
     "内部 SkinDesign v4：受限调色板、头部/躯干/左右手臂/左右腿的正反面逐像素网格以及透明 overlay 网格",
     "通用 UV 映射器：把模型提交的像素网格确定性映射到 Steve/Alex 64x64 布局，侧面由边缘像素连续延展，顶底面使用部件基础色",
@@ -33,7 +33,11 @@
     "用纯函数单测和 Playwright 指针交互验证 UV 几何、模型规格与旋转状态",
     "为 3D 角色提供待机、行走、跑步和飞行动画，四肢围绕肩/髋关节真实摆动",
     "提供播放/暂停、动画切换、速度、自动旋转和缩放控制；用户手动拖拽时停止自动旋转",
-    "以 CSS keyframes 和本地状态实现动画，不复制参考 HTML 的 skinview3d CDN 依赖或代码"
+    "以 CSS keyframes 和本地状态实现动画，不复制参考 HTML 的 skinview3d CDN 依赖或代码",
+    "提供显式真实 Provider 本地启动入口，复用既有厂商无关 LLM 适配器与 gitignored 配置；Fake Provider 仅用于明确标识的演示和自动化测试",
+    "在创作界面清楚呈现真实生成、排队、渲染、验证、失败与候选确认状态，避免固定 fixture 被误认为真实生成",
+    "重构 Web 信息架构、视觉系统、响应式布局和表单反馈，使创建会话、描述皮肤、选择模型、等待结果、3D 检查与确认下载形成连续工作台体验",
+    "补充桌面与移动端视觉验收、关键交互测试以及真实 Provider 失败路径的可理解错误提示"
   ],
   "out_of_scope": [
     "公共 OpenAPI、JSON Schema、事件、数据库迁移或 SDK 修改",
@@ -54,7 +58,11 @@
     "idle, walk, run and fly visibly animate the first-party 3D rig; playback, speed, auto-rotation and zoom controls are accessible and deterministic",
     "Playwright switches animation, pauses playback, exercises auto-rotation and verifies that manual drag takes control",
     "pnpm check:full passes end to end",
-    "coordination Start, Continue and Finish validations pass and the final commit is fast-forwarded to local main"
+    "coordination Start, Continue and Finish validations pass and the final commit is fast-forwarded to local main",
+    "explicit real-provider startup refuses missing configuration and never silently falls back to Fake Provider",
+    "the user-facing workspace distinguishes real generation from demo fixtures and presents provider failures without claiming a generated result",
+    "desktop and mobile layouts preserve the full create-to-preview flow with accessible focus, loading, error and empty states",
+    "visual QA confirms a cohesive non-template studio identity, readable hierarchy and usable 3D controls"
   ],
   "repositories": {
     "mc-plan-skin": {
@@ -67,16 +75,17 @@
   "depends_on": [
     "MCP-F1-SKIN-007"
   ],
-  "blocked_reason": "The v4 pipeline, rotatable 3D preview and four-mode animation controls are implemented, committed and fully validated. Finish remains blocked only because the configured local LLM endpoint returns HTTP 402 before the required controlled real-provider benchmark. Restore provider quota/payment, rerun the reported Alex prompt, manually approve the candidate, then run coordination Finish and merge.",
+  "blocked_reason": "The configured local LLM endpoint last returned HTTP 402, which blocks final real-candidate acceptance but does not block the now-active provider startup, honest error-state and Web experience work. Finish still requires restored provider quota/payment plus a successful controlled real-provider render and manual visual approval.",
   "direction_exception": {
     "category": "foundation-governance",
-    "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D online preview plus directly visible animation playback controls (2026-10-03)",
-    "reason": "Owner-directed correction of the Standalone candidate experience. The preview remains a replaceable local component, uses no third-party 3D library, changes no public contract, and does not bind a production provider or implement Official integration."
+    "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D preview, visible animation playback, a real generation flow and a complete interface redesign (2026-10-03)",
+    "reason": "Owner-directed correction of the Standalone creation experience. The work reuses the existing provider-neutral configurable adapter rather than selecting a production vendor, keeps Fake explicit, changes no public contract, introduces no third-party 3D runtime and does not implement Official integration."
   },
   "handoff_history": [
     "2026-10-02T10:00:49Z: Owner reported that candidate 6b8f479c looked unacceptable and template-derived. Codex reproduced the conversation from local demo data, confirmed attempt 1 failed with MISSING_SECOND_LAYER and traced attempt 2 to the fixed garment schema plus the sole snow-explorer few-shot example, then accepted this bounded redesign from clean Skin main 787bc34.",
     "2026-10-02T16:01:42Z: Work resumed after the owner explicitly requested that online preview become rotatable 3D. Scope expanded within Skin to a replaceable first-party CSS 3D component with no third-party library or public contract change; the provider HTTP 402 remains a separate final visual-benchmark dependency rather than blocking preview work.",
-    "2026-10-02T17:07:48Z: Owner requested visible animation playback and supplied gothic_skin_viewer.html as a local interaction reference. Work resumed to add first-party idle/walk/run/fly rig motion and controls without importing its skinview3d CDN dependency; HTTP 402 remains a later real-provider benchmark dependency."
+    "2026-10-02T17:07:48Z: Owner requested visible animation playback and supplied gothic_skin_viewer.html as a local interaction reference. Work resumed to add first-party idle/walk/run/fly rig motion and controls without importing its skinview3d CDN dependency; HTTP 402 remains a later real-provider benchmark dependency.",
+    "2026-10-02T18:55:56Z: Owner rejected the identical Fake Provider fixtures, explicitly requested the real generation flow and asked for the entire project interface to be made visually complete. Codex resumed the existing locked Skin workstream to add an explicit real-provider startup path, honest provider/error states and a cohesive responsive studio redesign; provider billing remains an external acceptance dependency rather than permission to fall back silently."
   ],
   "validation_results": [
     "Canonical mc-plan-development Skill 1.1.2 matched the Foundation authoritative copy; coordination Start and the later scope-expansion Continue validations passed with Skin as the only locked product repository",
