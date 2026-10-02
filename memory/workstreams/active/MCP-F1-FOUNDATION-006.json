@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-006",
+  "title": "按已完成的 CORE-002 校正组合状态与 Core 状态文档",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely",
+  "owner": "Codely",
+  "started_at": "2026-10-02T23:09:01Z",
+  "updated_at": "2026-10-02T23:09:01Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [
+    "mc-plan-core"
+  ],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "依据已完成、关闭并合并本地 main 的 MCP-F1-CORE-002，修正 Foundation 项目组合状态与 Core 状态/开发计划中的过期描述，为下一阶段 Developer App/scope/PAT 开发建立准确入口。",
+  "in_scope": [
+    "更新 Foundation memory/current/portfolio.md：准确记录 CORE-001 与 CORE-002 已完成、关闭并合并本地 main；Core 0.1.0-alpha.1 的身份/Profile 纵向链路已通过真实 Keycloak 开发组合验收；下一 Core 开发阶段为 Developer App、scope 和 PAT；当前唯一活动工作流为 MCP-F1-SKIN-008；Skin 的 Provider HTTP 402 已解除但 Finish 仍受所有者人工视觉验收阻塞",
+    "更新 Core docs/STATUS.md：把 CORE-002 从进行中改为已完成，准确列出当前已实现边界与下一步",
+    "更新 Core docs/development-plan.md：固定顺序第 3 步标记为完成，第 4 步标记为下一阶段",
+    "修复 Foundation docs/STATUS.md 中关于 CORE-001 仍待协调关闭的同一事实过期描述",
+    "核对 direction.json；仅在真实状态需要时更新时间或说明，不改变 F1 主方向与退出条件",
+    "检查相关交叉引用、日期、工作流数量和里程碑描述，修复同一事实的明显矛盾"
+  ],
+  "out_of_scope": [
+    "实现 Developer App、scope、PAT 或任何业务代码",
+    "修改 OpenAPI、JSON Schema、事件、SDK 或契约版本",
+    "修改 mc-plan-contracts、mc-plan-ops、mc-plan-skin、mc-plan-community",
+    "决定 PAT 默认最长有效期、正式 scope 集合或其他尚未批准的产品/安全政策",
+    "创建远程仓库、推送或部署",
+    "触碰 MCP-F1-SKIN-008 的分支、记录或运行环境"
+  ],
+  "contract_impact": "none; documentation-only status correction with no public interface, schema, event or SDK change",
+  "acceptance_evidence": [
+    "协调 Start、Continue、Finish 校验全部通过",
+    "Foundation 工作区、协调、Markdown 链接、JSON、Skill、命名和跨仓一致性校验通过",
+    "Core 按 AGENTS.md 声明的验收命令实际执行并记录结果；因纯文档修改而不适用的项明确记录原因",
+    "六仓职责、活动锁数量、工作流编号与 Git 状态一致；Skin 工作流保持原样"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "d5112e3584d6c9a16c086dc503b0c0b8384baf5f",
+      "branch": "docs/MCP-F1-FOUNDATION-006-status-correction",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-core": {
+      "base_commit": "30382fd34ff7c67da978358fc247c05221bddb22",
+      "branch": "docs/MCP-F1-FOUNDATION-006-status-correction",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via the dispatch prompt authorizing this bounded documentation-governance workstream (2026-10-03)",
+    "reason": "Foundation-primary governance correction that records the completed MCP-F1-CORE-002 status facts; it preserves mc-plan-core as the F1 primary product direction, changes no public contract or business code, and takes over no other workstream."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
