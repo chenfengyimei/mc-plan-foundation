@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-008",
   "title": "逐像素皮肤蓝图与动态 3D 预览",
-  "status": "active",
+  "status": "blocked",
   "milestone": "F1",
   "initial_owner": "Codex",
   "owner": "Codex",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T17:07:48Z",
+  "updated_at": "2026-10-02T17:27:47Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -60,14 +60,14 @@
     "mc-plan-skin": {
       "base_commit": "787bc34a2965553e16543aa72b3d80dfd4aa03b6",
       "branch": "feat/MCP-F1-SKIN-008-pixel-blueprint-v4",
-      "last_checkpoint_commit": "3300f6380654b34f32b802a5d106ed73c3106cad",
+      "last_checkpoint_commit": "b7541447ea30e1e40c0176187ef9c18219499d15",
       "final_commit": null
     }
   },
   "depends_on": [
     "MCP-F1-SKIN-007"
   ],
-  "blocked_reason": null,
+  "blocked_reason": "The v4 pipeline, rotatable 3D preview and four-mode animation controls are implemented, committed and fully validated. Finish remains blocked only because the configured local LLM endpoint returns HTTP 402 before the required controlled real-provider benchmark. Restore provider quota/payment, rerun the reported Alex prompt, manually approve the candidate, then run coordination Finish and merge.",
   "direction_exception": {
     "category": "foundation-governance",
     "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D online preview plus directly visible animation playback controls (2026-10-03)",
@@ -95,6 +95,16 @@
     "Web preview unit tests passed 5/5 for six-part UV geometry, 64x64 bounds, Alex symmetry and rotation behavior; Playwright verified a real mouse drag changes yaw and reset restores the default view",
     "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests including provider 27/27 and web preview 5/5, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
     "Interactive 3D preview and visual refresh committed in mc-plan-skin as 3300f6380654b34f32b802a5d106ed73c3106cad; visual QA used the self-contained Fake Provider candidate and confirmed perspective, side faces and outer layers",
-    "Workstream is intentionally blocked rather than finished: the external HTTP 402 condition still prevents the required final real-provider visual benchmark"
+    "Workstream is intentionally blocked rather than finished: the external HTTP 402 condition still prevents the required final real-provider visual benchmark",
+    "Reviewed the owner-provided gothic_skin_viewer.html as an interaction reference only; retained the first-party CSS 3D renderer and introduced no skinview3d, CDN or third-party runtime dependency",
+    "Added idle, walk, run and fly rig animations with shoulder/hip joint origins, distinct limb motion and whole-body bob/flight poses; default walk playback makes candidate structure immediately visible",
+    "Added accessible play/pause, action selection, 0.5x-2x speed, 78%-128% zoom and auto-rotation controls; mouse/touch/keyboard input stops auto-rotation and restores direct control",
+    "Web preview unit tests passed 7/7, including animation inventory and speed-to-duration behavior",
+    "Playwright verified run selection changes the right-arm animation, pause freezes it, speed and zoom update, auto-rotation changes yaw, manual drag disables auto-rotation, reset restores view and finalization still succeeds",
+    "Visual QA on the Fake Provider flow confirmed the running pose, joint articulation and expanded control panel are legible within the existing preview card",
+    "A transient Windows Vitest worker exit 3221226505 occurred during the first full run; isolated API integration immediately passed 7/7 and the subsequent complete pnpm check:full passed",
+    "Final pnpm check:full passed with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200: format, build, lint, strict typecheck, all unit tests including provider 27/27 and web preview 7/7, contract consistency, fixtures 6/6, API integration 7/7, worker integration 5/5 and Playwright 1/1",
+    "Animated 3D preview checkpoint committed in mc-plan-skin as b7541447ea30e1e40c0176187ef9c18219499d15; no public contract, database, provider binding or secret changed",
+    "Workstream returned to blocked after completing the owner-requested animation scope; the only remaining unblock condition is the previously recorded real-provider HTTP 402 benchmark dependency"
   ]
 }
