@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-007",
+  "title": "写入 CORE-003 完成状态并正式固化 SKIN-008 阻塞",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely",
+  "owner": "Codely",
+  "started_at": "2026-10-03T11:16:28Z",
+  "updated_at": "2026-10-03T11:16:28Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "将已完成并合并本地 main 的 MCP-F1-CORE-003 写入组合状态，同时把 MCP-F1-SKIN-008 正式标记为 blocked，消除治理记录与 Git 事实之间的差异。",
+  "in_scope": [
+    "更新 memory/current/portfolio.md：Core MCP-F1-CORE-003 已完成、关闭并合并本地 main；Contracts 0.1.0-alpha.2 已锁定 Developer App、scope 与 PAT 契约；Q-007 已决为 PAT 默认最长 30 天；Core 下一阶段为开发计划第 5 步 Asia/Shanghai 每日权益；F1 整体尚未完成，积分账本、完整审计/outbox 发布、SDK/消费者与恢复演练仍待实现",
+    "更新 Foundation docs/STATUS.md 使其与上述事实一致",
+    "更新 MCP-F1-SKIN-008 活动记录：status 改为 blocked，保留 owner、分支、检查点与锁，不设 final_commit、不移动到 completed，记录 Skin 分支实际领先 main 8 个提交，阻塞原因表述为当前 GLM flash-low 与 v4 协议组合未达到视觉要求（不断言问题完全来自模型或协议），解锁等待 Q-001 Provider 基准、预算/凭据决策或所有者明确选择，禁止继续无界抽卡",
+    "核对当前 direction：F1 目标与退出条件仍正确则保持不变",
+    "修复由上述状态变化导致的直接交叉引用矛盾"
+  ],
+  "out_of_scope": [
+    "修改 Core、Contracts、Skin、Community 或 Ops 的任何文件",
+    "实现每日权益、积分账本、SDK 或 Provider ADR",
+    "生成皮肤、调用外部模型或修改 .env",
+    "执行 Skin Finish、合并 Skin main 或删除 Skin 分支",
+    "创建远程仓库、推送或部署"
+  ],
+  "contract_impact": "none; Foundation-only governance status correction with no public interface change",
+  "acceptance_evidence": [
+    "协调 Start、Continue、Finish 校验全部通过",
+    "Foundation validate-workspace.ps1 与 test-coordination.ps1 通过",
+    "六仓 Git 状态核对一致，CORE-003 最终提交均可从各自本地 main 到达",
+    "SKIN-008 记录保持 active 桶、blocked 状态、原有 owner/锁/检查点与 null final_commit，Skin 分支未被合并或删除"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "7de90a9f64eca5168ea3e04d601836f4152f94d2",
+      "branch": "docs/MCP-F1-FOUNDATION-007-status-correction",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner via the dispatch prompt authorizing this one governance correction (2026-10-03)",
+    "reason": "Foundation-primary governance correction recording the completed CORE-003 slice and formalizing the owner-directed SKIN-008 blocked status; preserves mc-plan-core as the F1 primary product direction and changes no contract, business code or Skin artifact."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
