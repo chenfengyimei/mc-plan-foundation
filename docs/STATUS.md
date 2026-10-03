@@ -12,6 +12,6 @@
 
 F1 评审：`MCP-F1-FOUNDATION-003` 按十项检查表补齐身份生命周期 ADR、Core 事务/运行边界、第一可运行切片、测试回退、风险和待决门槛；Foundation、协调与只读契约验证通过。
 
-当前方向：`F1 / mc-plan-core`，状态为活动。`MCP-F1-CORE-001` 与 `MCP-F1-CORE-002` 均已完成、关闭并合并本地 `main`；Core `0.1.0-alpha.1` 身份/Profile 纵向链路已通过真实 Keycloak 开发组合受控集成验收。这不等于 F1 Core 产品里程碑完成，下一阶段为 Developer App/scope/PAT。当前唯一活动工作流 `MCP-F1-SKIN-008` 正在 ADR-0009 的 F1 受限 Standalone 范围内改进逐像素生成质量与可旋转 3D 预览，不开启 F3；其 Provider HTTP 402 已解除，Finish 仅待所有者人工视觉验收。
+当前方向：`F1 / mc-plan-core`，状态为活动。`MCP-F1-CORE-001`、`MCP-F1-CORE-002` 与 `MCP-F1-CORE-003` 均已完成、关闭并合并本地 `main`；Contracts `0.1.0-alpha.2` 已锁定 Developer App、scope 与 PAT 契约，Q-007 已决为 PAT 默认最长 30 天，Core 已实现业务角色、scope、Developer App 与 PAT 生命周期。这不等于 F1 Core 产品里程碑完成：下一阶段为开发计划第 5 步 Asia/Shanghai 每日权益，积分账本、完整审计/outbox 发布、SDK/消费者与恢复演练仍待实现。当前唯一活动工作流 `MCP-F1-SKIN-008` 已正式标记为 blocked：当前 GLM flash-low 与 v4 协议组合未达到所有者视觉验收，解锁等待 Q-001 Provider 基准、预算/凭据决策或所有者明确选择，禁止无界抽卡；其仍在 ADR-0009 的 F1 受限 Standalone 范围内，不开启 F3。
 
 待决事项统一记录在 `memory/open-questions.md`，具体工作以后由 GitHub Issue/PR 跟踪。
