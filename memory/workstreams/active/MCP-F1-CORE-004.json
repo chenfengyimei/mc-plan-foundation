@@ -6,9 +6,9 @@
   "status": "active",
   "milestone": "F1",
   "initial_owner": "Codely",
-  "owner": "Codely",
+  "owner": "Codex/Mac/01a10393-c30d-7023-848a-1872974fe81d",
   "started_at": "2026-10-03T11:37:14Z",
-  "updated_at": "2026-10-03T20:04:23Z",
+  "updated_at": "2026-10-03T23:25:47Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -71,7 +71,14 @@
   ],
   "blocked_reason": null,
   "direction_exception": null,
-  "handoff_history": [],
+  "handoff_history": [
+    {
+      "at": "2026-10-03T23:25:47Z",
+      "from_owner": "Codely",
+      "to_owner": "Codex/Mac/01a10393-c30d-7023-848a-1872974fe81d",
+      "reason": "项目所有者于 2026-10-04（Asia/Shanghai）在当前聊天明确授权因设备迁移，将 Codely/Windows 会话的 MCP-F1-CORE-004 正式交接给当前 Codex/Mac 会话，并授权安装工具、以 chenfengyimei 登录 GitHub、克隆六仓、推送检查点及通过真实验收后的 ff-only 合并和清理；该直接授权覆盖旧记录中仅限本地、禁止推送的操作约束，不改变业务范围。接管检查点已逐项核验：Foundation main fe6602ccaf575b1f93a07f618d299717439601a0，Core 活动分支 f833c2fab5a08dbe3b0283ae99bd050f7f6e61b8，Contracts 活动分支 fab1f3c2f46bc19438caf5f9614ce5dfa0217a15。保留 Tracking ID、active 状态、Core 主仓库、Contracts 唯一辅助仓库与全部已有验收事实；SKIN-008 的 blocked 状态、owner、检查点和 Skin 锁不变。剩余工作依次为真实 PostgreSQL 十二路首次消费与副作用/幂等测试、上海跨日与不累计、策略窗口与历史快照、非法服务主体拒绝、权益/消费 HTTP E2E、锁定 Schema 契约测试、Core/Contracts 文档、全量验收及最终 runtime 镜像重建，之后才可 Continue/Finish、ff-only 合并并关闭本工作流。"
+    }
+  ],
   "validation_results": [
     "Preflight verified: Foundation main 35410c2, Contracts main 5a4da89, Core main ce89a39, Skin on its locked branch at 9a06135 and blocked; six worktrees clean with no remotes; CORE-001 through CORE-003 used so MCP-F1-CORE-004 was allocated; canonical Skills 1.1.2 and 1.0.0 matched installed copies",
     "Coordination Start passed with Core as primary, Contracts as the only supporting repository, and the blocked Skin-only lock unchanged",
@@ -81,6 +88,7 @@
     "Migration-ordering checkpoint committed in Core as 118e9b7: entitlement_policies (module/operation/timezone/daily_grant/effective_from/effective_to with a module-operation-effective_from unique key), daily_entitlements (user_id/policy_id/policy_date unique with granted snapshot and consumed counter) and idempotent_consumption_commands (caller_id/operation/idempotency_key unique with request fingerprint, status, result remaining and consumed-at); the forward-only migration creates all tables first and then auditable-seeds the baseline policy row 5f6a4e69-9c2e-4b65-95c1-3f1d90d80001 (skin, creation_session, Asia/Shanghai, 3, effective from 2026-10-01T00:00:00+08:00, open-ended)",
     "Application boundary checkpoint committed in Core as f833c2f: entitlement module with injectable BusinessClock and Asia/Shanghai Intl policy date (no machine-timezone dependence), QueryEntitlementsService returning a non-consuming view (row snapshot or virtual policy view), ConsumeEntitlementService validating module/operation/units/reference and delegating to the store, PrismaEntitlementStore with a single ReadCommitted transaction performing idempotency lookup, user status check, policy resolution, upsert materialization, atomic conditional consumed increment, audit plus internal outbox writes and the command record, with retry handling for unique-constraint races; JoseServicePrincipalAuthenticator verifies service tokens by signature/issuer/audience/expiry without email requirements and never provisions users; HTTP controller maps outcomes to the locked 200/201/409 problem semantics with IDEMPOTENCY_KEY_CONFLICT and ENTITLEMENT_EXHAUSTED added to the public problem catalog and filter",
     "Core checkpoint validations run and passed at f833c2f: prisma generate, format:check, lint, strict typecheck, unit tests 55/55 across nine files (including new shanghai-policy-date boundary tests for UTC 15:59:59/16:00:00 and timezone-independence, entitlement application tests for fingerprint stability, non-consuming GET, input validation and outcome mapping), e2e 29/29, architecture validation for 54 source files, migration:validate for 4 forward-only migrations, contract tests 3/3 against the locked alpha.3 files, build, and integration 3/3 on fresh testcontainers PostgreSQL applying all four migrations sequentially to an empty database (an initial migration-ordering defect was caught and fixed by the integration run: the baseline INSERT now executes after CREATE TABLE); docker build --target runtime completed successfully at the same committed tree with exit 0, exporting the runtime image manifest sha256:a8055cff1153936b53d43812001ac77a3582bcb5388f000cac10bf86bb9a3265",
-    "This is a mid-flight Mac-migration checkpoint, not completion: the entitlement vertical chain integration tests (twelve-way concurrency, day rollover, non-carryover, policy effective windows, idempotent replay and service-principal rejection), the entitlements/consume HTTP e2e suites, the locked entitlement schema contract test extension, Core STATUS/development-plan/acceptance doc updates, the Contracts compatibility matrix row and the final Continue/Finish/merge steps remain open; the runtime Docker image build has already passed at f833c2f"
+    "This is a mid-flight Mac-migration checkpoint, not completion: the entitlement vertical chain integration tests (twelve-way concurrency, day rollover, non-carryover, policy effective windows, idempotent replay and service-principal rejection), the entitlements/consume HTTP e2e suites, the locked entitlement schema contract test extension, Core STATUS/development-plan/acceptance doc updates, the Contracts compatibility matrix row and the final Continue/Finish/merge steps remain open; the runtime Docker image build has already passed at f833c2f",
+    "Mac takeover audit actually passed on 2026-10-04 Asia/Shanghai: all six repositories cloned with origin=https://github.com/chenfengyimei/<repository>.git; all nine owner-specified remote checkpoints match, all worktrees clean, and Core/Contracts/Skin restored to their declared branches while Foundation/Community/Ops stay on main; gh 2.102.0 authenticated as chenfengyimei with ADMIN access to the three private repositories; canonical development 1.1.2 and orchestrator 1.0.0 installed and -Check passed; Git 2.54.0, PowerShell 7.6.6, Node 24.16.0, pnpm 11.19.0 and Python 3.9.6 verified; Docker Desktop 4.93.0 with Engine 29.8.1 and Compose 5.5.1 passed docker version, docker compose version and docker info. These are environment and handoff checks only; no new Core implementation test or final runtime image build is claimed."
   ]
 }
