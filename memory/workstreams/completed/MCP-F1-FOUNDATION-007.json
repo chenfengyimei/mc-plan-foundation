@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-007",
   "title": "写入 CORE-003 完成状态并正式固化 SKIN-008 阻塞",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-03T11:16:28Z",
-  "updated_at": "2026-10-03T11:16:28Z",
+  "updated_at": "2026-10-03T11:18:40Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -44,8 +44,8 @@
     "mc-plan-foundation": {
       "base_commit": "7de90a9f64eca5168ea3e04d601836f4152f94d2",
       "branch": "docs/MCP-F1-FOUNDATION-007-status-correction",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "68f2920f01bc0dd3a28285b18ab078a2d574b97c",
+      "final_commit": "68f2920f01bc0dd3a28285b18ab078a2d574b97c"
     }
   },
   "depends_on": [
@@ -58,5 +58,14 @@
     "reason": "Foundation-primary governance correction recording the completed CORE-003 slice and formalizing the owner-directed SKIN-008 blocked status; preserves mc-plan-core as the F1 primary product direction and changes no contract, business code or Skin artifact."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Preflight verified live: Foundation main 7de90a9f64eca5168ea3e04d601836f4152f94d2, Contracts main 5a4da898db2efd16b5c9f05dbc23e65b8e895e9d, Core main ce89a397b7b6b4197845a512f57ccda249c69645, Skin on its locked branch at 9a061355a76e29076b5b9268183a7f31b5caa9ca; all six worktrees clean with no remotes; the three CORE-003 final commits are reachable from their local mains; its short-lived branches are deleted; MCP-F1-FOUNDATION-007 confirmed as the next unused Foundation number and MCP-F1-SKIN-008 is the only other active record; canonical Skills 1.1.2 and 1.0.0 matched installed copies",
+    "Coordination Start passed with Foundation as the only primary repository and no supporting repositories; the Skin-only lock was untouched",
+    "Core-003 completion recorded in portfolio.md (commit 2f286ff): Contracts 0.1.0-alpha.2 locked Developer App, scope and PAT contracts; Q-007 decided as 30 days; Core implemented roles, scopes, developer apps and the hash-only PAT lifecycle; next Core phase is development-plan step 5 Asia/Shanghai daily entitlements; F1 overall remains open on credit ledger, full audit/outbox publication, SDK/consumers and recovery drills",
+    "docs/STATUS.md and README.md aligned with the same facts (commit c956553), removing the stale CORE-001-pending-closure and SKIN-008-improving descriptions",
+    "MCP-F1-SKIN-008 record formalized to status=blocked (commit 68f2920): owner, branch, checkpoints and lock preserved, final_commit stays null, the record stays in the active bucket, Skin branch verified 8 commits ahead of local main, blocked reason states the GLM flash-low plus v4 protocol combination does not meet the owner's visual acceptance without attributing the gap entirely to model or protocol, unlock waits on the Q-001 provider baseline, budget/credential decisions or an explicit owner choice, and unbounded card drawing is prohibited; a traceability entry was appended to its validation results",
+    "direction.json reviewed and intentionally unchanged: the F1 objective and exit criteria still describe the in-progress milestone accurately",
+    "Coordination Continue passed with two active records (SKIN-008 blocked and this workstream); validate-workspace.ps1 passed for 6 active repositories, 111 Markdown files and 47 JSON files; test-coordination.ps1 passed all 14 cases",
+    "Final commit recorded as Foundation 68f2920f01bc0dd3a28285b18ab078a2d574b97c; no file outside mc-plan-foundation was modified, Skin main was not merged and the Skin branch was not deleted"
+  ]
 }
