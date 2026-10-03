@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-SKIN-008",
   "title": "逐像素皮肤蓝图与动态 3D 预览",
-  "status": "active",
+  "status": "blocked",
   "milestone": "F1",
   "initial_owner": "Codex",
   "owner": "Codely",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-02T23:22:00Z",
+  "updated_at": "2026-10-03T11:17:30Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -75,7 +75,7 @@
   "depends_on": [
     "MCP-F1-SKIN-007"
   ],
-  "blocked_reason": "The owner authorized one bounded prompt-protocol improvement round and it is implemented, tested and committed (word-by-word description adherence, garment-to-region anchoring, front/back band consistency, overlay edge alignment, refusal misclassification fix). The bounded real validation then hit a model-tier quality ceiling rather than a protocol defect: glm-5.3 (full) is persistently rate-limited with HTTP 429 on the current free key, so the validation ran on glm-5.3-flash with reasoning_effort=low, where the final candidate 90616ed2 is structurally valid (64x64, two-layer, zero issues, 30 seconds) but scores about 1/10 on the owner's acceptance criteria (no cold/snow palette, no blue scarf at the neck, generic template look). The flash+low tier demonstrably does not execute the strengthened protocol. Finish remains blocked on the owner's manual acceptance, which has not been granted; per the owner's directive the session stopped drawing cards and records this as the quality ceiling of the current model/prompt-protocol combination. The main session should decide whether to move to the provider benchmark ADR (Q-001).",
+  "blocked_reason": "当前 GLM flash-low 与 v4 提示词协议的组合未达到项目所有者的视觉验收要求，正式标记为 blocked。有界协议改进轮已实现、测试并提交（6030deb 逐词落实、服饰区域锚定、前后行带一致、overlay 对齐；9a06135 拒答误判修复；0a8e858 三个多主题确定性协议测试），最终受控候选 90616ed2（30 秒渲染）技术校验全过但视觉约 1/10：无冷色雪地、颈部无蓝围巾、层错位、模板感。glm-5.3 正式档因免费 key 持续 HTTP 429 未参与本轮，flash+low 是与旧 flash 基准同模型同档、唯一变量为提示词协议的对照。现有证据不足以把问题完全归因于模型，也不足以完全归因于协议——这是该组合的质量上限，完整结论需要正式档或跨档对照。Skin 分支 feat/MCP-F1-SKIN-008-pixel-blueprint-v4 领先本地 main 8 个提交（最新检查点 9a061355a76e29076b5b9268183a7f31b5caa9ca）。解锁等待：Q-001 Provider 基准（模型/预算/凭据决策）或项目所有者对模型、预算、prompt 策略的明确选择；在此之前禁止继续无界抽卡。Finish 未执行、Skin main 未合并、锁不释放，final_commit 保持 null。",
   "direction_exception": {
     "category": "foundation-governance",
     "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D preview, visible animation playback, a real generation flow and a complete interface redesign (2026-10-03)",
@@ -158,6 +158,7 @@
     "Bounded real validation attempts: glm-5.3 with high effort was persistently rejected with HTTP 429 rate limiting on the free key (three pipeline retries failed in about 10 seconds and a lightweight probe still returned 429 after six minutes), so the round switched to glm-5.3-flash with low effort for clean single-variable comparison against the old flash baseline",
     "Discovered and fixed a refusal misclassification defect: thinking models prepend disclaimers such as 无法直接绘制图像 before an otherwise legal v4 JSON, and the old refusal-first ordering discarded them as PROVIDER_CONTENT_REJECTED; the provider now parses first and classifies refusal only when no valid payload can be extracted (fix plus regression test committed as 9a06135; the previously rejected snow-explorer render then succeeded)",
     "Final bounded validation render succeeded in 30 seconds: candidate 90616ed2 on conversation 3b4e9b48 (sha256 96e424a83b4dc5bbd7aa59dd788786f28cb3f0b92e154ccfaf7cf5e3a2b5430c, 1643 bytes) validates as a legal 64x64 two-layer Alex skin with zero issues, but manual visual inspection scores about 1/10 against the owner's acceptance criteria (no cold/snow palette, no blue scarf at the neck, layer misalignment, generic template look) - the flash+low tier does not execute the strengthened protocol",
-    "Per the owner's directive the session stopped drawing cards after the bounded round, kept the verified commits, and records the current model/prompt-protocol combination as the quality ceiling; the demo stack remains resident via pnpm start:real with the candidate inspectable at http://127.0.0.1:3100 in conversation 3b4e9b48; no public contract, database migration, production-provider binding or secret changed"
+    "Per the owner's directive the session stopped drawing cards after the bounded round, kept the verified commits, and records the current model/prompt-protocol combination as the quality ceiling; the demo stack remains resident via pnpm start:real with the candidate inspectable at http://127.0.0.1:3100 in conversation 3b4e9b48; no public contract, database migration, production-provider binding or secret changed",
+    "Owner-authorized governance correction MCP-F1-FOUNDATION-007 (2026-10-03) formalized this record to status=blocked with the neutral combination attribution and the verified 8-commits-ahead branch fact; owner, branch, checkpoints, lock and null final_commit are unchanged, Skin main was not merged and no Skin file was touched by that correction"
   ]
 }
