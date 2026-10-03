@@ -8,7 +8,7 @@
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-03T11:37:14Z",
-  "updated_at": "2026-10-03T11:37:14Z",
+  "updated_at": "2026-10-03T11:44:00Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -62,7 +62,7 @@
     "mc-plan-contracts": {
       "base_commit": "5a4da898db2efd16b5c9f05dbc23e65b8e895e9d",
       "branch": "feat/MCP-F1-CORE-004-entitlement-prerelease",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "fab1f3c2f46bc19438caf5f9614ce5dfa0217a15",
       "final_commit": null
     }
   },
@@ -72,5 +72,11 @@
   "blocked_reason": null,
   "direction_exception": null,
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Preflight verified: Foundation main 35410c2, Contracts main 5a4da89, Core main ce89a39, Skin on its locked branch at 9a06135 and blocked; six worktrees clean with no remotes; CORE-001 through CORE-003 used so MCP-F1-CORE-004 was allocated; canonical Skills 1.1.2 and 1.0.0 matched installed copies",
+    "Coordination Start passed with Core as primary, Contracts as the only supporting repository, and the blocked Skin-only lock unchanged",
+    "Contracts 0.1.0-alpha.3 locked before any producer work as commit fab1f3c2f46bc19438caf5f9614ce5dfa0217a15: GET /v1/entitlements gains the PAT alternative with credits:read and aligned AuthenticationRequired/AccessForbidden semantics; POST /v1/credits/consume requires Idempotency-Key, adds explicit 400/401/403/404 and the dual 409 ConsumptionConflict semantics (IDEMPOTENCY_KEY_CONFLICT, ENTITLEMENT_EXHAUSTED), and ConsumptionResult.source narrows to daily_entitlement only",
+    "Isolated Python validation passed for 17 schemas/events and 3 OpenAPI documents with 23 unique operationIds including new alpha.3 machine gates: entitlement field set with the Asia/Shanghai const and skin module enum, consume Idempotency-Key requirement, ConsumptionResult source enum claiming only the implemented source, and the compatibility classification",
+    "Redocly recommended lint passed for core.yaml, community.yaml and skin.yaml"
+  ]
 }
