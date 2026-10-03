@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-003",
   "title": "实现 Core 业务角色、scope、Developer App 与 PAT 生命周期",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-02T23:59:22Z",
-  "updated_at": "2026-10-03T00:28:24Z",
+  "updated_at": "2026-10-03T00:30:54Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts",
@@ -55,19 +55,19 @@
       "base_commit": "b684ac88f5a07dd261844993e794b6a8d98e6a75",
       "branch": "feat/MCP-F1-CORE-003-developer-app-pat",
       "last_checkpoint_commit": "ce89a397b7b6b4197845a512f57ccda249c69645",
-      "final_commit": null
+      "final_commit": "ce89a397b7b6b4197845a512f57ccda249c69645"
     },
     "mc-plan-contracts": {
       "base_commit": "070b00ae27bda4c3ec2d5cdd08cece626c8878a7",
       "branch": "feat/MCP-F1-CORE-003-core-prerelease",
       "last_checkpoint_commit": "5a4da898db2efd16b5c9f05dbc23e65b8e895e9d",
-      "final_commit": null
+      "final_commit": "5a4da898db2efd16b5c9f05dbc23e65b8e895e9d"
     },
     "mc-plan-foundation": {
       "base_commit": "80fe8c170c8f1fc49c7826aa7e9ac24f3ace3022",
       "branch": "docs/MCP-F1-CORE-003-q007-record",
       "last_checkpoint_commit": "ac7e10aa63ffba491556cbeed3475acc169d513d",
-      "final_commit": null
+      "final_commit": "d0a689f4c586e089525bcbd8e9c71a1c2b934469"
     }
   },
   "depends_on": [
@@ -88,6 +88,9 @@
     "Core implementation committed as fcae0a4 (49 files: authorization, developer-app, token-metadata modules, migration, lock manifest and tests) plus docs commit ce89a39; RequestPrincipalService dispatches by mcp_ prefix between PAT authentication and OIDC provisioning, PAT storage keeps only HMAC-SHA256 hash plus 12-char prefix, and high-risk writes append transactional audit and internal outbox records",
     "Core pnpm format:check, lint, strict typecheck and build passed; unit suite passed 45/45 across seven files; HTTP e2e suite passed 29/29 across four files; architecture validation passed for 44 source files; test:contract passed as declared against the LF-normalized Contracts worktree with 5 locked files verified and all locked JSON Schemas validated for the new surfaces",
     "Docker being available, the isolated PostgreSQL integration suite passed 3/3: twelve-way concurrent first login still converges to one user with role propagation, and the full app/token chain verified hash-only storage, prefix-unique lookup, last_used_at tracking, immediate rejection of expired and revoked tokens, scope ceiling, ROLE_REQUIRED and token-minting rejection, plus the exact audit action and internal outbox event sequences",
-    "Foundation commit ac7e10a records the decided Q-007 value in memory/open-questions.md: PAT default maximum validity 30 days, decided by the project owner on 2026-10-03, machine-locked in Contracts and runtime-enforced in Core"
+    "Foundation commit ac7e10a records the decided Q-007 value in memory/open-questions.md: PAT default maximum validity 30 days, decided by the project owner on 2026-10-03, machine-locked in Contracts and runtime-enforced in Core",
+    "Core docker build --target runtime completed successfully with exit 0, exporting the non-root runtime image (manifest sha256:9488274103822c713502a54d231d249533f42136ef00b8660f7144d25e094e23) with the new migration and application code included",
+    "Foundation validate-workspace.ps1 passed for 6 active repositories, 111 Markdown files and 46 JSON files; test-coordination.ps1 passed all 14 cases; coordination Continue passed with the independent Skin-only lock unchanged",
+    "Final commits recorded as Core ce89a397b7b6b4197845a512f57ccda249c69645, Contracts 5a4da898db2efd16b5c9f05dbc23e65b8e895e9d and Foundation d0a689f4c586e089525bcbd8e9c71a1c2b934469; the Skin workstream branch, record and runtime were never touched"
   ]
 }
