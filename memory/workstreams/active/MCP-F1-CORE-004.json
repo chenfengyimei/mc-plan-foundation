@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-004",
+  "title": "实现 Asia/Shanghai 每日免费权益纵向链路",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely",
+  "owner": "Codely",
+  "started_at": "2026-10-03T11:37:14Z",
+  "updated_at": "2026-10-03T11:37:14Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "以契约先行方式实现 Core 的 Asia/Shanghai 每日免费权益纵向链路：每个上海自然日三个 Skin creation_session、自然日重置、不累计、并发安全、请求幂等和版本化策略生效期。",
+  "in_scope": [
+    "Contracts 先行收敛 GET /v1/entitlements（credits:read，可加 PAT 替代认证）与 POST /v1/credits/consume（serviceOAuth credits:consume、Idempotency-Key、仅 daily_entitlement 来源、稳定幂等冲突与权益耗尽问题语义）到 0.1.0-alpha.3，如实记录与 alpha.2 的兼容分类",
+    "Core entitlement 模块：版本化 EntitlementPolicy（module=skin、operation=creation_session、timezone=Asia/Shanghai、daily grant=3、显式生效期），基线策略经前向只增迁移可审计建立",
+    "每日权益状态保存策略快照与 policy_date，(user_id, policy_id, policy_date) 唯一约束防重复授予，已生成权益不被后续策略版本追溯改变",
+    "注入时钟按 Asia/Shanghai 计算 policy_date，测试覆盖 UTC 15:59:59/16:00:00 日界线且不依赖机器时区",
+    "消费经数据库事务、唯一约束与原子条件更新保证不超发，Redis 锁或进程内互斥不作为正确性依据",
+    "持久化幂等命令记录：调用方、操作名、Idempotency-Key、规范化请求指纹、执行状态与最终响应；同键同指纹回放原结果，同键不同指纹稳定冲突",
+    "新消费成功时在同一 Core PostgreSQL 事务写审计与 INTERNAL outbox；不发布未进入 Contracts 的跨服务公共事件",
+    "读取端支持 OIDC 用户并复用 PAT 主体解析与 credits:read；消费端实现独立服务主体验证边界，不为服务 token 建立 IdentityLink/Profile",
+    "更新 Contracts 机器校验脚本、状态页、API 目录、兼容说明与矩阵（生产者验证后）",
+    "更新 Core STATUS、开发计划（第 5 步完成、第 6 步下一阶段）与验收证据"
+  ],
+  "out_of_scope": [
+    "CreditAccount 或 CreditLedgerEntry 业务逻辑、积分发放、签到、贡献奖励、消费、退款或人工调整",
+    "免费权益耗尽后的积分自动回退（后续消费编排器工作流）",
+    "Skin 消费者、Official Skin 集成、TypeScript SDK、消费者集成",
+    "管理员策略管理 API、公开 outbox 发布器、跨服务事件或消息消费者",
+    "修改 Community、Skin、Ops 业务文件或 Skin 工作流",
+    "硬编码 Q-003、Q-013 或其他未决产品数值",
+    "创建远程仓库、推送或部署"
+  ],
+  "contract_impact": "prerelease compatible convergence: Core 0.1.0-alpha.3 converges the previously declared-but-unimplemented entitlements and consume skeleton with explicit problem semantics, PAT alternative authentication on GET, and a daily_entitlement-only source enum; all 0.1.0-alpha.2 locked surfaces keep their semantics unchanged",
+  "acceptance_evidence": [
+    "Contracts Python and Redocly validation pass with evolved 0.1.0-alpha.3 machine gates",
+    "Core format, lint, typecheck, unit, integration, end-to-end, architecture, migration, contract and build validations pass, plus the runtime image build",
+    "Twelve-way concurrent first consumption materializes exactly one daily entitlement and never over-issues beyond three units per Asia/Shanghai day",
+    "Same-key same-fingerprint replays return the original result with one audit and one internal outbox effect; same-key different-fingerprint returns a stable conflict",
+    "The Shanghai day boundary is enforced by an injected clock: UTC 15:59:59 belongs to the previous policy date and UTC 16:00:00 to the next; new days restore three units without carryover",
+    "Policy version switching only affects entitlements whose effective time starts afterwards; already-materialized daily entitlements keep their snapshots",
+    "Non-ACTIVE accounts, unverified identities, insufficient scopes, expired or revoked PATs and illegal service principals are all rejected",
+    "GET /v1/entitlements returns values validated against the locked entitlement JSON Schema and never consumes quota"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "ce89a397b7b6b4197845a512f57ccda249c69645",
+      "branch": "feat/MCP-F1-CORE-004-daily-entitlements",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "5a4da898db2efd16b5c9f05dbc23e65b8e895e9d",
+      "branch": "feat/MCP-F1-CORE-004-entitlement-prerelease",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": []
+}
