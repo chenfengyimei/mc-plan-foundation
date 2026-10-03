@@ -8,7 +8,7 @@
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-02T23:59:22Z",
-  "updated_at": "2026-10-03T00:10:00Z",
+  "updated_at": "2026-10-03T00:28:24Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts",
@@ -54,19 +54,19 @@
     "mc-plan-core": {
       "base_commit": "b684ac88f5a07dd261844993e794b6a8d98e6a75",
       "branch": "feat/MCP-F1-CORE-003-developer-app-pat",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "ce89a397b7b6b4197845a512f57ccda249c69645",
       "final_commit": null
     },
     "mc-plan-contracts": {
       "base_commit": "070b00ae27bda4c3ec2d5cdd08cece626c8878a7",
       "branch": "feat/MCP-F1-CORE-003-core-prerelease",
-      "last_checkpoint_commit": "3f9e13a727f5b47aa8ca48dd86decfc54e7b2cc4",
+      "last_checkpoint_commit": "5a4da898db2efd16b5c9f05dbc23e65b8e895e9d",
       "final_commit": null
     },
     "mc-plan-foundation": {
       "base_commit": "80fe8c170c8f1fc49c7826aa7e9ac24f3ace3022",
       "branch": "docs/MCP-F1-CORE-003-q007-record",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "ac7e10aa63ffba491556cbeed3475acc169d513d",
       "final_commit": null
     }
   },
@@ -82,6 +82,12 @@
     "Coordination Start passed with Core as primary, Contracts and Foundation as the only supporting repositories, and the independent Skin-only lock unchanged",
     "Contracts 0.1.0-alpha.2 locked before any producer work as commit 3f9e13a727f5b47aa8ca48dd86decfc54e7b2cc4: GET /v1/me gains a compatible personal-access-token security alternative; new developer-app and personal-access-token operations with developer-apps:read/manage and pat:read/manage scopes; explicit 400 VALIDATION_FAILED, 403 ROLE_REQUIRED and 404 NOT_FOUND problem semantics",
     "Isolated Python validation passed for 15 JSON schemas/events with 15 unique ids and 3 OpenAPI documents with 23 unique operationIds, including evolved machine gates: /v1/me keeps its locked alpha.1 shape plus the PAT scheme, all nine new operations keep their exact locked security requirements, PAT create accepts only userOAuth, PAT metadata schema exposes no plaintext or hash fields, expires_in_days is machine-locked to maximum 30 and default 30, and the PAT scope enum matches the declared catalog",
-    "Redocly recommended lint passed for core.yaml, community.yaml and skin.yaml"
+    "Redocly recommended lint passed for core.yaml, community.yaml and skin.yaml",
+    "Contract-first order preserved: Contracts lock commits 3f9e13a (initial lock) and bde4dfb (created-response schema split) precede all Core implementation commits; Contracts STATUS and the compatibility matrix were finalized afterwards as 5a4da89 with the verified producer combination",
+    "Core forward-only migration 20261003001000_developer_apps_pat adds the BusinessRole enum and role column, developer_apps and personal_access_tokens tables with a (token_prefix, token_hash) unique index; prisma validate and migration:validate passed for 3 forward-only migrations",
+    "Core implementation committed as fcae0a4 (49 files: authorization, developer-app, token-metadata modules, migration, lock manifest and tests) plus docs commit ce89a39; RequestPrincipalService dispatches by mcp_ prefix between PAT authentication and OIDC provisioning, PAT storage keeps only HMAC-SHA256 hash plus 12-char prefix, and high-risk writes append transactional audit and internal outbox records",
+    "Core pnpm format:check, lint, strict typecheck and build passed; unit suite passed 45/45 across seven files; HTTP e2e suite passed 29/29 across four files; architecture validation passed for 44 source files; test:contract passed as declared against the LF-normalized Contracts worktree with 5 locked files verified and all locked JSON Schemas validated for the new surfaces",
+    "Docker being available, the isolated PostgreSQL integration suite passed 3/3: twelve-way concurrent first login still converges to one user with role propagation, and the full app/token chain verified hash-only storage, prefix-unique lookup, last_used_at tracking, immediate rejection of expired and revoked tokens, scope ceiling, ROLE_REQUIRED and token-minting rejection, plus the exact audit action and internal outbox event sequences",
+    "Foundation commit ac7e10a records the decided Q-007 value in memory/open-questions.md: PAT default maximum validity 30 days, decided by the project owner on 2026-10-03, machine-locked in Contracts and runtime-enforced in Core"
   ]
 }
