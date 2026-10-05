@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-OPS-002",
+  "title": "Ops 本地身份组合的真实邮件验证与密码重置收信验收",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "started_at": "2026-10-05T16:17:31.0379730+00:00",
+  "updated_at": "2026-10-05T16:17:31.0379730+00:00",
+  "primary_repository": "mc-plan-ops",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "为本地身份组合补齐真实邮件链路验收证据：通过真实 Keycloak 自助注册、邮件验证与忘记密码/重置流程，在本地 Mailpit 中产生实际收件并完成端到端闭环（注册→验证邮件→验证→PKCE 登录 email_verified=true→GET /v1/me；忘记密码→重置邮件→新密码登录成功、旧密码被拒），证明 realm 的 registrationAllowed/verifyEmail/resetPasswordAllowed 与 SMTP→Mailpit 边界在真实组合中可用；明确本地 Mailpit 不等于生产邮件验收（Q-006 未决）。",
+  "in_scope": [
+    "新增 scripts/validate-dev-email-flows.ps1：专属 Compose project（沿用 OPS-001 隔离模式：运行前后仅对本 project down -v、loopback 端口可配置并预检冲突、-KeepStack 显式选项），不修改 realm/compose 既有边界（注册、邮箱验证、密码重置与本地 SMTP 已由既有 realm 启用并被静态门禁断言）",
+    "自助注册流真实验收：以保留地址 registration-<runId>@mc-plan.example.invalid 与本地占位密码完成真实注册表单提交，Keycloak 经 SMTP 投递验证邮件到 Mailpit，脚本经 Mailpit API 轮询收件并核对收件人与发件人（no-reply@mc-plan.example.invalid），提取验证链接完成验证，随后 Authorization Code + PKCE 登录成功且令牌 email_verified=true，GET /v1/me 返回 PublicActor 并在 Core 幂等配置身份",
+    "忘记密码流真实验收：对同一受控身份发起忘记密码，经 Mailpit 收件并提取重置链接，提交新本地占位密码后旧密码登录被拒、新密码登录成功且 email_verified 保持 true",
+    "断言全部邮件仅使用保留地址；脚本输出显式标注 [LOCAL-MAILPIT] 非生产邮件验收；不调用任何消费/权益接口，不产生额度副作用；输出不含完整令牌或真实邮箱",
+    "文档同步：docs/dev-identity.md 增加邮件链路验收一节（含完整带参命令、二次执行隔离行为、清理证据与 Q-006 边界），docs/STATUS.md、docs/development-plan.md 与 README 相应更新；明确本地非生产、不代表预发布或生产就绪"
+  ],
+  "out_of_scope": [
+    "生产邮件服务选择与生产 SMTP 配置（Q-006 未决）、生产域名/地域（Q-004）及任何预发布/生产部署",
+    "修改 Core、Contracts、Foundation、Community、Skin 的任何文件或分支；realm/compose 既有边界变更；邮件模板、登录主题、本地化或品牌定制",
+    "额度/消费/积分任何接口；重置令牌安全审计、防暴力破解策略、邮件重发管理界面",
+    "修改 MCP-F1-SKIN-008 的 blocked 状态、owner、检查点或 Skin 锁",
+    "硬编码任何未决产品数值；创建远程仓库或镜像公开发布"
+  ],
+  "contract_impact": "none; local non-production Ops acceptance only. No public API, scope, error code, event or schema changes.",
+  "acceptance_evidence": [
+    "validate-dev-environment.ps1 静态门禁继续通过（含 registrationAllowed/verifyEmail/resetPasswordAllowed 与本地 SMTP 断言）",
+    "validate-dev-email-flows.ps1 完整带参且可独立重复执行通过：自助注册→Mailpit 实际收件→验证→PKCE 登录 email_verified=true→GET /v1/me PublicActor 配置成功",
+    "忘记密码流通过：Mailpit 实际收件→重置→旧密码登录被拒、新密码登录成功、email_verified 保持 true",
+    "Mailpit 收件断言：收件人与发件人均为保留地址、主题/链接可提取；[LOCAL-MAILPIT] 标注出现在输出与文档中",
+    "二次执行通过（专属 project 前后 down -v，全新隔离数据），清理仅移除本 project 容器/网络/卷并有清理证据",
+    "docs/dev-identity.md、STATUS、development-plan、README 更新，如实记录命令、边界与证据；不声称生产或预发布就绪"
+  ],
+  "repositories": {
+    "mc-plan-ops": {
+      "base_commit": "6813b52d68750db3d1e68111607300827c093af8",
+      "branch": "feat/MCP-F1-OPS-002-email-flow-acceptance",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-002",
+    "MCP-F1-OPS-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Preflight verified 2026-10-05 ~23:58 (Codely/Mac): Foundation main 69b5576 与 origin 一致且干净；Contracts e434d93（=origin）、Core main 63745d6（MCP-F1-CORE-006/W06 已于 ~23:55 完成关闭，Core 锁已释放）、Community 69ac5e9、Skin feat/MCP-F1-SKIN-008 85b35ff（blocked，Skin-only 锁保留）、Ops main 6813b52（=origin）全部干净；登记处为 1 活动（SKIN-008）/30 完成",
+    "目标核对：W01 组合状态同步已由 MCP-F1-FOUNDATION-009 完成关闭；W06/CORE-006 已完成；W03（dev-app Keycloak 生命周期，预计 CORE-007）按会话1草案仍需所有者明确批准派工，未启动；邮件验证/密码重置真实收信证据为 Session-1 与 Session-D 评审两处点名的独立小切片（Ops 锁空闲、可独立排期），无任何会话注册相同目标（无 MCP-F1-OPS-002 及任何邮件流工作流记录），故分配 MCP-F1-OPS-002",
+    "所有者授权：2026-10-05 指令（核实完善与开发，按照你能做的以及当前目标，开始执行完成完善）；本切片不选择 Q-006 生产邮件、不硬编码未决数值、契约零变化"
+  ]
+}
