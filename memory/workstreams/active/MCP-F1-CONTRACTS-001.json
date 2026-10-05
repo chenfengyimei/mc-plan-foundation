@@ -1,0 +1,69 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-001",
+  "title": "已验收 Core 表面的 TypeScript SDK 第一切片",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/session-4-contracts-sdk",
+  "owner": "Codely/session-4-contracts-sdk",
+  "started_at": "2026-10-05T14:42:08Z",
+  "updated_at": "2026-10-05T14:42:08Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "按 ADR-0004 与 docs/sdk.md，为已验收的 Core 0.1.0-alpha.4 表面提供首个经 producer 验证的 TypeScript SDK：从仓库内锁定的 openapi/core.yaml 与 JSON Schema（含内联 Schema）确定性生成公共类型，提供注入式 transport（baseURL/fetch/token 提供器、ProblemDetails、abort/超时、有界幂等重试不换键、200 重放/201 成功），仅暴露 12 个有 producer 证据的 operation（getPublicUser 与未来积分公共消费/退款/管理不暴露），本地 pack 供干净工程消费；用 CORE-005 最终固定镜像与隔离 PostgreSQL 做真实 HTTP smoke（读资料/权益/余额 + 消费同键重放，非 mock transport），producer 旧验收与 SDK/consumer 新验收分栏记录；不发布 npm、不设稳定版本。",
+  "in_scope": [
+    "sdk/typescript 新建自包含 pnpm 包 @mc-plan/core-sdk@0.1.0-alpha.4（private）：openapi-typescript 从 ../../openapi/core.yaml 确定性生成类型，generate:check 重跑 diff 为空，来源为仓库内 sha256 锁定契约文件并在文档记录锁提交 9a85b98",
+    "显式 SUPPORTED_OPERATIONS 支持清单（12 个 operationId + 来源版本）：getCurrentUser、createDeveloperApp、listDeveloperApps、getDeveloperApp、approveDeveloperAppScopes、revokeDeveloperApp、createPersonalAccessToken、listPersonalAccessTokens、revokePersonalAccessToken、listCurrentEntitlements、consumeCredits、getCreditBalance",
+    "手写 transport 消费生成类型：注入 baseURL/fetch/getUserToken/getServiceToken；不接管密码、不保存 secret/token；文档写明浏览器 PKCE 用户令牌与服务端 client-credentials 边界；abort(AbortSignal) 与可配置超时；有界重试仅限 GET 与契约幂等的 consumeCredits（5xx/网络 ≤2 次、重试不换 Idempotency-Key）；200 重放/201 成功均成功并以 replayed 标志区分；4xx 抛类型化 Problem 不重试",
+    "ProblemDetails 类型化解析（code 联合：AUTHENTICATION_REQUIRED/INSUFFICIENT_SCOPE/ACCOUNT_UNAVAILABLE/ROLE_REQUIRED/VALIDATION_FAILED/NOT_FOUND/IDEMPOTENCY_KEY_CONFLICT/ENTITLEMENT_EXHAUSTED，保留 errors[]/trace_id）",
+    "Core 列表不发明游标/分页参数，响应按契约 {items} 类型化",
+    "真实 HTTP smoke：固定镜像 mc-plan-core:mcp-f1-core-005-5508d60 + 会话隔离 postgres:17 + 本地 JWKS 测试发行方（RS256、精确 issuer/audience/email_verified）：OIDC 用户读 me/entitlements/balance（无账户读零且不建账户、不产生账本副作用）、consumeCredits 同键同请求 200 重放与同键异请求 409、缺 scope/错 issuer 的类型化错误",
+    "本地 pnpm pack + 干净临时工程消费验证",
+    "写回 docs/development-plan.md、AGENTS.md、docs/compatibility.md（SDK 列与已验证组合，producer 与 SDK/consumer 验收分栏）、docs/STATUS.md、sdk/typescript/README.md",
+    "本地 checkpoint 提交与经验证的 Contracts main ff-only 集成；本会话未获推送授权，报告待推送状态"
+  ],
+  "out_of_scope": [
+    "任何 openapi/*.yaml、schemas/*、events/* 内容变更（零公共契约变更，不冻结新表面）",
+    "getPublicUser 与 credits 来源公共消费/退款/管理/审计公共面（无 producer 证据不暴露）",
+    "Skin/Community draft 表面的 SDK 覆盖与 draft 猜测路由",
+    "公开 npm 发布、稳定版本、Python SDK、远程仓库创建、生产部署",
+    "修改 Core/Skin/Community/Ops 业务文件或他人 Foundation 未提交文件；SKIN-008 锁保持不变"
+  ],
+  "contract_impact": "none; zero changes to OpenAPI/JSON Schema/event files. The SDK is generated from the already-locked 0.1.0-alpha.4 contract (lock commit 9a85b98, merged to Contracts main a8b38be) and adds no public surface",
+  "acceptance_evidence": [
+    "既有契约 gate（外部 Python 3.12 validate_contracts.py、Redocly lint）与新增 SDK gate（format:check/lint/typecheck/generate:check/test/build/pack:check）全部实际通过",
+    "generate:check 证明生成产物与锁定的 core.yaml 确定性一致（重跑 diff 为空）",
+    "smoke:real 对固定镜像与隔离 PostgreSQL 全场景通过（读资料/权益/余额无副作用、同键重放 200/201、同键异请求 409、类型化 Problem），日志留存",
+    "干净临时工程从本地 tarball 安装并编译引用 SDK 类型成功",
+    "validate-coordination Start/Continue/Finish 通过；完成记录进入 completed 并本地 ff-only 合并 Contracts main"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "a8b38beb275e8a8e21e4a29ec4d3c603004b302a",
+      "branch": "feat/MCP-F1-CONTRACTS-001-core-sdk",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-005"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "owner-directed-contracts-slice",
+    "authorized_by": "MC Plan project owner 会话4 派工提示（2026-10-05）：主仓=Contracts，预批“第一切片：已验收 Core 的 SDK”，并明确 005 通过 Finish 且双仓 main 真实集成后开始（2026-10-05 已满足并经 validate-coordination Finish 与 origin/main SHA 机器验证）",
+    "reason": "F1 方向以 Core 为主仓；本切片为 Contracts 主仓的 SDK 工程，不改公共契约内容，按 ADR-0004 与 contract-changes.md 的 Contracts→producer→SDK→consumer 顺序在 producer 验收（CORE-005）完成后执行。"
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Gates verified before Start (2026-10-05, Codely/session-4-contracts-sdk): MCP-F1-CORE-005 passed phase Finish (25 completed / 2 active workstreams); Contracts main and Core main both integrated and pushed to origin (a8b38be / 5508d60); workspace validate-workspace passed (6 repos, 111 MD, 51 JSON); existing contract gates re-ran green from an external Python 3.12 venv (18 schemas/events, 18 unique $ids, 24 operationIds) and pnpm dlx redocly lint (3 documents); no active record holds mc-plan-contracts; the fixed producer image mc-plan-core:mcp-f1-core-005-5508d60 (IID sha256:1e92bb4e7afafae7eb405a511a19f6e4e3b22993dd11fd9506efb44428cf6fdf) exists locally; canonical Skills orchestrator 1.0.0 and development 1.1.2 -Check passed."
+  ]
+}
