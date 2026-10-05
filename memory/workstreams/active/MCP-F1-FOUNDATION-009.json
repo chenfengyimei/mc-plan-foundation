@@ -8,7 +8,7 @@
   "initial_owner": "Codely/session-4-contracts-sdk",
   "owner": "Codely/session-4-contracts-sdk",
   "started_at": "2026-10-05T15:33:14Z",
-  "updated_at": "2026-10-05T15:33:14Z",
+  "updated_at": "2026-10-05T15:35:15Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -41,7 +41,7 @@
     "mc-plan-foundation": {
       "base_commit": "fcfdbad9e80f7ff7f9f48a4f4f4128ee3981f044",
       "branch": "fix/MCP-F1-FOUNDATION-009-status-sync",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "08aa0c2f4c7b8cbbf596f3593405113132e5b0b0",
       "final_commit": null
     }
   },
@@ -54,6 +54,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Preflight 2026-10-05 (Codely/session-4-contracts-sdk): Foundation main fcfdbad clean and equal to origin/main; 28 completed / 1 active (SKIN-008 blocked, Skin-only, owner Codely/8b150da7-6a4c-4e53-a769-422c12963 handoff, checkpoint 85b35ff, +1 unpushed); OPS-001 closed by its owner (Ops main 6813b52 pushed); Contracts main e434d93 local, 2 ahead of origin a8b38be, push pending authorization; Core 5508d60 / Community 69ac5e9 synced; workspace short-lock free; canonical Skills development 1.1.2 and orchestrator 1.0.0 -Check passed earlier this session."
+    "Preflight 2026-10-05 (Codely/session-4-contracts-sdk): Foundation main fcfdbad clean and equal to origin/main; 28 completed / 1 active (SKIN-008 blocked, Skin-only, owner Codely/8b150da7-6a4c-4e53-a769-422c12963 handoff, checkpoint 85b35ff, +1 unpushed); OPS-001 closed by its owner (Ops main 6813b52 pushed); Contracts main e434d93 local, 2 ahead of origin a8b38be, push pending authorization; Core 5508d60 / Community 69ac5e9 synced; workspace short-lock free; canonical Skills development 1.1.2 and orchestrator 1.0.0 -Check passed earlier this session.",
+    "Checkpoint 2026-10-05 (Codely/session-4-contracts-sdk): 8 targeted prose edits applied to memory/current/portfolio.md (Ops row + OPS-001 delivery, Skin row handoff/owner/9-ahead/85b35ff, both tail paragraphs -> 28 completed / 1 active with A/B/C all closed) and docs/STATUS.md (current-direction paragraph CORE-001..005 + alpha.4 + CORE-005 link, record-status paragraph, A/B/C closure sentence); stale-phrase sweep (待启动/未启动/8 个提交) returns zero hits; validate-workspace passed (6 repos, 112 Markdown, 58 JSON); committed as 08aa0c2 on fix/MCP-F1-FOUNDATION-009-status-sync. No direction/ADR/open-questions/coordination-history changes; SKIN-008 record untouched."
   ]
 }
