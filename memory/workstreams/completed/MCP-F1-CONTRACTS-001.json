@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CONTRACTS-001",
   "title": "已验收 Core 表面的 TypeScript SDK 第一切片",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/session-4-contracts-sdk",
   "owner": "Codely/session-4-contracts-sdk",
   "started_at": "2026-10-05T14:42:08Z",
-  "updated_at": "2026-10-05T14:50:19Z",
+  "updated_at": "2026-10-05T14:50:31Z",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -50,7 +50,7 @@
       "base_commit": "a8b38beb275e8a8e21e4a29ec4d3c603004b302a",
       "branch": "feat/MCP-F1-CONTRACTS-001-core-sdk",
       "last_checkpoint_commit": "e434d93de5922e1e61d3d4172a07ed80512bd831",
-      "final_commit": null
+      "final_commit": "e434d93de5922e1e61d3d4172a07ed80512bd831"
     }
   },
   "depends_on": [
@@ -66,6 +66,7 @@
   "validation_results": [
     "Gates verified before Start (2026-10-05, Codely/session-4-contracts-sdk): MCP-F1-CORE-005 passed phase Finish (25 completed / 2 active workstreams); Contracts main and Core main both integrated and pushed to origin (a8b38be / 5508d60); workspace validate-workspace passed (6 repos, 111 MD, 51 JSON); existing contract gates re-ran green from an external Python 3.12 venv (18 schemas/events, 18 unique $ids, 24 operationIds) and pnpm dlx redocly lint (3 documents); no active record holds mc-plan-contracts; the fixed producer image mc-plan-core:mcp-f1-core-005-5508d60 (IID sha256:1e92bb4e7afafae7eb405a511a19f6e4e3b22993dd11fd9506efb44428cf6fdf) exists locally; canonical Skills orchestrator 1.0.0 and development 1.1.2 -Check passed.",
     "Implementation checkpoint 2026-10-05 (Codely/session-4-contracts-sdk): sdk/typescript package @mc-plan/core-sdk@0.1.0-alpha.4 committed as cfe696b (feat) with docs write-back e434d93 on feat/MCP-F1-CONTRACTS-001-core-sdk; all SDK gates green from the committed tree: prettier format:check, eslint --max-warnings 0, strict tsc typecheck (noUncheckedIndexedAccess + exactOptionalPropertyTypes), 25/25 vitest unit tests, build, generate:check zero drift, pack:check clean-consumer compile; existing gates re-ran green from an external Python 3.12 venv (18 schemas/events, 18 $ids, 24 operationIds) and pnpm dlx redocly lint (3 documents); contracts tree clean.",
-    "smoke:real passed 2026-10-05 against the fixed producer image mc-plan-core:mcp-f1-core-005-5508d60 (Core 5508d60) with session-isolated postgres:17-alpine, local JWKS RS256 issuer (exact issuer/audience, email_verified) and unique network/container/volume names cleaned up in finally: five migrations applied via npm run migration:deploy, /health/ready 200; SDK real-HTTP scenarios all green - getCurrentUser (lazily provisioned user), listCurrentEntitlements (skin/creation_session Asia/Shanghai 3/day baseline, read does not consume), getCreditBalance returns zero with credit_accounts and credit_ledger_entries counts 0 before and after (no account, no ledger writes), consumeCredits first call 201 (source daily_entitlement, remaining 2), same Idempotency-Key + same request 200 replay with identical consumption_id, same key different reference_id 409 IDEMPOTENCY_KEY_CONFLICT, untrusted issuer 401 AUTHENTICATION_REQUIRED, missing credits:read scope 403 INSUFFICIENT_SCOPE - all surfaced as typed Problem errors; the smoke also caught and fixed a real SDK defect (missing Content-Type on JSON bodies rejected by the producer as 400 VALIDATION_FAILED) now locked by a unit assertion."
+    "smoke:real passed 2026-10-05 against the fixed producer image mc-plan-core:mcp-f1-core-005-5508d60 (Core 5508d60) with session-isolated postgres:17-alpine, local JWKS RS256 issuer (exact issuer/audience, email_verified) and unique network/container/volume names cleaned up in finally: five migrations applied via npm run migration:deploy, /health/ready 200; SDK real-HTTP scenarios all green - getCurrentUser (lazily provisioned user), listCurrentEntitlements (skin/creation_session Asia/Shanghai 3/day baseline, read does not consume), getCreditBalance returns zero with credit_accounts and credit_ledger_entries counts 0 before and after (no account, no ledger writes), consumeCredits first call 201 (source daily_entitlement, remaining 2), same Idempotency-Key + same request 200 replay with identical consumption_id, same key different reference_id 409 IDEMPOTENCY_KEY_CONFLICT, untrusted issuer 401 AUTHENTICATION_REQUIRED, missing credits:read scope 403 INSUFFICIENT_SCOPE - all surfaced as typed Problem errors; the smoke also caught and fixed a real SDK defect (missing Content-Type on JSON bodies rejected by the producer as 400 VALIDATION_FAILED) now locked by a unit assertion.",
+    "Closure 2026-10-05 (Codely/session-4-contracts-sdk): validate-coordination passed Start (after record ac8900f + branch creation) and Continue (after checkpoint record dcec676); Contracts main fast-forwarded locally a8b38be -> e434d93 (feat cfe696b + docs e434d93, 27 files, +5134 lines) with a clean tree; feature branch deletion follows closure. Push status: this session has NO owner push authorization, so local main is 2 commits ahead of origin/main (a8b38be) and the push is explicitly reported as pending - not silently skipped and not done. No public npm publish, no stable version, no registry access; the SDK remains a private local-pack package."
   ]
 }
