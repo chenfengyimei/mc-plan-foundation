@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-007",
+  "title": "实现 Developer App 的 Keycloak OIDC 客户端生命周期与受控管理集成",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "started_at": "2026-10-05T16:43:30.179Z",
+  "updated_at": "2026-10-05T16:43:30.179Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-ops"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "为已锁定的 Developer App 公共表面补齐真实 Keycloak 客户端生命周期：Core 通过 Ops realm 提供的最小权限管理服务客户端，在应用创建、scope 审批/收窄与撤销时幂等配置/禁用对应 Keycloak OIDC 客户端（public 强制 PKCE S256、confidential 机密边界、回调精确匹配），成功/失败路径有显式补偿与注册表↔realm 核对，应用注册后可真实完成 Authorization Code + PKCE 并以签发令牌通过 Core 认证。公共契约零变化；不使用 realm-admin 作为任何应用身份。",
+  "in_scope": [
+    "Ops（辅助）：realm 增加唯一新增客户端 mc-plan-core-admin——confidential + serviceAccountsEnabled + fullScopeAllowed=false，服务账号角色仅 realm-management 的 manage-clients，机器校验禁止 realm-admin；其密钥由 Keycloak 生成并经本地 Admin API 读取后注入运行环境，绝不入 Git（沿用 OPS-001 已验证模式；生产部署仍待 Q-004/Q-006）",
+    "Ops（辅助）：为开发者应用验收补齐 developer-apps:manage 客户端 scope 定义并仅挂在本地 PKCE 验收客户端的 optional scopes；compose 为 Core 注入 KEYCLOAK_ADMIN_TOKEN_URL/REALM/CLIENT_ID/CLIENT_SECRET 环境并补 .env.example 键，沿用 OPS-001 的参数化端口/项目与固定输入模式；validate-dev-environment.ps1 增加管理客户端/最小角色断言；新增独立 compose project 的 validate-dev-developer-apps.ps1（对齐 validate-dev-entitlements.ps1 的隔离模式：前后 down -v、可选 -KeepStack）跑开发者应用生命周期真实验收",
+    "Core 新增 developer-app 模块内 KeycloakClientAdmin 应用端口与 infrastructure 适配器（Admin REST：创建/更新/查询/禁用客户端、scope 映射），适配器用 mc-plan-core-admin 的 client-credentials 令牌调用；领域/应用层不依赖 Keycloak SDK，方向遵守 adapter→port→domain 与 test:architecture",
+    "Core 配置新增 KEYCLOAK_ADMIN_TOKEN_URL/REALM/CLIENT_ID/CLIENT_SECRET（+超时），启动缺失即失败关闭；Keycloak admin 不进入 readiness（liveness/readiness 语义不变，仍仅 PostgreSQL+迁移）",
+    "create（POST /v1/developer-apps，公共契约不变）：按确定性 clientId（由 app_id 派生）幂等配置 Keycloak 客户端——public：publicClient+standardFlow+S256 PKCE 强制、禁 direct grants/implicit/service account；confidential：另设 Core 生成的一次性机密（契约语义保持：明文仅出现在 201 响应一次，Core 只存哈希）；重定向 URI 精确写入（核心侧已验证的 HTTPS/回环精确匹配规则不变）；批准 scope 作为显式 client scope 映射并挂 mc-plan-core audience 映射（优先复用 realm 既有 mc-plan-core-audience 客户端 scope；对未注册 audience 需 included.custom.audience——OPS-001 实证教训）；随后同一 PostgreSQL 事务提交注册表新列 keycloak_client_id、审计与既有 INTERNAL outbox 记录",
+    "approveScopes（PATCH）：先幂等替换 realm 客户端 scope 映射，再提交 DB 事务；任一步失败走显式补偿并整体失败，不留半状态",
+    "revoke（DELETE）：先禁用（disable）realm 客户端保留其审计历史，再提交 DB 撤销事务；DB 失败则补偿性重新启用并失败；禁止删除 realm 客户端",
+    "成功/失败幂等补偿：Keycloak 配置失败→请求失败且无可见半状态；DB 提交失败→补偿性清理已下发客户端（尽力而为+结构化日志+审计）；补偿失败由核对暴露",
+    "注册表↔realm 应用级核对：active 应用与 realm 客户端（存在/启用/scope ⊆ 批准集）比对，显式暴露注入的漂移，不静默修复（与 credits 核对同哲学）；存量（下发机制存在前注册的）应用允许 keycloak_client_id 为空并由核对标记",
+    "前向只增迁移：developer_apps 增加 keycloak_client_id 等所需列，prisma validate + migration:validate 通过，既有身份/PAT/权益/积分回归不变",
+    "真实 Keycloak 集成测试（隔离 keycloak:26.8.0 测试容器 + 最小测试 realm 夹具，位于 Core 测试目录，不读 Ops 仓文件）：创建→PKCE 授权码→令牌→GET /v1/me 全链路；confidential 机密交换；scope 收窄反映进令牌；revoke 后授权被拒；并发/重试对同一确定性 clientId 收敛；注入失败验证补偿与无半状态",
+    "回归保持：PAT 只显示一次/哈希保存/30 天上限（Q-007）/PAT 不得铸造 PAT；ROLE_REQUIRED 高风险写入；审计+INTERNAL outbox 同事务；契约锁定 12 文件零漂移、developer-app HTTP 响应仍按 alpha.4 Schema 校验",
+    "文档：更新 Core STATUS/architecture/acceptance/development-plan（本切片完成后写回下一步）；更新 Ops STATUS/development-plan；Contracts 文件零修改"
+  ],
+  "out_of_scope": [
+    "任何公共契约/Schema/scope/错误码/事件/SDK 变化；Contracts 保持 alpha.4 锁（9a85b98）不动，Contracts 不进写集",
+    "开发者应用机密轮换 API、应用解封/恢复（un-revoke）、应用删除后客户端删除、webOrigins/CORS 策略、开发者门户 UI",
+    "生产部署、生产域名/地域（Q-004）、生产邮件（Q-006）、生产密钥管理；本地开发组合之外的环境",
+    "邮箱注册验证/密码重置的 Keycloak+Mailpit 自动化证据（OPS-002 已关闭）",
+    "公开资料按 userId 读取/资料编辑/年龄声明/导出删除注销（下一轮，先走所有者决策包）、奖励/定价/credits 来源消费（Q-003/Q-013 未决）、账本公共查询",
+    "修改 Community、Skin 业务文件或 Skin 工作流；MCP-F1-SKIN-008 一切不变",
+    "把 realm-admin 或任何管理权限授予普通应用身份；用管理服务客户端代表用户行事",
+    "硬编码任何未决产品数值；创建远程仓库或镜像公开发布"
+  ],
+  "contract_impact": "none; the locked Contracts 0.1.0-alpha.4 public surface is unchanged (create/list/get/approve/revoke developer-app operations and all schemas stay as locked at 9a85b98); Keycloak client provisioning is Core-internal per ADR-0008 §7 and adds no public API, schema, scope, error code, or event",
+  "acceptance_evidence": [
+    "Core format:check、lint、严格 typecheck、test:unit、test:e2e、test:architecture、migration:validate、MC_PLAN_CONTRACTS_DIR=../mc-plan-contracts test:contract、build 全部通过；Docker 可用时 test:integration 通过并重建 runtime 镜像（非 root、迁移、live/ready）",
+    "真实 Keycloak 集成证据：新注册 public 应用以 S256 PKCE 完成 Authorization Code，签发令牌通过 Core OIDC 验证并在 GET /v1/me 返回 PublicActor；confidential 应用以 Core 一次性机密完成交换；令牌 scope 严格 ⊆ 批准集，PATCH 收窄后新签发令牌不再携带被移除 scope；revoke 后该客户端授权被 Keycloak 拒绝且 DB 状态为 revoked",
+    "补偿与幂等：注入 Keycloak 失败→无 active DB 行、无孤儿启用客户端；注入 DB 失败→补偿清理并整体失败；同一确定性 clientId 的重试收敛为单客户端；核对能显式暴露注入的注册表↔realm 漂移且不静默修复",
+    "越权与语义回归：跨用户/未知 appId 404、缺 developer-apps:manage/pat 越界 403、非 DEVELOPER/ADMIN 高风险写 ROLE_REQUIRED、PAT 铸 PAT 拒绝、回调通配符拒绝——全部沿用既有自动化证据",
+    "契约零漂移：12 个锁定文件无变化，契约测试照常通过；developer-app 响应仍按 alpha.4 Schema 机器校验",
+    "迁移：前向只增、prisma validate/migration:validate 通过，存量行容忍空 keycloak_client_id；runtime 镜像以最终提交源码重建并通过迁移与探针冒烟",
+    "Ops 验收：validate-dev-environment.ps1 通过并断言管理客户端仅 manage-clients（无 realm-admin）；新增 validate-dev-developer-apps.ps1 用重建镜像跑通开发者应用生命周期真实验收（PKCE 全链路、confidential 交换、收窄、撤销拒绝），全部输出留证"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "63745d6657d99117acfecd456c140d5e994ebe18",
+      "branch": "feat/MCP-F1-CORE-007-developer-app-keycloak-lifecycle",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-ops": {
+      "base_commit": "a41c25fba057fa4c069c8959eb58b3cd5706688b",
+      "branch": "feat/MCP-F1-CORE-007-core-admin-client",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-005",
+    "MCP-F1-CORE-006"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-05T16:43:30.179Z under the Foundation short-lock from live state: Core main 63745d6 and Ops main a41c25f both clean and synced; MCP-F1-CORE-006 completed with matching final commit; Core and Ops locks verified free inside the critical section; owner dispatch = project owner instruction 2026-10-06 to continue the published queue (W03 next after W06 closure)."
+  ]
+}
