@@ -63,7 +63,7 @@ pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/ch
 
 ## 2026-10-05 残余治理叙述同步
 
-工作流 `MCP-F1-FOUNDATION-010`，Owner `Codely/session-0-governance-sync`，仅写 Foundation（零辅助）；方向例外为所有者“核实完善与开发，按照你能做的以及当前目标，开始执行完成完善”指示授权的 `foundation-governance`，全局 F1/Core 不变。Base `69b5576bb232eedd25c38b7c34a2d70730de69af`。本切片完成 `MCP-F1-FOUNDATION-009` 明确范围外的余项：[协调文档](coordination.md) 本包注册顺序段与开发计划 008 段中“B 仍待启动”补记 B=`MCP-F1-OPS-001` 已注册并关闭的完成事实（保留历史，不改协议）；`memory/current/portfolio.md` 与 `docs/STATUS.md` 的记录现状段对齐 30 个 completed、当前活动清单、Contracts 已获授权推送与 CORE-006 关闭（outbox 发布器，无传输绑定）事实。运行本开发计划声明的四条验收命令与 Start/Continue/Finish；无远端推送授权，本地 ff-only 合并 main 后推送状态如实记录。
+工作流 `MCP-F1-FOUNDATION-010`，Owner `Codely/session-0-governance-sync`，仅写 Foundation（零辅助）；方向例外为所有者“核实完善与开发，按照你能做的以及当前目标，开始执行完成完善”指示授权的 `foundation-governance`，全局 F1/Core 不变。Base `69b5576bb232eedd25c38b7c34a2d70730de69af`。本切片完成 `MCP-F1-FOUNDATION-009` 明确范围外的余项：[协调文档](coordination.md) 本包注册顺序段与开发计划 008 段遗留的 B 状态句补记为 B=`MCP-F1-OPS-001` 已注册并关闭的完成事实（保留历史，不改协议）；`memory/current/portfolio.md` 与 `docs/STATUS.md` 的记录现状段对齐 30 个 completed、当前活动清单、Contracts 已获授权推送与 CORE-006 关闭（outbox 发布器，无传输绑定）事实。运行本开发计划声明的四条验收命令与 Start/Continue/Finish；无远端推送授权，本地 ff-only 合并 main 后推送状态如实记录。
 
 ## 完成条件
 
