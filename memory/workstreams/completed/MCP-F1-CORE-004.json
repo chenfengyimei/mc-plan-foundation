@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-004",
   "title": "实现 Asia/Shanghai 每日免费权益纵向链路",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely",
   "owner": "Codex/Mac/01a10393-c30d-7023-848a-1872974fe81d",
   "started_at": "2026-10-03T11:37:14Z",
-  "updated_at": "2026-10-05T13:03:00Z",
+  "updated_at": "2026-10-05T13:12:43Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -57,13 +57,13 @@
       "base_commit": "ce89a397b7b6b4197845a512f57ccda249c69645",
       "branch": "feat/MCP-F1-CORE-004-daily-entitlements",
       "last_checkpoint_commit": "8ba869a6181d683604be29057745d769e8f98df2",
-      "final_commit": null
+      "final_commit": "8ba869a6181d683604be29057745d769e8f98df2"
     },
     "mc-plan-contracts": {
       "base_commit": "5a4da898db2efd16b5c9f05dbc23e65b8e895e9d",
       "branch": "feat/MCP-F1-CORE-004-entitlement-prerelease",
       "last_checkpoint_commit": "72bac5302a7c889f1162a5b89543ec024d47bd90",
-      "final_commit": null
+      "final_commit": "72bac5302a7c889f1162a5b89543ec024d47bd90"
     }
   },
   "depends_on": [
@@ -93,6 +93,8 @@
     "Mac first fixed slice passed at Core 50e3f8395c0646bf531865e2f9b3ffbfd2ae3cb7 on 2026-10-05 Asia/Shanghai: real PostgreSQL twelve distinct first consumptions yield exactly one daily row, three successes and nine exhausted results with remaining 2/1/0, three audits and three INTERNAL/PENDING outbox records; twelve simultaneous identical keys yield one new consumption and eleven exact replays with one audit/outbox pair. Replaying both completed and rejected commands preserves all persisted effects. Red tests exposed and minimal fixes removed the invalid cons_ prefix from the UUID database column and read the post-increment counter inside the locked transaction. Actual gates passed: integration 5/5, unit 55/55, E2E 29/29, contract 3/3 against nine alpha.3 files, format, lint, strict typecheck, architecture (54 source files), four forward-only migrations and build. Final runtime rebuild and remaining acceptance are still open.",
     "Remaining implementation acceptance passed at Core 69561d0813ebd51aaeb13ebf8cf57fdda2f3a2e8: 16/16 PostgreSQL integration tests (including actual HTTP with locally signed RS256 OIDC/service tokens and hash-backed PATs), 52/52 HTTP E2E, 55/55 unit and 7/7 locked alpha.3 contract tests; format, lint, strict typecheck, architecture (54), four forward-only migrations and build passed. Shanghai UTC 15:59:59/16:00:00 rollover restores three without carryover, completed/rejected commands replay across days, caller keys are isolated, changed fingerprints conflict, all non-ACTIVE statuses and unknown opaque IDs reject without effects, inclusive-start/exclusive-end policy windows and historical snapshots hold. Red tests required minimal snapshot-cap and oversized-unit fixes plus NOT_FOUND mapping. Service scope enforcement rejects user/PAT and illegal signature/issuer/audience/expiry/algorithm claims without provisioning; new consumption returns 201 and replay 200. Real OIDC/PAT GET preserves quota and rejects unverified identity, missing credits:read, expired/revoked PAT and suspended accounts. Contract tests parse ConsumptionResult from the locked OpenAPI using pinned yaml/ajv-formats rather than copying its public schema. Contracts Python gates (17 schemas/events, 3 OpenAPI, 23 operationIds) and Redocly on all three APIs passed. Documentation, final runtime rebuild and closure remain open.",
     "Policy-transition edge acceptance passed at Core 570b03bf785f81ff94d4a680bbde8711325adae7: a red mid-day policy-switch test showed the old producer returning a fresh virtual grant for an already-materialized day. The minimal correction reads/reuses the existing day snapshot and serializes first materialization with a Core PostgreSQL user row lock, retaining the existing per-policy unique constraint and atomic bounded counter. A twelve-way race spanning two policy effective windows now produces one daily row, exactly three consumed units, three audits and three INTERNAL outbox records; users without an existing day select the newly effective policy. All actual gates pass: integration 17/17, unit 55/55, E2E 52/52, contract 7/7, format, lint, typecheck, architecture 54, four migrations and build. No schema, migration, public contract, ledger or consumer surface changed. For precision, service-token rejection evidence covers PATs and user tokens lacking credits:consume; deployment must grant that service-only scope solely to authorized client-credentials clients at the trusted issuer.",
-    "Final documentation checkpoints: Core 8ba869a6181d683604be29057745d769e8f98df2 updates STATUS, fixed-order development step 5 completed/step 6 next, acceptance and runtime boundaries; Contracts 72bac5302a7c889f1162a5b89543ec024d47bd90 records the verified producer combination in alpha.3 compatibility/STATUS/development-plan, with all nine locked API/Schema files unchanged. Actual final coordination gates passed on Mac: Continue for CORE-004; validate-workspace for six repositories, 110 Markdown and 48 JSON files; test-coordination all 14 cases. Both feature checkpoints pushed. The initial final Docker build failed fetching auth.docker.io OAuth through direct DNS; it is being retried with the already-authorized local proxy, and no successful final runtime build is claimed yet."
+    "Final documentation checkpoints: Core 8ba869a6181d683604be29057745d769e8f98df2 updates STATUS, fixed-order development step 5 completed/step 6 next, acceptance and runtime boundaries; Contracts 72bac5302a7c889f1162a5b89543ec024d47bd90 records the verified producer combination in alpha.3 compatibility/STATUS/development-plan, with all nine locked API/Schema files unchanged. Actual final coordination gates passed on Mac: Continue for CORE-004; validate-workspace for six repositories, 110 Markdown and 48 JSON files; test-coordination all 14 cases. Both feature checkpoints pushed. The initial final Docker build failed fetching auth.docker.io OAuth through direct DNS; it is being retried with the already-authorized local proxy, and no successful final runtime build is claimed yet.",
+    "Final runtime build actually passed with exit 0 from clean Core 8ba869a6181d683604be29057745d769e8f98df2, using the existing authorized local proxy after the recorded direct-network failure: tag mc-plan-core:mcp-f1-core-004-8ba869a, image/index IID sha256:f94007baeb4d3d41e5b72dd03a2a41a3563219fc0aba30df34509c4ae168fb79, runtime manifest sha256:ef7c1a28cf99b95ba82b06fb62c81c796f5c9011aae62adeb2518eb4f002fa54, arm64 and USER node. An additional isolated image smoke applied all four migrations using the runtime image npm command, verified the baseline daily grant is three, started as uid=1000 and returned live=200/ready=200; only temporary smoke containers/network were removed. Final Continue passed with all six worktrees clean. Final commits recorded as Core 8ba869a6181d683604be29057745d769e8f98df2 and Contracts 72bac5302a7c889f1162a5b89543ec024d47bd90. No production deployment or image publication performed; Skin blocked record/branch, Community and Ops remain unchanged.",
+    "Finish validation actually passed after moving CORE-004 to completed and recording both final commits: six registered repositories, one active (SKIN-008 blocked) and 24 completed workstreams. Core/Contracts locks are released; the independent Skin lock remains. ff-only merges, remote main pushes and deletion of the merged CORE-004 short branches follow this completed-record commit under the owner’s explicit authorization."
   ]
 }
