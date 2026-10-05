@@ -6,9 +6,9 @@
   "status": "blocked",
   "milestone": "F1",
   "initial_owner": "Codex",
-  "owner": "Codely",
+  "owner": "Codely/8b150da7-6a4c-4e53-a769-422c79c12963",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-03T11:17:30Z",
+  "updated_at": "2026-10-05T14:40:07Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -111,6 +111,12 @@
       "from_owner": "Codex",
       "to_owner": "Codely",
       "reason": "Owner directed the Codely session to continue from the Codex breakpoint. Codely completed the in-flight studio implementation: finished the missing Pixel Foundry design system in globals.css, aligned Playwright assertions with machine-state classes, fixed the preview-bytes type narrowing that had blocked the web build, reran pnpm check:full fully green with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200, and committed the checkpoint as 968ea7265eeb7c1263d3643b1b4a2d624c2d852d; the provider HTTP 402 remains the only final real-candidate acceptance dependency."
+    },
+    {
+      "at": "2026-10-05T14:40:07Z",
+      "from_owner": "Codely",
+      "to_owner": "Codely/8b150da7-6a4c-4e53-a769-422c79c12963",
+      "reason": "The MC Plan project owner delivered the session-2 Skin prompt directly to this new session and explicitly authorized the formal handoff of the existing workstream. Preflight on 2026-10-05 22:35-22:41 +08:00 verified the previous writer stopped: the mc-plan-skin worktree is clean at HEAD 9a061355a76e29076b5b9268183a7f31b5caa9ca (equal to the recorded last checkpoint, 8 commits ahead of main, 0/0 against origin/feat/MCP-F1-SKIN-008-pixel-blueprint-v4, no file modified within 90 minutes) and final_commit stays null, so there was no uncommitted work to save and no second writer. The new owner keeps initial_owner, tracking id, branch, the unmerged 8-commit results and the blocked status unchanged. The authorized first bounded slice is limited to in-scope 008 offline website completion: workbench experience compatible with existing interfaces, explicit real-vs-fake provider distinction, first-party 3D capabilities preserved; no new public endpoint, no long-term artwork storage and no Official integration inside 008; no paid generation before Q-001 is decided; no Finish, no lock release and no main merge while owner visual acceptance is unmet."
     }
   ],
   "validation_results": [
@@ -159,6 +165,7 @@
     "Discovered and fixed a refusal misclassification defect: thinking models prepend disclaimers such as 无法直接绘制图像 before an otherwise legal v4 JSON, and the old refusal-first ordering discarded them as PROVIDER_CONTENT_REJECTED; the provider now parses first and classifies refusal only when no valid payload can be extracted (fix plus regression test committed as 9a06135; the previously rejected snow-explorer render then succeeded)",
     "Final bounded validation render succeeded in 30 seconds: candidate 90616ed2 on conversation 3b4e9b48 (sha256 96e424a83b4dc5bbd7aa59dd788786f28cb3f0b92e154ccfaf7cf5e3a2b5430c, 1643 bytes) validates as a legal 64x64 two-layer Alex skin with zero issues, but manual visual inspection scores about 1/10 against the owner's acceptance criteria (no cold/snow palette, no blue scarf at the neck, layer misalignment, generic template look) - the flash+low tier does not execute the strengthened protocol",
     "Per the owner's directive the session stopped drawing cards after the bounded round, kept the verified commits, and records the current model/prompt-protocol combination as the quality ceiling; the demo stack remains resident via pnpm start:real with the candidate inspectable at http://127.0.0.1:3100 in conversation 3b4e9b48; no public contract, database migration, production-provider binding or secret changed",
-    "Owner-authorized governance correction MCP-F1-FOUNDATION-007 (2026-10-03) formalized this record to status=blocked with the neutral combination attribution and the verified 8-commits-ahead branch fact; owner, branch, checkpoints, lock and null final_commit are unchanged, Skin main was not merged and no Skin file was touched by that correction"
+    "Owner-authorized governance correction MCP-F1-FOUNDATION-007 (2026-10-03) formalized this record to status=blocked with the neutral combination attribution and the verified 8-commits-ahead branch fact; owner, branch, checkpoints, lock and null final_commit are unchanged, Skin main was not merged and no Skin file was touched by that correction",
+    "Formal takeover by the new Skin session 2026-10-05 (Codely/8b150da7-6a4c-4e53-a769-422c79c12963): live six-repo preflight re-verified (Skin clean at checkpoint 9a06135 with 0/0 against the pushed origin feature branch and no writer activity within 90 minutes; CORE-005 closed as completed with final commits 5508d60 (core) and a8b38be (contracts) present; the Foundation worktree still carries the FOUNDATION-008 governance session uncommitted files, left untouched); canonical Skill install -Check passed for mc-plan-development 1.1.2 and mc-plan-orchestrator 1.0.0; general coordination validation passed (2 active, 25 completed); this handoff record was committed inside the workspace-root short lock with a precise pathspec commit on the current Foundation branch, with no push, no branch switch and no other path staged or committed by this transaction; the workstream remains blocked with final_commit null and no Skin code change in this transaction."
   ]
 }
