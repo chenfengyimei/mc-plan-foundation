@@ -8,7 +8,7 @@
   "initial_owner": "Codely/session-0-governance-sync",
   "owner": "Codely/session-0-governance-sync",
   "started_at": "2026-10-05T23:52:08.107095+08:00",
-  "updated_at": "2026-10-05T16:02:28.7925490+00:00",
+  "updated_at": "2026-10-05T16:04:31.2185750+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -42,7 +42,7 @@
     "mc-plan-foundation": {
       "base_commit": "69b5576bb232eedd25c38b7c34a2d70730de69af",
       "branch": "fix/MCP-F1-FOUNDATION-010-residual-narrative-sync",
-      "last_checkpoint_commit": "fda97ba6659df43e0fa0e7e0d96838f4ec0e9cdd",
+      "last_checkpoint_commit": "fbd5b4ce48a9d2e72730f9a292bc64fa47676847",
       "final_commit": null
     }
   },
@@ -57,6 +57,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Checkpoint 2026-10-05 (Codely/session-0-governance-sync): seven targeted edits applied on fix/MCP-F1-FOUNDATION-010-residual-narrative-sync - coordination.md registration-order section now records B=MCP-F1-OPS-001 closed with A/B/C all closed and the section marked as 00-era history; development-plan.md marks FOUNDATION-008 closed (final 9814ac0 merged/pushed), fixes the same stale B sentence and adds the FOUNDATION-010 section; portfolio.md Contracts row records e434d93 pushed under owner authorization, Core row extended to CORE-001..006 closed with CORE-006 63745d6 (no transport binding), record-status paragraph updated to 30 completed / 2 active (this slice + SKIN-008 blocked); STATUS.md record-status paragraph updated identically. No direction/ADR/open-questions edits; SKIN-008 and CORE-006 records untouched."
+    "Checkpoint 2026-10-05 (Codely/session-0-governance-sync): seven targeted edits applied on fix/MCP-F1-FOUNDATION-010-residual-narrative-sync - coordination.md registration-order section now records B=MCP-F1-OPS-001 closed with A/B/C all closed and the section marked as 00-era history; development-plan.md marks FOUNDATION-008 closed (final 9814ac0 merged/pushed), fixes the same stale B sentence and adds the FOUNDATION-010 section; portfolio.md Contracts row records e434d93 pushed under owner authorization, Core row extended to CORE-001..006 closed with CORE-006 63745d6 (no transport binding), record-status paragraph updated to 30 completed / 2 active (this slice + SKIN-008 blocked); STATUS.md record-status paragraph updated identically. No direction/ADR/open-questions edits; SKIN-008 and CORE-006 records untouched.",
+    "Follow-up 2026-10-05 (Codely/session-0-governance-sync): the four declared acceptance commands passed on the branch tree - validate-workspace (6 repositories / 112 Markdown / 60 JSON), test-coordination 14/14, test-workspace-scanning 21/21, test-foundation-write 14/14; the 010 dev-plan section was reworded so the stale-phrase sweep (仍待启动/未启动/唯一活动) now returns zero hits across coordination.md, development-plan.md, portfolio.md and STATUS.md; docs follow-up commit is the final implementation checkpoint."
   ]
 }
