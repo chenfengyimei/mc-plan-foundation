@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-011",
   "title": "ADR-0011：事件投递传输形态定为消费者拉取（HTTP）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "started_at": "2026-10-05T17:59:23.511Z",
-  "updated_at": "2026-10-05T17:59:52.866Z",
+  "updated_at": "2026-10-05T18:00:42.969Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -37,7 +37,7 @@
       "base_commit": "f6b69f7e8b97c43354cf44c237d81e76d92b0985",
       "branch": "feat/MCP-F1-FOUNDATION-011-event-transport-adr",
       "last_checkpoint_commit": "c16abfb00fa887eb3dc7e70166b4efc15b71caf0",
-      "final_commit": null
+      "final_commit": "17ff913d28a54e9adfb1cb5b497fd2fa2277f94a"
     }
   },
   "depends_on": [
@@ -53,6 +53,7 @@
   "handoff_history": [],
   "validation_results": [
     "Registered 2026-10-05T17:59:23.511Z from live state: Foundation main f6b69f7 clean and synced; Foundation lock free inside the critical section; owner transport decision delivered in-session 2026-10-06 (consumer pull over HTTP; broker and HTTP-push explicitly rejected).",
-    "ADR-0011 decisions/0011-event-delivery-consumer-pull.md written on the governance branch: consumer pull over HTTP (cursor + explicit acknowledgment, at-least-once, event_id consumer idempotency, authorized service credentials only, no new middleware, readiness unchanged); broker and HTTP-push recorded as rejected alternatives with reasons; upgrade requires a new ADR."
+    "ADR-0011 decisions/0011-event-delivery-consumer-pull.md written on the governance branch: consumer pull over HTTP (cursor + explicit acknowledgment, at-least-once, event_id consumer idempotency, authorized service credentials only, no new middleware, readiness unchanged); broker and HTTP-push recorded as rejected alternatives with reasons; upgrade requires a new ADR.",
+    "ADR-0011 delivery verified: decisions/0011-event-delivery-consumer-pull.md exists with the owner 2026-10-06 decision (consumer pull over HTTP), rejected alternatives (broker, HTTP-push) with reasons, consumer obligations (cursor + explicit acknowledgment, at-least-once, event_id idempotency), visibility boundary (authorized service credentials only) and explicit change conditions; no other file touched. Process note: the first completion attempt aborted on a bad tip assertion before writing anything, and the wrapper let the follow-on chain merge the governance branch to main early (ad3cc4d..17ff913 pushed, ADR landed on main); the branch was recreated at the same pushed tip solely to complete this record, and this closure evidence records the real sequence."
   ]
 }
