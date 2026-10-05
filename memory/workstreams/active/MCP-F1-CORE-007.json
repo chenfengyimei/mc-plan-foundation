@@ -7,7 +7,7 @@
   "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "started_at": "2026-10-05T16:43:30.179Z",
-  "updated_at": "2026-10-05T16:43:30.179Z",
+  "updated_at": "2026-10-05T17:30:31.270Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-ops"
@@ -58,13 +58,13 @@
     "mc-plan-core": {
       "base_commit": "63745d6657d99117acfecd456c140d5e994ebe18",
       "branch": "feat/MCP-F1-CORE-007-developer-app-keycloak-lifecycle",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "18bcef29c5cd2a92562e08531992a4d9719d26ec",
       "final_commit": null
     },
     "mc-plan-ops": {
       "base_commit": "a41c25fba057fa4c069c8959eb58b3cd5706688b",
       "branch": "feat/MCP-F1-CORE-007-core-admin-client",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "f62a4375e36d80cf044d4b92be3bebd5369b5c0c",
       "final_commit": null
     }
   },
@@ -76,6 +76,10 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-05T16:43:30.179Z under the Foundation short-lock from live state: Core main 63745d6 and Ops main a41c25f both clean and synced; MCP-F1-CORE-006 completed with matching final commit; Core and Ops locks verified free inside the critical section; owner dispatch = project owner instruction 2026-10-06 to continue the published queue (W03 next after W06 closure)."
+    "Registered 2026-10-05T16:43:30.179Z under the Foundation short-lock from live state: Core main 63745d6 and Ops main a41c25f both clean and synced; MCP-F1-CORE-006 completed with matching final commit; Core and Ops locks verified free inside the critical section; owner dispatch = project owner instruction 2026-10-06 to continue the published queue (W03 next after W06 closure).",
+    "Implementation completed on the declared branches: Core implementation 06cc8bb (feat(developer-app): provision Keycloak OIDC client lifecycle) plus docs 18bcef2; Ops f62a437 (feat(identity): add core admin client and developer-app lifecycle acceptance). Core gate evidence recorded before the checkpoint commit: unit 103, HTTP E2E 57, real PostgreSQL/Keycloak integration 48 (9 new real-Keycloak 26.8.0 testcontainer lifecycle tests), contract 17, architecture 74 source files, 7 forward-only migrations, format/lint/strict typecheck/build all green.",
+    "Real Keycloak lifecycle acceptance: public app provisioned first as an enabled PKCE S256 client with exactly the approved default client scopes plus subject/email/mc-plan-core-audience; Authorization Code + PKCE through the freshly provisioned client maps to the same MC Plan user; PATCH narrowing removes the scope from the realm client and from newly issued tokens (403 INSUFFICIENT_SCOPE); confidential one-time secret exchange succeeds (wrong secret rejected at the token endpoint; the original secret still works after scope re-provisioning, no silent rotation); revocation disables the realm client without deleting it and new authorizations are refused.",
+    "Compensation, idempotence and reconciliation: injected Keycloak failure leaves no registry row and no orphan client; injected registry failure triggers compensating deletion (zero orphans; a failed compensation is reported explicitly for reconciliation); concurrent ensureClient calls converge onto one realm client (409 create conflict converges via re-lookup and update); registry<->realm reconciliation reports missing/disabled/unexpectedly-enabled/scope-drift/unexpected-scopes/unprovisioned and orphan clients without silent repair; legacy rows with null keycloak_client_id stay database-only for scope/revoke operations.",
+    "Keycloak 26.8 empirical findings locked into code and tests: attaching a default client scope is PUT (POST answers 404); role/scope mapping posts must carry the minimal {id,name} representation (full representation answers 400); a service account under fullScopeAllowed=false only exercises roles granted through BOTH the user-level role mapping and the client-level scope mapping; realm import cannot carry an explicit service-account user entry (duplicate-user import failure). Ops delivery: realm adds exactly one new client mc-plan-core-admin (no committed secret), KEYCLOAK_ADMIN_* compose inputs, validate-dev-environment.ps1 machine-asserts the admin boundary, initialize-core-admin-client.ps1 is the shared idempotent helper, validate-dev-developer-apps.ps1 is the new dedicated acceptance project; static validation and PowerShell syntax checks passed for all scripts."
   ]
 }
