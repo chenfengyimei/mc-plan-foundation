@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-OPS-001",
   "title": "Ops 真实 Keycloak 用户与服务令牌的 alpha.3 权益消费联调",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
   "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
   "started_at": "2026-10-05T23:04:21.954603+08:00",
-  "updated_at": "2026-10-05T15:18:52.4107240+00:00",
+  "updated_at": "2026-10-05T15:19:24.8932280+00:00",
   "primary_repository": "mc-plan-ops",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -51,7 +51,7 @@
       "base_commit": "ff0eeb7ff61301af762ba05ab58459b6c707577e",
       "branch": "feat/MCP-F1-OPS-001-alpha3-identity-acceptance",
       "last_checkpoint_commit": "6813b52d68750db3d1e68111607300827c093af8",
-      "final_commit": null
+      "final_commit": "6813b52d68750db3d1e68111607300827c093af8"
     }
   },
   "depends_on": [
@@ -72,6 +72,8 @@
     "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-identity.ps1 passed on a freshly created dev project: real Authorization Code + PKCE S256 login issued an RS256 Keycloak token whose issuer/audience/email_verified/scope claims were asserted and whose signature was verified with jose inside the Core container, twelve concurrent GET /v1/me responses converged to records=1:1:1:1:1, liveness/readiness passed with migrations current, the runtime user is uid 1000, and the Core/Keycloak database identities stayed isolated",
     "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-entitlements.ps1 passed (project mc-plan-alpha3-acceptance, Keycloak 127.0.0.1:8280, Core 127.0.0.1:3400, Asia/Shanghai policy_date 2026-10-05): user OIDC and a valid PAT read entitlements without consuming and without materializing a daily grant; a real client_credentials service token performed first 201, same-key same-request 200 with all five result fields unchanged, same-key different-request 409 IDEMPOTENCY_KEY_CONFLICT, same-key twelve-way 1x201+11x200 with one deduction, fresh-quota different-key twelve-way 3x201+9x409 ENTITLEMENT_EXHAUSTED with remaining 0/1/2, serial exhaustion and rejected-key replay 409; database assertions showed daily grants 3:2 and 3:3, idempotent commands 15 (5 COMPLETED / 10 REJECTED) all attributed to the real service principal, audit ENTITLEMENT_CONSUMED 5 distinct, core.entitlement.consumed.internal.v1 INTERNAL/PENDING outbox 5 distinct, identity provisioning outbox 3, identities 3:3:3 unchanged and zero service-principal IdentityLinks; all ten rejection boundaries returned the locked codes and were labeled [REAL-KEYCLOAK] (missing consume scope user/service 403, PAT consume credential 401, wrong audience 401, genuinely expired per-client token 401, unknown user 404, non-ACTIVE user token and service consumption 403) or [SYNTHETIC-LOCAL-SIGNED] (non-real-issuer locally signed JWT 401, malformed bearer 401) with no ledger side effects; cleanup removed the dedicated project containers, networks and volumes",
     "A second full run of scripts/validate-dev-entitlements.ps1 with -ComposeProjectName mc-plan-alpha3-acceptance-alt -KeycloakHttpPort 8580 -KeycloakMgmtPort 9580 -MailpitPort 8525 -CoreHttpPort 3600 also passed end to end with identical ledger results, proving independent repeatability with freshly isolated data, configurable ports and project names, and the same own-project-only cleanup; two earlier prototype-directory runs of the byte-identical scripts had also passed (8280/3400 and 8380/3500) before the files were committed",
-    "Implementation committed in mc-plan-ops as 6813b52d68750db3d1e68111607300827c093af8 (11 files, +1261/-75): pinned alpha.3 compose inputs with PAT_HASH_KEY/PAT_MAX_VALIDITY_DAYS, parameterized loopback ports/project, the realm with the dedicated confidential service client and labeled negative clients, the new validate-dev-entitlements.ps1, updated validate-dev-environment.ps1/validate-dev-identity.ps1, and STATUS/development-plan/topology/README updates plus the new docs/dev-identity.md runbook recording pinned SHA and digests, ports, realm boundaries, test counts, REAL/SYNTHETIC negative labeling and cleanup evidence"
+    "Implementation committed in mc-plan-ops as 6813b52d68750db3d1e68111607300827c093af8 (11 files, +1261/-75): pinned alpha.3 compose inputs with PAT_HASH_KEY/PAT_MAX_VALIDITY_DAYS, parameterized loopback ports/project, the realm with the dedicated confidential service client and labeled negative clients, the new validate-dev-entitlements.ps1, updated validate-dev-environment.ps1/validate-dev-identity.ps1, and STATUS/development-plan/topology/README updates plus the new docs/dev-identity.md runbook recording pinned SHA and digests, ports, realm boundaries, test counts, REAL/SYNTHETIC negative labeling and cleanup evidence",
+    "Closure evidence 2026-10-05: the final commit is Ops 6813b52d68750db3d1e68111607300827c093af8 on branch feat/MCP-F1-OPS-001-alpha3-identity-acceptance (base ff0eeb7ff61301af762ba05ab58459b6c707577e, single commit, 11 files +1261/-75); the three acceptance commands and a second independently repeated acceptance run all passed from the committed tree as recorded in the checkpoint entries; per protocol the Finish validation, local ff-only merge to Ops main, normal origin push and branch release follow this transaction",
+    "Scope boundary kept: no Core, Contracts, Foundation, Community or Skin file or branch was touched; the fixed inputs stayed Core 8ba869a (verified image digest f94007ba/ef7c1a28, linux/arm64) and Contracts 0.1.0-alpha.3 verified commit-pinned against the fab1f3c lock with the 72bac53 export byte-identical; no public API, scope, error code, event or schema changed; the local combination is non-production and does not claim prerelease or production readiness; Q-004/Q-006/Q-014/Q-015/Q-016 remain undecided and Mailpit is not production email acceptance"
   ]
 }
