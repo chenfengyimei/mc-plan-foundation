@@ -8,7 +8,7 @@
   "initial_owner": "Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c",
   "owner": "Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c",
   "started_at": "2026-10-05T14:12:03.671348Z",
-  "updated_at": "2026-10-05T14:12:03.671348Z",
+  "updated_at": "2026-10-05T14:59:41.1774910+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,7 +39,7 @@
     "mc-plan-foundation": {
       "base_commit": "221d4852e0fe79f6c7ca4f82bc65e1341e06e88d",
       "branch": "fix/MCP-F1-FOUNDATION-008-parallel-governance",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "9814ac0aed57e5c8614dc2b36da81db80a1d8d9a",
       "final_commit": null
     }
   },
@@ -51,5 +51,14 @@
     "reason": "依赖 JSON/YAML 被误认作项目契约，且同一 Mac 多会话共享 Foundation 工作树/index；须先串行完成可验证短锁及扫描治理才允许后续注册，不修改全局 F1/Core 方向。"
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Preflight refreshed six repositories: initial snapshot matched the owner brief (Foundation 5320cb0, Contracts 72bac53, Core 8ba869a, Community 69ac5e9, Skin 9a06135, Ops ff0eeb7); canonical development 1.1.2 and orchestrator 1.0.0 install.ps1 -Check passed, both Skills remain unchanged. Foundation base advanced before registration to 221d4852e0fe79f6c7ca4f82bc65e1341e06e88d via existing Codely CORE-005 coordination commits; allocated FOUNDATION-008 in an atomic mkdir registration transaction, exact own record commit 89b708f530e245b5b5425a31b853935ccc9a866a and declared branch created; validate-coordination.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC -TrackingId MCP-F1-FOUNDATION-008 -Phase Start passed.",
+    "Baseline isolated reproduction passed: git show 221d485:scripts/validate-workspace.ps1 > /private/tmp/mc-governance-baseline-01a10c60.ps1; pwsh -NoProfile -File scripts/test-workspace-scanning.ps1 -ValidatorPath /private/tmp/mc-governance-baseline-01a10c60.ps1 -ReproduceBaseline returned exit 0 with 3 expected cases (clean source exit 0; dependency duplicate $id exit 1; dependency YAML missing relative $ref exit 1). No real contract altered.",
+    "pwsh -NoProfile -File scripts/test-workspace-scanning.ps1 passed exit 0, 21 cases: dependency/temporary/ignored products excluded; genuine invalid JSON, duplicate $id, missing local $ref, broken Markdown still exit 1; tracked ignored .codex guide, coordination JSON and non-ignored hidden source checked; spaced paths and workspace/repository registration gates verified in unique temporary Git fixtures.",
+    "pwsh -NoProfile -File scripts/test-foundation-write.ps1 passed exit 0, 14 cases: two independent PowerShell writers cannot enter together; failed acquisition returns holder without retry or releasing it; normal/terminating/native-failure release matches own token; foreign token and incomplete/extra evidence retained; shared dirty index/wrong branch/Foundation owner rejected; governance exact paths and precise own record staging verified. Only unique test-owned temporary trees used.",
+    "pwsh -NoProfile -File scripts/test-coordination.ps1 passed exit 0, 14 cases. pwsh -NoProfile -File scripts/validate-workspace.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC passed first for 6 active repositories / 111 Markdown / 51 JSON, and on resume with the installed SDK for 6 repositories / 111 Markdown / 56 JSON. Counts are observations, not conditions; project inventory uses registered Git tracked plus non-ignored untracked inputs.",
+    "The first governance checkpoint attempt was rejected by the new entry due to the occupied short lock and another session coordination/index changes. No foreign file was staged, committed, reverted or force-pushed. After the owner requested continuation, fresh preflight found only own governance changes and no lock/index residue; branch tip fda7b9484d24ac8297aae7291f61bc58f2af08b4 contains other sessions CORE-005/SDK closures and the owner-authorized Skin handoff. Preserved their records, commits and current Skin blocked lock; verified CORE-005 and CONTRACTS-001 final commits exist on business main and Finish passes. SDK main e434d93 remains 2 commits ahead of origin/a8b38be; no SDK push performed by this task.",
+    "Implementation checkpoint 9814ac0aed57e5c8614dc2b36da81db80a1d8d9a created through invoke-foundation-write.ps1 in matching Foundation governance branch mode with exact 10 owned paths; git diff --check, workspace validation (6 / 111 / 56) and -Phase Continue passed inside the transaction. Git fetch origin and ff-only synchronization completed safely; no public interface, product source, migration, image, Skill version or global direction changed. Short locks released by matching holder only.",
+    "Full entry invocation documented in docs/coordination.md; ADR-0010 records the same-Mac cooperative protocol. Foundation writes on ordinary main require the entry plus Submit-FoundationRecord, exact own paths and clean shared index; long business work stays outside. No TTL, forced takeover, retry loop or daemon. If sessions cannot use the entry, Foundation registrations/updates remain serial. A/B may register after governance closure, C waits for A closure; A/C have already been closed by other sessions and must not be duplicated; B remains unstarted planning with no reserved ID."
+  ]
 }
