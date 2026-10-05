@@ -8,7 +8,7 @@
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-05T14:08:37Z",
-  "updated_at": "2026-10-05T14:08:37Z",
+  "updated_at": "2026-10-05T14:17:30Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": ["mc-plan-contracts"],
   "reference_repositories": [
@@ -62,7 +62,7 @@
     "mc-plan-contracts": {
       "base_commit": "72bac5302a7c889f1162a5b89543ec024d47bd90",
       "branch": "feat/MCP-F1-CORE-005-balance-read-prerelease",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "9a85b989a87dc9e809f956770ebd7a60e1c8e664",
       "final_commit": null
     }
   },
@@ -71,6 +71,9 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "Preflight verified 2026-10-05 (Codely/Mac): six repos clean and synced to origin on main/declared branches (Foundation 5320cb0, Contracts 72bac53, Core 8ba869a, Community 69ac5e9, Skin 9a06135 on feat/MCP-F1-SKIN-008-pixel-blueprint-v4, Ops ff0eeb7); the only active workstream is MCP-F1-SKIN-008 (blocked, Skin-only lock, owner Codely, final_commit null) and no other session has registered a Core/Contracts task, so MCP-F1-CORE-005 was allocated as the next unused Core ID; canonical development 1.1.2 and orchestrator 1.0.0 Skill copies match the Foundation authoritative files; direction F1 with Core primary and Contracts/Ops supporting covers this slice; the workspace-root draft memory mcp-f1-core-005-draft.md matches the owner-confirmed scope (read-only balance public surface, application-level reconciliation, new credits-specific idempotent command table); Mac toolchain verified (Git, pwsh 7.6.6, Node 24.16.0, pnpm 11.19.0, Python 3.12.14, Docker Engine 29.8.1, gh 2.102.0)"
+    "Preflight verified 2026-10-05 (Codely/Mac): six repos clean and synced to origin on main/declared branches (Foundation 5320cb0, Contracts 72bac53, Core 8ba869a, Community 69ac5e9, Skin 9a06135 on feat/MCP-F1-SKIN-008-pixel-blueprint-v4, Ops ff0eeb7); the only active workstream is MCP-F1-SKIN-008 (blocked, Skin-only lock, owner Codely, final_commit null) and no other session has registered a Core/Contracts task, so MCP-F1-CORE-005 was allocated as the next unused Core ID; canonical development 1.1.2 and orchestrator 1.0.0 Skill copies match the Foundation authoritative files; direction F1 with Core primary and Contracts/Ops supporting covers this slice; the workspace-root draft memory mcp-f1-core-005-draft.md matches the owner-confirmed scope (read-only balance public surface, application-level reconciliation, new credits-specific idempotent command table); Mac toolchain verified (Git, pwsh 7.6.6, Node 24.16.0, pnpm 11.19.0, Python 3.12.14, Docker Engine 29.8.1, gh 2.102.0)",
+    "Coordination Start passed with the active record committed on Foundation main 2ba4490 and both declared branches created (Core feat/MCP-F1-CORE-005-immutable-credit-ledger, Contracts feat/MCP-F1-CORE-005-balance-read-prerelease); workspace validation passed for 6 repositories, 113 Markdown and 49 JSON files; the blocked Skin-only lock remains unchanged",
+    "Contracts 0.1.0-alpha.4 locked before any producer work as commit 9a85b989a87dc9e809f956770ebd7a60e1c8e664 on the feature branch: GET /v1/credits/balance (operationId getCreditBalance, credits:read for OIDC and personal access tokens, strictly read-only GET-only path, 200 via the new locked CreditBalance schema, 401/403 via the existing AuthenticationRequired/AccessForbidden, no 404); ConsumptionResult.source stays daily_entitlement-only and all alpha.3 surfaces keep their semantics",
+    "Isolated Python 3.12 validation passed for 18 schemas/events with 18 unique $ids and 24 unique operationIds including the new alpha.4 machine gates (balance read-only path set, operationId, CreditBalance field set with non-negative minimum and additionalProperties false, CreditLedgerEntry four-kind enum and non-negative bounds, consume source enum unchanged, alpha.4 compatibility classification); Redocly recommended lint passed for core.yaml, community.yaml and skin.yaml"
   ]
 }
