@@ -49,12 +49,15 @@ foreach ($directory in (Get-ChildItem -LiteralPath $root -Directory -Filter 'mc-
     }
 }
 
-$markdownFiles = Get-ChildItem -LiteralPath $root -Recurse -Force -File -Filter '*.md' |
-    Where-Object {
-        $_.FullName -notmatch '[\\/]\.git[\\/]' -and
-        $_.FullName -notmatch '[\\/]\.validation[\\/]' -and
-        $_.FullName -notmatch '[\\/]node_modules[\\/]'
+. (Join-Path $PSScriptRoot 'get-project-files.ps1')
+$projectFiles = @{}
+foreach ($repository in $repositories) {
+    try {
+        $projectFiles[[string]$repository.name] = @(Get-ProjectFiles -RepositoryPath (Join-Path $root ([string]$repository.path)))
     }
+    catch { $errors.Add($_.Exception.Message) }
+}
+$markdownFiles = @($projectFiles.Values | ForEach-Object { $_ } | Where-Object { $_.Extension -eq '.md' })
 
 foreach ($file in $markdownFiles) {
     $content = Get-Content -LiteralPath $file.FullName -Raw
@@ -72,9 +75,9 @@ foreach ($file in $markdownFiles) {
 }
 
 $jsonFiles = @(
-    Get-ChildItem -LiteralPath (Join-Path $root 'mc-plan-contracts') -Recurse -File -Filter '*.json'
-    Get-ChildItem -LiteralPath (Join-Path $root 'mc-plan-foundation') -Recurse -Force -File -Filter '*.json' |
-        Where-Object { $_.FullName -notmatch '[\\/]\.git[\\/]' }
+    foreach ($name in @('mc-plan-contracts', 'mc-plan-foundation')) {
+        $projectFiles[$name] | Where-Object { $_.Extension -eq '.json' }
+    }
 )
 $schemaIds = @{}
 foreach ($file in $jsonFiles) {
@@ -95,7 +98,7 @@ foreach ($file in $jsonFiles) {
     }
 }
 
-$contractFiles = Get-ChildItem -LiteralPath (Join-Path $root 'mc-plan-contracts') -Recurse -File |
+$contractFiles = $projectFiles['mc-plan-contracts'] |
     Where-Object { $_.Extension -in @('.json', '.yaml', '.yml') }
 foreach ($file in $contractFiles) {
     $content = Get-Content -LiteralPath $file.FullName -Raw

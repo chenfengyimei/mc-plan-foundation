@@ -19,11 +19,47 @@ Foundation 不拥有产品接口。公共语义变化由 Foundation/ADR 先决�
 ## 验收命令
 
 ```powershell
-pwsh -File .\mc-plan-foundation\scripts\validate-workspace.ps1
-pwsh -File .\mc-plan-foundation\scripts\test-coordination.ps1
+# 在 /Users/chenfeng/xm/MC/mc-plan-foundation 运行
+pwsh -NoProfile -File scripts/validate-workspace.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC
+pwsh -NoProfile -File scripts/test-coordination.ps1
+pwsh -NoProfile -File scripts/test-workspace-scanning.ps1
+pwsh -NoProfile -File scripts/test-foundation-write.ps1
 ```
 
 Skill 变更还必须运行官方 `quick_validate.py`、安装/版本漂移测试和行为用例静态检查。
+
+## 2026-10-05 并行开发治理
+
+工作流 `MCP-F1-FOUNDATION-008`，Owner `Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c`，仅写 Foundation；方向例外为所有者 00 提示授权的 `foundation-governance`，全局 F1/Core 不变。初始快照 Foundation `5320cb0`；注册前 Codely 已正常提交 CORE-005 登记/契约检查点，因此实际 base 为 `221d4852e0fe79f6c7ca4f82bc65e1341e06e88d`，登记提交 `89b708f530e245b5b5425a31b853935ccc9a866a`。不重复启动 Core，也不修改其记录。
+
+第一次检查点尝试因短锁占用及他人协调记录修改被入口拒绝，未 stage 或提交他人内容。所有者随后要求继续；重新预检时 Foundation 为 `fda7b9484d24ac8297aae7291f61bc58f2af08b4`，index 干净、仅本会话治理路径待提交。期间 CORE-005/SDK 关闭与 Skin 正式交接均由其他会话提交，本分支保留这些提交；核实二者最终提交在业务仓 main 上、Finish 通过，不替 SDK 推送、不修改 Skin 记录。
+
+复现使用独立 Git 夹具，无真实契约改动：
+
+```powershell
+git show 221d485:scripts/validate-workspace.ps1 > /private/tmp/mc-governance-baseline-01a10c60.ps1
+pwsh -NoProfile -File scripts/test-workspace-scanning.ps1 `
+  -ValidatorPath /private/tmp/mc-governance-baseline-01a10c60.ps1 -ReproduceBaseline
+```
+
+复现三项均符合预期：干净 exit 0，依赖重复 $id exit 1，依赖 YAML 缺失相对 $ref exit 1。修复后扫描库存按注册仓库/Git 规则生成；21 项隔离回归覆盖依赖、隐藏源、临时/忽略产物、真实 JSON/重复 ID/引用/Markdown 失败、受跟踪 `.codex`、协调 JSON、含空格路径及项目/工作区门槛。计数随真实文件变化，不作为测试断言。
+
+短锁测试使用两个实际 PowerShell 子进程和受控进入/释放信号，验证失败立即返回、持有者证据、异常/native 失败释放、令牌不匹配保留、未完成证据/额外内容保留、共享 index/错误分支拒绝、治理 Owner/精确路径检查，以及只提交本 ID 记录的 helper。入口与调用协议见 [协调文档](coordination.md)，长期选择见 [ADR-0010](../decisions/0010-foundation-write-transactions.md)。
+
+实际结果：首次工作区验收通过（6 个 active 仓库、111 Markdown、51 JSON），继续时已安装 SDK 的实际工作区再次通过（6 仓、111 Markdown、56 JSON）；协调回归 14/14、扫描回归 21/21、短锁/提交隔离回归 14/14 均通过（exit 0），Continue 通过。Markdown 数量变化来自按注册仓库扫描及新增 ADR；仓库外 CODELY/草案记忆不再计入，JSON 增量包含真实协调记录、alpha.4 契约与 SDK 文件，不使用固定数量作条件。最终提交和关闭证据保存在本工作流 completed 记录；Finish 在关闭事务中执行，随后本地 main ff-only 合并并正常 push。
+
+本次不修改 Skill 内容；仅运行现有 Check 确认安装未漂移：
+
+```powershell
+pwsh -NoProfile -File .codex/skills/mc-plan-development/scripts/install.ps1 -Check
+pwsh -NoProfile -File .codex/skills/mc-plan-orchestrator/scripts/install.ps1 -Check
+pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC -TrackingId MCP-F1-FOUNDATION-008 -Phase Start
+pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC -TrackingId MCP-F1-FOUNDATION-008 -Phase Continue
+# 记录已提交并移入 completed、仓库干净后运行
+pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC -TrackingId MCP-F1-FOUNDATION-008 -Phase Finish
+```
+
+治理关闭后 A/B 可开始注册，C 等 A 关闭并释放 Contracts 锁后再注册；继续时 A/C 已由其他会话关闭，不重复登记，B 仍待启动，不预留 ID。本任务不改变 Skin 当前 blocked/所有权/锁。短锁仅支持遵守入口的同 Mac 协调事务，不能声称任意并发写入安全；若会话不能使用入口，Foundation 注册/记录更新必须全部串行协调。
 
 ## 完成条件
 
