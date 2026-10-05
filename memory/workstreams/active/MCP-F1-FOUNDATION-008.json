@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-008",
+  "title": "依赖隔离扫描与同 Mac Foundation 短锁协议",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c",
+  "owner": "Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c",
+  "started_at": "2026-10-05T14:12:03.671348Z",
+  "updated_at": "2026-10-05T14:12:03.671348Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "修复工作区依赖/缓存误扫描，保留真实源码验证；实现并验证同一 Mac 共享 Foundation 的短临界区协议，为后续有界并行工作提供注册门槛。",
+  "in_scope": [
+    "注册仓库 Git 文件/忽略规则筛选、隔离扫描回归",
+    "短锁包装入口、并发/持有者异常释放回归、coordination 文档及新增 ADR",
+    "Foundation STATUS、开发计划及 portfolio 治理事实和后续未启动顺序"
+  ],
+  "out_of_scope": [
+    "所有产品契约、SDK、业务源码和另外五仓修改",
+    "改变全局 F1/Core 方向、Skin 所有权/阻塞/锁",
+    "A/B/C 注册或预留 ID、Skill 内容改动、自动过期/强占/守护进程、生产部署或公开发布"
+  ],
+  "contract_impact": "none; Foundation governance scripts and coordination protocol only",
+  "acceptance_evidence": [
+    "隔离夹具复现 clean=0 / dependency duplicate id=1 / dependency YAML ref=1，修复后依赖通过、真实坏源仍失败",
+    "工作区验收、14 cases 协调基线、新扫描与短锁并发验收均通过",
+    "Start/Continue/Finish、检查点、ff-only 合并 main 与正常 origin push"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "221d4852e0fe79f6c7ca4f82bc65e1341e06e88d",
+      "branch": "fix/MCP-F1-FOUNDATION-008-parallel-governance",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner 向本 Codex 会话交付 00 治理提示（2026-10-05），明确授权有界实现、验证、提交、关闭、ff-only 合并与正常 origin 推送",
+    "reason": "依赖 JSON/YAML 被误认作项目契约，且同一 Mac 多会话共享 Foundation 工作树/index；须先串行完成可验证短锁及扫描治理才允许后续注册，不修改全局 F1/Core 方向。"
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
