@@ -7,8 +7,8 @@
   "milestone": "F1",
   "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
   "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
-  "started_at": "2026-10-05T16:17:31.0379730+00:00",
-  "updated_at": "2026-10-05T16:17:31.0379730+00:00",
+  "started_at": "2026-10-06T00:17:31.037973+08:00",
+  "updated_at": "2026-10-05T16:29:22.5977630+00:00",
   "primary_repository": "mc-plan-ops",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -46,7 +46,7 @@
     "mc-plan-ops": {
       "base_commit": "6813b52d68750db3d1e68111607300827c093af8",
       "branch": "feat/MCP-F1-OPS-002-email-flow-acceptance",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "a41c25fba057fa4c069c8959eb58b3cd5706688b",
       "final_commit": null
     }
   },
@@ -60,6 +60,11 @@
   "validation_results": [
     "Preflight verified 2026-10-05 ~23:58 (Codely/Mac): Foundation main 69b5576 与 origin 一致且干净；Contracts e434d93（=origin）、Core main 63745d6（MCP-F1-CORE-006/W06 已于 ~23:55 完成关闭，Core 锁已释放）、Community 69ac5e9、Skin feat/MCP-F1-SKIN-008 85b35ff（blocked，Skin-only 锁保留）、Ops main 6813b52（=origin）全部干净；登记处为 1 活动（SKIN-008）/30 完成",
     "目标核对：W01 组合状态同步已由 MCP-F1-FOUNDATION-009 完成关闭；W06/CORE-006 已完成；W03（dev-app Keycloak 生命周期，预计 CORE-007）按会话1草案仍需所有者明确批准派工，未启动；邮件验证/密码重置真实收信证据为 Session-1 与 Session-D 评审两处点名的独立小切片（Ops 锁空闲、可独立排期），无任何会话注册相同目标（无 MCP-F1-OPS-002 及任何邮件流工作流记录），故分配 MCP-F1-OPS-002",
-    "所有者授权：2026-10-05 指令（核实完善与开发，按照你能做的以及当前目标，开始执行完成完善）；本切片不选择 Q-006 生产邮件、不硬编码未决数值、契约零变化"
+    "所有者授权：2026-10-05 指令（核实完善与开发，按照你能做的以及当前目标，开始执行完成完善）；本切片不选择 Q-006 生产邮件、不硬编码未决数值、契约零变化",
+    "Coordination Start passed 2026-10-05 with the record committed on Foundation main bad7000 and pushed; the declared branch feat/MCP-F1-OPS-002-email-flow-acceptance was created at base 6813b52d68750db3d1e68111607300827c093af8, and the union push also published the eight pending local commits of the closed MCP-F1-FOUNDATION-010 under the established shared-main practice; the blocked Skin-only MCP-F1-SKIN-008 lock remained unchanged",
+    "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-environment.ps1 passed unchanged: the registrationAllowed/verifyEmail/resetPasswordAllowed and local SMTP -> Mailpit realm gates that this slice relies on are enforced by the existing static validation",
+    "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-email-flows.ps1 passed (project mc-plan-emailflow-acceptance, Keycloak 127.0.0.1:8680, Mailpit 8625, Core 127.0.0.1:3800, identity emailflow-5a0d20c2@mc-plan.example.invalid): real self-registration form -> Keycloak SMTP delivered the Verify email to Mailpit (reserved sender no-reply@mc-plan.example.invalid, API receipt asserted) -> action-token link -> UPDATE_PASSWORD required action -> Authorization Code + PKCE token with email_verified=true -> GET /v1/me returned the PublicActor; the forgot-password flow delivered a Reset password email, rotated the password, rejected the old password with Invalid username or password, logged in with the rotated password keeping email_verified=true and the same stable MC Plan user; identities converged to 1:1:1, Core/Keycloak database identities isolated, runtime uid 1000, migrations current before ready; output labeled [LOCAL-MAILPIT]; cleanup removed the dedicated project containers, networks and volumes",
+    "A second full run of scripts/validate-dev-email-flows.ps1 with -ComposeProjectName mc-plan-emailflow-acceptance-alt -KeycloakHttpPort 8780 -KeycloakMgmtPort 9780 -MailpitPort 8725 -CoreHttpPort 3900 also passed end to end (identity emailflow-7090ad4b@mc-plan.example.invalid), proving independent repeatability with freshly isolated data, configurable ports and project names, and the same own-project-only cleanup; two prototype-directory runs of the byte-identical script had also passed before the files were committed",
+    "Implementation committed in mc-plan-ops as a41c25fba057fa4c069c8959eb58b3cd5706688b (5 files, +554/-9): the new validate-dev-email-flows.ps1 plus runbook/STATUS/development-plan/README updates recording the command, coverage, [LOCAL-MAILPIT] boundary and Q-006 scope; no realm, compose or contract surface changed"
   ]
 }
