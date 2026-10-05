@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-010",
   "title": "残余治理叙述同步：注册顺序段、开发计划与组合/状态页的 CORE-006 后事实",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/session-0-governance-sync",
   "owner": "Codely/session-0-governance-sync",
   "started_at": "2026-10-05T23:52:08.107095+08:00",
-  "updated_at": "2026-10-05T16:04:47.8258310+00:00",
+  "updated_at": "2026-10-05T16:04:58.5237330+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -43,7 +43,7 @@
       "base_commit": "69b5576bb232eedd25c38b7c34a2d70730de69af",
       "branch": "fix/MCP-F1-FOUNDATION-010-residual-narrative-sync",
       "last_checkpoint_commit": "ac8636154a7dc017a5c1d0fe9bb64081dd410679",
-      "final_commit": null
+      "final_commit": "ac8636154a7dc017a5c1d0fe9bb64081dd410679"
     }
   },
   "depends_on": [
@@ -59,6 +59,7 @@
   "validation_results": [
     "Checkpoint 2026-10-05 (Codely/session-0-governance-sync): seven targeted edits applied on fix/MCP-F1-FOUNDATION-010-residual-narrative-sync - coordination.md registration-order section now records B=MCP-F1-OPS-001 closed with A/B/C all closed and the section marked as 00-era history; development-plan.md marks FOUNDATION-008 closed (final 9814ac0 merged/pushed), fixes the same stale B sentence and adds the FOUNDATION-010 section; portfolio.md Contracts row records e434d93 pushed under owner authorization, Core row extended to CORE-001..006 closed with CORE-006 63745d6 (no transport binding), record-status paragraph updated to 30 completed / 2 active (this slice + SKIN-008 blocked); STATUS.md record-status paragraph updated identically. No direction/ADR/open-questions edits; SKIN-008 and CORE-006 records untouched.",
     "Follow-up 2026-10-05 (Codely/session-0-governance-sync): the four declared acceptance commands passed on the branch tree - validate-workspace (6 repositories / 112 Markdown / 60 JSON), test-coordination 14/14, test-workspace-scanning 21/21, test-foundation-write 14/14; the 010 dev-plan section was reworded so the stale-phrase sweep (仍待启动/未启动/唯一活动) now returns zero hits across coordination.md, development-plan.md, portfolio.md and STATUS.md; docs follow-up commit is the final implementation checkpoint.",
-    "Final sweep 2026-10-05 (Codely/session-0-governance-sync): the Skin portfolio row no longer asserts uniqueness of the active set; the stale-phrase sweep (仍待启动/未启动/唯一活动) now returns zero hits across docs/coordination.md, docs/development-plan.md, memory/current/portfolio.md and docs/STATUS.md."
+    "Final sweep 2026-10-05 (Codely/session-0-governance-sync): the Skin portfolio row no longer asserts uniqueness of the active set; the stale-phrase sweep (仍待启动/未启动/唯一活动) now returns zero hits across docs/coordination.md, docs/development-plan.md, memory/current/portfolio.md and docs/STATUS.md.",
+    "Closure 2026-10-05 (Codely/session-0-governance-sync): record moved to completed with final_commit ac8636154a7dc017a5c1d0fe9bb64081dd410679 (the final governance-docs commit on the branch). All four declared acceptance commands passed on the committed tree: validate-workspace (6 active repositories / 112 Markdown / 60 JSON), test-coordination 14/14, test-workspace-scanning 21/21, test-foundation-write 14/14; stale-phrase sweep (仍待启动/未启动/唯一活动) returns zero hits across coordination.md, development-plan.md, portfolio.md and STATUS.md; Start and three Continue phases passed inside the short-lock entry. Finish runs in this closure transaction, followed by local main ff-only merge and branch cleanup. Push status: no owner push authorization received, so Foundation local main stays ahead of origin/main and the push is explicitly reported as pending - not done silently. No direction.json/repositories.json/open-questions/ADR changes; SKIN-008 and CORE-006 records untouched; no business repository modified."
   ]
 }
