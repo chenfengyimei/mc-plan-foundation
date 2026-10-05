@@ -1,0 +1,76 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-005",
+  "title": "实现不可变积分账本纵向切片与只读余额 API",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely",
+  "owner": "Codely",
+  "started_at": "2026-10-05T14:08:37Z",
+  "updated_at": "2026-10-05T14:08:37Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": ["mc-plan-contracts"],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按项目所有者确认的草案以契约先行实现 Core 固定顺序第 6 步不可变积分账本纵向切片：Contracts 0.1.0-alpha.4 仅新增只读 GET /v1/credits/balance 与 CreditBalance JSON Schema；Core 新增 credits 模块（惰性幂等 CreditAccount、不可变 CreditLedgerEntry、credits 专用幂等命令表、可信内部 grant/consume/refund/adjustment、单事务非负不变量、同事务审计与 credit.changed.v1 INTERNAL outbox、应用服务级余额核对）。不增加公共积分扣减/回退，不硬编码 Q-003/Q-013 未决数值，SDK 须待本工作流关闭。",
+  "in_scope": [
+    "Contracts 先行锁定 0.1.0-alpha.4：新增 GET /v1/credits/balance（稳定 operationId getCreditBalance 供 SDK 后续生成；OIDC 或 PAT，credits:read；非负整数余额；未建立积分账户的已存在 ACTIVE 用户读取为零且不建账户；严格只读，不产生积分账户、账本、审计或 outbox 副作用；401/403 沿用既有 Problem 目录与 actor 解析约定，不发明未审批公共错误码）与 CreditBalance JSON Schema；机器校验锁定余额只读语义，POST /v1/credits/consume 的 source 枚举仍仅 daily_entitlement；如实记录与 alpha.3 的兼容分类",
+    "Core credits 模块（按 architecture.md 边界与 src/<module>/{application,infrastructure} 结构）：首次积分事件惰性幂等建立 CreditAccount；不可变 CreditLedgerEntry 逐条记录唯一幂等键、来源、原因、操作主体、前后余额与关联业务引用；数据库层拒绝账本 UPDATE/DELETE 并测试",
+    "grant/consume/refund/adjustment 四类可信内部应用服务原语：新建 credits 专用幂等命令表（调用方/操作名/幂等键/规范化指纹/状态/最终结果持久化，不触碰 idempotent_consumption_commands），同键同指纹回放原结果、同键不同指纹稳定冲突；失败命令结果持久化，其后充值不改变原失败结果",
+    "单一 Core PostgreSQL 事务内锁定账户行、验证并保持非负余额（不足整体失败、无部分扣减、无负余额）、追加账本、更新可核对余额投影、写审计与 credit.changed.v1 INTERNAL outbox（信封按 Contracts 锁定 Schema，仅内部记录、无发布器）；整数范围显式验证，防浮点与 SQL/JS 溢出；进程内锁或队列假设不能替代数据库约束",
+    "人工调整仅内部应用层：要求 ADMIN 授权上下文与原因，正负调整不突破非负边界；不新增管理 HTTP 接口；内部铸币能力不通过任何现有 HTTP 输入暴露",
+    "退款为新的幂等补偿命令，引用同账户原扣减；并发/分次退款总额不超过原额、不改写旧账；跨账户退款拒绝",
+    "应用服务级余额核对：从不可变账本重算并与投影比对，能发现并显式暴露注入的投影差异，不静默修账；无 Redis/worker 新运行依赖，readiness 约束不变",
+    "只新增前向迁移：从既有四迁移升级且身份/PAT/每日权益继续工作；新 credits 表/迁移属于 Core，不放 Contracts；回退按兼容部署和前向修复，不删除已有账目",
+    "GET /v1/credits/balance 生产者按锁定 CreditBalance Schema 验收，含 OIDC/PAT 正确读取、无账户零值/不创建、前后副作用表计数相同、缺 scope/过期撤销/非 ACTIVE 账号按已锁语义拒绝",
+    "更新 Contracts 机器校验脚本、状态页、API 目录、兼容说明与矩阵（生产者验证后），以及 Core STATUS、开发计划（第 6 步完成、第 7 步下一阶段）、验收与运行边界文档"
+  ],
+  "out_of_scope": [
+    "credits 来源的公共消费（ConsumptionResult.source 扩展）与免费额度耗尽后的积分回退编排器：依赖 Q-013 价格决策，另开后续工作流",
+    "注册/签到/贡献奖励发放流程与数值（Q-003 未决）；Community 贡献事件消费与奖励规则另开工作流；测试金额仅为夹具",
+    "公开 outbox 发布器、跨服务事件发布与任何消费者（开发计划第 7 步及后续）",
+    "TypeScript SDK、Skin/Community 消费者集成；C/SDK 工作流必须等本工作流关闭",
+    "管理员角色管理/角色分配流程与公共管理端点；人工调整仅在应用服务层实现并由集成测试验收",
+    "修改 Community、Skin、Ops 业务文件或 Skin 工作流；MCP-F1-SKIN-008 的 blocked 状态、owner、检查点与 Skin 锁保持不变",
+    "硬编码 Q-003、Q-013 或其他未决产品数值；价格策略/版本化奖励策略表不在本切片",
+    "创建远程仓库、生产部署或镜像公开发布"
+  ],
+  "contract_impact": "prerelease compatible addition: Contracts 0.1.0-alpha.4 adds the read-only GET /v1/credits/balance surface with the CreditBalance JSON Schema (OIDC or PAT with credits:read, non-negative integer balance, zero without an account and no account creation, no ledger/audit/outbox side effects); all 0.1.0-alpha.3 locked surfaces keep their semantics and POST /v1/credits/consume keeps the daily_entitlement-only source enum",
+  "acceptance_evidence": [
+    "Contracts Python 与 Redocly 校验通过，含 alpha.4 新机器门槛（余额只读语义、consume source 枚举不扩、兼容分类）",
+    "Core format、lint、严格 typecheck、单元、隔离 PostgreSQL 集成、HTTP E2E、architecture、migration、契约与 build 全部通过，最终 runtime 镜像从最终提交源码重建成功并验证新迁移、非 root 与 live/ready",
+    "十二路不同键竞争扣减保持非负、不超发；十二路同键同指纹命令只产生一条新账本结果，其余原结果重放；同键不同指纹稳定冲突；失败命令重放在其后充值后仍保持原失败结果",
+    "余额不足整体失败，无半笔或负余额；事务失败不留部分效果；首次建账户在并发下幂等；不同调用方键独立",
+    "并发与分次退款总额不超过原扣减额、不改写旧账，跨账户退款拒绝；人工调整要求 ADMIN 主体与原因并保持非负边界；账本 UPDATE/DELETE 被数据库拒绝并有测试",
+    "注入的投影差异被余额核对发现并显式暴露；正常路径投影与账本推导一致",
+    "每次账本变化在同一事务提交审计与 credit.changed.v1 INTERNAL/PENDING outbox 记录（按锁定 Schema 校验），无发布器、不跨服务发送；审计记录含操作主体、原因与关联业务引用",
+    "GET /v1/credits/balance 经锁定 CreditBalance Schema 校验：OIDC/PAT 正确读取、无账户零值且不创建账户、前后副作用表计数相同；缺 scope、过期/撤销 PAT、未知或非 ACTIVE 账号按已锁语义拒绝",
+    "整数边界（浮点、超界、溢出防护）与既有每日权益/身份回归全部通过"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "8ba869a6181d683604be29057745d769e8f98df2",
+      "branch": "feat/MCP-F1-CORE-005-immutable-credit-ledger",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "72bac5302a7c889f1162a5b89543ec024d47bd90",
+      "branch": "feat/MCP-F1-CORE-005-balance-read-prerelease",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-F1-CORE-004"],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Preflight verified 2026-10-05 (Codely/Mac): six repos clean and synced to origin on main/declared branches (Foundation 5320cb0, Contracts 72bac53, Core 8ba869a, Community 69ac5e9, Skin 9a06135 on feat/MCP-F1-SKIN-008-pixel-blueprint-v4, Ops ff0eeb7); the only active workstream is MCP-F1-SKIN-008 (blocked, Skin-only lock, owner Codely, final_commit null) and no other session has registered a Core/Contracts task, so MCP-F1-CORE-005 was allocated as the next unused Core ID; canonical development 1.1.2 and orchestrator 1.0.0 Skill copies match the Foundation authoritative files; direction F1 with Core primary and Contracts/Ops supporting covers this slice; the workspace-root draft memory mcp-f1-core-005-draft.md matches the owner-confirmed scope (read-only balance public surface, application-level reconciliation, new credits-specific idempotent command table); Mac toolchain verified (Git, pwsh 7.6.6, Node 24.16.0, pnpm 11.19.0, Python 3.12.14, Docker Engine 29.8.1, gh 2.102.0)"
+  ]
+}
