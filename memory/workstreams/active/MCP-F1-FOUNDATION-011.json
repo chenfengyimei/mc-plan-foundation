@@ -7,7 +7,7 @@
   "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "started_at": "2026-10-05T17:59:23.511Z",
-  "updated_at": "2026-10-05T17:59:23.511Z",
+  "updated_at": "2026-10-05T17:59:52.866Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -36,7 +36,7 @@
     "mc-plan-foundation": {
       "base_commit": "f6b69f7e8b97c43354cf44c237d81e76d92b0985",
       "branch": "feat/MCP-F1-FOUNDATION-011-event-transport-adr",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "c16abfb00fa887eb3dc7e70166b4efc15b71caf0",
       "final_commit": null
     }
   },
@@ -52,6 +52,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-05T17:59:23.511Z from live state: Foundation main f6b69f7 clean and synced; Foundation lock free inside the critical section; owner transport decision delivered in-session 2026-10-06 (consumer pull over HTTP; broker and HTTP-push explicitly rejected)."
+    "Registered 2026-10-05T17:59:23.511Z from live state: Foundation main f6b69f7 clean and synced; Foundation lock free inside the critical section; owner transport decision delivered in-session 2026-10-06 (consumer pull over HTTP; broker and HTTP-push explicitly rejected).",
+    "ADR-0011 decisions/0011-event-delivery-consumer-pull.md written on the governance branch: consumer pull over HTTP (cursor + explicit acknowledgment, at-least-once, event_id consumer idempotency, authorized service credentials only, no new middleware, readiness unchanged); broker and HTTP-push recorded as rejected alternatives with reasons; upgrade requires a new ADR."
   ]
 }
