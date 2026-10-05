@@ -30,7 +30,7 @@ Skill 变更还必须运行官方 `quick_validate.py`、安装/版本漂移测�
 
 ## 2026-10-05 并行开发治理
 
-工作流 `MCP-F1-FOUNDATION-008`，Owner `Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c`，仅写 Foundation；方向例外为所有者 00 提示授权的 `foundation-governance`，全局 F1/Core 不变。初始快照 Foundation `5320cb0`；注册前 Codely 已正常提交 CORE-005 登记/契约检查点，因此实际 base 为 `221d4852e0fe79f6c7ca4f82bc65e1341e06e88d`，登记提交 `89b708f530e245b5b5425a31b853935ccc9a866a`。不重复启动 Core，也不修改其记录。
+工作流 `MCP-F1-FOUNDATION-008`（已关闭：final `9814ac0aed57e5c8614dc2b36da81db80a1d8d9a`，main ff-only 合并并推送，详见其 completed 记录），Owner `Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c`，仅写 Foundation；方向例外为所有者 00 提示授权的 `foundation-governance`，全局 F1/Core 不变。初始快照 Foundation `5320cb0`；注册前 Codely 已正常提交 CORE-005 登记/契约检查点，因此实际 base 为 `221d4852e0fe79f6c7ca4f82bc65e1341e06e88d`，登记提交 `89b708f530e245b5b5425a31b853935ccc9a866a`。不重复启动 Core，也不修改其记录。
 
 第一次检查点尝试因短锁占用及他人协调记录修改被入口拒绝，未 stage 或提交他人内容。所有者随后要求继续；重新预检时 Foundation 为 `fda7b9484d24ac8297aae7291f61bc58f2af08b4`，index 干净、仅本会话治理路径待提交。期间 CORE-005/SDK 关闭与 Skin 正式交接均由其他会话提交，本分支保留这些提交；核实二者最终提交在业务仓 main 上、Finish 通过，不替 SDK 推送、不修改 Skin 记录。
 
@@ -59,7 +59,11 @@ pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/ch
 pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC -TrackingId MCP-F1-FOUNDATION-008 -Phase Finish
 ```
 
-治理关闭后 A/B 可开始注册，C 等 A 关闭并释放 Contracts 锁后再注册；继续时 A/C 已由其他会话关闭，不重复登记，B 仍待启动，不预留 ID。本任务不改变 Skin 当前 blocked/所有权/锁。短锁仅支持遵守入口的同 Mac 协调事务，不能声称任意并发写入安全；若会话不能使用入口，Foundation 注册/记录更新必须全部串行协调。
+治理关闭后 A/B 可开始注册，C 等 A 关闭并释放 Contracts 锁后再注册；继续时 A/C 已由其他会话关闭，不重复登记；B 后续亦已注册为 `MCP-F1-OPS-001` 并关闭，不预留 ID。本任务不改变 Skin 当前 blocked/所有权/锁。短锁仅支持遵守入口的同 Mac 协调事务，不能声称任意并发写入安全；若会话不能使用入口，Foundation 注册/记录更新必须全部串行协调。
+
+## 2026-10-05 残余治理叙述同步
+
+工作流 `MCP-F1-FOUNDATION-010`，Owner `Codely/session-0-governance-sync`，仅写 Foundation（零辅助）；方向例外为所有者“核实完善与开发，按照你能做的以及当前目标，开始执行完成完善”指示授权的 `foundation-governance`，全局 F1/Core 不变。Base `69b5576bb232eedd25c38b7c34a2d70730de69af`。本切片完成 `MCP-F1-FOUNDATION-009` 明确范围外的余项：[协调文档](coordination.md) 本包注册顺序段与开发计划 008 段中“B 仍待启动”补记 B=`MCP-F1-OPS-001` 已注册并关闭的完成事实（保留历史，不改协议）；`memory/current/portfolio.md` 与 `docs/STATUS.md` 的记录现状段对齐 30 个 completed、当前活动清单、Contracts 已获授权推送与 CORE-006 关闭（outbox 发布器，无传输绑定）事实。运行本开发计划声明的四条验收命令与 Start/Continue/Finish；无远端推送授权，本地 ff-only 合并 main 后推送状态如实记录。
 
 ## 完成条件
 
