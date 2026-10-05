@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-011",
+  "title": "ADR-0011：事件投递传输形态定为消费者拉取（HTTP）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "started_at": "2026-10-05T17:59:23.511Z",
+  "updated_at": "2026-10-05T17:59:23.511Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "把项目所有者 2026-10-06 的事件投递传输形态决策（消费者拉取/HTTP，拒绝 broker 与 HTTP-push）落为 Foundation ADR-0011，作为 Contracts alpha.5 投递语义锁定与后续真实投递/消费者切片（预计 MCP-F1-CORE-008）的精确前置；本切片仅写入该 ADR，不实现任何业务代码、不改公共契约。",
+  "in_scope": [
+    "新增 decisions/0011-event-delivery-consumer-pull.md：记录决策内容、背景（CORE-006 有界发布器无传输绑定的遗留前置）、拒绝的替代形态及原因、对 Contracts 投递语义与消费者语义的约束（拉取游标、显式确认、at-least-once、event_id 幂等、服务凭证与最小 scope）、变更条件",
+    "协调记录按 ADR-0010 治理例外在声明分支上精确路径提交"
+  ],
+  "out_of_scope": [
+    "Contracts alpha.5 任何契约文件修改；Core 任何业务实现；消费者实现；Ops 组合变更",
+    "portfolio/direction/STATUS/open-questions 等其他治理文档（留给后续切片按需触碰）",
+    "修改 MCP-F1-SKIN-008 的一切"
+  ],
+  "contract_impact": "none; this slice writes a Foundation ADR only and changes no Contracts files",
+  "acceptance_evidence": [
+    "ADR-0011 文件存在于 decisions/ 且内容与所有者 2026-10-06 决策一致（消费者拉取/HTTP；broker 与 HTTP-push 为被拒替代）",
+    "Start/Continue/Finish 通过；治理分支按 ADR-0010 例外精确路径提交；ff-only 合并回 main 并推送"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "f6b69f7e8b97c43354cf44c237d81e76d92b0985",
+      "branch": "feat/MCP-F1-FOUNDATION-011-event-transport-adr",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-006",
+    "MCP-F1-CORE-007"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, in-session transport decision 2026-10-06 (consumer pull over HTTP; broker and HTTP-push rejected) delivered as the direct continuation of the owner instruction to keep developing the published queue",
+    "reason": "Recording the owner event-delivery transport decision as Foundation ADR-0011 is the declared prerequisite of the next Contracts/Core slices; it writes governance documentation only, touches no business repository, no public contract and no other workstream, and leaves the F1/mc-plan-core direction unchanged."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-05T17:59:23.511Z from live state: Foundation main f6b69f7 clean and synced; Foundation lock free inside the critical section; owner transport decision delivered in-session 2026-10-06 (consumer pull over HTTP; broker and HTTP-push explicitly rejected)."
+  ]
+}
