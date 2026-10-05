@@ -8,7 +8,7 @@
   "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
   "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
   "started_at": "2026-10-06T00:17:31.037973+08:00",
-  "updated_at": "2026-10-05T16:29:36.0940760+00:00",
+  "updated_at": "2026-10-05T16:30:19.2139620+00:00",
   "primary_repository": "mc-plan-ops",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -67,6 +67,7 @@
     "A second full run of scripts/validate-dev-email-flows.ps1 with -ComposeProjectName mc-plan-emailflow-acceptance-alt -KeycloakHttpPort 8780 -KeycloakMgmtPort 9780 -MailpitPort 8725 -CoreHttpPort 3900 also passed end to end (identity emailflow-7090ad4b@mc-plan.example.invalid), proving independent repeatability with freshly isolated data, configurable ports and project names, and the same own-project-only cleanup; two prototype-directory runs of the byte-identical script had also passed before the files were committed",
     "Implementation committed in mc-plan-ops as a41c25fba057fa4c069c8959eb58b3cd5706688b (5 files, +554/-9): the new validate-dev-email-flows.ps1 plus runbook/STATUS/development-plan/README updates recording the command, coverage, [LOCAL-MAILPIT] boundary and Q-006 scope; no realm, compose or contract surface changed",
     "Closure evidence 2026-10-06: the final commit is Ops a41c25fba057fa4c069c8959eb58b3cd5706688b on branch feat/MCP-F1-OPS-002-email-flow-acceptance (base 6813b52d68750db3d1e68111607300827c093af8, single commit, 5 files +554/-9); both acceptance runs and the static gate passed from the committed tree as recorded in the checkpoint entries; per protocol the Finish validation, local ff-only merge to Ops main, normal origin push and branch release follow this transaction",
-    "Scope boundary kept: no Core, Contracts, Foundation, Community or Skin file or branch was touched; no realm/compose/contract surface changed; all email evidence uses reserved example.invalid addresses only and is labeled [LOCAL-MAILPIT] (not production email acceptance; Q-006 remains undecided); the local combination stays non-production and claims no prerelease or production readiness"
+    "Scope boundary kept: no Core, Contracts, Foundation, Community or Skin file or branch was touched; no realm/compose/contract surface changed; all email evidence uses reserved example.invalid addresses only and is labeled [LOCAL-MAILPIT] (not production email acceptance; Q-006 remains undecided); the local combination stays non-production and claims no prerelease or production readiness",
+    "MCP-F1-OPS-002 Finish validation passed 2026-10-06 (1 active and 32 completed workstreams at that moment); Ops main was fast-forwarded from 6813b52d68750db3d1e68111607300827c093af8 to a41c25fba057fa4c069c8959eb58b3cd5706688b and pushed to origin (6813b52..a41c25f), and the short-lived branch feat/MCP-F1-OPS-002-email-flow-acceptance was released after the merge; the Foundation record commits bad7000 (start), b5d578d (checkpoint), fc02531 (completion) and this entry are all on origin main; the workspace returns to one active workstream MCP-F1-SKIN-008 whose blocked state, owner, checkpoints and Skin-only lock are unchanged"
   ]
 }
