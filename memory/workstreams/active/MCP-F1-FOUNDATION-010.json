@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-010",
+  "title": "残余治理叙述同步：注册顺序段、开发计划与组合/状态页的 CORE-006 后事实",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/session-0-governance-sync",
+  "owner": "Codely/session-0-governance-sync",
+  "started_at": "2026-10-05T15:52:08.1070950+00:00",
+  "updated_at": "2026-10-05T15:52:08.1070950+00:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "完成 W01 状态同步的明确余项并把 CORE-006 注册后的组合事实对齐机器记录：009 范围外留下的 coordination.md 本包注册顺序段与 development-plan 008 段中“B 仍待启动”改为 B=MCP-F1-OPS-001 已注册并关闭的完成事实（保留历史、不改协议）；portfolio/STATUS 的记录现状段由 28 completed/唯一活动 SKIN-008 修正为 29 completed/2 active（CORE-006 outbox 发布器进行中 + SKIN-008 blocked），并把 Contracts SDK 已获所有者授权推送的事实如实记录；development-plan 补 010 小节。不改方向、锁、ADR、open-questions 或任何业务仓库。",
+  "in_scope": [
+    "docs/coordination.md 本包注册顺序段：追加 A/B/C 全部关闭的完成事实（B=MCP-F1-OPS-001 已注册并关闭），保留 00 执行期历史叙述与全部协议内容",
+    "docs/development-plan.md：008 小节标注关闭终态（final 9814ac0，main 合并推送）；修正其“B 仍待启动”句为已关闭事实；新增 2026-10-05 残余治理叙述同步（MCP-F1-FOUNDATION-010）小节与验收命令",
+    "memory/current/portfolio.md：记录现状段更新为 29 completed / 2 active（CORE-006 分支与检查点 bf1d569 事实）；Contracts SDK 推送状态改为已获授权推送（origin/main e434d93）；outbox 发布由“仍待后续工作流”改为 CORE-006 实施中",
+    "docs/STATUS.md：记录现状段同样更新 29/2 与 CORE-006 进行中事实、SDK 已推送事实",
+    "运行本仓声明验收命令与协调校验 Start/Continue/Finish 三阶段"
+  ],
+  "out_of_scope": [
+    "不修改 direction.json、repositories.json、open-questions.md、constitution 或任何 ADR 结论",
+    "不触碰 MCP-F1-CORE-006 与 MCP-F1-SKIN-008 记录（原 Owner 继续）；不修改任何业务仓库文件",
+    "不推送任何远端（无授权），推送状态如实记录；不采纳 P5-P7 页面归属等新产品方案",
+    "不改协调协议、短锁入口行为或 Skill 内容"
+  ],
+  "contract_impact": "none; documentation truth sync only (coordination/dev-plan/portfolio/STATUS narratives to match machine records)",
+  "acceptance_evidence": [
+    "validate-workspace.ps1、test-coordination.ps1、test-workspace-scanning.ps1、test-foundation-write.ps1 全部通过",
+    "validate-coordination Start/Continue/Finish 三阶段通过",
+    "滞后短语清扫（仍待启动/未启动/唯一活动）在目标文件返回零命中，且活动清单与 memory/workstreams 记录及六仓 Git 一致"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "69b5576bb232eedd25c38b7c34a2d70730de69af",
+      "branch": "fix/MCP-F1-FOUNDATION-010-residual-narrative-sync",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-009"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner 2026-10-05 会话0 指示“核实完善与开发，按照你能做的以及当前目标，开始执行完成完善”，且此前批次消息已定序“必要 W01 状态同步”；009 已关闭，本切片为其明确范围外的残留余项",
+    "reason": "F1 方向以 Core 为全局主仓；本切片为 Foundation 主仓的治理性叙述余项同步（组合摘要/状态页/协调历史段与机器记录一致），不承载业务代码，不改方向与锁。"
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
