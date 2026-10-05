@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-005",
   "title": "实现不可变积分账本纵向切片与只读余额 API",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely",
   "owner": "Codely",
   "started_at": "2026-10-05T14:08:37Z",
-  "updated_at": "2026-10-05T14:25:00Z",
+  "updated_at": "2026-10-05T14:42:00Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": ["mc-plan-contracts"],
   "reference_repositories": [
@@ -56,14 +56,14 @@
     "mc-plan-core": {
       "base_commit": "8ba869a6181d683604be29057745d769e8f98df2",
       "branch": "feat/MCP-F1-CORE-005-immutable-credit-ledger",
-      "last_checkpoint_commit": "ff4618979c19dec5df65fdab1e94475bd121a139",
-      "final_commit": null
+      "last_checkpoint_commit": "5508d607628910a4f72c496e8340e526badcb9df",
+      "final_commit": "5508d607628910a4f72c496e8340e526badcb9df"
     },
     "mc-plan-contracts": {
       "base_commit": "72bac5302a7c889f1162a5b89543ec024d47bd90",
       "branch": "feat/MCP-F1-CORE-005-balance-read-prerelease",
-      "last_checkpoint_commit": "9a85b989a87dc9e809f956770ebd7a60e1c8e664",
-      "final_commit": null
+      "last_checkpoint_commit": "a8b38beb275e8a8e21e4a29ec4d3c603004b302a",
+      "final_commit": "a8b38beb275e8a8e21e4a29ec4d3c603004b302a"
     }
   },
   "depends_on": ["MCP-F1-CORE-004"],
@@ -80,6 +80,13 @@
     "Core gates passed at ff46189: format:check, lint with zero warnings, strict typecheck, unit 74/74 (19 new credits application tests), HTTP E2E 57/57 (5 new balance boundary tests incl. no internal-primitive HTTP routes), contract 11/11 against the locked alpha.4 files (4 new: CreditBalance response validation, invented-field/negative-balance rejection, credit.changed.v1 envelope validation via the locked event schema with the internal actor/reason fields correctly absent from the public data shape), real PostgreSQL integration 31/31 (14 new credits tests on testcontainer postgres:17 applying all five migrations), architecture 63 source files, migration:validate 5 forward-only and build",
     "Integration evidence at ff46189: twelve distinct-key competing consumes against a 30-unit grant post exactly ten and reject two with persisted REJECTED_INSUFFICIENT_BALANCE rows, balance never negative and every entry keeps balance_after = balance_before + amount; twelve identical-key grants converge to one ledger entry, one audit, one INTERNAL/PENDING credit.changed.v1 outbox record and exactly one account row; twelve distinct-key concurrent grants on a fresh user create exactly one account; a rejected consume replays as already-rejected even after a recovery grant; unknown users, non-ACTIVE accounts, unknown refunds and non-admin/suspended/no-reason adjustments leave zero side effects; concurrent twelve-way and sequential refunds cap at the original consume (6 posted / 6 rejected, partial refunds 20+10 of 30, over-refund rejected and stably replayed) with the original entry never rewritten; cross-account and grant-entry refund references reject NOT_FOUND; ledger UPDATE/DELETE via the Prisma client and raw SQL are rejected by the database trigger and chain/negative-balance CHECK violations reject raw inserts; an injected projection drift (account balance manually set to 7 against a derived 10) is exposed as inconsistent and not repaired; integer boundaries hold at the int4 ceiling (BALANCE_CEILING rejected and stably replayed, full drain allowed) with float/NaN/Infinity/non-integer/zero/negative and over-ceiling deltas rejected as VALIDATION_FAILED; the balance HTTP read via real OIDC and hash-backed PATs returns zero without an account, leaves all side-effect table counts identical before and after, and rejects missing scope, unverified identity, expired/revoked PATs and SUSPENDED accounts; the pre-existing daily entitlement flow still consumes and writes its internal event on the same database with no credit account, ledger entries or credit commands created",
     "A red integration test exposed and fixed a real defect during development: the refundable-remaining computation initially ADDED already-refunded amounts instead of subtracting them, so the concurrent-refund cap never rejected (twelve refunds posted where six are legal); the sign was corrected to -original.amount - refunded and the full suite re-run green before the checkpoint commit",
-    "Foundation coordination note (22:12-22:25 Asia/Shanghai): another session committed 89b708f starting MCP-F1-FOUNDATION-008 (Codex owner, Foundation primary with no supporting repositories, no lock overlap with Core/Contracts) and is actively editing Foundation scripts; the CORE-005 checkpoint commit on top staged only this record path, left the other session's uncommitted files untouched, and deferred the origin push until the next coordination transaction to avoid publishing their unpushed local commit without their action"
+    "Foundation coordination note (22:12-22:25 Asia/Shanghai): another session committed 89b708f starting MCP-F1-FOUNDATION-008 (Codex owner, Foundation primary with no supporting repositories, no lock overlap with Core/Contracts) and is actively editing Foundation scripts; the CORE-005 checkpoint commit on top staged only this record path, left the other session's uncommitted files untouched, and deferred the origin push until the next coordination transaction to avoid publishing their unpushed local commit without their action",
+    "Final acceptance gates passed from the final Core commit 5508d607628910a4f72c496e8340e526badcb9df: format:check, lint with zero warnings, strict typecheck, unit 74/74, isolated PostgreSQL integration 31/31, HTTP E2E 57/57, architecture for 63 source files, migration:validate for 5 forward-only migrations, 12-file source contract verification at 0.1.0-alpha.4 (lock commit 9a85b98), contract tests 11/11 and build; every declared command actually ran and none was skipped",
+    "Final runtime image built from the final source with exit 0 using the authorized local proxy for registry auth after the documented direct-DNS failure: tag mc-plan-core:mcp-f1-core-005-5508d60, image ID sha256:1e92bb4e7afafae7eb405a511a19f6e4e3b22993dd11fd9506efb44428cf6fdf, arm64, USER node; isolated smoke on a session-specific network applied all five migrations inside the image via npm run migration:deploy, verified the credit_ledger_entries_append_only trigger plus the nonnegative-balance and chain CHECK constraints and the baseline daily grant of three, started as uid 1000 and returned /health/live 200 and /health/ready 200 with database up and migrations current; only this session's own smoke containers and network were removed",
+    "Contracts write-back committed as a8b38beb275e8a8e21e4a29ec4d3c603004b302a after producer verification: alpha.4 compatibility matrix row with the verified Core 5508d60 combination, STATUS verified-producer paragraph and development-plan milestone line; isolated Python validation (18 schemas/events, 18 $ids, 24 operationIds) and Redocly lint re-ran green; the twelve locked contract files are unchanged since the lock commit 9a85b98",
+    "SDK continuation facts for the next workstream: balance operationId getCreditBalance at Contracts 0.1.0-alpha.4 lock commit 9a85b98 with twelve sha256-locked files (openapi/core.yaml, common actor/problem/event-envelope, core entitlement/credit-balance/credit-ledger-entry/developer-app/developer-app-created/personal-access-token/personal-access-token-created schemas, events/credit.changed.v1.json); Core carries five forward-only migrations with the credit ledger in 20261005150000_immutable_credit_ledger; the producer supports GET /v1/credits/balance (OIDC or PAT with credits:read) plus trusted internal grant/consume/refund/adjustment and reconciliation primitives with no HTTP minting route; credits-source public consumption, the HTTP refund orchestrator, outbox publishers, TypeScript SDK and consumers all remain out of scope and Q-003/Q-013 stay undecided",
+    "Closure push publishes the shared Foundation local main union, including the other session's already-committed start record 89b708f for MCP-F1-FOUNDATION-008 (Foundation-only lock, no overlap); that session's uncommitted coordination-protocol work (scripts, ADR draft, coordination/portfolio/docs edits) was left untouched and uncommitted",
+    "Slice complete vs F1 open: the immutable credit ledger slice and the read-only balance surface are implemented and verified end to end, but F1 as a whole remains open — full audit/outbox publishers, SDK, consumers, recovery drills and the credits-source consumption orchestration are still future workstreams",
+    "Foundation closure mechanics (22:33-22:42 Asia/Shanghai): the first closure attempt broke after git mv because the chained git add of the pre-move path errored and skipped the commit, while that command's push published shared local main up to 89b708f (carrying the already-complete FOUNDATION-008 start record, intended for publication anyway); by then the FOUNDATION-008 session had switched the shared Foundation checkout onto its branch fix/MCP-F1-FOUNDATION-008-parallel-governance (tip 905d3a3, an existing CORE-005 record commit with no 008-owned commits yet), so committing the completed record on main was impossible without switching the shared checkout or blocking 008's ff-only merge; the completed record is therefore committed on top of 905d3a3 on the current branch and reaches origin/main via the 008 session's ff-only merge, and the 008 session's uncommitted protocol work (scripts, ADR draft, coordination/portfolio/docs edits) was left untouched throughout — this branch deviation from the ordinary-sessions-commit-on-main rule is recorded here explicitly with its reason"
   ]
 }
