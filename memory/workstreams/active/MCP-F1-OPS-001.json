@@ -7,8 +7,8 @@
   "milestone": "F1",
   "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
   "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
-  "started_at": "2026-10-05T15:04:21.9546030+00:00",
-  "updated_at": "2026-10-05T15:04:21.9546030+00:00",
+  "started_at": "2026-10-05T23:04:21.954603+08:00",
+  "updated_at": "2026-10-05T15:18:52.4107240+00:00",
   "primary_repository": "mc-plan-ops",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -50,7 +50,7 @@
     "mc-plan-ops": {
       "base_commit": "ff0eeb7ff61301af762ba05ab58459b6c707577e",
       "branch": "feat/MCP-F1-OPS-001-alpha3-identity-acceptance",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "6813b52d68750db3d1e68111607300827c093af8",
       "final_commit": null
     }
   },
@@ -66,6 +66,12 @@
     "Contracts alpha.3 锁以提交方式重新核对（不依赖任何会话 checkout）：从 Core 8ba869a 读取 contracts/core-api.lock.json（0.1.0-alpha.3，9 文件，锁定提交 fab1f3c），9 个文件 blob 在 fab1f3c 与固定导出点 72bac53 均与锁哈希完全一致；正在修改 Core/Contracts 的会话 checkout 不作为输入",
     "Core 运行时镜像在本机核实：mc-plan-core:mcp-f1-core-004-8ba869a 存在，image index digest 重算为 sha256:f94007baeb4d3d41e5b72dd03a2a41a3563219fc0aba30df34509c4ae168fb79（与 MCP-F1-CORE-004 记录一致），linux/arm64 runtime manifest sha256:ef7c1a28cf99b95ba82b06fb62c81c796f5c9011aae62adeb2518eb4f002fa54 完全一致，无需重建",
     "活动记录复查：MCP-F1-SKIN-008（blocked，仅锁 Skin）、MCP-F1-CORE-005（Core+Contracts，注册于 2026-10-05T14:08Z 并于本轮预检期间完成关闭，Ops 仅为其只读参考）与 MCP-F1-FOUNDATION-008（Foundation 治理短锁协议，要求后续注册等其串行完成）；无其他会话注册相同 Ops 目标，与本流 Ops 主仓无锁重叠，故按 Foundation 模板分配首个未用 Ops 编号 MCP-F1-OPS-001，注册时点等 FOUNDATION-008 关闭门槛",
-    "本机工具链可用：Docker Engine 29.8.1（containerd image store）、Compose v5.5.1、pwsh 7.6.6、Git、gh；无运行中的无关 Compose project，端口预检无基线冲突"
+    "本机工具链可用：Docker Engine 29.8.1（containerd image store）、Compose v5.5.1、pwsh 7.6.6、Git、gh；无运行中的无关 Compose project，端口预检无基线冲突",
+    "Coordination Start passed 2026-10-05 with the record committed on Foundation main 3c3c1d6 and pushed; the declared branch feat/MCP-F1-OPS-001-alpha3-identity-acceptance was created at base ff0eeb7ff61301af762ba05ab58459b6c707577e, and the blocked Skin-only MCP-F1-SKIN-008 lock remained unchanged",
+    "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-environment.ps1 passed: the composition defaults to the pinned alpha.3 image mc-plan-core:mcp-f1-core-004-8ba869a, a second config run with IDENTITY_KEYCLOAK_PORT=8281/IDENTITY_CORE_PORT=3401 proved loopback port and issuer parameterization, Core/Keycloak keep different database/user/password, PAT_HASH_KEY is a local-only 40-char placeholder and PAT_MAX_VALIDITY_DAYS stays 30, the realm keeps PKCE S256, verified email, three reserved acceptance identities, confidential client-credentials clients with exact minimal scope sets, credits:consume absent from the PKCE client, no realm-admin mappings, no committed secrets, and the secret-signature scan stayed clean",
+    "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-identity.ps1 passed on a freshly created dev project: real Authorization Code + PKCE S256 login issued an RS256 Keycloak token whose issuer/audience/email_verified/scope claims were asserted and whose signature was verified with jose inside the Core container, twelve concurrent GET /v1/me responses converged to records=1:1:1:1:1, liveness/readiness passed with migrations current, the runtime user is uid 1000, and the Core/Keycloak database identities stayed isolated",
+    "From the committed Ops implementation, pwsh -NoProfile -File scripts/validate-dev-entitlements.ps1 passed (project mc-plan-alpha3-acceptance, Keycloak 127.0.0.1:8280, Core 127.0.0.1:3400, Asia/Shanghai policy_date 2026-10-05): user OIDC and a valid PAT read entitlements without consuming and without materializing a daily grant; a real client_credentials service token performed first 201, same-key same-request 200 with all five result fields unchanged, same-key different-request 409 IDEMPOTENCY_KEY_CONFLICT, same-key twelve-way 1x201+11x200 with one deduction, fresh-quota different-key twelve-way 3x201+9x409 ENTITLEMENT_EXHAUSTED with remaining 0/1/2, serial exhaustion and rejected-key replay 409; database assertions showed daily grants 3:2 and 3:3, idempotent commands 15 (5 COMPLETED / 10 REJECTED) all attributed to the real service principal, audit ENTITLEMENT_CONSUMED 5 distinct, core.entitlement.consumed.internal.v1 INTERNAL/PENDING outbox 5 distinct, identity provisioning outbox 3, identities 3:3:3 unchanged and zero service-principal IdentityLinks; all ten rejection boundaries returned the locked codes and were labeled [REAL-KEYCLOAK] (missing consume scope user/service 403, PAT consume credential 401, wrong audience 401, genuinely expired per-client token 401, unknown user 404, non-ACTIVE user token and service consumption 403) or [SYNTHETIC-LOCAL-SIGNED] (non-real-issuer locally signed JWT 401, malformed bearer 401) with no ledger side effects; cleanup removed the dedicated project containers, networks and volumes",
+    "A second full run of scripts/validate-dev-entitlements.ps1 with -ComposeProjectName mc-plan-alpha3-acceptance-alt -KeycloakHttpPort 8580 -KeycloakMgmtPort 9580 -MailpitPort 8525 -CoreHttpPort 3600 also passed end to end with identical ledger results, proving independent repeatability with freshly isolated data, configurable ports and project names, and the same own-project-only cleanup; two earlier prototype-directory runs of the byte-identical scripts had also passed (8280/3400 and 8380/3500) before the files were committed",
+    "Implementation committed in mc-plan-ops as 6813b52d68750db3d1e68111607300827c093af8 (11 files, +1261/-75): pinned alpha.3 compose inputs with PAT_HASH_KEY/PAT_MAX_VALIDITY_DAYS, parameterized loopback ports/project, the realm with the dedicated confidential service client and labeled negative clients, the new validate-dev-entitlements.ps1, updated validate-dev-environment.ps1/validate-dev-identity.ps1, and STATUS/development-plan/topology/README updates plus the new docs/dev-identity.md runbook recording pinned SHA and digests, ports, realm boundaries, test counts, REAL/SYNTHETIC negative labeling and cleanup evidence"
   ]
 }
