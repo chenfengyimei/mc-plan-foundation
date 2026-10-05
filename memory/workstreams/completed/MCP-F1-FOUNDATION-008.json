@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-008",
   "title": "依赖隔离扫描与同 Mac Foundation 短锁协议",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c",
   "owner": "Codex/01a10c60-19a8-7c20-9f65-dbec5553ee4c",
   "started_at": "2026-10-05T14:12:03.671348Z",
-  "updated_at": "2026-10-05T14:59:41.1774910+00:00",
+  "updated_at": "2026-10-05T15:01:32.4201170+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -40,7 +40,7 @@
       "base_commit": "221d4852e0fe79f6c7ca4f82bc65e1341e06e88d",
       "branch": "fix/MCP-F1-FOUNDATION-008-parallel-governance",
       "last_checkpoint_commit": "9814ac0aed57e5c8614dc2b36da81db80a1d8d9a",
-      "final_commit": null
+      "final_commit": "9814ac0aed57e5c8614dc2b36da81db80a1d8d9a"
     }
   },
   "depends_on": [],
@@ -59,6 +59,7 @@
     "pwsh -NoProfile -File scripts/test-coordination.ps1 passed exit 0, 14 cases. pwsh -NoProfile -File scripts/validate-workspace.ps1 -WorkspaceRoot /Users/chenfeng/xm/MC passed first for 6 active repositories / 111 Markdown / 51 JSON, and on resume with the installed SDK for 6 repositories / 111 Markdown / 56 JSON. Counts are observations, not conditions; project inventory uses registered Git tracked plus non-ignored untracked inputs.",
     "The first governance checkpoint attempt was rejected by the new entry due to the occupied short lock and another session coordination/index changes. No foreign file was staged, committed, reverted or force-pushed. After the owner requested continuation, fresh preflight found only own governance changes and no lock/index residue; branch tip fda7b9484d24ac8297aae7291f61bc58f2af08b4 contains other sessions CORE-005/SDK closures and the owner-authorized Skin handoff. Preserved their records, commits and current Skin blocked lock; verified CORE-005 and CONTRACTS-001 final commits exist on business main and Finish passes. SDK main e434d93 remains 2 commits ahead of origin/a8b38be; no SDK push performed by this task.",
     "Implementation checkpoint 9814ac0aed57e5c8614dc2b36da81db80a1d8d9a created through invoke-foundation-write.ps1 in matching Foundation governance branch mode with exact 10 owned paths; git diff --check, workspace validation (6 / 111 / 56) and -Phase Continue passed inside the transaction. Git fetch origin and ff-only synchronization completed safely; no public interface, product source, migration, image, Skill version or global direction changed. Short locks released by matching holder only.",
-    "Full entry invocation documented in docs/coordination.md; ADR-0010 records the same-Mac cooperative protocol. Foundation writes on ordinary main require the entry plus Submit-FoundationRecord, exact own paths and clean shared index; long business work stays outside. No TTL, forced takeover, retry loop or daemon. If sessions cannot use the entry, Foundation registrations/updates remain serial. A/B may register after governance closure, C waits for A closure; A/C have already been closed by other sessions and must not be duplicated; B remains unstarted planning with no reserved ID."
+    "Full entry invocation documented in docs/coordination.md; ADR-0010 records the same-Mac cooperative protocol. Foundation writes on ordinary main require the entry plus Submit-FoundationRecord, exact own paths and clean shared index; long business work stays outside. No TTL, forced takeover, retry loop or daemon. If sessions cannot use the entry, Foundation registrations/updates remain serial. A/B may register after governance closure, C waits for A closure; A/C have already been closed by other sessions and must not be duplicated; B remains unstarted planning with no reserved ID.",
+    "Verified checkpoint record 01cc73dba88d4d6e9964ce63ff30fa5eb5e15b1c submitted through the new short-lock entry and Submit-FoundationRecord; Continue passed before and after the exact own-path commit. Final implementation is 9814ac0aed57e5c8614dc2b36da81db80a1d8d9a; no pending implementation remains."
   ]
 }
