@@ -1,0 +1,71 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-OPS-001",
+  "title": "Ops 真实 Keycloak 用户与服务令牌的 alpha.3 权益消费联调",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "started_at": "2026-10-05T15:04:21.9546030+00:00",
+  "updated_at": "2026-10-05T15:04:21.9546030+00:00",
+  "primary_repository": "mc-plan-ops",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "把现有本地身份组合升级为真实 Keycloak 签发的用户（Authorization Code + PKCE）与服务（client_credentials）令牌，并以固定 Core 8ba869a / Contracts alpha.3（72bac53）输入完成 alpha.3 每日权益消费身份边界的实际部署组合验收：用户 OIDC 与合法 PAT 读取权益不消费，真实服务令牌幂等消费（201/200/409/耗尽/十二路并发），数据库账目、审计与 INTERNAL outbox 一致无重复，服务认证不产生额外 IdentityLink/Profile，真实与合成负例明确标记。",
+  "in_scope": [
+    "dev/identity 组合输入升级为可复现 alpha.3：Core 镜像锁定 mc-plan-core:mcp-f1-core-004-8ba869a（image index sha256:f94007baeb4d3d41e5b72dd03a2a41a3563219fc0aba30df34509c4ae168fb79，linux/arm64 runtime manifest sha256:ef7c1a28cf99b95ba82b06fb62c81c796f5c9011aae62adeb2518eb4f002fa54），Contracts alpha.3 固定自 72bac53 并与 Core contracts/core-api.lock.json 九文件哈希核对，补充 PAT_HASH_KEY 等 alpha.3 运行环境",
+    "Compose project、loopback 端口与专属数据卷可配置且脚本预检冲突；保留 Core/Keycloak 私网数据库账号隔离",
+    "realm 增加专用于本地验收的 confidential client_credentials 客户端与最小 credits:consume scope、Core audience 配置，真实 client_credentials 取令牌（secret 由 Keycloak 运行时生成、经本地 Admin API 读取、绝不提交）；credits:consume 不挂浏览器 PKCE 客户端或 PAT grant catalog，不授 realm-admin",
+    "保留真实 Authorization Code + PKCE、verified email、GET /v1/me 链路；用户 OIDC 与合法 PAT GET /v1/entitlements 不消费额度（含首次消费前不物化 daily grant 的边界）",
+    "真实服务令牌 POST /v1/credits/consume：首次 201、同键同请求 200 且原结果不变、同键异请求 409、耗尽 409；十二路不同键恰好三次成功其余耗尽，十二路同键仅一次扣减；数据库账目、审计与 INTERNAL outbox 对应无重复，DEVELOPER 角色与 SUSPENDED 状态仅在专属数据库夹具中建立",
+    "拒绝边界：缺失 consume scope 的真实用户/服务令牌 403、有效 PAT 作消费凭证 401、错误 audience 401、真实过期令牌 401、未知用户 404、非 ACTIVE 账号 403；真实 Keycloak 场景与本地签名合成负例明确标记，不以伪造令牌冒充真实 issuer，不放宽 issuer/audience/expiry 校验",
+    "新增可独立重复执行的真实服务/权益组合验收脚本：专属 Compose project、预检不冲突的可配置端口、专属数据卷、可复现启动与清理，二次执行隔离全新数据；输出不含完整令牌、client secret 或真实邮箱",
+    "更新 Ops STATUS、开发计划、部署拓扑与本地身份 runbook：记录固定 Core/Contracts SHA、镜像 digest、端口、realm 配置边界、测试数量、真实/合成负例标注与清理证据；明确本地非生产，不代表预发布或生产就绪"
+  ],
+  "out_of_scope": [
+    "修改 Core、Contracts、Foundation、Community、Skin 的任何文件或分支；Core 8ba869a 与 Contracts 72bac53 仅为只读固定输入（MCP-F1-CORE-005 正在修改的 Contracts checkout 不作为本轮输入）",
+    "Core 业务逻辑实现或公共 API、scope、错误码、事件、Schema 变更；积分账本与 alpha.4 余额表面属于 MCP-F1-CORE-005，本轮不使用也不声称",
+    "Developer App 自动注册 Keycloak 客户端；生产域名/地域 Q-004、生产邮件 Q-006、托管数据库 Q-014、监控产品 Q-015、正式 RPO/RTO Q-016 的任何决策",
+    "预发布/生产部署、镜像发布、公网暴露、真实秘密或真实用户数据",
+    "改变 MCP-F1-SKIN-008 的 blocked 状态、owner、检查点或 Skin 锁"
+  ],
+  "contract_impact": "none; local non-production Ops combination only. No public API, scope, error code, event or schema changes; the acceptance asserts the already-locked Contracts 0.1.0-alpha.3 surfaces only.",
+  "acceptance_evidence": [
+    "validate-dev-environment.ps1 通过：锁定 alpha.3 Core 镜像、端口/issuer 参数化双运行核验、隔离数据库、本地 SMTP、verified email、PKCE S256、最小服务客户端 scope 与无真实秘密签名",
+    "validate-dev-identity.ps1 带可配置端口/project 通过：PKCE S256 -> GET /v1/me -> 十二路并发聚合、迁移就绪后才 ready、uid 1000 非 root、数据库隔离与 identity outbox 核验",
+    "新增 validate-dev-entitlements.ps1 完整带参且可独立重复执行通过：用户 OIDC 与合法 PAT 读取权益不消费且不物化账目；真实 client_credentials 服务令牌首次 201 / 同键同请求 200 原结果不变 / 同键异请求 409 / 耗尽 409；全新额度身份十二路不同键恰好 3x201+9x409，十二路同键 1x201+11x200 仅一次扣减",
+    "数据库断言：daily grant 主身份 3:2、额度身份 3:3，幂等命令 15（5 COMPLETED / 10 REJECTED）全部属于真实服务主体，审计 ENTITLEMENT_CONSUMED 5 条无重复，core.entitlement.consumed.internal.v1 INTERNAL outbox 5 条无重复，身份 3:3:3 不变，服务主体 IdentityLink 为 0",
+    "全部拒绝边界返回稳定语义（403 INSUFFICIENT_SCOPE、401 AUTHENTICATION_REQUIRED、404 NOT_FOUND、403 ACCOUNT_UNAVAILABLE），真实 Keycloak 场景与 SYNTHETIC 本地签名负例分别标注，负例不产生任何账目副作用；issuer/audience/expiry 校验未放宽",
+    "二次执行通过（专属 project 数据卷重建，全新隔离数据），清理仅移除本轮 project 的容器/网络/卷并留有清理证据",
+    "Ops STATUS、开发计划、部署拓扑与本地身份 runbook 更新：固定 SHA、镜像 digest、端口、realm 边界、测试数量、负例标注与清理证据如实记录"
+  ],
+  "repositories": {
+    "mc-plan-ops": {
+      "base_commit": "ff0eeb7ff61301af762ba05ab58459b6c707577e",
+      "branch": "feat/MCP-F1-OPS-001-alpha3-identity-acceptance",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-002",
+    "MCP-F1-CORE-004"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Preflight verified 2026-10-05 (Codely/Mac): six repositories fetch 后与各自远程一致且干净（Foundation、Contracts 72bac53、Core 8ba869a、Community、Skin feat/MCP-F1-SKIN-008 9a06135、Ops ff0eeb7）；随后并行的 MCP-F1-CORE-005 关闭使 Core/Contracts main 前移（5508d60/a8b38be），不影响本流固定输入",
+    "Contracts alpha.3 锁以提交方式重新核对（不依赖任何会话 checkout）：从 Core 8ba869a 读取 contracts/core-api.lock.json（0.1.0-alpha.3，9 文件，锁定提交 fab1f3c），9 个文件 blob 在 fab1f3c 与固定导出点 72bac53 均与锁哈希完全一致；正在修改 Core/Contracts 的会话 checkout 不作为输入",
+    "Core 运行时镜像在本机核实：mc-plan-core:mcp-f1-core-004-8ba869a 存在，image index digest 重算为 sha256:f94007baeb4d3d41e5b72dd03a2a41a3563219fc0aba30df34509c4ae168fb79（与 MCP-F1-CORE-004 记录一致），linux/arm64 runtime manifest sha256:ef7c1a28cf99b95ba82b06fb62c81c796f5c9011aae62adeb2518eb4f002fa54 完全一致，无需重建",
+    "活动记录复查：MCP-F1-SKIN-008（blocked，仅锁 Skin）、MCP-F1-CORE-005（Core+Contracts，注册于 2026-10-05T14:08Z 并于本轮预检期间完成关闭，Ops 仅为其只读参考）与 MCP-F1-FOUNDATION-008（Foundation 治理短锁协议，要求后续注册等其串行完成）；无其他会话注册相同 Ops 目标，与本流 Ops 主仓无锁重叠，故按 Foundation 模板分配首个未用 Ops 编号 MCP-F1-OPS-001，注册时点等 FOUNDATION-008 关闭门槛",
+    "本机工具链可用：Docker Engine 29.8.1（containerd image store）、Compose v5.5.1、pwsh 7.6.6、Git、gh；无运行中的无关 Compose project，端口预检无基线冲突"
+  ]
+}
