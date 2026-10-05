@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-006",
+  "title": "实现 Core 事务 outbox 发布器与事件恢复切片",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely",
+  "owner": "Codely",
+  "started_at": "2026-10-05T15:36:22Z",
+  "updated_at": "2026-10-05T15:36:22Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "以有界切片完成 Core 固定顺序第 7 步的 outbox 发布与事件恢复（W06）：把既有各写入方在同一事务追加的 INTERNAL/PENDING outbox 记录按已锁定事件契约原子转换为 PUBLISHED，支持可重投（at-least-once）、进程崩溃后的恢复与卡滞/失败记录的显式告警暴露；用按 event_id 幂等的测试消费者验证重投下业务不重复。无真实消费者前不做跨服务网络投递，不引入新的外部消息系统运行依赖，readiness 约束不变。",
+  "in_scope": [
+    "Core outbox 模块：发布器应用端口与实现，PENDING 到 PUBLISHED 的单事务状态转换、publishedAt 回填、并发防双投（数据库行锁或等价原子条件更新，进程内假设不算约束）",
+    "可重投：失败重试上限与退避、失败与卡滞记录的显式暴露（计数/结构化指标面），同批可安全重跑",
+    "事件恢复：进程重启后从 PENDING 无丢失继续，发布崩溃在状态转换提交前不产生半发布状态；恢复演练有自动化证据",
+    "幂等消费者验证夹具：按 event_id 去重的测试消费者证明 at-least-once 重投下不重复处理",
+    "发布前按锁定事件 Schema（0.1.0-alpha.4 的 credit.changed.v1 与 event-envelope）校验内部载荷；不修改锁定文件",
+    "既有写入方（identity、developer-app、token-metadata、entitlement、credits）同事务审计与 INTERNAL outbox 行为回归保持",
+    "按开发计划第 7 步补齐指标/追踪的可观测验收（基于既有 OpenTelemetry 基线，只读暴露）",
+    "更新 Core STATUS、开发计划、acceptance 与 runtime 文档；Contracts 仅在实现证据要求时按实际需要另行声明为辅助（预计无公共契约变化）"
+  ],
+  "out_of_scope": [
+    "任何真实跨服务网络投递、Kafka/RabbitMQ 等新中间件、Redis/worker 新运行依赖（readiness 不变）",
+    "奖励数值、兑换价格与公共积分消费/退款 HTTP 表面（W05，等 Q-003/Q-013）",
+    "Developer App Keycloak OIDC 客户端生命周期（W03，按框架在 Core 锁上排在 W06 之后）",
+    "修改 Contracts 锁定文件、Community/Skin/Ops 业务文件或 Skin 工作流（SKIN-008 blocked 锁保持原样）",
+    "生产部署、镜像公开发布、消费者产品集成"
+  ],
+  "contract_impact": "none expected: the credit.changed.v1 envelope and EventEnvelope schemas are already locked at 0.1.0-alpha.4 (lock commit 9a85b98); the publisher validates internal payloads against those locked files read-only and no public API, scope, error code, event or schema changes",
+  "acceptance_evidence": [
+    "Core format、lint、严格 typecheck、单元、隔离 PostgreSQL 集成、HTTP E2E、architecture、migration、契约与 build 全部通过，最终 runtime 镜像从最终提交源码重建并冒烟（非 root、迁移、live/ready）",
+    "并发双发布器对同一批 PENDING 记录只产生一次 PUBLISHED 转换，其余安全重试；失败记录在重试上限内可重投，超限显式暴露",
+    "发布进程在转换前崩溃后重启不丢记录、不产生半发布状态；恢复演练自动化",
+    "按 event_id 幂等的测试消费者在人工重投下不重复处理同一事件",
+    "载荷按锁定 Schema 校验通过；非法载荷被拒绝并暴露，不标记 PUBLISHED",
+    "既有 identity/developer-app/token-metadata/entitlement/credits 同事务审计与 outbox 写入回归全绿",
+    "指标/告警面：PENDING 积压、失败与卡滞计数可观测并有测试"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "5508d607628910a4f72c496e8340e526badcb9df",
+      "branch": "feat/MCP-F1-CORE-006-outbox-publisher",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-005"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Preflight verified 2026-10-05 ~23:40 (Codely/Mac): authoritative W06 definition read from the owner framework (audit/outbox/event-recovery; acceptance themes atomic records, re-deliverable publishing, idempotent consumers, alerting); entry gates CORE-005 closed plus locked event protocol at alpha.4 are satisfied; live registry = 29 completed with only SKIN-008 (blocked, Skin-only) active after FOUNDATION-009 closed W01 minutes earlier; Foundation back on clean main (4 final unpushed closure commits ride this registration push); Core main 5508d60 and Contracts main e434d93 (pushed to origin under owner authorization 23:34) both clean; MCP-F1-CORE-006 is the next unused Core ID and the Session-1 draft that predicted CORE-006 for the dev-app Keycloak slice is explicitly not a reservation (that slice is W03 and serializes after W06 on the Core lock); W06 registers Core-only per the framework preamble that auxiliaries are declared only when actually needed"
+  ]
+}
+
