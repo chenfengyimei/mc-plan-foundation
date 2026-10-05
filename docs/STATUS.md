@@ -14,10 +14,10 @@
 
 F1 评审：`MCP-F1-FOUNDATION-003` 按十项检查表补齐身份生命周期 ADR、Core 事务/运行边界、第一可运行切片、测试回退、风险和待决门槛；Foundation、协调与只读契约验证通过。
 
-当前方向：`F1 / mc-plan-core`，状态为活动。`MCP-F1-CORE-001` 至 `MCP-F1-CORE-004` 均已完成、关闭并合并 `main`；Core `8ba869a` 与 Contracts `72bac53` 已 ff-only 合并、推送 GitHub 并清理短期分支。Contracts `0.1.0-alpha.3` 锁定每日权益/服务消费表面，Core 每日三个 Skin creation_session 按 Asia/Shanghai 重置、不累计；十二路并发（含跨策略切换）、历史快照、幂等、OIDC/PAT 读取、服务 scope 和事务审计/INTERNAL outbox 验收通过。单元 55、HTTP E2E 52、PostgreSQL 集成 17、契约 7、最终 runtime 镜像及隔离镜像运行验证、Continue/Finish/工作区与 14 项协调测试均有实际证据，见 [CORE-004 完成记录](../memory/workstreams/completed/MCP-F1-CORE-004.json)。
+当前方向：`F1 / mc-plan-core`，状态为活动。`MCP-F1-CORE-001` 至 `MCP-F1-CORE-005` 均已完成、关闭并合并 `main`；Core `5508d60` 已推送 GitHub。Contracts `0.1.0-alpha.3` 锁定每日权益/服务消费表面（每日三个 Skin creation_session 按 Asia/Shanghai 重置、不累计；十二路并发/历史快照/幂等/OIDC/PAT/服务 scope 验收见 [CORE-004 完成记录](../memory/workstreams/completed/MCP-F1-CORE-004.json)）；`0.1.0-alpha.4` 新增只读积分余额表面（`getCreditBalance`），不可变积分账本为内部实现不经公共接口暴露；单元 74、HTTP E2E 57、隔离 PostgreSQL 集成 31、契约 11 与最终 runtime 镜像冒烟见 [CORE-005 完成记录](../memory/workstreams/completed/MCP-F1-CORE-005.json)。
 
-治理恢复时已核实其他会话的 CORE-005 与 CONTRACTS-001 completed 记录、最终提交在 main 上及 Finish 通过：Core main `5508d60`，Contracts 本地 main `e434d93`。SDK 记录明确为本地验收包、远端推送仍待授权；本任务不替其推送。完整审计/outbox 发布、消费者、恢复演练与公共积分消费回退仍待后续工作，F1 整体尚未完成，Q-007 的 PAT 默认最长 30 天保持原决策。
+记录现状：`MCP-F1-CORE-005`（Core main `5508d60`）、`MCP-F1-CONTRACTS-001`（Contracts 本地 main `e434d93`，SDK 远端推送待授权、不视为已推送）与 `MCP-F1-OPS-001`（Ops main `6813b52` 已推送；真实 Keycloak 用户/服务令牌的固定 alpha.3 权益消费联调验收通过）均已关闭且 Finish 通过，详见各自 completed 记录；本治理任务不替任何会话推送。完整审计/outbox 发布、消费者、恢复演练与公共积分消费回退仍待后续工作，F1 整体尚未完成，Q-007 的 PAT 默认最长 30 天保持原决策。
 
-`MCP-F1-SKIN-008` 仍为 blocked；其他会话按所有者授权交接至 `Codely/8b150da7-6a4c-4e53-a769-422c79c12963`，本治理任务未修改其记录、分支、检查点或锁，禁止无界抽卡，不开启 F3。本任务未创建或预留 A/B/C 的 ID；治理关闭后 A/B 可开始注册，C 等 A 关闭后再注册，已有 completed 记录不能重复启动。B 仍为未启动规划。
+`MCP-F1-SKIN-008` 仍为 blocked；其他会话按所有者授权交接至 `Codely/8b150da7-6a4c-4e53-a769-422c79c12963`，本治理任务未修改其记录、分支、检查点或锁，禁止无界抽卡，不开启 F3。A/B/C 三项均已注册并关闭（A=`MCP-F1-CORE-005`、B=`MCP-F1-OPS-001`、C=`MCP-F1-CONTRACTS-001`），已有 completed 记录不能重复启动；公共契约需求按优先级串行冻结。
 
 待决事项统一记录在 `memory/open-questions.md`，具体工作以后由 GitHub Issue/PR 跟踪。
