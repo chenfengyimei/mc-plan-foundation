@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-002",
+  "title": "ADR-0011 契约先行：Core 0.1.0-alpha.5 消费者拉取事件投递语义锁定",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "started_at": "2026-10-06T16:30:48.297Z",
+  "updated_at": "2026-10-06T16:30:48.297Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [
+    "mc-plan-core"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-community",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "按 ADR-0011 把事件投递传输形态决策落为锁定的 Core 0.1.0-alpha.5 契约：新增服务专用的 GET /v1/events（游标分页拉取未确认事件，at-least-once）与 POST /v1/events/acknowledgments（显式确认），新 serviceOAuth scope events:consume，EventPage/EventAcknowledgment Schema 复用锁定的事件信封；本切片只锁契约与 SDK 生成面（不暴露无 producer 证据的新操作），Core 辅助仅更新契约锁清单，不实现任何生产者代码。",
+  "in_scope": [
+    "openapi/core.yaml 升至 0.1.0-alpha.5：GET /v1/events（operationId listDeliveredEvents，返回 oldest-unacknowledged 事件批次与 next_cursor，服务凭证专用）与 POST /v1/events/acknowledgments（operationId acknowledgeEvents，游标确认幂等）；serviceOAuth flows 新增 events:consume scope；EventAcknowledgmentRequest 为内联组件（cursor 必填非空）",
+    "新增 schemas/core/event-page.json（items 为锁定事件信封数组 + next_cursor string|null）与 schemas/core/event-acknowledgment.json（cursor）；事件信封本身零修改",
+    "scripts/validate_contracts.py 同步锁定本切片语义：版本、两个新操作的 serviceOAuth 专用 security（拒绝 userOAuth/PAT）、events:consume 不进入 userOAuth 目录或 PAT 可授予集、EventPage/EventAcknowledgment 字段集、确认幂等语义注释、兼容矩阵分类短语",
+    "docs/compatibility.md 增加 Core 0.1.0-alpha.5 行（预发布兼容新增：服务事件投递）；docs/api-catalog.md、docs/STATUS.md、docs/development-plan.md 同步",
+    "sdk/typescript：openapi-typescript 从 alpha.5 core.yaml 重新生成（零漂移门禁）、SUPPORTED_CONTRACT_VERSION/LOCK_COMMIT/文件哈希清单更新至 alpha.5、SUPPORTED_OPERATIONS 保持 12 个 producer 已验证操作不变（listDeliveredEvents/acknowledgeEvents 因无 producer 证据不暴露）、包版本 0.1.0-alpha.5；全部 SDK 验收命令通过",
+    "Core（辅助）：contracts/core-api.lock.json 更新至 0.1.0-alpha.5（新增两个 Schema 文件哈希与新的 core.yaml 哈希，锁提交指向本切片 Contracts 锁定提交）；Core 契约校验与既有 contract 测试照常通过；不实现任何事件投递生产者代码"
+  ],
+  "out_of_scope": [
+    "Core 任何事件投递生产者实现（属预计 MCP-F1-CORE-008 的后续切片）；任何事件可见性/type 过滤参数、重试/死信语义扩展",
+    "userOAuth/PAT 面暴露 events:consume（该 scope 服务专用，浏览器/PAT 一律不得授予）",
+    "修改 Community/Skin OpenAPI、事件信封、既有 alpha.4 已锁操作的安全语义或字段",
+    "修改 MCP-F1-SKIN-008 的一切；发布 npm 或稳定版本"
+  ],
+  "contract_impact": "additive prerelease: Core 0.1.0-alpha.4 -> 0.1.0-alpha.5 adds two service-only operations (listDeliveredEvents, acknowledgeEvents), one serviceOAuth scope (events:consume), two new JSON Schemas (EventPage, EventAcknowledgment) and the inline EventAcknowledgmentRequest component; all locked alpha.4 operations, schemas, scopes and error codes stay byte-compatible",
+  "acceptance_evidence": [
+    "validate_contracts.py 通过（结构、语义、引用、安全、本切片新断言）；redocly lint 或等价命令按仓库开发计划执行",
+    "SDK generate:check 零漂移；format/lint/严格 typecheck/全部单元测试/build 通过；manifest 测试锁定的哈希与 alpha.5 锁提交一致；client 面仍只有 12 个 producer 已验证操作",
+    "Core 契约锁更新后 verify-contracts（14 文件）与既有 contract 测试通过；对 alpha.4 生产者表面零影响（无生产者代码变更）",
+    "Start/Continue/Finish 通过；Contracts 主提交先于 Core 辅助锁清单提交；两仓 ff-only 合并 main 并推送"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "e434d93de5922e1e61d3d4172a07ed80512bd831",
+      "branch": "feat/MCP-F1-CONTRACTS-002-event-delivery-alpha5",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-core": {
+      "base_commit": "18bcef29c5cd2a92562e08531992a4d9719d26ec",
+      "branch": "feat/MCP-F1-CONTRACTS-002-contract-lock-update",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-006",
+    "MCP-F1-CORE-007",
+    "MCP-F1-FOUNDATION-011"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "contract-first-prerequisite",
+    "authorized_by": "MC Plan project owner transport decision recorded as ADR-0011 (2026-10-06, MCP-F1-FOUNDATION-011) plus the in-session owner instruction to continue the published queue",
+    "reason": "Contracts is the required first writer for every public surface change; the consumer-pull delivery semantics must be locked before the Core implementation slice (predicted MCP-F1-CORE-008) may start, mirroring the alpha.2-alpha.4 contract-first pattern. Core joins only as the lock-manifest auxiliary; no business direction changes."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-06T16:30:48.297Z from live state: Contracts main e434d93 and Core main 18bcef2 both clean and synced; ADR-0011 verified present; baseline validate_contracts.py passed on this Mac (18 JSON schemas/events, 3 OpenAPI documents, 24 unique operationIds) in a pinned python 3.12 venv with PyYAML 6.0.3 + jsonschema 4.26.0; Contracts and Core locks verified free inside the critical section."
+  ]
+}
