@@ -7,7 +7,7 @@
   "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "started_at": "2026-10-06T16:30:48.297Z",
-  "updated_at": "2026-10-06T16:30:48.297Z",
+  "updated_at": "2026-10-06T16:39:39.987Z",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [
     "mc-plan-core"
@@ -44,13 +44,13 @@
     "mc-plan-contracts": {
       "base_commit": "e434d93de5922e1e61d3d4172a07ed80512bd831",
       "branch": "feat/MCP-F1-CONTRACTS-002-event-delivery-alpha5",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "8350c3d",
       "final_commit": null
     },
     "mc-plan-core": {
       "base_commit": "18bcef29c5cd2a92562e08531992a4d9719d26ec",
       "branch": "feat/MCP-F1-CONTRACTS-002-contract-lock-update",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "ad6a5e063e9c5fb72730b4dea42ff2a4f073632a",
       "final_commit": null
     }
   },
@@ -67,6 +67,9 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-06T16:30:48.297Z from live state: Contracts main e434d93 and Core main 18bcef2 both clean and synced; ADR-0011 verified present; baseline validate_contracts.py passed on this Mac (18 JSON schemas/events, 3 OpenAPI documents, 24 unique operationIds) in a pinned python 3.12 venv with PyYAML 6.0.3 + jsonschema 4.26.0; Contracts and Core locks verified free inside the critical section."
+    "Registered 2026-10-06T16:30:48.297Z from live state: Contracts main e434d93 and Core main 18bcef2 both clean and synced; ADR-0011 verified present; baseline validate_contracts.py passed on this Mac (18 JSON schemas/events, 3 OpenAPI documents, 24 unique operationIds) in a pinned python 3.12 venv with PyYAML 6.0.3 + jsonschema 4.26.0; Contracts and Core locks verified free inside the critical section.",
+    "Contracts lock commit 5ba7172427f719eca2af44a0ef5d43b9871551e5 (feat(core): lock 0.1.0-alpha.5 consumer-pull event delivery contract) added GET /v1/events (listDeliveredEvents, serviceOAuth events:consume, cursor pagination over oldest unacknowledged events, at-least-once) and POST /v1/events/acknowledgments (acknowledgeEvents, idempotent cursor acknowledgment, unknown/malformed cursor 400) plus schemas/core/event-page.json + event-acknowledgment.json (items reuse the locked event envelope byte-for-byte) and the inline cursor request body; validate_contracts.py now machine-locks the alpha.5 semantics (service-only security on both operations, events:consume absent from userOAuth/PAT catalogs and PAT-grantable scopes, GET-only /v1/events with limit 1..200, EventPage/EventAcknowledgment closed field sets, locked 400/401/403 responses, compatibility classification phrase). Baseline and final validate_contracts.py runs passed in a pinned python 3.12 venv (PyYAML 6.0.3 + jsonschema 4.26.0): 20 JSON schemas/events, 3 OpenAPI documents, 26 unique operationIds.",
+    "SDK commit (feat(sdk): regenerate types for 0.1.0-alpha.5 and keep 12 producer-verified operations) regenerated the type baseline from the alpha.5 core.yaml and kept SUPPORTED_OPERATIONS at exactly the 12 producer-verified operations (listDeliveredEvents/acknowledgeEvents intentionally NOT exposed); manifest version/lock-commit/hashes updated (12 files incl. the two new schemas and the transitively consumed event envelope); package version 0.1.0-alpha.5. All SDK gates green on this Mac: format:check (with a new sdk/typescript/.prettierignore exempting src/generated and dist so the committed file stays byte-identical to generator output - the alpha.4 committed file was prettier-formatted which made the raw generate:check gate self-inconsistent; raw output now committed and generate:check verified ZERO DRIFT end to end), lint --max-warnings 0, strict typecheck, 25/25 vitest, build.",
+    "Core supporting commit (chore(contracts): lock core-api manifest at 0.1.0-alpha.5) updated contracts/core-api.lock.json to 0.1.0-alpha.5 referencing lock commit 5ba7172427f719eca2af44a0ef5d43b9871551e5 with 14 files (two new schema hashes + new core.yaml hash); verify-contracts passed against the Contracts branch checkout, lock-only structural check passed, 17/17 contract tests passed, and unit+e2e regression 160/160 with architecture (74 files) and prettier all green. No Core producer code was written for the events surface."
   ]
 }
