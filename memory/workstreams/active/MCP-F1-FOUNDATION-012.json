@@ -7,7 +7,7 @@
   "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "started_at": "2026-10-07T13:13:10.788Z",
-  "updated_at": "2026-10-07T13:13:10.788Z",
+  "updated_at": "2026-10-07T13:13:16.207Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -34,7 +34,7 @@
     "mc-plan-foundation": {
       "base_commit": "b93582b6d73f85e5fb6b55daa26b46ea98695f93",
       "branch": "feat/MCP-F1-FOUNDATION-012-skin-anonymous-window-adr",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "ab6e7613ee14e7458437b37c7245f5f27d30de03",
       "final_commit": null
     }
   },
@@ -47,6 +47,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-07T13:13:10.788Z from live state: Foundation main b93582b clean and synced; Foundation lock free inside the critical section; owner W10 decision (option A) delivered in-session 2026-10-07. Concurrent active workstreams MCP-F1-CORE-008 (Core+Ops) and MCP-F1-SKIN-008 (Skin-only, blocked) verified disjoint from this write-set."
+    "Registered 2026-10-07T13:13:10.788Z from live state: Foundation main b93582b clean and synced; Foundation lock free inside the critical section; owner W10 decision (option A) delivered in-session 2026-10-07. Concurrent active workstreams MCP-F1-CORE-008 (Core+Ops) and MCP-F1-SKIN-008 (Skin-only, blocked) verified disjoint from this write-set.",
+    "ADR-0012 decisions/0012-skin-standalone-anonymous-window.md written on the governance branch: Skin Standalone anonymous-window semantics (unguessable 128-bit UUID addressing, 30d conversation / 24h candidate retention, deletion endpoint, no session-credential object model, userOAuth reserved as Official-mode documentation) with broker-style alternatives rejected and explicit change conditions."
   ]
 }
