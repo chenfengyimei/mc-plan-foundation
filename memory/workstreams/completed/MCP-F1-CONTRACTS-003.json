@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CONTRACTS-003",
   "title": "ADR-0012 契约先行：Skin 0.1.0-alpha.1 匿名窗口五缺口（预览/详情/下载/删除）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
   "started_at": "2026-10-07T13:16:47.991Z",
-  "updated_at": "2026-10-07T13:16:47.991Z",
+  "updated_at": "2026-10-07T13:26:17.109Z",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -38,7 +38,7 @@
       "base_commit": "8350c3df85c7ea48e74216ebbe2f0237ff8cf18c",
       "branch": "feat/MCP-F1-CONTRACTS-003-skin-anonymous-alpha",
       "last_checkpoint_commit": null,
-      "final_commit": null
+      "final_commit": "30064022daa61795b9a1945af2d23a0ce88d04dd"
     }
   },
   "depends_on": [
@@ -52,6 +52,8 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-07T13:16:47.991Z from live state: Contracts main 8350c3d clean and synced; Contracts lock free inside the critical section; prerequisite ADR-0012 verified present on Foundation main (owner W10 option-A decision 2026-10-07); concurrent active workstreams (MCP-F1-CORE-008 Core+Ops, MCP-F1-SKIN-008 Skin-only blocked) verified disjoint from this write-set."
+    "Registered 2026-10-07T13:16:47.991Z from live state: Contracts main 8350c3d clean and synced; Contracts lock free inside the critical section; prerequisite ADR-0012 verified present on Foundation main (owner W10 option-A decision 2026-10-07); concurrent active workstreams (MCP-F1-CORE-008 Core+Ops, MCP-F1-SKIN-008 Skin-only blocked) verified disjoint from this write-set.",
+    "Final acceptance on the committed tree: validate_contracts.py passed (20 JSON schemas/events, 3 OpenAPI documents, 30 unique operationIds) in the pinned python 3.12 venv; redocly lint exit 0 across all OpenAPI documents (one expected no-unused-components warning: the userOAuth security scheme is intentionally unreferenced under the ADR-0012 anonymous-window semantics and stays as Official-mode documentation); docs updated (api-catalog Skin section, compatibility classification + matrix row, STATUS, development-plan).",
+    "Alpha.1 semantics delivered exactly as scoped per ADR-0012 option A: four anonymous operations (getConversation detail+messages, deleteConversation with cascade, getCandidatePreview PNG bytes, downloadSkin PNG bytes) on top of the unchanged four draft operations; unguessable 128-bit UUID addressing, 30d conversation / 24h candidate retention documented per operation, explicit 404 for unknown/expired/deleted, no credential object model, userOAuth retained as Official-mode documentation (its no-unused-components warning is intentional). Skin producer implementation belongs to a later Skin-line slice (SKIN-008 owner, after the Q-001=B decision is exercised with the owner-deposited paid key)."
   ]
 }
