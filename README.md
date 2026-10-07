@@ -28,7 +28,7 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 
 ## 当前阶段
 
-Foundation v1.0 文档与多仓治理基线已完成并保存在本地 Git；尚未创建远程仓库。`MCP-F1-FOUNDATION-003` 已完成项目所有者授权的十项架构评审，当前全局方向为活动的 `F1 / mc-plan-core`。`MCP-F1-CORE-001`、`MCP-F1-CORE-002` 与 `MCP-F1-CORE-003` 均已完成、关闭并合并本地 `main`（身份/Profile 与 Developer App/scope/PAT 切片）；唯一活动工作流 `MCP-F1-SKIN-008` 已正式标记为 blocked——当前 GLM flash-low 与 v4 协议组合未达到所有者视觉验收，解锁等待 Q-001 Provider 基准、预算/凭据决策或所有者明确选择。`MCP-F1-FOUNDATION-005` 增加了主会话统筹 Skill，使后续派工先核对实时锁、提交和完成层级。当前组合状态见 [项目组合状态](memory/current/portfolio.md)，后续顺序见 [路线图](docs/roadmap.md)。
+Foundation v1.0 文档与治理基线、F1 架构评审已完成，六仓均已有 GitHub remote。当前全局方向仍为 `F1 / mc-plan-core`；Core-008（Core + Ops）与 Skin-008（blocked）仍未关闭，Community 尚未实现业务工程，不能视为 V1 完成。最新里程碑见 [项目组合状态](memory/current/portfolio.md)，从当前代码到完整 V1 的职责与验收顺序见 [完整交付路线](docs/delivery-plan.md)，阶段定义见 [路线图](docs/roadmap.md)。活动锁与 Git 状态须在每次派工前重新核对。
 
 所有写任务必须先按 [多仓协调模型](docs/coordination.md) 声明唯一主仓库和仓库锁；各项目固定开发顺序见对应 `docs/development-plan.md`。
 

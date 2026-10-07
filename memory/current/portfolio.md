@@ -1,16 +1,25 @@
 # 项目组合状态
 
-更新时间：2026-10-05
+核对日期：2026-10-07。本文为里程碑摘要；实时 Owner、锁、检查点与关闭状态以 [工作流记录](../workstreams/active/) 和 Git 为准。全局方向仍为 [F1 / Core](direction.json)，没有通过 F1 退出门槛。
 
-| 仓库 | 阶段 | 当前目标 | 下一决策门槛 |
-|---|---|---|---|
-| Foundation | F0/GOV 完成；F1 评审门槛通过 | v1.0 基线、工作流治理、开发 Skill 与 `mc-plan-orchestrator` v1.0 已归档；`MCP-F1-FOUNDATION-008` 修复 Git 项目文件扫描并建立经隔离验收的同 Mac 协调短事务协议（ADR-0010） | 持续核对方向、锁和组合状态；不承载业务代码；所有 Foundation 协调写入使用短锁入口 |
-| Contracts | F0/GOV 完成；alpha.4 与 SDK 切片已归档 | CORE-005 的 alpha.4 只读余额契约与 CONTRACTS-001 SDK 已有 completed 记录，最终提交 main `e434d93` 已于 2026-10-05 获所有者授权推送 origin。原每日权益消费仍仅 daily_entitlement | 公共积分消费/回退及消费者须按后续工作流推进，遵守契约 → SDK → 消费者顺序 |
-| Core | F1 活动；权益/积分账本/outbox 发布器切片已归档 | CORE-001 至 CORE-006 均已关闭；CORE-005 最终提交 `5508d60`（alpha.4 只读余额表面与内部积分账本）与 CORE-006 最终提交 `63745d6`（第 7 步事务 outbox 发布器与事件恢复，无传输绑定）均在已推送 main 上；本治理会话核实提交和 Finish，不复写业务验收结果 | 真实事件投递（须先有传输 ADR 与 Contracts 投递语义锁定）、消费者、备份恢复演练与公共积分消费回退仍待后续工作；F1 尚未完成 |
-| Community | F2/F4 计划中；实现未开始 | 资源发布闭环与社区功能顺序已固化 | F2 开始前批准资源状态机与上传契约 |
-| Skin | F3 计划中；F1 受限 Standalone 持续改进（ADR-0009） | 工程骨架、Standalone 最小链路、逐像素蓝图协议、无第三方运行时的可旋转 3D 预览与真实 Provider 流程已完成；工作流 `MCP-F1-SKIN-008` 已正式标记为 blocked：当前 GLM flash-low 与 v4 协议组合未达到所有者视觉验收，受控候选技术校验全过但视觉约 1/10；工作流已按所有者授权正式交接至 `Codely/8b150da7-6a4c-4e53-a769-422c79c12963`，分支领先本地 `main` 9 个提交（离线工作台完成度检查点 `85b35ff`，未推送） | 解锁等待 Q-001 Provider 基准（模型/预算/凭据决策）或所有者明确选择；在此之前禁止无界抽卡；Skin 契约缺口须按契约先行顺序另开 Contracts 主工作流补全；F3 前仍须模型提供商基准 ADR，Official 集成不得越过 Core/Community 门槛 |
-| Ops | F1 辅助活动；本地开发/联调组合已验证 | 真实输入优先的开发、预发布、恢复和扩容路线已固化；`MCP-F1-CORE-002` 已建立固定版本 Keycloak、隔离 Core/Keycloak PostgreSQL、本地 Mailpit 与无真实秘密的本地开发组合；`MCP-F1-OPS-001` 已以真实 Keycloak 用户/服务令牌完成固定 alpha.3 权益消费联调验收（最小 scope 服务客户端、标注负例客户端、隔离验收项目与 validate-dev-entitlements.ps1；Ops main `6813b52` 已推送） | 获得服务器、域名、地域与运维产品决策后另建预发布工作流，不得把本地占位凭证提升为生产配置 |
+| 仓库 | 已有事实 | 当前缺口与下一门槛 |
+|---|---|---|
+| Foundation | F0/GOV 与 F1 架构评审完成；ADR-0010 短事务、ADR-0011 消费者拉取、ADR-0012 Skin 匿名窗口已落地 | 按 [完整交付路线](../../docs/delivery-plan.md) 收敛实现与证据；后续阶段逐门槛推进 |
+| Contracts | main `3006402`；Core `0.1.0-alpha.5`、Skin `0.1.0-alpha.1` 已锁定；Core SDK 暴露 12 个已有 producer 证据的操作 | 事件 SDK 等待 Core 投递正确性及真实消费者验收；Community 仍为 draft；Skin alpha 契约不等于生产者已实现 |
+| Core | main `ad6a5e0` 已含 CORE-001 至 CORE-007；CORE-008 分支检查点 `8f18ac5` 已实现事件拉取与确认 | CORE-008 仍 active，仅实现检查点；乱序发布存在丢投路径，Ops 验收尚不能关闭；备份恢复、指标追踪及其余 F1 条目仍待证据 |
+| Community | main `69ac5e9`；仅治理与业务计划文档，无应用源码或测试 | F2 尚未启动：先审定资源上传/状态机与预发布契约，再实施资源闭环；F4 全部社区批次均未实现 |
+| Skin | SKIN-008 分支检查点 `85b35ff`，本地比 origin 同名分支领先 1 个提交；已有 Standalone 工作台、第一方 3D 预览、刷新恢复、比较与本地下载 | 工作流仍 blocked，尚未合并 main；真实生成质量验收未通过；alpha.1 公共详情/删除/预览/下载尚未实现，当前本地预览依赖忽略文件 |
+| Ops | main `2ece743`；已有本地 Keycloak/Core、Mailpit 邮件与密码恢复、权益、开发者应用验收 | CORE-008 占用 Ops，事件 compose/realm/验收脚本仍有未提交改动；事件验收、隔离备份恢复和预发布生产门槛未完成 |
 
-记录现状（2026-10-05 23:55 核对；活动清单以 `memory/workstreams` 机器记录为准）：30 个 completed；活动工作流 2 个：`MCP-F1-FOUNDATION-010`（本切片，Foundation 主，治理叙述余项同步）与 `MCP-F1-SKIN-008`（blocked，仅锁 Skin）。`MCP-F1-CORE-005`（Core main `5508d60`，已推送）、`MCP-F1-OPS-001`（Ops main `6813b52`，已推送）、`MCP-F1-CONTRACTS-001`（Contracts main `e434d93`，已获所有者授权推送）、`MCP-F1-FOUNDATION-008/009` 与 `MCP-F1-CORE-006`（Core main `63745d6`，已推送）均已关闭且 Finish 通过；详情以各自 completed 记录为准，此处不复制其业务测试结果。当前活动业务锁为 `MCP-F1-FOUNDATION-010`（Foundation）与 `MCP-F1-SKIN-008`（blocked，Skin）；后者由所有者授权正式交接至 `Codely/8b150da7-6a4c-4e53-a769-422c79c12963`，本治理任务不修改该记录。Skin 尚未合并 main、未释放锁，仍等待视觉验收/Provider 决策，禁止无界抽卡。ADR-0009 不改变 Core 主方向，F1 整体仍未完成。
+## 活动业务工作流
 
-A/B/C 三项均已注册并关闭：A=`MCP-F1-CORE-005`、B=`MCP-F1-OPS-001`、C=`MCP-F1-CONTRACTS-001`，已有 completed 记录不能重复登记。Core 第 7 步 outbox 发布器与事件恢复已由 `MCP-F1-CORE-006` 关闭（本切片无传输绑定，生产不绑定任何 sink）；真实事件投递（须传输 ADR 与 Contracts 投递语义锁定）、消费者集成、备份恢复演练与公共积分消费回退仍待后续工作流；公共契约需求按优先级串行冻结，不开多个 Contracts 写会话。具体实施任务以后由 GitHub Issues/PR 跟踪；本文件只记录跨仓里程碑状态。
+- `MCP-F1-CORE-008`：Owner `Codely/session-4-contracts-sdk`，写集 Core + Ops，active。Core 检查点已提交；Ops 未提交；两个 final_commit 均为空。不得据 Core 开发计划中的“已完成”措辞认定工作流已关闭。
+- `MCP-F1-SKIN-008`：Owner `Codely/8b150da7-6a4c-4e53-a769-422c79c12963`，仅锁 Skin，blocked。保留既有实现及视觉验收门槛；不得自动解锁或把 alpha.1 新 API 混入原先排除公共 API/迁移的范围。
+
+2026-10-07 本轮核对开始时为 37 条 completed、2 条 active；这是历史快照，不作为之后的实时数量。当前数量以 `scripts/validate-coordination.ps1` 输出为准。此次没有推送远端，没有替其他 Owner 接管、关闭或提交业务改动。
+
+## 决策与证据边界
+
+Contracts-003 完成叙述提及 Q-001 的后续选择与凭据，但 [待决事项](../open-questions.md) 与 Skin active 记录尚未形成统一、已验收的 Provider 结论。该叙述仅为待核实线索，不能据此宣称生成质量合格或发起付费调用。其余供应商、定价、生产域名/地域、邮件、审核、权限、日志期限及 RPO/RTO 决策仍按各自 Owner 与最迟门槛处理。
+
+完整社区、双模式 Skin、稳定 SDK、自部署与上线加固均属于 V1 范围。不能以文档齐全、Fake Provider 流程通过、某仓单测通过或工作流数量代替产品验收。
