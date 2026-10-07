@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-003",
+  "title": "ADR-0012 契约先行：Skin 0.1.0-alpha.1 匿名窗口五缺口（预览/详情/下载/删除）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "started_at": "2026-10-07T13:16:47.991Z",
+  "updated_at": "2026-10-07T13:16:47.991Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按 Foundation ADR-0012（所有者 2026-10-07 W10 方案 A：不可猜测 UUID + 匿名窗口）把 skin.yaml 从 0.1.0-draft 升为 0.1.0-alpha.1：补齐候选预览字节、会话详情+消息、成品下载、会话删除四个匿名操作，顶层安全改为匿名（userOAuth 保留为 Official 模式文档性方案），并机器锁定匿名窗口保留期语义（30d 会话/24h 候选）；Skin 生产者实现属后续 Skin 线切片，本切片不改 Core/Ops/Skin 任何文件。",
+  "in_scope": [
+    "openapi/skin.yaml 升至 0.1.0-alpha.1：新增 GET /v1/conversations/{conversationId}（getConversation，返回含 messages 的会话详情）、DELETE /v1/conversations/{conversationId}（deleteConversation，级联候选与产物，204）、GET /v1/conversations/{conversationId}/candidates/{candidateId}/preview（getCandidatePreview，PNG 字节）、GET /v1/conversations/{conversationId}/skins/{resourceId}/download（downloadSkin，PNG 字节）",
+    "顶层 security 改为匿名（security: []），userOAuth 保留为 Official 模式文档性方案（ADR-0012）；每操作描述声明不可枚举 UUID、30d 会话/24h 候选保留期与 404 语义",
+    "docs/api-catalog.md Skin 段、docs/compatibility.md Skin 0.1.0-alpha.1 行、docs/STATUS.md、docs/development-plan.md 同步"
+  ],
+  "out_of_scope": [
+    "Skin 生产者实现（后续 Skin 线切片）；userOAuth 实际启用；会话 Bearer 凭据（ADR-0012 拒绝）；消息分页/批量资料查询/积分消费回退",
+    "修改 core.yaml/community.yaml/事件信封/既有 alpha 锁定语义；修改 Core、Ops、Skin、Community、Foundation 任何文件；MCP-F1-SKIN-008 与 MCP-F1-CORE-008 一切不变"
+  ],
+  "contract_impact": "additive prerelease: skin.yaml 0.1.0-draft -> 0.1.0-alpha.1 adds four anonymous operations (getConversation, deleteConversation, getCandidatePreview, downloadSkin) under the ADR-0012 anonymous-window semantics; the existing four draft operations keep their shapes; core.yaml, community.yaml and all locked schemas stay untouched",
+  "acceptance_evidence": [
+    "validate_contracts.py 通过（20+ schemas、4 OpenAPI 文档、新 operationIds 唯一、每操作显式 4xx）；redocly lint 三+一文档 exit 0",
+    "兼容矩阵登记 Skin 0.1.0-alpha.1 行（生产者未实现，Skin 线切片按 ADR-0012 匿名窗口语义跟进）",
+    "Start/Continue/Finish 通过；Contracts 主提交先于文档完成提交；ff-only 合并 main 并推送"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "8350c3df85c7ea48e74216ebbe2f0237ff8cf18c",
+      "branch": "feat/MCP-F1-CONTRACTS-003-skin-anonymous-alpha",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-012"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "contract-first-prerequisite",
+    "authorized_by": "MC Plan project owner W10 decision 2026-10-07 (anonymous-window semantics option A) recorded as Foundation ADR-0012 (MCP-F1-FOUNDATION-012, completed and pushed) and the in-session owner instruction to continue the published queue",
+    "reason": "skin.yaml is the public contract surface owned by Contracts; the owner W10 decision makes this the next contract-first slice. Skin joins nothing (producer later); Core/Ops/Community untouched; the F1/mc-plan-core direction is unchanged."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-07T13:16:47.991Z from live state: Contracts main 8350c3d clean and synced; Contracts lock free inside the critical section; prerequisite ADR-0012 verified present on Foundation main (owner W10 option-A decision 2026-10-07); concurrent active workstreams (MCP-F1-CORE-008 Core+Ops, MCP-F1-SKIN-008 Skin-only blocked) verified disjoint from this write-set."
+  ]
+}
