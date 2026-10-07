@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-013",
+  "title": "六仓当前事实核对与完整 V1 交付分配",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex/01a10cc9-ec7e-7271-9b59-0664002de4f9",
+  "owner": "Codex/01a10cc9-ec7e-7271-9b59-0664002de4f9",
+  "started_at": "2026-10-07T14:26:17.9405060+00:00",
+  "updated_at": "2026-10-07T14:26:17.9405060+00:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-contracts",
+    "mc-plan-skin",
+    "mc-plan-community"
+  ],
+  "objective": "依据当前 Git、活动记录与源码核对六仓差距，修正过时组合状态，形成覆盖 F1-F6 的依赖有序交付队列；不替代现存业务 Owner，不把计划写成实现完成。",
+  "in_scope": [
+    "仅更新 README.md、docs/STATUS.md、memory/current/portfolio.md，并新增 docs/delivery-plan.md",
+    "源码只读审查结果、职责/写集/依赖/验收/停止条件落入治理路线",
+    "本工作流协调记录、验证、本地提交与 ff-only 集成"
+  ],
+  "out_of_scope": [
+    "其他仓库业务代码和未提交改动",
+    "接管、修改或关闭 CORE-008/SKIN-008",
+    "改变 F1/Core 方向、预占后续 Tracking ID",
+    "付费模型调用、秘密读取、生产部署、远端推送"
+  ],
+  "contract_impact": "none; documentation-only reconciliation; public contracts and SDKs are read-only",
+  "acceptance_evidence": [
+    "核对六仓 HEAD/branch/worktree、当前方向/全部活动记录；三路只读源码核查",
+    "README/STATUS/portfolio 不再宣称无 remote 或只有一个活动业务工作流；准确区分 Core 事件检查点与完成",
+    "F1-F6/V1 全范围有责任、依赖与验收，保留 Skin 视觉门槛与完整 F4 范围",
+    "工作区、协调及三个治理工具回归通过；Start/Continue/Finish；仅本地集成"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "final_commit": null,
+      "last_checkpoint_commit": null,
+      "base_commit": "54a8686f4fe26dc9a44a29343b56b562cfd2be24",
+      "branch": "docs/MCP-F1-FOUNDATION-013-delivery-plan"
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-012",
+    "MCP-F1-CONTRACTS-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "reason": "用户授权的全项目分析与分配，需要先校准过时组合记录并建立完整交付顺序；仅写无竞争的 Foundation 治理文档，保留业务锁与 F1/Core 方向。",
+    "authorized_by": "项目所有者本会话 2026-10-07：对整个项目分析分配与开发，将当前文件夹所有项目、整个 MC 计划开发完毕"
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Canonical install -Check passed: mc-plan-development 1.1.2, mc-plan-orchestrator 1.0.0",
+    "2026-10-07 baseline: coordination 6 repositories / 2 active / 37 completed; workspace 114 Markdown / 69 JSON; test-coordination 14/14, test-workspace-scanning 21/21, test-foundation-write 14/14, all exit 0. No governance tool code changed.",
+    "Three delegated read-only audits plus primary source verification found Core insertion-order delivery gap, incomplete Ops event acceptance, and Skin alpha.1/retention/finalize gaps; business tests were not rerun and no business acceptance is claimed."
+  ]
+}
