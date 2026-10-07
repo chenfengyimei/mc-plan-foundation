@@ -1,0 +1,78 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-008",
+  "title": "实现 consumer-pull 真实事件投递面与第一个真实消费者验收",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "started_at": "2026-10-07T12:38:49.1205890+00:00",
+  "updated_at": "2026-10-07T12:38:49.1205890+00:00",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-ops"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按 ADR-0011（消费者拉取，所有者 2026-10-06 决策）与已锁定的 Contracts 0.1.0-alpha.5 投递语义，实现 Core 的真实事件投递面：GET /v1/events（serviceOAuth events:consume，按发布顺序返回本消费者最旧未确认的 INTERNAL 事件，limit 1..200 默认 50，EventPage {items,next_cursor|null}）与 POST /v1/events/acknowledgments（{cursor} 幂等确认、返回当前确认位置；未知/畸形/他消费者游标 400 VALIDATION_FAILED）；投递为 at-least-once（未确认事件持续可重投，消费者按锁定信封 event_id 幂等）；游标为绑定消费者身份的不透明令牌、只对本消费者有效；per-consumer 投递位置以前向迁移持久化；outbox 发布器边界与 PUBLISHED 语义按 ADR-0011/CORE-006 设计落实并如实记录；readiness 仍仅 PostgreSQL+迁移，无新中间件。提供第一个真实消费者完整拉取→处理→确认闭环的隔离真实 Keycloak 集成验收与 Ops 本地验收栈留证。公共契约零变化（alpha.5 已锁定，生产者按锁定表面实现，14 个锁定文件不动）。",
+  "in_scope": [
+    "Core 新增 events 模块（遵守 src/<module>/{adapter,application,infrastructure} 结构与 test:architecture 边界；入站适配只调应用端口；领域不依赖 NestJS/Keycloak SDK）：listDeliveredEvents 与 acknowledgeEvents 两个操作严格按锁定 alpha.5 表面实现，响应对锁定 EventPage/EventAcknowledgment/EventEnvelope Schema 机器校验（AJV，沿用既有契约测试模式）",
+    "per-consumer 投递状态前向迁移：按服务主体（client_credentials sub）持久化确认位置；游标为确定性、可重放、绑定消费者身份的不透明令牌（复用既有 HMAC/base64url 模式），GET 只发放本消费者游标，ack 只推进本消费者位置且幂等（重复确认返回当前确认位置），未知/畸形/他消费者游标 400 VALIDATION_FAILED",
+    "at-least-once 语义：未确认事件保持可重投；确认后不再向该消费者重投；投递顺序按事件发布序稳定；消费者按 event_id 幂等由验收证明；跨消费者隔离（消费者 A 的确认不影响 B 的重投，A 的游标 B 使用被拒）",
+    "outbox 集成：拉取投递查询与 outbox 记录/发布器（MCP-F1-CORE-006 交付物）的衔接与 PUBLISHED 语义按 ADR-0011 落实——不引入占位 sink、不因未确认投递把记录标 PUBLISHED、确切转换条件在 Core 文档与记录中如实记录；readiness 不变（仅 PostgreSQL+迁移），无 Redis/新中间件",
+    "鉴权与边界：events:consume 仅服务面（不进用户/PAT 面，沿用 Contracts 机器门槛）；缺 events:consume 的真实服务令牌 403 INSUFFICIENT_SCOPE；用户 OIDC 令牌与 PAT 不经 events 面并按锁定语义拒绝；服务认证不产生 IdentityLink/Profile",
+    "真实消费者集成测试（隔离 Keycloak 26.8.0 测试容器 + 最小测试 realm 夹具 + events:consume 服务客户端，位于 Core 测试目录、不读 Ops 仓文件，沿用 CORE-007 夹具模式）：端到端拉取→按 event_id 去重→确认→无重投；确认幂等；跨消费者隔离；畸形/他消费者游标与 limit 越界 400；并发拉取/确认不超发不丢失（按事件序汇聚）；确认前后状态一致可重试（无半确认）；既有身份/PAT/权益/积分/开发者应用回归不变",
+    "Ops（辅助）：realm 增加唯一新增 events 消费者客户端（confidential + client_credentials + 最小 default scopes events:consume + Core audience；secret 由 Keycloak 生成经本地 Admin API 运行时读取，不入 Git，沿用已验证模式）；validate-dev-environment.ps1 增加 events:consume 仅服务面与最小 scope 断言；新增 validate-dev-events.ps1（独立 compose project、固定输入=本切片重建镜像、前后仅对本 project down -v、端口可配置预检）以真实服务消费者跑全链路拉取/确认/重投/幂等/隔离验收并留证",
+    "契约零漂移：14 个锁定文件无变化；contract 测试通过；events 响应按锁定 Schema 机器校验",
+    "文档：更新 Core STATUS、开发计划（本切片完成与下一步消费者集成）、架构/运行边界文档（PUBLISHED/投递语义如实记录）；更新 Ops STATUS、开发计划与本地身份 runbook；Contracts 文件零修改"
+  ],
+  "out_of_scope": [
+    "任何公共契约/Schema/scope/错误码/SDK 变化；Contracts 保持 alpha.5 锁（5ba7172）不动，Contracts 不进写集；SDK 的 events 操作暴露等 CORE-008 关闭后由后续 SDK 工作流处理",
+    "Skin/Community 生产消费者集成（各自独立工作流与门槛：Skin 锁保持、Community F2 待所有者方向批准）；broker 或 HTTP-push 形态（ADR-0011 已拒，不得增加第二条投递路径）",
+    "生产部署、生产域名/地域（Q-004）、生产邮件（Q-006）、托管数据层（Q-014）、监控产品（Q-015）、正式 RPO/RTO（Q-016）决策",
+    "注册/奖励/定价数值（Q-003/Q-013 未决不得硬编码）；邮件链路、恢复演练、W02 资料与用户权利等其它切片",
+    "修改 Community、Skin 业务文件或 Skin 工作流；MCP-F1-SKIN-008 的 blocked 状态、owner、检查点与 Skin 锁保持不变",
+    "创建远程仓库或镜像公开发布"
+  ],
+  "contract_impact": "none; the producer implements the already-locked Contracts 0.1.0-alpha.5 consumer-pull delivery surface (listDeliveredEvents/acknowledgeEvents, service-only events:consume scope, EventPage/EventAcknowledgment/EventEnvelope schemas); all 14 locked files stay unchanged and no public API, schema, scope, error code or event definition changes",
+  "acceptance_evidence": [
+    "Core format:check、lint、严格 typecheck、test:unit、test:e2e、test:architecture、migration:validate、MC_PLAN_CONTRACTS_DIR 指向锁定 Contracts 的 test:contract（14 文件）与 build 全部通过；Docker 可用时 test:integration（隔离 PostgreSQL + 真实 Keycloak 26.8.0 测试容器）通过",
+    "真实消费者闭环：真实 events:consume 服务客户端拉取→按 event_id 幂等处理→确认→同消费者不再收到已确认事件；未确认事件保持可重投（at-least-once）；重复确认幂等返回当前确认位置；投递顺序按发布序稳定",
+    "游标与边界：他消费者游标 400 VALIDATION_FAILED；畸形/未知游标 400；limit 越界 400；GET 只返回本消费者未确认集且 next_cursor 语义（追平后 items 空 + null）符合锁定契约",
+    "鉴权边界：缺 events:consume 的真实服务令牌 403 INSUFFICIENT_SCOPE；用户 OIDC 令牌与 PAT 不经 events 面并按锁定语义拒绝；服务认证不产生额外 IdentityLink/Profile",
+    "并发与恢复：并发拉取/确认不超发不丢失（按事件序汇聚断言）；确认提交失败不留半确认状态、可安全重试；既有身份/PAT/权益/积分/开发者应用回归全部通过",
+    "outbox 发布器与 PUBLISHED 语义按 ADR-0011/CORE-006 边界落实：无占位 sink、readiness 不变、确切转换条件在文档与本记录如实记录",
+    "runtime 镜像自最终提交源码重建并通过迁移/非 root/live-ready 冒烟；Ops 静态门禁与 validate-dev-events.ps1 真实链路验收通过（两轮独立执行），清理仅限本 project 并留证；文档如实记录命令、语义与边界"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "ad6a5e063e9c5fb72730b4dea42ff2a4f073632a",
+      "branch": "feat/MCP-F1-CORE-008-event-delivery-pull",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-ops": {
+      "base_commit": "2ece743a795964b0709b47af667a6fa857b8e0f6",
+      "branch": "feat/MCP-F1-CORE-008-events-consumer-realm",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-006",
+    "MCP-F1-CORE-007"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Preflight verified 2026-10-07 (Codely/Mac): 六仓干净；Core main ad6a5e0、Ops main 2ece743、Contracts main 8350c3d 均与 origin 一致；登记处 1 活动（MCP-F1-SKIN-008，blocked，仅锁 Skin）/33 完成",
+    "前置全部满足：MCP-F1-CORE-006（发布器机制）与 MCP-F1-CORE-007（developer-app Keycloak 生命周期，含管理服务客户端与测试夹具模式）均已关闭释放 Core 锁；ADR-0011（consumer-pull，所有者 2026-10-06 决策）已接受；Contracts 0.1.0-alpha.5 投递语义已锁定（5ba7172，14 文件，event-page/event-acknowledgment/event-envelope/credit.changed.v1）且 Contracts 机器校验含 events:consume 仅服务面与操作 ID 门槛；SDK 已按 alpha.5 重生成类型但保持 12 个已验证操作（events 操作待生产者验证）",
+    "目标核对：无任何会话注册 CORE-008 或真实投递切片（active 仅 SKIN-008，completed 无 CORE-008）；Session-1 队列、Session-D 评审与 ADR-0011 均把'真实投递面+第一个真实消费者'列为 CORE-007 之后的下一项；所有者指示继续执行；故分配 MCP-F1-CORE-008（Core 主 + Ops 辅 1/2）"
+  ]
+}
