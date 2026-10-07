@@ -6,9 +6,9 @@
   "status": "active",
   "milestone": "F1",
   "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
-  "owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+  "owner": "Codely/session-4-contracts-sdk",
   "started_at": "2026-10-07T12:38:49.1205890+00:00",
-  "updated_at": "2026-10-07T12:38:49.1205890+00:00",
+  "updated_at": "2026-10-07T12:40:22Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-ops"
@@ -69,10 +69,18 @@
   ],
   "blocked_reason": null,
   "direction_exception": null,
-  "handoff_history": [],
+  "handoff_history": [
+    {
+      "at": "2026-10-07T12:40:22.221212+00:00",
+      "from_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
+      "to_owner": "Codely/session-4-contracts-sdk",
+      "reason": "注册会话自 2026-10-07T12:38:49Z 启动记录后零进展（两业务分支零提交、零未提交文件、记录无检查点、updated_at 停留在注册时刻）；项目所有者连续两次'继续'派工（2026-10-07 20:33 / 20:47 本地），构成显式接管授权。接管保留 ID/initial_owner/基线/分支/范围；接管会话曾在同目标注册竞争中让位（其 start 记录 394898f 有效，本会话当时零写入）。"
+    }
+  ],
   "validation_results": [
     "Preflight verified 2026-10-07 (Codely/Mac): 六仓干净；Core main ad6a5e0、Ops main 2ece743、Contracts main 8350c3d 均与 origin 一致；登记处 1 活动（MCP-F1-SKIN-008，blocked，仅锁 Skin）/33 完成",
     "前置全部满足：MCP-F1-CORE-006（发布器机制）与 MCP-F1-CORE-007（developer-app Keycloak 生命周期，含管理服务客户端与测试夹具模式）均已关闭释放 Core 锁；ADR-0011（consumer-pull，所有者 2026-10-06 决策）已接受；Contracts 0.1.0-alpha.5 投递语义已锁定（5ba7172，14 文件，event-page/event-acknowledgment/event-envelope/credit.changed.v1）且 Contracts 机器校验含 events:consume 仅服务面与操作 ID 门槛；SDK 已按 alpha.5 重生成类型但保持 12 个已验证操作（events 操作待生产者验证）",
-    "目标核对：无任何会话注册 CORE-008 或真实投递切片（active 仅 SKIN-008，completed 无 CORE-008）；Session-1 队列、Session-D 评审与 ADR-0011 均把'真实投递面+第一个真实消费者'列为 CORE-007 之后的下一项；所有者指示继续执行；故分配 MCP-F1-CORE-008（Core 主 + Ops 辅 1/2）"
+    "目标核对：无任何会话注册 CORE-008 或真实投递切片（active 仅 SKIN-008，completed 无 CORE-008）；Session-1 队列、Session-D 评审与 ADR-0011 均把'真实投递面+第一个真实消费者'列为 CORE-007 之后的下一项；所有者指示继续执行；故分配 MCP-F1-CORE-008（Core 主 + Ops 辅 1/2）",
+    "Recorded takeover 2026-10-07 (Codely/session-4-contracts-sdk): inside the Foundation short-lock, quiescence verified - Core feat/MCP-F1-CORE-008-event-delivery-pull and Ops feat/MCP-F1-CORE-008-events-consumer-realm both have ZERO commits ahead of main, ZERO uncommitted files, and the record had no checkpoint since started_at 2026-10-07T12:38:49Z; no other session holds the workspace lock; previous owner session shows no writes after the start record 394898f. Takeover preserves tracking_id, initial_owner, bases (Core ad6a5e0 / Ops 2ece743), declared branches and scope; owner field updated with this handoff entry per coordination rules."
   ]
 }
