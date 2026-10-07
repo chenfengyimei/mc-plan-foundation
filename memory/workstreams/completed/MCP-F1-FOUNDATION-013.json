@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-013",
   "title": "六仓当前事实核对与完整 V1 交付分配",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codex/01a10cc9-ec7e-7271-9b59-0664002de4f9",
   "owner": "Codex/01a10cc9-ec7e-7271-9b59-0664002de4f9",
   "started_at": "2026-10-07T14:26:17.9405060+00:00",
-  "updated_at": "2026-10-07T14:26:17.9405060+00:00",
+  "updated_at": "2026-10-07T14:26:19.1290100+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,8 +39,8 @@
   ],
   "repositories": {
     "mc-plan-foundation": {
-      "final_commit": null,
-      "last_checkpoint_commit": null,
+      "final_commit": "c9bfc59ee4fdf25cf00fc8557b2f2b1921584959",
+      "last_checkpoint_commit": "c9bfc59ee4fdf25cf00fc8557b2f2b1921584959",
       "base_commit": "54a8686f4fe26dc9a44a29343b56b562cfd2be24",
       "branch": "docs/MCP-F1-FOUNDATION-013-delivery-plan"
     }
@@ -59,6 +59,7 @@
   "validation_results": [
     "Canonical install -Check passed: mc-plan-development 1.1.2, mc-plan-orchestrator 1.0.0",
     "2026-10-07 baseline: coordination 6 repositories / 2 active / 37 completed; workspace 114 Markdown / 69 JSON; test-coordination 14/14, test-workspace-scanning 21/21, test-foundation-write 14/14, all exit 0. No governance tool code changed.",
-    "Three delegated read-only audits plus primary source verification found Core insertion-order delivery gap, incomplete Ops event acceptance, and Skin alpha.1/retention/finalize gaps; business tests were not rerun and no business acceptance is claimed."
+    "Three delegated read-only audits plus primary source verification found Core insertion-order delivery gap, incomplete Ops event acceptance, and Skin alpha.1/retention/finalize gaps; business tests were not rerun and no business acceptance is claimed.",
+    "After documentation changes: workspace validation, coordination Start/Continue and git diff --check passed. Exact four documentation paths committed; all business repositories and other workstream records untouched. Foundation governance scope complete; the MC Plan product is not complete."
   ]
 }
