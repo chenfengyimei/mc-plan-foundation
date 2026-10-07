@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-012",
+  "title": "ADR-0012：Skin Standalone 匿名窗口访问语义（不可枚举标识 + 保留期）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "owner": "Codely/93711330-244c-4cc4-90f5-4e820f645c15",
+  "started_at": "2026-10-07T13:13:10.788Z",
+  "updated_at": "2026-10-07T13:13:10.788Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-skin",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-community"
+  ],
+  "objective": "把项目所有者 2026-10-07 的 W10 匿名安全语义决策（方案 A：不可猜测 128-bit UUID + 匿名窗口保留期语义；拒绝会话 Bearer 与匿名全局）落为 Foundation ADR-0012，作为 skin.yaml 草案升 alpha（预览/详情/下载/删除五缺口）Contracts 切片的精确前置；本切片仅写入该 ADR，不实现任何业务代码、不改任何公共契约文件。",
+  "in_scope": [
+    "新增 decisions/0012-skin-standalone-anonymous-window.md：记录决策内容、背景（skin.yaml 0.1.0-draft 全局 userOAuth 与 Skin Standalone 产线匿名事实的契约差距）、被拒替代形态（会话 Bearer/匿名全局无窗口承诺）及原因、机器可校验规则（不可枚举 UUID、24h 候选/30d 会话保留期、删除端点、userOAuth 保留为 Official 模式说明）、变更条件",
+    "协调记录按 ADR-0010 治理例外在声明分支上精确路径提交"
+  ],
+  "out_of_scope": [
+    "skin.yaml 任何修改（属后续 Contracts 主仓切片）；Skin 生产者实现；Official 模式 userOAuth 启用",
+    "portfolio/direction/STATUS/open-questions 等其他治理文档；修改 MCP-F1-SKIN-008 与 MCP-F1-CORE-008 的一切"
+  ],
+  "contract_impact": "none; this slice writes a Foundation ADR only and changes no contract files",
+  "acceptance_evidence": [
+    "ADR-0012 文件存在于 decisions/ 且内容与所有者 2026-10-07 决策一致（方案 A 不可猜测 UUID + 匿名窗口；B/C 为被拒替代）；Start/Continue/Finish 通过；治理分支按 ADR-0010 例外精确路径提交；ff-only 合并回 main 并推送"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "b93582b6d73f85e5fb6b55daa26b46ea98695f93",
+      "branch": "feat/MCP-F1-FOUNDATION-012-skin-anonymous-window-adr",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner W10 decision 2026-10-07 (anonymous-window semantics option A) delivered in-session as the direct continuation of the standing instruction to keep developing the published queue",
+    "reason": "Recording the owner skin.yaml anonymous-security decision as Foundation ADR-0012 is the declared prerequisite of the skin.yaml contract slice; it writes governance documentation only, touches no business repository, no public contract file and no other workstream, and leaves the F1/mc-plan-core direction unchanged."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-07T13:13:10.788Z from live state: Foundation main b93582b clean and synced; Foundation lock free inside the critical section; owner W10 decision (option A) delivered in-session 2026-10-07. Concurrent active workstreams MCP-F1-CORE-008 (Core+Ops) and MCP-F1-SKIN-008 (Skin-only, blocked) verified disjoint from this write-set."
+  ]
+}
