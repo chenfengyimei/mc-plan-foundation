@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-009",
   "title": "公开资料读取与资料名编辑纵向切片（W02 第一阶段，契约先行）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/master-control-20261008",
   "owner": "Codely/master-control-20261008",
-  "started_at": "2026-10-08T15:04:54.8086460+00:00",
-  "updated_at": "2026-10-08T15:04:54.8086460+00:00",
+  "started_at": "2026-10-08T23:04:54.808646+08:00",
+  "updated_at": "2026-10-08T15:17:23.6779670+00:00",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -49,14 +49,14 @@
     "mc-plan-core": {
       "base_commit": "87ddd66f24a9044ebcebd2d4043511fd5796029d",
       "branch": "feat/MCP-F1-CORE-009-public-profile-slice",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "7d2253999480117422aab48feb9f2602af8f444e",
+      "final_commit": "7d2253999480117422aab48feb9f2602af8f444e"
     },
     "mc-plan-contracts": {
       "base_commit": "4ebd060edabf368161e7ad4cb83f447a6490a0a7",
       "branch": "feat/MCP-F1-CORE-009-alpha6-contract",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "2b1ba6a48c203b29ab29c5339e6fd32b68d7dcfd",
+      "final_commit": "2b1ba6a48c203b29ab29c5339e6fd32b68d7dcfd"
     }
   },
   "depends_on": [
@@ -67,6 +67,10 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-08 (Codely/master-control-20261008) from live state per the owner instruction to complete all remaining workflows: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 41 completed after the CORE-008 / CONTRACTS-004 / OPS-003 closures; Core main 87ddd66 and Contracts main 4ebd060 both clean and pushed; the Session-0 execution-ready prototype at /private/tmp/mcp-contracts-003-proto/ (alpha.6 contract pre-validated green in the pinned venv, Core producer files, record draft, port checklist) is adopted with the owner-decided W02 values D1/D2/D4/D6 and the explicitly deferred D3/D5 sub-decisions; Core-primary with Contracts as the single lock-first supporting repository mirrors the MCP-F1-CORE-005 pattern; both canonical skills -Check current."
+    "Registered 2026-10-08 (Codely/master-control-20261008) from live state per the owner instruction to complete all remaining workflows: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 41 completed after the CORE-008 / CONTRACTS-004 / OPS-003 closures; Core main 87ddd66 and Contracts main 4ebd060 both clean and pushed; the Session-0 execution-ready prototype at /private/tmp/mcp-contracts-003-proto/ (alpha.6 contract pre-validated green in the pinned venv, Core producer files, record draft, port checklist) is adopted with the owner-decided W02 values D1/D2/D4/D6 and the explicitly deferred D3/D5 sub-decisions; Core-primary with Contracts as the single lock-first supporting repository mirrors the MCP-F1-CORE-005 pattern; both canonical skills -Check current.",
+    "Contract-first lock 2026-10-08 (Codely/master-control-20261008): the execution-ready Session-0 prototype (/private/tmp/mcp-contracts-003-proto/) was applied with only bounded adaptations. Contracts commit 6b80c4cf78053fb953452f50cb08c15272176759 locks 0.1.0-alpha.6 (core.yaml getPublicUser prerelease producer-ization + PATCH /v1/me updateCurrentUser + profile:write userOAuth/personalAccessToken dual declaration, PAT grant catalog unchanged) with validate_contracts.py alpha.6 machine gates (31 unique operationIds) and the compatibility.md alpha.6 classification + matrix row applied additively on top of the CONTRACTS-004 state; the full contract suite ran green in the pinned python 3.12 venv (20 schemas/events, 3 OpenAPI documents, 31 operationIds) and redocly lint passed on all three documents (1 documented skin.yaml warning). Contracts commit 2b1ba6a48c203b29ab29c5339e6fd32b68d7dcfd regenerates the SDK type baseline for alpha.6 (package version 0.1.0-alpha.6, SUPPORTED_CONTRACT_FILES openapi/core.yaml hash e45f258a91487ac046b8516436b6dab0e7dffeb5c1646491c15b5685505a71a1, lock commit 6b80c4c) while keeping SUPPORTED_OPERATIONS at exactly the 14 producer-verified operations (getPublicUser/updateCurrentUser absent); SDK gates green: generate:check zero drift after commit, typecheck, lint 0, 32/32 tests, build, pack:check clean consumer.",
+    "Core producer 2026-10-08 (same session): commit 7d2253999480117422aab48feb9f2602af8f444e ports the prototype profile producer with the typecheck/test-convention adaptations the final tree demanded - requireScope is NOT touched (policy.ts stays untouched so PATs can never obtain profile:write; the PATCH adapter checks the principal token scopes directly per the design decision), the e2e problem-errors access hardened for noUncheckedIndexedAccess, and the integration test rewritten to the current StartedPostgreSqlContainer conventions. Delivered: PROFILE_STORE application port + PrismaProfileStore (ACTIVE-only public read with zero side effects; display-name edit updates the profile and appends the PROFILE_UPDATED audit with profile_id/previous/new metadata in one PostgreSQL transaction), controller GET v1/users/:userId (no-auth public surface; non-UUID/unknown/non-ACTIVE all 404 without existence disclosure; exactly the three PublicActor fields) and PATCH v1/me (profile:write checked on the principal scopes; closed-field 1..80 body; defensive null -> 404); no new migration (profiles.display_name already VarChar(80)); contracts/core-api.lock.json updated to 0.1.0-alpha.6 (lock commit 6b80c4c, core.yaml hash e45f258a...). All gates actually run on the committed final tree: format:check, eslint --max-warnings 0, strict typecheck, unit 114/114, HTTP e2e 81/81 (15 new public-profile cases: 401 no-credential, PAT/missing-scope 403, malformed/unknown/non-ACTIVE 404 without disclosure, closed-field validation 400, exact PublicActor field set, PATCH reflected in /v1/me), architecture 84 files, migration:validate 8 forward-only, contract verify 14 files renamed at alpha.6 (15 entries in the lock manifest) + 24/24 contract tests, real-PostgreSQL/Keycloak integration 65/65, build. Logs: /Users/chenfeng/.codex/outputs/mc-core009-20261008/logs/01-10.",
+    "Runtime image note 2026-10-08 (same session): this slice changes producer code without schema/dependency changes; the CORE-008 image (mcp-f1-core-008-87ddd66) predates it, so the SDK exposure slice that follows MUST rebuild the runtime from 7d22539 and re-verify the two new endpoints in-image before exposing them. Recorded as the explicit next-slice prerequisite; no placeholder or unrebuilt image is claimed for this slice.",
+    "Finish closure 2026-10-08 (Codely/master-control-20261008): Core main fast-forwarded 87ddd66..7d22539 and pushed to origin (origin/main = 7d2253999480117422aab48feb9f2602af8f444e); Contracts main fast-forwarded 4ebd060..2b1ba6a and pushed to origin (origin/main = 2b1ba6a48c203b29ab29c5339e6fd32b68d7dcfd); both short-lived feature branches deleted locally and never present on any remote; MCP-F1-SKIN-008 (blocked, Skin-only) untouched; no workspace lock remains. Next executable slice: the Contracts-side SDK events/profile exposure pipeline (MCP-F1-CONTRACTS-005/006 style) requires the 7d22539 image rebuild; W02-b rights endpoints stay owner-gated on the D5 sub-decisions (deactivation/Keycloak linkage detail), and the metrics surface stays gated on Q-015."
   ]
 }
