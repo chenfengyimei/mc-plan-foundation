@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-010",
   "title": "W02-b 注销权利端点纵向切片（α.7 契约先行，仅本地停用）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/master-control-20261008",
   "owner": "Codely/master-control-20261008",
-  "started_at": "2026-10-08T16:31:29.3510000+00:00",
-  "updated_at": "2026-10-08T16:31:29.3510000+00:00",
+  "started_at": "2026-10-09T00:31:29.351+08:00",
+  "updated_at": "2026-10-08T17:41:38.2174310+00:00",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -47,14 +47,14 @@
     "mc-plan-core": {
       "base_commit": "7d2253999480117422aab48feb9f2602af8f444e",
       "branch": "feat/MCP-F1-CORE-010-w02b-deactivation",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "cf95e3efdab749c4f3f6aeb6b300051af58322bf",
+      "final_commit": "cf95e3efdab749c4f3f6aeb6b300051af58322bf"
     },
     "mc-plan-contracts": {
       "base_commit": "3b0c2bd5a64978488b0fb733115e88996ecce17c",
       "branch": "feat/MCP-F1-CORE-010-alpha7-contract",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "5af5bd96fc4a94d3667bd1529715e579a7a544a6",
+      "final_commit": "5af5bd96fc4a94d3667bd1529715e579a7a544a6"
     }
   },
   "depends_on": [
@@ -65,6 +65,8 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-09 (Codely/master-control-20261008) per the owner-approved boundary-remediation plan (approved Plan-Mode plan in this session): owner ask_user decisions 2026-10-08 set Q-015 = local bounded metrics, prerelease baseline = local record, W02-b deactivation linkage = local-only (Keycloak untouched, login still possible while every Core API face rejects), and SKIN-008 = owner injects the paid key then acceptance runs; D3 remains decided per the 2026-10-07 20:53 authoritative decision set (internal storage, no public surface) and is cited as out of scope because no declaration write path is defined. Live preflight: no workspace lock, six repos clean and synced with origin (core 7d22539, contracts 3b0c2bd, ops 3021123, foundation e4c940a), registry 1 active (SKIN-008 blocked) / 43 completed, IDs CORE-010/CORE-011/CONTRACTS-006/FOUNDATION-014 verified free. Deactivation maps to the existing PG enum value CLOSED so the slice needs zero migration; both principal resolution paths (OIDC provisioning and the PAT authenticator) already emit the locked account_unavailable 403 for non-ACTIVE accounts and the public read is ACTIVE-only 404, so no new problem code or scope is required. Core-primary with Contracts supporting mirrors the CORE-009 contract-first pattern."
+    "Registered 2026-10-09 (Codely/master-control-20261008) per the owner-approved boundary-remediation plan (approved Plan-Mode plan in this session): owner ask_user decisions 2026-10-08 set Q-015 = local bounded metrics, prerelease baseline = local record, W02-b deactivation linkage = local-only (Keycloak untouched, login still possible while every Core API face rejects), and SKIN-008 = owner injects the paid key then acceptance runs; D3 remains decided per the 2026-10-07 20:53 authoritative decision set (internal storage, no public surface) and is cited as out of scope because no declaration write path is defined. Live preflight: no workspace lock, six repos clean and synced with origin (core 7d22539, contracts 3b0c2bd, ops 3021123, foundation e4c940a), registry 1 active (SKIN-008 blocked) / 43 completed, IDs CORE-010/CORE-011/CONTRACTS-006/FOUNDATION-014 verified free. Deactivation maps to the existing PG enum value CLOSED so the slice needs zero migration; both principal resolution paths (OIDC provisioning and the PAT authenticator) already emit the locked account_unavailable 403 for non-ACTIVE accounts and the public read is ACTIVE-only 404, so no new problem code or scope is required. Core-primary with Contracts supporting mirrors the CORE-009 contract-first pattern.",
+    "Implementation evidence 2026-10-09 (Codely/master-control-20261008): deactivation controller resolves the principal first so a deactivated caller (including a repeated call with the same token) gets the locked 403 ACCOUNT_UNAVAILABLE problem; the PATCH adapter pattern is reused with profile:write checked directly on principal scopes (PAT catalog never grants it). PrismaProfileStore.deactivateAccount flips the business account to the existing CLOSED PG enum value and appends the ACCOUNT_DEACTIVATED audit (previous_status/status) in one PostgreSQL transaction, converging repeated direct store calls to already_closed with no duplicate audit. Contracts-side lock commit 56bff96fe5fcad31f85943b7a557ec54148ea503 (core.yaml POST /v1/me/deactivation + alpha.7 machine gates, 32 operationIds, redocly lint green) and SDK regeneration commit 5af5bd9 keep SUPPORTED_OPERATIONS at exactly the 16 producer-verified operations with the producer anchor corrected to 7d22539 (contract-first residual from CONTRACTS-005). All worked gates on the committed final trees: Core format/eslint 0/strict typecheck, unit 114, e2e 86 (5 new deactivation cases), contract 25, boundaries 84 files, migrations 8 forward-only (zero new), contract lock structurally valid at alpha.7, build; real-PostgreSQL/Keycloak integration 68/68. Contracts residual fact-corrected: the SDK producer anchor previously claimed 87ddd66 while claiming sixteen-operation evidence; it now pins 7d2253999480117422aab48feb9f2602af8f444e.",
+    "Runtime image 2026-10-09 (same session): mc-plan-core:mcp-f1-core-010-cf95e3e (image ID sha256:aee4e166b93a14b36991a8ededef8e5d80d741ce6094a46f2a9381dfc083dbf8, 994MB arm64) built from the committed final tree. In-image smoke: isolated postgres:17-alpine network, in-image migration:deploy reports all migrations applied, health/live 200, GET /v1/me/deactivation POST route present and answering the locked bare 401 AUTHENTICATION_REQUIRED problem without credentials, non-root uid 1000. Full behavioral smoke against a real Keycloak/PKCE identity remains the explicit CONTRACTS-006 smoke:real prerequisite."
   ]
 }
