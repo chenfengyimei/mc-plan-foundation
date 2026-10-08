@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-011",
+  "title": "本地有界指标面（Q-015：OTel 指标真实导出 + 事件投递有界计数器 + 本地 Prometheus 拉取端口）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/contracts006-deactivation-sdk-20261009",
+  "owner": "Codely/contracts006-deactivation-sdk-20261009",
+  "started_at": "2026-10-09T06:35:43.5481380+08:00",
+  "updated_at": "2026-10-09T06:35:43.5481380+08:00",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按项目所有者 2026-10-08 已拍板的 Q-015 决策（指标面=本地有界，不选择生产监控提供商）与 2026-10-09 \"继续到完成\" 指令，在 Core 落地本地有界指标面：OTEL_ENABLED=true 时把既有 @opentelemetry/api 仪表（outbox 发布器 claimed/published/failed/rejected 计数与 backlog gauge——此前因无 reader 实际不出任何指标）经 PrometheusExporter 在本地专用拉取端口真实导出；为 alpha.5 事件投递面新增有界无标签计数器（pulled/acked/cursor_rejected）；零公共契约变化、零迁移、零新公共 API 路由、readiness 不变、无告警与生产监控选择、tracing 保持 env 驱动 auto-instrumentation 现状。",
+  "in_scope": [
+    "配置：app-config 新增 OTEL_METRICS_PORT（整数 1..65535，默认 9464）并在 telemetry 配置段透出；OTEL_ENABLED/OTEL_SERVICE_NAME 语义不变",
+    "遥测接线：startTelemetry 在 enabled 时以 PrometheusExporter 作为 NodeSDK metricReader（本地拉取服务器，默认全接口绑定容器内 0.0.0.0，由 Ops/运行边界映射为宿主 loopback）；端口占用等启动错误按配置错误 fail-closed（消息点名 OTEL_METRICS_PORT）；shutdown 停止导出服务器；disabled 时保持现返回 null 且不开任何端口",
+    "事件投递有界指标：EventDeliveryMetrics 端口 + OTel 实现（mc_plan_core_events_pulled_total / mc_plan_core_events_acked_total / mc_plan_core_events_cursor_rejected_total，无标签避免基数开放），经 EventsModule/控制器注入 EventDeliveryService：pull 记 items 数、acknowledge 成功记一次、InvalidCursorError 记一次拒绝",
+    "测试：单元（服务经端口记录 pulled/acked/rejected、端口实现 no-op 安全、配置解析边界）；集成 tests/integration/telemetry-metrics.integration.test.ts（真实拉取：启动 startTelemetry 后实例化 OtelOutboxMetrics 与 OtelEventDeliveryMetrics、驱动真实计数、GET /metrics 断言 content-type text/plain、含 outbox 与 events 两族指标名与 target_info service.name；shutdown 后端口关闭；disabled 返回 null 不开端口；端口被占用时 fail-closed 报 OTEL_METRICS_PORT）；既有全部套件回归保持",
+    "运行时：重建镜像 mc-plan-core:mcp-f1-core-011-<final> 并做镜像内 smoke（OTEL_ENABLED=true + 发布 9464：/metrics 含 outbox+events 指标族与 target_info、live/ready 200、迁移 current、uid 1000；OTEL_ENABLED=false 对照运行确认指标端口关闭、readiness 不变）",
+    "文档：docs/runtime.md 环境变量行（OTEL_METRICS_PORT）、STATUS.md、development-plan.md 新增指标面步骤行、acceptance.md 增补指标验收证据；不改公共契约文档"
+  ],
+  "out_of_scope": [
+    "任何公共契约/OpenAPI/Schema/事件变化（契约清单 14 文件零变化）与任何迁移；新公共 API 路由（/metrics 不在公共 API 端口上）",
+    "生产监控提供商选择、告警规则、SLI/SLO、通知渠道（Q-014 未决保持；本切片只交付本地有界指标面）",
+    "tracing 表面变更（保持 env 驱动 auto-instrumentation 现状）；外部 collector/OTLP 出口",
+    "开放标签（consumer_subject、user_id 等一律不做 metric label，避免基数失控）",
+    "Ops realm/compose/验收脚本改动（后续切片按需单独登记）；预发布基线治理（队列下一项，另开 Foundation 切片）",
+    "修改 Skin/Community/任何其他工作流；MCP-F1-SKIN-008 一切不变"
+  ],
+  "contract_impact": "none: internal observability only - the public contract files (alpha.7 lock, 14 files) are byte-unchanged; the metrics surface binds to a dedicated local pull port that is not part of the public API; no migration, no new public route, readiness semantics unchanged",
+  "acceptance_evidence": [
+    "全量门禁实跑：format:check、lint --max-warnings 0、typecheck、unit、e2e、architecture boundaries、migration:validate（8 前向、零新增）、contract-lock（14 文件零漂移）、integration（真实 PostgreSQL/Keycloak testcontainers + 新增 telemetry 真实拉取集成）、build",
+    "镜像 mc-plan-core:mcp-f1-core-011-<final> 构建成功并完成镜像内 smoke：/metrics 服务 outbox+events 指标族与 target_info、live/ready 200、迁移 current、uid 1000、OTEL_ENABLED=false 对照端口关闭",
+    "既有 outbox/events/身份/权益/积分/开发者应用/公开资料/注销全部回归通过；OTEL_ENABLED=false 行为与现网一致",
+    "文档如实更新（runtime/STATUS/development-plan/acceptance）且不声称生产监控或告警已选型",
+    "coordination Start/Continue/Finish 通过；final_commit 回填后 completed 归档、干净 main ff-only 整合与既有 origin 普通推送"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "cf95e3efdab749c4f3f6aeb6b300051af58322bf",
+      "branch": "feat/MCP-F1-CORE-011-local-bounded-metrics",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-008",
+    "MCP-F1-CORE-010"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-09 (Codely/contracts006-deactivation-sdk-20261009, continuing the owner's 'continue until complete' dispatch after CONTRACTS-006 closure): in-lock live state: Foundation main synced to origin 48d9496, six repos clean (core cf95e3e=origin, contracts f6a7927=origin, ops 3021123, community 69ac5e9, foundation 48d9496; skin on blocked SKIN-008 feat 7ec11b5 untouched), registry 1 active (SKIN-008 blocked, Skin-only lock) / 45 completed, no workspace lock, no duplicate local-metrics record, next unused Core ID allocated as MCP-F1-CORE-011 after contiguous CORE-001..010 verification. Owner decision provenance: Q-015 = local bounded metrics was decided by the project owner on 2026-10-08 (recorded in the MCP-F1-CORE-010 record's validation history) and the 2026-10-09 queue order named the local metrics surface as the next executable slice after the deactivation SDK; the current owner instruction 'continue until complete' authorizes executing it. Direction alignment: mc-plan-core is the F1 primary repository and metrics evidence is an F1 exit gate; no direction exception. Design baseline verified live: Core already depends on @opentelemetry/api 1.9.1 + @opentelemetry/sdk-node 0.222.0 + auto-instrumentations 0.80.0 (src/platform/observability/telemetry.ts wires NodeSDK but sets NO metric reader, so the existing outbox OTel instruments - OtelOutboxMetrics claimed/published/failed/rejected + backlog gauge - never export anywhere; @opentelemetry/exporter-prometheus 0.222.0 is already in the local pnpm store as a transitive dependency). The events pull/ack surface (CORE-008) has no metrics at all. This slice wires a real local Prometheus pull reader behind OTEL_ENABLED and adds three bounded unlabeled counters for the delivery face."
+  ]
+}
