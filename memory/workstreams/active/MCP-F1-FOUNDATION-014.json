@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-014",
+  "title": "预发布基线治理（ADR-0013 本地记录基线 + Foundation 状态摘要同步）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/contracts006-deactivation-sdk-20261009",
+  "owner": "Codely/contracts006-deactivation-sdk-20261009",
+  "started_at": "2026-10-09T07:12:27.8261740+08:00",
+  "updated_at": "2026-10-09T07:12:27.8261740+08:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按项目所有者 2026-10-08 拍板决策（预发布基线=本地记录；Q-015=本地有界指标）与 2026-10-09 \"继续到完成\" 指令，把 F1 的预发布基线落为 ADR-0013：F1 以单机 Docker 真实验收为本地记录基线成立，生产域名（Q-004）、生产邮件（Q-006）、托管数据层（Q-014）与正式 RPO/RTO（Q-016）按既有门槛顺延到 V1 真实部署前，实测恢复演练数值不升格为正式目标；Q-015 已决记录写入 open-questions 已决段；并把 Foundation portfolio 与 docs/STATUS.md 中 2026-10-07 时代的滞后叙述（Core-008 active、乱序发布待修、Ops 事件未提交、Contracts 12 操作、Skin 未消费 alpha.1、Ops 无恢复演练等）同步到当前机器真相（46 completed / 1 active SKIN-008 blocked，事件投递/注销/恢复演练/本地指标面均已关闭）。零业务代码，零其他 Owner 记录改动。",
+  "in_scope": [
+    "ADR-0013（decisions/0013-f1-prerelease-local-record.md）：F1 预发布基线=本地记录形态——本地运行基线（单机 Docker Keycloak+PostgreSQL+Core+Mailpit 真实验收留证）、Q-015 本地有界指标已决、Q-004/Q-006/Q-014/Q-016 按既有门槛顺延不视为已决、OPS-003 实测 RPO/RTO 只作本地证据不写成正式目标、本地真实性标准不变",
+    "memory/open-questions.md：Q-015 移入已决事项段（决策=本地有界指标面，落实=ADR-0013 + MCP-F1-CORE-011），主表标注已决指针；Q-004/Q-006/Q-014/Q-016 门槛措辞保持不变",
+    "memory/current/portfolio.md 同步到机器真相：六行仓现状（Core cf95e3e→CORE-011 镜像后最新 SHA、Contracts f6a7927/17 操作 SDK、Ops 3021123 含双 project 恢复演练、Community 69ac5e9、Skin blocked 7ec11b5）、活动工作流段（仅 SKIN-008 blocked 等 Q-001 付费 key）、completed 数与验证边界段刷新",
+    "docs/STATUS.md 同步：核对日期与事实段更新到 2026-10-09（Core-001..011、Contracts-001..006、Ops-001..003 已关闭；Core-008 乱序发布已修复并关闭；Skin alpha.1 生产者已实现但工作流仍 blocked 等视觉验收；CORE-011 本地指标面与 ADR-0013 预发布基线落地）",
+    "验证：validate-workspace、test-coordination、test-workspace-scanning、test-foundation-write、Start/Continue/Finish 全部通过；滞后短语扫描零命中（Core-008 active/乱序发布/12 操作/未消费 alpha.1/尚无恢复 等旧语不再残留于本仓治理面）"
+  ],
+  "out_of_scope": [
+    "任何业务仓库（Core/Contracts/Ops/Community/Skin）的文件改动；其他 Owner 的记录改动；Q-004/Q-006/Q-014/Q-016 的实质决策或采购（只顺延门槛，不决策）",
+    "把 OPS-003 实测值升格为正式 RPO/RTO 目标；把本地基线当作跳过真实验收的理由；生产监控/告警选择（Q-014/Q-016 相邻项保持未决）",
+    "MCP-F1-SKIN-008 任何触碰；Q-001 付费 key 注入（所有者侧输入）；F2 方向决策；注册新 ADR 之外的治理文件发明",
+    "Foundation Skill/工具代码改动（scripts/ 只读）"
+  ],
+  "contract_impact": "none: governance records only - ADR-0013 plus status/portfolio/open-questions prose; no public contract, code, or tooling change anywhere",
+  "acceptance_evidence": [
+    "ADR-0013 提交且内容与已决事实一致（本地基线、Q-015 已决、四项顺延、实测值不升格、变更条件）",
+    "portfolio.md 与 docs/STATUS.md 与 Git/注册表机器真相一致（46 completed / 1 active blocked；六仓 SHA/操作数/验收线如实）",
+    "validate-workspace（6 仓/MD/JSON 扫描）、test-coordination、test-workspace-scanning、test-foundation-write、Start/Continue/Finish 全绿",
+    "滞后短语零残留扫描通过；未声称任何未完成事项为完成（Skin 视觉验收、Q-001、Q-003/Q-013、Q-004/Q-006/Q-014/Q-016 如实标注未决）"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "5c83771ed4e6c054d4c0f18687e170576c2aeaad",
+      "branch": "feat/MCP-F1-FOUNDATION-014-prerelease-baseline",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-011",
+    "MCP-F1-OPS-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan 项目所有者 2026-10-08 会话决策集（预发布基线=本地记录、Q-015=本地有界指标，记录于 MCP-F1-CORE-010 验证历史）与 2026-10-09 \"继续到完成\" 指令",
+    "reason": "Foundation 主仓治理切片：把所有者已拍板的预发布基线决策落为 ADR 并同步治理摘要，不改变 F1/Core 全局方向，不触碰业务代码与其他 Owner 记录。"
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-09 (Codely/contracts006-deactivation-sdk-20261009) per the owner's standing prerelease-baseline decision (2026-10-08) and the 2026-10-09 'continue until complete' dispatch, as the next queue item after MCP-F1-CORE-011 closed. In-lock live state: Foundation main synced to origin 5c83771, registry 1 active (SKIN-008 blocked, Skin-only lock, untouched) / 46 completed, no duplicate prerelease-baseline goal (title/objective scan; CORE-010's evidence-prose mention is not a goal claim), ADR-0013 file verified absent, next unused Foundation ID allocated as MCP-F1-FOUNDATION-014 after contiguous 001..013 verification. Scope is governance-only: ADR-0013 + portfolio/STATUS/open-questions sync, exactly the stale-summary correction the 2026-10-09 recovery report requested be done in a proper Foundation write workflow."
+  ]
+}
