@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-OPS-003",
+  "title": "alpha.5 本地恢复演练：固定最终镜像的双 project 备份-破坏-恢复证明",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/master-control-20261008",
+  "owner": "Codely/master-control-20261008",
+  "started_at": "2026-10-08T14:18:37.6380820+00:00",
+  "updated_at": "2026-10-08T14:18:37.6380820+00:00",
+  "primary_repository": "mc-plan-ops",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "以 CORE-008 最终已验收镜像 mc-plan-core:mcp-f1-core-008-87ddd66（image ID f8055ba5712b）为固定输入，在两个互不重叠的专属 Compose project（A=mc-plan-recovery-source 8480/9480/8425/3600、B=mc-plan-recovery-restored 8580/9580/8525/3700）上执行本地非生产恢复演练：真实种子（三受控身份、DEVELOPER 夹具+dev-app 映射、PAT 四态、权益 3:2/3:3+REJECTED 幂等命令、SQL TEST-FIXTURE 账本+锁定合法 credit.changed.v1 信封、events 部分确认）→ 备份点 T0（单写者暂停 + pg_dump custom 两库）→ 备份后四项变更构成实测 RPO 窗口 → 全量 SQL 快照留证 → down -v 彻底销毁 A → B 空卷起新栈 pg_restore → 按机器断言矩阵复核（身份/映射/PAT 四态含复活+API 补偿、权益幂等、账本触发器仍拒改写、投影 reconcile、audit/outbox/delivery_position/consumer_progress=快照且进度不越界、events 全闭环、live/ready/migrations current 不重放/uid 1000/数据库隔离/基线策略行）→ 实测 RPO/RTO 与 30 天保留清理留证；连续两轮独立执行全绿 + 既有验收栈兼容回归。逻辑备份+写暂停=事务一致点，生产级 PITR 属 Q-014 未决不引入不宣称；恢复演练不连接任何生产外部通知、AI 或用户回调。",
+  "in_scope": [
+    "scripts/validate-dev-recovery.ps1：全参数化（-CoreImage 占位守卫、双 project 与端口组、-KeepStack、-BackupDirectory）、启动前 loopback 端口预检、清理仅限本两专属 project 的容器/网络/卷；同一 compose 文件与同一固定镜像驱动 A/B 两栈",
+    "固定输入以终版树重验：镜像 mc-plan-core:mcp-f1-core-008-87ddd66（f8055ba5712b，8 个前向迁移含 20261007120000_event_pull_delivery）、Contracts alpha.5 锁 5ba7172（14 文件）、运行输入 OUTBOX_PUBLISHER_ENABLED=true/OUTBOX_SINK=pull/OUTBOX_DRAIN_INTERVAL_MS=1000 与 KEYCLOAK_ADMIN_* fail-closed 形状键（initialize-core-admin-client.ps1 既有模式）、依赖镜像 postgres 17.10-alpine3.24/keycloak 26.8.0/mailpit 固定 tag 沿用",
+    "种子与备份后变更：三受控身份真实 PKCE 登录（main/quota 全链路、disabled 保持 Core 边界拒绝）；SQL 夹具 role=DEVELOPER（显式 TEST-FIXTURE）后经 CORE-007 表面真实创建 dev-app 并记录 developer_apps↔Keycloak 客户端映射；PAT-A（T0 前 active）/PAT-R（T0 前撤销）/PAT-D（T0 前建、T0 后撤销=复活样本）/PAT-C（T0 后建=预期丢失）；服务客户端消费主身份至 3:2、quota 至 3:3 含一条 REJECTED_ENTITLEMENT_EXHAUSTED 幂等命令；SQL TEST-FIXTURE 小规模 grant 账本行+账户投影+对应锁定合法 credit.changed.v1 信封 outbox（Schema 先验后插，不冒充公共 producer）；events 消费者真实拉取并确认一部分（保留未确认已发布事件并记录 event_consumer_progress）；T0 后四项变更：第 4 次权益消费、新增账本夹具事件、创建 PAT-C、撤销 PAT-D——逐项记录墙钟构成实测 RPO 窗口",
+    "备份与恢复：备份点 T0 = compose stop core 单写者暂停 → core-db 与 keycloak-db 各自 pg_dump --format=custom 经 docker compose cp 字节安全落盘本 project 专属备份目录（记录墙钟）→ 重启 core 验证 ready；A 侧全量 SQL 状态快照（身份/映射/PAT/幂等命令/账本/audit/outbox/delivery_position/consumer_progress 计数与关键行）输出留证；down -v 彻底销毁 A；B 以空卷起新栈（仅 db 起栈）→ pg_restore 两库 → core 启动验证 migrations current 不重放、Keycloak realm/客户端随 keycloak-db 恢复",
+    "恢复后复核矩阵逐项机器断言（失败即抛错）：三身份 PKCE 重新登录与边界一致；developer_apps 行与 Keycloak 客户端映射完好（admin API 复核 client 存在）；PAT-A 可认证、PAT-R 仍拒（撤销不复活）、PAT-C 不存在（预期丢失）、PAT-D 复活为 active→断言观察并经 API 重新撤销成功（补偿演示，runbook 记录删除一致性边界：数据库恢复≠撤销/删除完成）；权益主身份 3:2（第 4 次消费丢失=实测 RPO 证据）、quota 3:3、幂等命令表=快照、COMPLETED 键重放原结果不变、REJECTED 键重放失败稳定；账本夹具行完好、UPDATE/DELETE 仍被触发器拒绝、余额投影=账本推导 reconcile；audit/outbox/delivery_position/consumer_progress 行数=快照、位置序一致、进度不越过快照（无乱退）；events 全链路：备份前未确认事件全部在场且按 delivery_position 排序、备份前已确认事件不再重投、确认一条后不再收到、再夹具发布一条→拉取→确认（恢复后闭环）；live/ready 200、migrations current、uid 1000、Core/Keycloak 数据库身份隔离、基线策略行（skin/creation_session/Asia/Shanghai/3）完好",
+    "实测指标与保留清理：RPO=最后一笔写入-T0 实际秒数、RTO=销毁完成-B ready 实际秒数、差异清单=四项 T0 后变更逐项\"恢复后缺失\"验证——只记实测值不替 Q-016 定目标；备份目录植入合成 35 天前文件运行 30 天保留清理（ADR-0006 上限），旧文件清理、T0 备份保留、输出留证，清理仅作用于本 project 目录；连续两次独立执行全绿；兼容回归：静态门禁 validate-dev-environment.ps1 + validate-dev-identity.ps1 + validate-dev-events.ps1 三条实际运行（证明共享 compose/realm 兼容）",
+    "文档：docs/backup-restore.md 增加本地演练节（命令、实测值记录方式、逻辑备份+写暂停一致性边界、删除一致性补偿边界、不宣称生产 PITR）；docs/dev-identity.md 恢复 project 表行与清理边界；docs/STATUS.md 与 docs/development-plan.md（固定顺序第 5 步恢复演练）同步"
+  ],
+  "out_of_scope": [
+    "预发布/生产环境与 Q-004/Q-006/Q-014/Q-015/Q-016 任何决策；生产级 PITR/托管备份宣称（逻辑备份+写暂停=事务一致点为如实记录的上限）",
+    "对象存储引用恢复（本地组合无 COS，不声称全站对象恢复）；Skin/Community 业务数据（无业务数据）；公共契约/Schema/scope 变化",
+    "修改 MCP-F1-SKIN-008 的一切与 Skin 工作流；Core 行为修复（本演练发现缺口反馈其 Owner）",
+    "发布 npm/镜像公开；连接任何生产外部通知、AI 或用户回调"
+  ],
+  "contract_impact": "none; the drill consumes the locked alpha.5 surface as-is (14 files at 5ba7172 via the fixed runtime image); no contract, schema, scope or error-code change",
+  "acceptance_evidence": [
+    "validate-dev-recovery.ps1 两轮独立执行全绿（每轮全新 A/B project 与卷），逐项机器断言矩阵 + 实测 RPO/RTO + 保留清理留证，日志绝对路径记录",
+    "兼容回归实际运行：validate-dev-environment.ps1、validate-dev-identity.ps1、validate-dev-events.ps1 三条通过，证明共享 compose/realm 不被本切片破坏",
+    "Start/Continue/Finish 通过；Ops main ff-only 整合与 origin 普通推送（5/B 派工已授权）；分支本地删除；锁释放"
+  ],
+  "repositories": {
+    "mc-plan-ops": {
+      "base_commit": "f48a98f2eead373b8fab197ee5b16182960a255b",
+      "branch": "feat/MCP-F1-OPS-003-alpha5-recovery-drill",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-008",
+    "MCP-F1-CORE-007",
+    "MCP-F1-OPS-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-08 (Codely/master-control-20261008) from live state: MCP-F1-CORE-008 completed+Finish with Core main 87ddd66 and Ops main f48a98f both pushed and the final image mc-plan-core:mcp-f1-core-008-87ddd66 (ID f8055ba5712b) locally verified; MCP-F1-CONTRACTS-004 completed+Finish with the events SDK exposure; registry before registration 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 40 completed; no workspace locks; the v2 recovery drill prep package (mc-session5b-recovery-prep-20261008/01-recovery-drill-draft-v2.md) gates all satisfied; Ops-primary with null direction_exception per the MCP-F1-OPS-002 precedent; both canonical skills -Check current."
+  ]
+}
