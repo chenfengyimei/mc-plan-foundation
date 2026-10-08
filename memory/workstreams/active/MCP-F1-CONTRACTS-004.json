@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-004",
+  "title": "Core SDK 事件操作暴露：listDeliveredEvents 与 acknowledgeEvents（producer 证据已备）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/master-control-20261008",
+  "owner": "Codely/master-control-20261008",
+  "started_at": "2026-10-08T13:52:41.7806020+00:00",
+  "updated_at": "2026-10-08T13:52:41.7806020+00:00",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "MCP-F1-CORE-008 已关闭（producer 最终 87ddd66f24a9044ebcebd2d4043511fd5796029d，镜像 mc-plan-core:mcp-f1-core-008-87ddd66 已验收推送）后，把已锁定 alpha.5 事件投递两操作暴露进 @mc-plan/core-sdk：listDeliveredEvents 与 acknowledgeEvents 严格按锁定 OpenAPI（serviceOAuth events:consume 专用、limit 1..200 默认 50、EventPage/EventAcknowledgment 响应、游标确认 200 幂等、未知/畸形/他消费者游标 400），SUPPORTED_OPERATIONS 由 12 个 producer 已验证操作扩至 14 个并把 SUPPORTED_PRODUCER_COMMIT 固定至 CORE-008 最终提交；以固定最终镜像真实 HTTP smoke 证明拉取→持久去重→确认→追平、重复确认幂等、A/B 主体隔离、他消费者/畸形游标 400、scope/audience 拒绝；getPublicUser 与未来 credits 公共命令仍不暴露；契约 14 文件零变化，private 本地 pack 不发布 npm。",
+  "in_scope": [
+    "sdk/typescript/src/supported-operations.ts：SUPPORTED_OPERATIONS 12→14（新增 listDeliveredEvents、acknowledgeEvents）、SUPPORTED_PRODUCER_COMMIT 固定至 mc-plan-core 87ddd66f24a9044ebcebd2d4043511fd5796029d（MCP-F1-CORE-008 已关闭并推送 main）、注释更新为两批 producer 证据（12 操作原由 CORE-005 验证、事件两操作由 CORE-008 验证、全部 14 操作在 87ddd66 最终树全量门禁复验）；getPublicUser 保持不暴露",
+    "sdk/typescript/src/client.ts：两个新方法严格按锁定 OpenAPI——listDeliveredEvents(limit 1..200 可选、AbortSignal) GET /v1/events 返回 EventPage；acknowledgeEvents({cursor}) POST /v1/events/acknowledgments 返回 200 EventAcknowledgment；均走 getServiceToken 服务凭证、SDK 不生成新 cursor 不换确认位置；自动重试/超时/abort 遵守现有 transport 规则（GET 与游标确认均按契约幂等可重试、4xx 从不重试）；limit/cursor 越界或畸形在客户端先行拒绝",
+    "sdk/typescript/tests：扩展 client-surface 单元测试（事件两方法的服务鉴权与 provider 缺失错误、路径/查询/body 形状、limit 越界客户端拒绝、200/400/401/403 问题映射、重复确认透传）与 contract-manifest 测试（14 操作、producer commit 87ddd66、SUPPORTED_CONTRACT_FILES 哈希清单不变）",
+    "sdk/typescript/smoke/smoke-real.mjs：固定镜像更新为 mc-plan-core:mcp-f1-core-008-87ddd66（运行输入 OUTBOX_PUBLISHER_ENABLED=true/OUTBOX_SINK=pull/OUTBOX_DRAIN_INTERVAL_MS=250）；新增真实事件闭环场景——经 SDK consumeCredits 产生真实 flat 事件并断言 PUBLISHED 后仍不可拉取、两个 [SYNTHETIC-DB-SEED] 锁定合法 credit.changed.v1 信封（psql 直插、显式 gen_random_uuid id）按发布序拉取→按 event_id 持久去重（文件注册表跨\"重启\"存活、重复副作用恰一次、ack 前不确认的崩溃-重投形状）→确认→追平（空 items+null cursor）、重复确认幂等返回当前位置、双服务主体 A/B 隔离（A 确认不影响 B、A 游标 B 用 400）、畸形游标 400、用户令牌与缺 events:consume 令牌 403、错 audience 401；真实/合成证据明确标注，不以 mock transport 替代",
+    "docs/compatibility.md 兼容矩阵记录实际组合（producer=Core 87ddd66 alpha.5 14 文件锁 5ba7172、SDK=0.1.0-alpha.5+events 14 操作、真实消费者=smoke 持久去重消费者）；docs/STATUS.md、docs/development-plan.md 同步；契约文件与 validate_contracts.py 机器锁零变化",
+    "SDK 包保持 private、版本 0.1.0-alpha.5、本地 pack 消费（pack:check 在干净工程严格 tsc 消费两新方法并回归既有 12 操作）；不发布 npm 或 stable"
+  ],
+  "out_of_scope": [
+    "任何契约/Schema/scope/错误码变更（alpha.5 锁 5ba7172 的 14 文件零漂移）；不新增第三种传输、新 scope 或游标语义扩展",
+    "暴露 getPublicUser 或任何未来 credits 公共命令（无 producer 证据不进 SDK）",
+    "修改 mc-plan-core/mc-plan-ops/mc-plan-skin/mc-plan-community 任何文件（全只读）；Core producer 任何变更",
+    "修改 MCP-F1-SKIN-008 的一切；发布 npm/稳定版本；生产部署；全局 Docker 清理",
+    "以 mock transport 替代真实 producer smoke；Skin/Community 产品消费者集成（各自后续工作流）"
+  ],
+  "contract_impact": "none; the locked 0.1.0-alpha.5 contract files stay byte-identical; the SDK only gains callable wrappers for the two already-locked operations now carrying producer evidence (listDeliveredEvents, acknowledgeEvents), growing SUPPORTED_OPERATIONS from 12 to 14 with SUPPORTED_PRODUCER_COMMIT pinned to mc-plan-core 87ddd66f24a9044ebcebd2d4043511fd5796029d",
+  "acceptance_evidence": [
+    "validate_contracts.py（固定 python 3.12 venv）与 redocly lint 三文档通过（契约零变化基线仍绿）",
+    "SDK 全部门禁：format:check（generated/dist 豁免）、lint --max-warnings 0、typecheck、generate:check 零漂移、vitest 全绿（含新增事件用例）、build、pack:check 干净工程严格 tsc 消费",
+    "smoke:real 以固定镜像 mc-plan-core:mcp-f1-core-008-87ddd66 真实 HTTP 通过全部场景（拉取→持久去重→确认→追平、重复确认、A/B 隔离、游标负例、scope/audience 拒绝），日志绝对路径留证",
+    "Start/Continue/Finish 通过；Contracts main ff-only 整合并普通推送；分支本地删除、远端从未存在；锁释放"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "30064022daa61795b9a1945af2d23a0ce88d04dd",
+      "branch": "feat/MCP-F1-CONTRACTS-004-events-sdk",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-008",
+    "MCP-F1-CONTRACTS-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "contract-first-prerequisite",
+    "authorized_by": "MC Plan project owner published queue (2026-10-08 master-control receipt: after CORE-008 closes, the Contracts-only events SDK slice proceeds per the standalone prompt 05-SESSION04-EVENTS-SDK-AFTER008.md, snapshot updated at reception) plus the in-session owner instruction 2026-10-08 to continue until no executable backlog remains",
+    "reason": "The SDK surface is owned by mc-plan-contracts and may only expose operations with producer evidence; the closed MCP-F1-CORE-008 supplies that evidence, making this the next contract-owned slice. Contracts is the required first and only writer; Core/Ops/Skin/Community untouched; the F1/mc-plan-core direction is unchanged."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-08 (Codely/master-control-20261008) from live state: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 39 completed after the MCP-F1-CORE-008 closure; Contracts main 30064022daa61795b9a1945af2d23a0ce88d04dd clean and synced with origin; Core main 87ddd66 (producer evidence for the two event operations, image mc-plan-core:mcp-f1-core-008-87ddd66 locally verified) and Ops main f48a98f both pushed by the same session closure; no Contracts/Cores locks held by others; ID MCP-F1-CONTRACTS-004 allocated as the next unused Contracts ID after 001/002/003; both canonical skills -Check current at registration time."
+  ]
+}
