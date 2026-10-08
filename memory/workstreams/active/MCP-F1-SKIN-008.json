@@ -8,7 +8,7 @@
   "initial_owner": "Codex",
   "owner": "Codely/8b150da7-6a4c-4e53-a769-422c79c12963",
   "started_at": "2026-10-02T10:00:49Z",
-  "updated_at": "2026-10-05T15:03:29Z",
+  "updated_at": "2026-10-08T12:01:22Z",
   "primary_repository": "mc-plan-skin",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -18,7 +18,7 @@
     "mc-plan-community",
     "mc-plan-ops"
   ],
-  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；从协议上保证第二层非空，把候选在线预览升级为可拖拽旋转、可播放姿态动画的无第三方依赖 3D 角色视图；并让本地真实 Provider 流程与整站创作界面达到可辨识、可解释、可实际使用的产品完成度。",
+  "objective": "项目所有者以实际候选 6b8f479c 明确否定 v3 的固定模板效果。将内部生成协议替换为由 LLM 直接编写各身体部件正反面的逐像素蓝图，渲染器仅负责 Minecraft UV 安全映射和侧面连续性，不再通过夹克、腰带、靴子等固定服装枚举决定外观；从协议上保证第二层非空，把候选在线预览升级为可拖拽旋转、可播放姿态动画的无第三方依赖 3D 角色视图；并让本地真实 Provider 流程与整站创作界面达到可辨识、可解释、可实际使用的产品完成度。 2026-10-08 起经项目所有者显式授权扩展：在原会话 2（现任 Owner）内实现已锁定的 Contracts skin.yaml 0.1.0-alpha.1 匿名窗口公共表面生产者（详情/预览/下载/删除、成品资源引用、保留与删除级联真实运行、Web 正式接线），模型视觉验收门槛保持独立，不另开 Skin-009 writer。",
   "in_scope": [
     "内部 SkinDesign v4：受限调色板、头部/躯干/左右手臂/左右腿的正反面逐像素网格以及透明 overlay 网格",
     "通用 UV 映射器：把模型提交的像素网格确定性映射到 Steve/Alex 64x64 布局，侧面由边缘像素连续延展，顶底面使用部件基础色",
@@ -37,16 +37,25 @@
     "提供显式真实 Provider 本地启动入口，复用既有厂商无关 LLM 适配器与 gitignored 配置；Fake Provider 仅用于明确标识的演示和自动化测试",
     "在创作界面清楚呈现真实生成、排队、渲染、验证、失败与候选确认状态，避免固定 fixture 被误认为真实生成",
     "重构 Web 信息架构、视觉系统、响应式布局和表单反馈，使创建会话、描述皮肤、选择模型、等待结果、3D 检查与确认下载形成连续工作台体验",
-    "补充桌面与移动端视觉验收、关键交互测试以及真实 Provider 失败路径的可理解错误提示"
+    "补充桌面与移动端视觉验收、关键交互测试以及真实 Provider 失败路径的可理解错误提示",
+    "从已批准的 Contracts skin.yaml 0.1.0-alpha.1（只读源，提交 3006402）用既有 pnpm contract:gen 机制重生成并锁定本地契约类型与 manifest；不手写复制公共类型，不改 Contracts 源文件",
+    "实现 getConversation：GET /v1/conversations/{conversationId} 返回含时间顺序消息历史的 ConversationDetail；公共角色仅 user/assistant（SYSTEM 过滤）；未知/过期/已删除返回 404 且不泄露保留细节",
+    "实现 deleteConversation：成功 204，数据库即时级联（消息/任务/候选/成品）并删除候选与成品对象字节；未知/过期/已删除返回 404；对象字节清理失败时入队可重试的目标清理任务，保留重试依据且行级数据先行移除",
+    "实现 getCandidatePreview：返回已验证候选 PNG 字节（image/png），受 24 小时候选窗口与会话归属约束；错配/未知/过期/已删除统一 404 不区分原因",
+    "实现 downloadSkin：以本仓 FinalizedSkin 资源 ID 返回成品 PNG 字节，受 30 天会话窗口与会话归属约束，404 语义同上",
+    "成功 finalize 的 Job 以本仓 FinalizedSkin ID 作为 resource_id（不再恒为 null，不伪装 Community 资源 ID）；原四操作、三次渲染上限、幂等键指纹与拒绝状态保持不变",
+    "保留语义真实运行：30 天会话/24 小时候选清扫加用户触发删除路径，配可重复受控时钟边界测试与最小实际清理路径（非仅文档说明）",
+    "Web 工作台接回正式详情/预览/下载/删除接口：刷新时从服务端恢复消息与会话状态；预览字节改走公共端点替代 gitignored demo 路由；真实 PNG 下载走公共端点并验证 Content-Type/尺寸/校验；删除入口在刷新后不复活数据",
+    "以 producer 集成测试补 ADR-0012 匿名窗口运行证据（不可猜测标识、错配 404、过期边界、删除级联、并发防复活、对象清理可恢复），不声称 Contracts 增加了专用语义机器锁"
   ],
   "out_of_scope": [
-    "公共 OpenAPI、JSON Schema、事件、数据库迁移或 SDK 修改",
+    "修改 mc-plan-contracts 的 OpenAPI/JSON Schema/事件/SDK 工件（本扩展仅按已锁定的 0.1.0-alpha.1 只读源重生成本地类型；Contracts 源文件零修改）；本扩展不需要新增数据库迁移，现有模型已表达所需数据",
     "Contracts、Core、Community、Ops 的任何修改",
     "图像生成模型、第三方 3D 预览库、WebGL 引擎绑定、Official 集成或生产厂商绑定",
     "在数据库中持久化内部设计 JSON 或新增面向用户的调试接口",
     "生产密钥、真实用户数据或对外厂商承诺"
   ],
-  "contract_impact": "none; internal provider design protocol, deterministic UV renderer and local candidate preview only",
+  "contract_impact": "none as artifact edits; Skin implements the already-locked Contracts skin.yaml 0.1.0-alpha.1 anonymous-window surfaces (ADR-0012) as their producer - no OpenAPI/Schema/SDK/migration changes; runtime evidence is added on the Skin side only",
   "acceptance_evidence": [
     "v4 schema accepts dimensionally correct component grids and rejects malformed rows, unknown palette symbols and an entirely transparent overlay",
     "Steve and Alex reference blueprints render legal 64x64 PNGs with non-empty second layer and deterministic bytes",
@@ -62,7 +71,19 @@
     "explicit real-provider startup refuses missing configuration and never silently falls back to Fake Provider",
     "the user-facing workspace distinguishes real generation from demo fixtures and presents provider failures without claiming a generated result",
     "desktop and mobile layouts preserve the full create-to-preview flow with accessible focus, loading, error and empty states",
-    "visual QA confirms a cohesive non-template studio identity, readable hierarchy and usable 3D controls"
+    "visual QA confirms a cohesive non-template studio identity, readable hierarchy and usable 3D controls",
+    "pnpm contract:gen regenerates types/manifest at 0.1.0-alpha.1 and pnpm contract:check passes with zero drift against the read-only Contracts checkout",
+    "GET /v1/conversations/{id} returns chronological messages with only user/assistant roles and 404s unknown/expired/deleted conversations without retention detail leakage",
+    "DELETE /v1/conversations/{id} returns 204 once, cascades database rows and object bytes, and 404s on repeat, expired or unknown addressing",
+    "candidate preview and final download serve image/png bytes that decode as 64x64 two-layer skins matching the recorded sha256; mismatched, unknown, expired or deleted addressing returns a single indistinguishable 404 code per endpoint",
+    "a succeeded finalize job reports the FinalizedSkin id as resource_id and the download endpoint serves that exact resource",
+    "concurrent delete during in-flight render/finalize processing leaves no resurrected candidates, finals or jobs",
+    "object-byte cleanup failure keeps retry evidence in a retryable queue job while rows are already gone; after cleanup job/preview/download all 404",
+    "controllable-clock boundary tests cover the 24h candidate and 30d conversation windows including the sweep and the user delete path",
+    "the original four operations keep their three-attempt limit, idempotency fingerprint replay/conflict and rejection semantics (regression)",
+    "web refresh restores messages and conversation state from the public detail endpoint, preview bytes load from the public endpoint, real download works end-to-end with Content-Type and 64x64 verification, and delete-then-refresh shows no resurrection on desktop and mobile",
+    "pnpm check and pnpm check:full pass on the final committed implementation with isolated ports, and prisma:validate / migration:validate pass with no new migrations",
+    "coordination Continue passes after this record update and again after the producer checkpoint; the workstream stays blocked with final_commit null until owner visual acceptance (Q-001) - producer completion is reported separately from model visual acceptance"
   ],
   "repositories": {
     "mc-plan-skin": {
@@ -73,9 +94,11 @@
     }
   },
   "depends_on": [
-    "MCP-F1-SKIN-007"
+    "MCP-F1-SKIN-007",
+    "MCP-F1-FOUNDATION-012",
+    "MCP-F1-CONTRACTS-003"
   ],
-  "blocked_reason": "当前 GLM flash-low 与 v4 提示词协议的组合未达到项目所有者的视觉验收要求，正式标记为 blocked。有界协议改进轮已实现、测试并提交（6030deb 逐词落实、服饰区域锚定、前后行带一致、overlay 对齐；9a06135 拒答误判修复；0a8e858 三个多主题确定性协议测试），最终受控候选 90616ed2（30 秒渲染）技术校验全过但视觉约 1/10：无冷色雪地、颈部无蓝围巾、层错位、模板感。glm-5.3 正式档因免费 key 持续 HTTP 429 未参与本轮，flash+low 是与旧 flash 基准同模型同档、唯一变量为提示词协议的对照。现有证据不足以把问题完全归因于模型，也不足以完全归因于协议——这是该组合的质量上限，完整结论需要正式档或跨档对照。Skin 分支 feat/MCP-F1-SKIN-008-pixel-blueprint-v4 领先本地 main 8 个提交（最新检查点 9a061355a76e29076b5b9268183a7f31b5caa9ca）。解锁等待：Q-001 Provider 基准（模型/预算/凭据决策）或项目所有者对模型、预算、prompt 策略的明确选择；在此之前禁止继续无界抽卡。Finish 未执行、Skin main 未合并、锁不释放，final_commit 保持 null。",
+  "blocked_reason": "当前 GLM flash-low 与 v4 提示词协议组合仍未达到项目所有者的视觉验收（质量证据不变：受控候选 90616ed2 技术校验全过但视觉约 1/10，glm-5.3 high 档候选 9474eb65 约 4/10，glm-5.3 正式档因免费 key 持续 HTTP 429 未参与；6030deb/9a06135/0a8e858 协议改进轮与检查点均已提交并推送）。2026-10-08 项目所有者在原会话 2 内显式授权范围扩展：实现已锁定的 Contracts skin.yaml 0.1.0-alpha.1 匿名窗口生产者（ADR-0012；记录更新先行提交并通过 Continue）。该扩展不改变视觉验收门槛：技术 producer 完成与模型视觉验收分开回传，未获真实付费模型基准前禁止无界抽卡。Q-001=B（正式档付费 key）目前仅由 CONTRACTS-003 记录转述，可审计文件未记录模型标识、调用总次数与金额上限，本会话亦未收到凭据（apps/worker/.env 在本机不存在）；付费基准步骤保持阻塞，仅报告具体缺项。分支 feat/MCP-F1-SKIN-008-pixel-blueprint-v4 此前检查点 85b35ff 领先本地 main 9 个提交（领先 origin/feat 分支 1 个未推送提交）；本扩展的新检查点将按实际 HEAD 更新。Finish 未执行、Skin main 未合并、锁不释放，final_commit 保持 null。",
   "direction_exception": {
     "category": "foundation-governance",
     "authorized_by": "MC Plan project owner via explicit rejection of the current Skin result and successive requests for a rotatable 3D preview, visible animation playback, a real generation flow and a complete interface redesign (2026-10-03)",
@@ -168,6 +191,7 @@
     "Owner-authorized governance correction MCP-F1-FOUNDATION-007 (2026-10-03) formalized this record to status=blocked with the neutral combination attribution and the verified 8-commits-ahead branch fact; owner, branch, checkpoints, lock and null final_commit are unchanged, Skin main was not merged and no Skin file was touched by that correction",
     "Formal takeover by the new Skin session 2026-10-05 (Codely/8b150da7-6a4c-4e53-a769-422c79c12963): live six-repo preflight re-verified (Skin clean at checkpoint 9a06135 with 0/0 against the pushed origin feature branch and no writer activity within 90 minutes; CORE-005 closed as completed with final commits 5508d60 (core) and a8b38be (contracts) present; the Foundation worktree still carries the FOUNDATION-008 governance session uncommitted files, left untouched); canonical Skill install -Check passed for mc-plan-development 1.1.2 and mc-plan-orchestrator 1.0.0; general coordination validation passed (2 active, 25 completed); this handoff record was committed inside the workspace-root short lock with a precise pathspec commit on the current Foundation branch, with no push, no branch switch and no other path staged or committed by this transaction; the workstream remains blocked with final_commit null and no Skin code change in this transaction.",
     "Session-2 bounded slice implemented in mc-plan-skin (owner-authorized in-scope 008 offline website completion): rebuilt the gitignored local demo-preview candidate route that the Windows-to-Mac migration had lost (.gitignore authorizes this local-only tool; it serves candidates/{uuid}.png from SKIN_DEMO_PREVIEW_DIR with UUID and path-safety checks; the public candidate-bytes endpoint remains the recorded contract gap), added refresh recovery (localStorage snapshot of session, job list, selection and form drafts, re-hydrated on mount and re-polled through the existing public GET /v1/jobs with candidate bytes reloaded through the local preview route; job 404 mapped to the terminal SKIN_JOB_NOT_FOUND state), a post-finalize client-side PNG download built from the already-validated candidate bytes (no new public endpoint; the public download surface stays a recorded contract gap), side-by-side candidate comparison for two or more candidates reusing the first-party 3D preview at a smaller scale, terminal-state closure (derived completed status, local expiry inference with honest display, render/finalize locking and a start-new-session entry), and viewport-neutral empty-state copy; docs/STATUS.md was refreshed from the stale SKIN-003-era text to the verified machine state (the tracked Windows check*.log files remain untouched pending an owner decision).",
-    "Final gates on the committed slice implementation: pnpm build (10 workspace packages), pnpm check (format:check, build, lint --max-warnings 0, strict typecheck, unit 93/93 across nine suites incl. provider-sdk 34, contract:check regeneration against the Contracts checkout, fixtures validation 6/6), pnpm check:full with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200 fully green on this Mac including real testcontainers PostgreSQL/Redis integration (api 7/7, worker 5/5) and Playwright 2/2: desktop full chain create->adjust->compare->preview->refresh-recovery->finalize->download with a real download event, and a 390x844 mobile full chain with drag rotation and download; pnpm migration:validate passed (schema valid, 2 forward migrations); the rewritten e2e spec initially failed because a missing await on locator.boundingBox fed NaN into mouse.move (diagnosed via a bounds={} probe log plus standalone chromium probes that cleared the browser of fractional/out-of-viewport suspicion), the fix restored the original awaited pattern and the complete gate re-ran green; a DOM geometry probe proved the mobile workflow rail renders all four pills in a 2x2 grid with no horizontal overflow (earlier visual-model claims of missing pills or a clipped session title were fullPage-screenshot misreads); desktop and mobile step screenshots are stored under /Users/chenfeng/.codex/outputs/mc-skin008-session2-takeover-20261005/shots/ and visual QA of the compare view, the finalize/download state and the mobile 3D controls found no layout defects; checkpoint committed in mc-plan-skin as 85b35ff8e78cc7fcece2594f66956f394125c83f (4 files, +625/-114, author identity aligned to this Mac repo convention after configuring the missing repo-local git identity; worktree clean; Skin branch now 9 commits ahead of local main and 0/0 against origin/feat/MCP-F1-SKIN-008-pixel-blueprint-v4 before this new commit); not pushed and not merged - the workstream stays blocked pending Q-001, final_commit remains null and Finish was not run."
+    "Final gates on the committed slice implementation: pnpm build (10 workspace packages), pnpm check (format:check, build, lint --max-warnings 0, strict typecheck, unit 93/93 across nine suites incl. provider-sdk 34, contract:check regeneration against the Contracts checkout, fixtures validation 6/6), pnpm check:full with SKIN_E2E_API_PORT=4100 and SKIN_E2E_WEB_PORT=3200 fully green on this Mac including real testcontainers PostgreSQL/Redis integration (api 7/7, worker 5/5) and Playwright 2/2: desktop full chain create->adjust->compare->preview->refresh-recovery->finalize->download with a real download event, and a 390x844 mobile full chain with drag rotation and download; pnpm migration:validate passed (schema valid, 2 forward migrations); the rewritten e2e spec initially failed because a missing await on locator.boundingBox fed NaN into mouse.move (diagnosed via a bounds={} probe log plus standalone chromium probes that cleared the browser of fractional/out-of-viewport suspicion), the fix restored the original awaited pattern and the complete gate re-ran green; a DOM geometry probe proved the mobile workflow rail renders all four pills in a 2x2 grid with no horizontal overflow (earlier visual-model claims of missing pills or a clipped session title were fullPage-screenshot misreads); desktop and mobile step screenshots are stored under /Users/chenfeng/.codex/outputs/mc-skin008-session2-takeover-20261005/shots/ and visual QA of the compare view, the finalize/download state and the mobile 3D controls found no layout defects; checkpoint committed in mc-plan-skin as 85b35ff8e78cc7fcece2594f66956f394125c83f (4 files, +625/-114, author identity aligned to this Mac repo convention after configuring the missing repo-local git identity; worktree clean; Skin branch now 9 commits ahead of local main and 0/0 against origin/feat/MCP-F1-SKIN-008-pixel-blueprint-v4 before this new commit); not pushed and not merged - the workstream stays blocked pending Q-001, final_commit remains null and Finish was not run.",
+    "Scope extension recorded 2026-10-08 under the workspace short-lock entry (invoke-foundation-write.ps1, session Codely/8b150da7-6a4c-4e53-a769-422c79c12963): the project owner dispatch authorized implementing the locked Contracts skin.yaml 0.1.0-alpha.1 producer inside this existing workstream instead of opening a Skin-009 writer; in_scope/out_of_scope/contract_impact/acceptance were updated first and committed via Submit-FoundationRecord with only this record path staged, followed by a passing Continue validation; depends_on now includes MCP-F1-FOUNDATION-012 (ADR-0012) and MCP-F1-CONTRACTS-003 (alpha.1 lock 3006402); the stale git description in blocked_reason was corrected to the actual HEAD state; no Contracts/Core/Community/Ops file was touched and no paid model call is authorized in this session."
   ]
 }
