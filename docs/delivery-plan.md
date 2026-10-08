@@ -1,22 +1,19 @@
 # MC Plan 完整交付路线
 
-状态：待逐项执行；核对日期：2026-10-07。目标：完成现有六仓的 F1–F6/V1 范围，包括完整社区、Skin 双模式、自部署和上线验收。本文安排跨仓交付依赖；接口以 Contracts、详细单仓顺序以各仓 development-plan、执行权以活动工作流为准。
+状态：待逐项执行；核对日期：2026-10-09（风险段已按关闭记录更新）。目标：完成现有六仓的 F1–F6/V1 范围，包括完整社区、Skin 双模式、自部署和上线验收。本文安排跨仓交付依赖；接口以 Contracts、详细单仓顺序以各仓 development-plan、执行权以活动工作流为准。
 
 ## 当前执行边界
 
-本轮已将 Core/Ops、Skin、Community/Contracts 分为三个只读核查任务，由主会话汇总治理。当前业务锁分别属于 Codely 的 CORE-008 和 SKIN-008；主会话已请求确认旧会话停止并授权保留改动接管，未收到回复前不写这些仓库。Foundation 的本轮治理与它们的业务写集不重叠，短事务期间其他会话须暂停 Foundation 协调写入。
+注册表核对 2026-10-09：46 completed / 1 active。下表第 1–4 项已全部交付并关闭（CORE-008、CONTRACTS-004、OPS-003、CORE-009/010+CONTRACTS-005/006）；CORE-011（本地有界指标）与 ADR-0013（本地预发布基线）已落地。唯一活动业务工作流为 SKIN-008（blocked，等 Q-001 付费 key 注入后的视觉验收）；第 5 项仍等 Q-003/Q-013 所有者决策。
 
 后续每个实现工作流只有一名写入 Owner，一个主仓库、至多两个辅助仓库。表中角色是责任分配，不代表已创建会话或预留锁；新 Tracking ID 必须在启动事务里分配。不得同时启动两个 Contracts 写入者。
 
-## 首先消除已发现的交付风险
+## 已消除的交付风险（2026-10-07 静态核查发现，2026-10-09 核对关闭）
 
-下列为源码静态核查发现，尚未在本轮重跑业务集成测试，不冒充修复或通过证据。
-
-1. **Core 事件丢投（P1）**。Core `prisma/migrations/20261007120000_event_pull_delivery/migration.sql` 在 INSERT 时通过 nextval 分配 delivery_position；`src/outbox/infrastructure/prisma-outbox.store.ts` 发布时只改 state/publishedAt；`src/events/infrastructure/prisma-event-delivery.store.ts` 只查询 PUBLISHED 且 position > 已确认位置。可复现时序为 A=1 延迟，B=2 先发布并被确认，A 后发布但永远不能再次被拉取。修复必须使可确认的发布进度不越过未来可见事件；仅把 nextval 移到发布方法仍不足以保证并发事务提交顺序。
-2. **Ops 事件验收不完整**。未提交的 `scripts/validate-dev-events.ps1` 种子 data 只有 balance，不符合锁定 credit.changed.v1 的 CreditLedgerEntry；外层字段集合断言不能替代完整 Schema 校验。foreign cursor 场景使用伪造签名，尚未证明两个真实服务消费者隔离；用户 PKCE 令牌预期 401 与当前服务认证后 scope 检查路径可能返回 403 的行为不一致，须按锁定契约定准后实测。
-3. **实现、验收、关闭叙述混淆**。CORE-008 active 且 Ops dirty，不能使用 Core 开发计划第 9 步的“已完成”作为关闭证据。Skin 仍从 gitignored demo-preview 读取候选，客户端 Blob 下载不能代替已锁定的公开字节接口。Community 仅 8 个文档/许可文件，不能算业务工程已初始化。
-
-4. **Skin 删除与确认恢复缺陷**。`apps/worker/src/retention.processor.ts` 会话级对象删除异常后仍删除会话行，丢失未删对象的重试引用；`apps/api/src/conversations/conversation.service.ts` finalize 未检查实际 expiresAt，幂等指纹遗漏 description；`apps/worker/src/finalize.processor.ts` 候选缺失时只令任务 FAILED，可能留下 FINALIZING 会话。先用故障注入与可控时钟复现，再修复并发/恢复路径，无需外部 AI 调用。
+1. **Core 事件丢投（P1）——已修复并验收**。`MCP-F1-CORE-008` 关闭前重构为发布时赋位：`markPublished` 在翻转 PENDING→PUBLISHED 的同一自动提交 UPDATE 内 `nextval` 赋 `delivery_position`，发布顺序即位置顺序；真实 PostgreSQL 回归 T1 退避后发布、T2 迟提交业务事务、T3 双实例收敛、T4 双发布器真并发全部通过。
+2. **Ops 事件验收不完整——已修复并验收**。`scripts/validate-dev-events.ps1` 已提交（Ops main `3021123`），种子为锁定合法 CreditLedgerEntry（先验后插）、双真实服务消费者 A/B 隔离与跨消费者游标拒绝，两轮独立真实验收全绿（关闭记录见 `MCP-F1-CORE-008`）。
+3. **实现、验收、关闭叙述混淆——已消除**。CORE-008 已关闭（Core main `48f2f03` 祖先链内）；Skin gitignored demo-preview 已在 `MCP-F1-SKIN-008` alpha.1 扩展中由正式公共详情/预览/下载/删除端点替代；Community 仍无业务源码（如实保留）。
+4. **Skin 删除与确认恢复缺陷——已在 `MCP-F1-SKIN-008` alpha.1 生产者扩展修复**。对象清理失败入队可重试任务携带失败键（行级数据先行移除、重试依据保留），24h/30d 可控时钟边界测试与 chmod 故障注入（含删除防复活）通过；工作流仍 blocked 等 Q-001 视觉验收，未合并 main。
 
 ## 交付分配与启动条件
 

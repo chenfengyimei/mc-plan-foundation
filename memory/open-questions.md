@@ -18,11 +18,14 @@
 | Q-012 | 结构化创作意图字段 | 对话原型、提供商可移植性、隐私最小化和契约稳定性 | Skin/Contracts | F3 Skin API 字段冻结前 |
 | Q-013 | 额外创作会话积分价格 | 模型成本、失败退款、预算、滥用实验和用户可理解性 | Core/Skin/Product | F3 计费联调前 |
 | Q-014 | 首发是否采用托管 PostgreSQL/Redis | 预算、维护能力、可用性、备份和迁移演练 | Ops | 首个预发布环境采购前 |
-| Q-015 | 生产监控与告警产品 | OpenTelemetry 兼容、区域、成本、数据保留和告警路由 | Ops | 首个预发布环境验收前 |
+| Q-015 | ~~生产监控与告警产品~~ **已决：本地有界指标面**（见文末已决记录） | — | Ops | 已于 F1 指标切片前决策 |
 | Q-016 | 正式 RPO/RTO | 业务影响分析、恢复演练耗时、备份成本和责任覆盖 | Ops/Product | 公开测试前 |
 
 以上事项中，Q-003、Q-004、Q-006、Q-014、Q-015 和 Q-016 不阻塞 `docs/f1-core-first-slice.md`：第一切片不选择奖励值、生产域名/地域、邮件提供商、托管数据层、监控产品或正式 RPO/RTO。若实现者需要这些值才能继续，必须停止对应功能并在表中规定的门槛由 Owner 决策，不能写入临时默认值。
 
 ## 已决事项
+
+- **Q-015 指标面：本地有界指标（不选择生产监控/告警提供商）**。决策人：MC Plan 项目所有者；决策日期：2026-10-08（与预发布基线=本地记录同批拍板）；授权途径：CORE-010 切片内所有者决策集，2026-10-09 由"继续到完成"指令执行。落实方式：[ADR-0013](../decisions/0013-f1-prerelease-local-record.md) 记录基线形态；`MCP-F1-CORE-011` 在 Core 落地 `OTEL_ENABLED=true` 时的本地 Prometheus 拉取端口（`OTEL_METRICS_PORT`，默认 9464，进程内导出器、fail-closed 端口、无标签有界计数器），并以真实拉取集成与镜像内 smoke（真实 pull/ack/游标拒绝计数、对照运行端口关闭）验收。生产监控与告警产品选择保持未决，升格须新决策。
+
 
 - **Q-007 PAT 默认最长有效期：30 天**。决策人：MC Plan 项目所有者；决策日期：2026-10-03；授权途径：CORE-003 派工提示词中所有者选择“完整第 4 步”并给出 30 天决策值。落实方式：Contracts `0.1.0-alpha.2` 的 `CreatePersonalAccessTokenRequest.expires_in_days` 以 `maximum: 30`、`default: 30` 机器锁定，并由 `scripts/validate_contracts.py` 强制检查；Core 运行时配置 `PAT_MAX_VALIDITY_DAYS` 允许 1–30、默认 30，不得调高突破契约。若未来需要延长上限，属于新的产品/安全决策，须由 Core/Security Owner 重新决策并同步契约。
