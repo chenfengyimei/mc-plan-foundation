@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CONTRACTS-005",
   "title": "Core SDK 公开资料操作暴露：getPublicUser 与 updateCurrentUser（producer 证据已备）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/master-control-20261008",
   "owner": "Codely/master-control-20261008",
-  "started_at": "2026-10-08T15:25:58.7316670+00:00",
-  "updated_at": "2026-10-08T15:25:58.7316670+00:00",
+  "started_at": "2026-10-08T23:25:58.731667+08:00",
+  "updated_at": "2026-10-08T15:37:57.9747950+00:00",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -44,8 +44,8 @@
     "mc-plan-contracts": {
       "base_commit": "2b1ba6a48c203b29ab29c5339e6fd32b68d7dcfd",
       "branch": "feat/MCP-F1-CONTRACTS-005-public-profile-sdk",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "3b0c2bd5a64978488b0fb733115e88996ecce17c",
+      "final_commit": "3b0c2bd5a64978488b0fb733115e88996ecce17c"
     }
   },
   "depends_on": [
@@ -60,6 +60,8 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-08 (Codely/master-control-20261008) from live state: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 42 completed after the MCP-F1-CORE-009 closure (Core main 7d22539, Contracts main 2b1ba6a both pushed); Contracts clean on main at 2b1ba6a; producer evidence for getPublicUser/updateCurrentUser delivered by CORE-009 (producer commit 7d22539) pending the image rebuild which is part of this slice; ID CONTRACTS-005 allocated as the next unused; both canonical skills -Check current this session."
+    "Registered 2026-10-08 (Codely/master-control-20261008) from live state: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 42 completed after the MCP-F1-CORE-009 closure (Core main 7d22539, Contracts main 2b1ba6a both pushed); Contracts clean on main at 2b1ba6a; producer evidence for getPublicUser/updateCurrentUser delivered by CORE-009 (producer commit 7d22539) pending the image rebuild which is part of this slice; ID CONTRACTS-005 allocated as the next unused; both canonical skills -Check current this session.",
+    "SDK exposure implemented 2026-10-08 (Codely/master-control-20261008): the production runtime image was rebuilt from the closed MCP-F1-CORE-009 final tree (mc-plan-core:mcp-f1-core-009-7d22539, image ID 97619ef7120c, in-image 8 migrations + live/ready verified by the smoke) and the SDK gained getPublicUser (public surface - the SDK sends NO credential headers on this path and never requires a token provider for it) and updateCurrentUser (user token + closed {display_name} body 1..80 client-side validated, not auto-retried because an edit is not an idempotent replay). SUPPORTED_OPERATIONS grew 14 to 16 with SUPPORTED_PRODUCER_COMMIT re-pinned to mc-plan-core 7d2253999480117422aab48feb9f2602af8f444e. Gates actually run: typecheck, lint 0, 32/32 vitest, build, pack:check clean consumer, generate:check zero drift (committed after regeneration - the earlier check failure was simply the uncommitted generated diff), and the real-HTTP smoke passed ALL scenarios against the 009 image including the new public-profile cases (unauthenticated read returns the same stable PublicActor; unknown/malformed ids 404 NOT_FOUND; PATCH edit round-trips and GET /v1/me reflects the new name; the smoke user token scope gained profile:write which the producer requires).",
+    "Finish closure 2026-10-08 (Codely/master-control-20261008): Contracts main fast-forwarded 2b1ba6a..3b0c2bd and pushed to origin (origin/main = 3b0c2bd5a64978488b0fb733115e88996ecce17c, ls-remote verified); the short-lived feature branch deleted locally, never on any remote; MCP-F1-SKIN-008 (blocked, Skin-only) untouched; no workspace lock remains. The W02-a chain (alpha.6 contract lock -> Core producer -> SDK exposure) is now fully closed across MCP-F1-CORE-009 and MCP-F1-CONTRACTS-005."
   ]
 }
