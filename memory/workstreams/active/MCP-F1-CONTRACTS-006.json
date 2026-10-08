@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-006",
+  "title": "注销SDK暴露（alpha.7 deactivateCurrentUser + 真实 Keycloak/PKCE smoke）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/contracts006-deactivation-sdk-20261009",
+  "owner": "Codely/contracts006-deactivation-sdk-20261009",
+  "started_at": "2026-10-09T04:40:31.2488110+08:00",
+  "updated_at": "2026-10-09T04:40:31.2488110+08:00",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "在 MCP-F1-CORE-010 已关闭的注销生产者证据（Core 最终树 cf95e3efdab749c4f3f6aeb6b300051af58322bf 与镜像 mc-plan-core:mcp-f1-core-010-cf95e3e）之上，为官方 TypeScript SDK 暴露 alpha.7 已锁定的 deactivateCurrentUser：新增客户端方法（POST /v1/me/deactivation，user 凭证注入，无请求体，成功 204 返回 void 不解析响应体，非幂等不自动重试），支持操作清单 16→17，SUPPORTED_PRODUCER_COMMIT 从 CORE-009 的 7d22539 更新到经实测的 CORE-010 最终树 cf95e3e，公共契约文件零变化、生成物零漂移；并把 CORE-010 记录明确留给本切片的真实 Keycloak/PKCE 完整行为 smoke 落地——本仓自有的隔离 Keycloak 26.8.0 容器与仓内 realm 夹具（web PKCE 客户端含 profile:write、noscope 客户端、双预置用户）上以真实 PKCE 令牌验证注销前 ACTIVE 可用、公开资料可读、PAT 因目录无 profile:write 而 403，注销 204 后 GET/PATCH me 与重复注销一律 403 ACCOUNT_UNAVAILABLE、公开读 404、另一身份不受影响、Keycloak 用户保持 enabled 且可重新登录但 Core 拒绝。",
+  "in_scope": [
+    "SDK 方法暴露：sdk/typescript src/client.ts 新增 deactivateCurrentUser——POST /v1/me/deactivation、仅 user 凭证提供器、无请求体（不携带 Content-Type）、204 正确返回 void 而不解析 JSON、401/403 保持类型化 Problem、非幂等操作不自动重试（transport idempotent=false，超时/断连后绝不发第二次注销请求）；class 文档注释与 README 如实更新到 17 个支持操作",
+    "支持清单：SUPPORTED_OPERATIONS 16→17 加入 deactivateCurrentUser；SUPPORTED_PRODUCER_COMMIT 更新为 CORE-010 最终树 cf95e3efdab749c4f3f6aeb6b300051af58322bf；SUPPORTED_CONTRACT_VERSION 0.1.0-alpha.7、锁提交 56bff96fe5fcad31f85943b7a557ec54148ea503 与 12 个来源哈希零变化；openapi-typescript 生成物零漂移；package 版本保持 0.1.0-alpha.7",
+    "单元测试：方法/路径/认证提供器边界/空请求体形状/204 返回 void 且不解析空响应体/401、403 Problem 类型化映射/POST 遇 503 不重试只发一次/断连（socket 破坏）只发一次注销请求；既有 16 操作与 transport/idempotency/problem 测试回归保持",
+    "smoke:real：固定镜像改为 mc-plan-core:mcp-f1-core-010-cf95e3e + 隔离专属 PostgreSQL；既有 16 操作全部回归场景保持（本地 JWKS 测试发行方，诚实标注，不称真实 Keycloak）；新增真实 Keycloak 26.8.0 容器（会话唯一命名、start-dev --import-realm、KC_BOOTSTRAP_ADMIN）+ 本仓提交的 realm 夹具：web 公共 PKCE S256 客户端（默认 client scopes 含 subject/email/profile:read/profile:write/mc-plan-core-audience）、noscope 公共 PKCE 客户端（无 profile:write）、两名预置用户；第二个 Core 容器以真实 Keycloak issuer/JWKS 启动；以真实 PKCE 令牌执行完整注销链：供给 ACTIVE 身份与公开资料可读 → 注销前创建 PAT（仅目录 scope，测试来源明确）且 PAT 调注销 403 INSUFFICIENT_SCOPE → 注销 204 → GET/PATCH /v1/me 与重复注销 403 ACCOUNT_UNAVAILABLE → 公开读 404 → 另一身份不受影响 → Keycloak 用户仍 enabled、可重新登录成功但新令牌被 Core 403 → noscope 令牌 403 → 无凭证裸 401；Keycloak admin 经 master realm 只读核对 enabled 状态；本会话容器/网络/卷 finally 清理，不触碰他人栈",
+    "文档：SDK README、supported-operations 注释、Contracts docs/STATUS.md、docs/compatibility.md（alpha.7 段 SDK 行 + 矩阵行 + 新增 SDK 注销验收分栏，沿用 CONTRACTS-004 分栏模式）与 api-catalog 中本切片事实如实更新；不声称 Skin/Community 已有 SDK 消费者"
+  ],
+  "out_of_scope": [
+    "任何公共契约文件改动：openapi/core.yaml、schemas、events 在 alpha.7 已锁，本切片零变化（SDK-only 暴露）；validate_contracts.py 与 redocly 只作为零变化基线重跑",
+    "mc-plan-core、mc-plan-ops 任何文件改动（Core 注销实现/镜像与 Ops realm 仅作只读证据参考）；不修改 Core/Ops realm、公共契约、迁移或用户权利语义",
+    "把本地 JWKS 签发令牌称为真实 Keycloak；给 PAT 或服务客户端授予 profile:write；发明冷静期、再激活、数据删除或注销幂等化语义（重复注销 403 是锁定行为，SDK 不得改为成功）",
+    "W10 skin SDK、事件面之外的新 SDK 操作、npm 发布、稳定版本、公开镜像；指标面、Foundation 预发布治理、SKIN-008 任何触碰、其他队列项",
+    "生产部署、付费模型请求、全局 Docker prune、其他会话消息"
+  ],
+  "contract_impact": "none as public contract files: 0.1.0-alpha.7 stays locked at commit 56bff96fe5fcad31f85943b7a557ec54148ea503 with zero OpenAPI/Schema/event edits; this slice only exposes the already-locked deactivateCurrentUser operation in the official TypeScript SDK, backed by the closed MCP-F1-CORE-010 producer evidence (Core final tree cf95e3efdab749c4f3f6aeb6b300051af58322bf) and adds runtime evidence on the SDK side only",
+  "acceptance_evidence": [
+    "validate_contracts.py（pinned venv，20 Schema/事件、3 OpenAPI、32 operationId）与 redocly 三文档 lint 通过，契约文件零变化",
+    "SDK 全套门禁：format:check、lint --max-warnings 0、严格 typecheck、generate:check 零漂移、test（含新增注销面用例）、build、pack:check 干净临时工程严格 tsc 消费并调用新方法",
+    "smoke:real 固定 mc-plan-core:mcp-f1-core-010-cf95e3e + 隔离 PG 全绿：既有 16 操作回归 + 真实 Keycloak/PKCE 注销链全场景（204 void、403 ACCOUNT_UNAVAILABLE、404、PAT/noscope/无凭证边界、Keycloak 不停用、另一身份不受影响）",
+    "文档如实更新（README/STATUS/compatibility/api-catalog）；支持清单 17 与 producer 锚 cf95e3e 与真实证据一致",
+    "coordination Start/Continue/Finish 全部通过；final_commit 回填后 completed 归档、干净 main ff-only 整合与既有 origin 普通推送"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "5af5bd96fc4a94d3667bd1529715e579a7a544a6",
+      "branch": "feat/MCP-F1-CONTRACTS-006-deactivation-sdk",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-010"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-09 (Codely/contracts006-deactivation-sdk-20261009) per the owner dispatch prompt CONTRACTS-DEACTIVATION-NEXT-PROMPT.md (mc-plan-recovery-2026-10-09): only the deactivation SDK slice; re-preflight live before registering, do not redo CORE-010 closure, no side tasks, no background polling. In-lock live state at registration: Foundation main synced to origin 675f455, six repos clean (core cf95e3e=origin, contracts 5af5bd9=origin, ops 3021123=origin, community 69ac5e9=origin; skin on blocked SKIN-008 feat branch 7ec11b5 untouched), registry 1 active (SKIN-008, blocked, Skin-only lock) / 44 completed, no workspace lock, no duplicate deactivation-SDK record, next unused Contracts ID allocated as MCP-F1-CONTRACTS-006 after contiguous 001..005 verification. Direction F1 alignment: this is the recorded SDK stage of the locked alpha.7 release order (Contracts lock -> CORE-010 producer -> SDK), mirroring CONTRACTS-004/005; zero public contract edits. Producer evidence verified live: CORE-010 record final Core cf95e3efdab749c4f3f6aeb6b300051af58322bf=origin/main with runtime image mc-plan-core:mcp-f1-core-010-cf95e3e present locally (image ID aee4e166b93a matches record); the record explicitly leaves the full real-Keycloak/PKCE behavioral smoke to this slice. Core 0.1.0-alpha.7 lock commit 56bff96 with SDK regenerated at 5af5bd9 keeps SUPPORTED_OPERATIONS at 16 with producer anchor 7d22539 - this slice moves the anchor to cf95e3e and exposes deactivateCurrentUser (16->17) with zero contract drift."
+  ]
+}
