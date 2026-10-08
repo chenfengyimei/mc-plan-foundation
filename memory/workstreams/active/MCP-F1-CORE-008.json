@@ -6,9 +6,9 @@
   "status": "active",
   "milestone": "F1",
   "initial_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
-  "owner": "Codely/session-4-contracts-sdk",
-  "started_at": "2026-10-07T12:38:49.1205890+00:00",
-  "updated_at": "2026-10-07T12:54:08Z",
+  "owner": "Codely/master-control-20261008",
+  "started_at": "2026-10-07T20:38:49.120589+08:00",
+  "updated_at": "2026-10-08T13:12:29.9977920+00:00",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-ops"
@@ -71,10 +71,16 @@
   "direction_exception": null,
   "handoff_history": [
     {
-      "at": "2026-10-07T12:40:22.221212+00:00",
+      "at": "2026-10-07T20:40:22.221212+08:00",
       "from_owner": "Codely/0b621e1d-cb32-4a15-886b-ce7490d84caa",
       "to_owner": "Codely/session-4-contracts-sdk",
       "reason": "注册会话自 2026-10-07T12:38:49Z 启动记录后零进展（两业务分支零提交、零未提交文件、记录无检查点、updated_at 停留在注册时刻）；项目所有者连续两次'继续'派工（2026-10-07 20:33 / 20:47 本地），构成显式接管授权。接管保留 ID/initial_owner/基线/分支/范围；接管会话曾在同目标注册竞争中让位（其 start 记录 394898f 有效，本会话当时零写入）。"
+    },
+    {
+      "at": "2026-10-08T13:12:29.9976060+00:00",
+      "from_owner": "Codely/session-4-contracts-sdk",
+      "to_owner": "Codely/master-control-20261008",
+      "reason": "项目所有者 2026-10-08 显式接管授权（直接开发、由本会话一次性开发修好并制定计划）：原 Owner 最后动作为 Core 700b140（20:20）与 Ops 1cd144c（20:41），此后协调记录零推进（updated_at 停留 2026-10-07T12:54:08Z）、无最终树门禁重跑、无最终镜像与 Finish 证据。接管保留 tracking_id、initial_owner、基线、分支与范围；接管前静默已在锁内复核（六仓无新提交、无工作区锁持有者）。"
     }
   ],
   "validation_results": [
