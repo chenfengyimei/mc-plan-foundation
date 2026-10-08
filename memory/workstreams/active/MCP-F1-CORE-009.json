@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-009",
+  "title": "公开资料读取与资料名编辑纵向切片（W02 第一阶段，契约先行）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/master-control-20261008",
+  "owner": "Codely/master-control-20261008",
+  "started_at": "2026-10-08T15:04:54.8086460+00:00",
+  "updated_at": "2026-10-08T15:04:54.8086460+00:00",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按项目所有者 2026-10-07 采纳的 W02 第一阶段决策（D1/D2/D4/D6 建议值；D3 年龄声明与 D5 用户权利端点子项中未决部分显式延后、不写入）以契约先行实现公开资料表面：Contracts 0.1.0-alpha.6 将 GET /v1/users/{userId}（getPublicUser）生产者化标记 prerelease（保持已锁 PublicActor 三字段零新增、无认证公开面、仅 ACTIVE 业务账号可公开寻址——未知/畸形/非 ACTIVE 一律 404 且不泄露账号存在性与状态），并新增 PATCH /v1/me（updateCurrentUser，prerelease）：唯一可编辑字段 display_name（1..80，字段封闭），需要新 profile:write scope（userOAuth 与 personalAccessToken 双凭证面声明，但 PAT 授予目录不含该 scope，机器校验锁定 PAT 永不可获得）；响应保持 PublicActor；400/401/403 沿用既有锁定语义。Core 生产者实现两个端点并以单事务审计记录用户发起的资料编辑；SDK/消费者与 D3/D5 延后项不在本切片。",
+  "in_scope": [
+    "Contracts 先行锁定 0.1.0-alpha.6：core.yaml 版本与描述更新、getPublicUser prerelease 标记与 ACTIVE-only 404 语义、PATCH /v1/me 操作（updateCurrentUser）、userOAuth 声明 profile:write、PAT 授予目录不新增该 scope；validate_contracts.py 新增 alpha.6 机器门槛（getPublicUser prerelease/无认证/PublicActor-only、PATCH 操作 ID/stability/双凭证 profile:write/display_name 1..80 字段封闭/锁定 400/401/403、profile:write 不入 PAT 目录、兼容分类短语）；docs/compatibility.md alpha.6 分类与矩阵行；SDK 类型基线随 alpha.6 重生成（generate:check 零漂移，SUPPORTED_CONTRACT_VERSION/LOCK_COMMIT/文件哈希更新，支持操作清单保持 14 个 producer 已验证操作——getPublicUser/updateCurrentUser 无 producer 证据前不暴露）；既有全部表面字节兼容",
+    "Core 生产者 GET /v1/users/{userId}：无认证公开面；userId 非 UUID 或未知或非 ACTIVE 业务账号一律 404 NOT_FOUND（不泄露存在性与状态）；仅返回 PublicActor 三字段；无副作用（无审计/outbox）",
+    "Core 生产者 PATCH /v1/me：profile:write scope 校验（PAT 目录不含 → PAT 调用自然 403 INSUFFICIENT_SCOPE）；请求体仅 display_name（1..80，未知字段 400 VALIDATION_FAILED）；同事务更新资料行并写审计记录（操作主体、旧值/新值最小元数据）；响应 PublicActor；/v1/me 后续读取反映新值",
+    "回归保持：GET /v1/me 既有语义不变；身份/PAT/权益/积分/开发者应用/事件投递全部回归通过；契约锁定文件零漂移，Core 契约清单（contracts/core-api.lock.json）更新至 alpha.6 并验证；profile:write 不进入任何服务面或 PAT 目录（机器门槛）",
+    "测试：单元（服务与校验）、HTTP E2E（401 无凭证、403 缺 scope/PAT、404 未知/非 UUID/非 ACTIVE、400 校验与字段封闭、200 精确字段集、PATCH 后 /v1/me 反映新值）、隔离 PostgreSQL 集成（真实 DB：公开读取 ACTIVE/SUSPENDED/未知、PATCH+审计同事务、并发编辑 last-write-wins）、契约测试扩展（PublicActor 与 PATCH 请求体按锁定 Schema 校验）",
+    "文档：更新 Core STATUS（当前契约 alpha.6、验收段、下一步）、开发计划（步骤 10）、运行/验收边界与 docs/acceptance.md；更新 Contracts 状态面（api-catalog getPublicUser 生产者化、STATUS、compatibility 矩阵）；不修改 Community/Skin/Ops 业务文件"
+  ],
+  "out_of_scope": [
+    "D3 年龄 14+ 声明（呈现位置、Core 存储模型、未声明用户状态语义待所有者子决策）与 D5 权利端点的未决子项（注销与 Keycloak 停用联动、导出范围、核验强度待所有者子决策）——显式延后，不在本版本写入任何表面（已决部分 D5=仅注销在后续权利骨架切片落实）",
+    "D4 扩展（账户状态公开字段——维持隐式 403 语义不变）；D6 批量公开资料查询（不冻结）；bio/头像编辑等 PublicActor 之外字段（D1 保持三字段零新增）",
+    "SDK/消费者工作流（updateCurrentUser/getPublicUser 待生产者证据后另开）；审核/频控策略；昵称唯一性或预留词策略",
+    "任何事件/outbox 变化；开发者应用/权益/积分/邮件链路改动；生产部署或 Q-004/Q-006/Q-014/Q-015/Q-016 决策",
+    "修改 Community、Skin、Ops 业务文件或 Skin 工作流；MCP-F1-SKIN-008 一切不变",
+    "硬编码未决产品数值；创建远程仓库或镜像公开发布"
+  ],
+  "contract_impact": "prerelease compatible addition: Contracts 0.1.0-alpha.6 promotes the draft GET /v1/users/{userId} to a prerelease public surface with unchanged PublicActor semantics and adds PATCH /v1/me (updateCurrentUser) with the new user-surface profile:write scope; the personal access token grant catalog is NOT extended and machine checks enforce that; all 0.1.0-alpha.5 locked surfaces stay byte-compatible",
+  "acceptance_evidence": [
+    "Contracts Python 校验通过（含 alpha.6 新机器门槛）与 Redocly lint 三文档通过；SDK generate:check 零漂移与全部门禁通过",
+    "Core format、lint、严格 typecheck、单元、HTTP E2E、architecture、migration、契约（alpha.6 清单）与 build 全部通过；隔离 PostgreSQL 集成通过",
+    "GET /v1/users/{userId}：ACTIVE 返回精确 PublicActor 三字段；未知/非 UUID/非 ACTIVE 均 404 且无存在性泄露；无凭证可访问",
+    "PATCH /v1/me：OIDC+profile:write 成功并同事务审计（元数据含旧/新值）；PAT（无 profile:write）403；缺字段/超界/未知字段 400 VALIDATION_FAILED；响应与后续 GET /v1/me 均为新 PublicActor",
+    "E2E/集成边界全绿：401 无凭证、403 缺 scope、404 语义、并发编辑收敛、回归套件零回退",
+    "文档如实更新（Core STATUS/开发计划步骤 10/运行边界/acceptance；Contracts 兼容说明与矩阵/目录/状态）；SDK/消费者明确延后并记录"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "87ddd66f24a9044ebcebd2d4043511fd5796029d",
+      "branch": "feat/MCP-F1-CORE-009-public-profile-slice",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "4ebd060edabf368161e7ad4cb83f447a6490a0a7",
+      "branch": "feat/MCP-F1-CORE-009-alpha6-contract",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-007",
+    "MCP-F1-CORE-008"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-08 (Codely/master-control-20261008) from live state per the owner instruction to complete all remaining workflows: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 41 completed after the CORE-008 / CONTRACTS-004 / OPS-003 closures; Core main 87ddd66 and Contracts main 4ebd060 both clean and pushed; the Session-0 execution-ready prototype at /private/tmp/mcp-contracts-003-proto/ (alpha.6 contract pre-validated green in the pinned venv, Core producer files, record draft, port checklist) is adopted with the owner-decided W02 values D1/D2/D4/D6 and the explicitly deferred D3/D5 sub-decisions; Core-primary with Contracts as the single lock-first supporting repository mirrors the MCP-F1-CORE-005 pattern; both canonical skills -Check current."
+  ]
+}
