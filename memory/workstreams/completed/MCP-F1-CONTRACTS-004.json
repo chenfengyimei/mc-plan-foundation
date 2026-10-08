@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CONTRACTS-004",
   "title": "Core SDK 事件操作暴露：listDeliveredEvents 与 acknowledgeEvents（producer 证据已备）",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/master-control-20261008",
   "owner": "Codely/master-control-20261008",
   "started_at": "2026-10-08T21:52:41.780602+08:00",
-  "updated_at": "2026-10-08T14:14:51.1604320+00:00",
+  "updated_at": "2026-10-08T14:15:38.6696110+00:00",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -46,7 +46,7 @@
       "base_commit": "30064022daa61795b9a1945af2d23a0ce88d04dd",
       "branch": "feat/MCP-F1-CONTRACTS-004-events-sdk",
       "last_checkpoint_commit": "4ebd060edabf368161e7ad4cb83f447a6490a0a7",
-      "final_commit": null
+      "final_commit": "4ebd060edabf368161e7ad4cb83f447a6490a0a7"
     }
   },
   "depends_on": [
@@ -64,6 +64,7 @@
     "Registered 2026-10-08 (Codely/master-control-20261008) from live state: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 39 completed after the MCP-F1-CORE-008 closure; Contracts main 30064022daa61795b9a1945af2d23a0ce88d04dd clean and synced with origin; Core main 87ddd66 (producer evidence for the two event operations, image mc-plan-core:mcp-f1-core-008-87ddd66 locally verified) and Ops main f48a98f both pushed by the same session closure; no Contracts/Cores locks held by others; ID MCP-F1-CONTRACTS-004 allocated as the next unused Contracts ID after 001/002/003; both canonical skills -Check current at registration time.",
     "SDK events exposure 2026-10-08 (Codely/master-control-20261008): commit df9eca1 exposes listDeliveredEvents (GET /v1/events, limit 1..200 client-side validated, EventPage/EventEnvelope typed, idempotent retry per existing transport rules) and acknowledgeEvents (POST /v1/events/acknowledgments, cursor 1..512 client-side validated, 200 idempotent, SDK never fabricates cursors), both service-token only; SUPPORTED_OPERATIONS grew 12 to 14 and SUPPORTED_PRODUCER_COMMIT pinned to mc-plan-core 87ddd66 (MCP-F1-CORE-008 closed; its final tree re-ran the full gate suite covering all fourteen operations); index re-exports the new types. Bounded tooling defects fixed so the gates actually run on this Mac: pack-check.mjs now runs npm_execpath pointing at .mjs/.cjs through the current node binary and derives the tarball name from the package version (the stale alpha.4 hardcode made pack:check fail on the unmodified tree), and smoke-real.mjs gained the CORE-007-era KEYCLOAK_ADMIN_* fail-closed shape keys plus the CORE-008 OUTBOX runtime inputs. Gates actually run on the final tree: prettier format:check, eslint --max-warnings 0, strict typecheck, generate:check zero drift, vitest 32/32 (25 + 7 new events-surface tests: service auth, path/query shapes, limit client-side rejection, acknowledgment body shape, events problem mapping 403/400, service-provider boundary), build, pack:check clean-consumer green (strict tsc consumption of both new methods plus the twelve legacy operations). Logs: /Users/chenfeng/.codex/outputs/mc-c004-sdk-20261008/logs/20-29.",
     "Real-HTTP smoke 2026-10-08 (Codely/master-control-20261008): full suite passed against the fixed producer image mc-plan-core:mcp-f1-core-008-87ddd66 on an isolated postgres:17-alpine with a local JWKS issuer - all twelve legacy scenarios plus the events closure: real identity provisioning and entitlement consumption flat internal events reached terminal PUBLISHED and never surfaced on the pull API (empty items + null cursor); two [SYNTHETIC-DB-SEED] locked-valid credit.changed.v1 envelopes (psql direct insert, explicit gen_random_uuid id, honestly labeled) pulled in publish order; a durable file-backed event_id registry proved at-least-once with exactly-once side effects (first pass applies 2, crash before ack, rebuilt consumer re-pulls the real redelivery, durable dedup applies 0, acknowledgment converges; caught-up page empty with null cursor); re-acknowledgment idempotent returning the current position; A/B service-subject isolation (B still saw both events after A acked, B acked independently and caught up); consumer A real cursor presented by B -> 400 VALIDATION_FAILED; malformed cursor -> 400 VALIDATION_FAILED; credits:consume-only service token and user OIDC token -> 403 INSUFFICIENT_SCOPE; wrong-issuer service token -> 401 AUTHENTICATION_REQUIRED. Log: 27-smoke-real.log in the same directory.",
-    "Contract baseline unchanged 2026-10-08: validate_contracts.py passed in the pinned python 3.12 venv (20 JSON schemas/events, 20 unique $ids, 3 OpenAPI documents, 30 unique operationIds) and redocly lint passed on all three OpenAPI documents (exit 0; the single warning is the documented skin.yaml userOAuth Official-mode component); SUPPORTED_CONTRACT_FILES hashes unchanged, SUPPORTED_CONTRACT_LOCK_COMMIT stays 5ba7172; zero contract file edits in this slice. Logs 28/29 in the same directory."
+    "Contract baseline unchanged 2026-10-08: validate_contracts.py passed in the pinned python 3.12 venv (20 JSON schemas/events, 20 unique $ids, 3 OpenAPI documents, 30 unique operationIds) and redocly lint passed on all three OpenAPI documents (exit 0; the single warning is the documented skin.yaml userOAuth Official-mode component); SUPPORTED_CONTRACT_FILES hashes unchanged, SUPPORTED_CONTRACT_LOCK_COMMIT stays 5ba7172; zero contract file edits in this slice. Logs 28/29 in the same directory.",
+    "Finish closure 2026-10-08 (Codely/master-control-20261008): Contracts main fast-forwarded 3006402..4ebd060 and pushed to origin (origin/main = 4ebd060edabf368161e7ad4cb83f447a6490a0a7, ls-remote verified); the short-lived feature branch feat/MCP-F1-CONTRACTS-004-events-sdk was deleted locally and never existed on any remote; no force push; MCP-F1-SKIN-008 (blocked, Skin-only) untouched throughout; no workspace lock remains. Next executable slices: Ops-only fixed-image recovery drill (predicted OPS-003, parallel-safe) and W02-a alpha.6 contract-first (Contracts channel, now free)."
   ]
 }
