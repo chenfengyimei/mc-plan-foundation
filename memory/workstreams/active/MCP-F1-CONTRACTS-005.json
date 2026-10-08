@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-005",
+  "title": "Core SDK 公开资料操作暴露：getPublicUser 与 updateCurrentUser（producer 证据已备）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/master-control-20261008",
+  "owner": "Codely/master-control-20261008",
+  "started_at": "2026-10-08T15:25:58.7316670+00:00",
+  "updated_at": "2026-10-08T15:25:58.7316670+00:00",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "MCP-F1-CORE-009 关闭（producer 最终 7d22539，α.6 锁 6b80c4c）后，把公开资料两操作暴露进 @mc-plan/core-sdk：getPublicUser（无认证公开面——SDK 调用不携带任何凭据头）与 updateCurrentUser（OIDC 用户令牌 + 请求体字段封闭 display_name 1..80）；SUPPORTED_OPERATIONS 14→16，SUPPORTED_PRODUCER_COMMIT 锚定自重建的 Core 最终提交 7d22539；以自 7d22539 重建的固定镜像做真实 HTTP smoke 证明公开读取 200/404 语义、编辑往返与 PAT 边界；getPublicUser 的无认证语义要求 SDK 传输层新增公开调用形态而不携带 Bearer 头；private 本地 pack 不发布 npm。",
+  "in_scope": [
+    "sdk/typescript/src/supported-operations.ts：SUPPORTED_OPERATIONS 14→16（新增 getPublicUser、updateCurrentUser）、SUPPORTED_PRODUCER_COMMIT 更新至 mc-plan-core 7d2253999480117422aab48feb9f2602af8f444e（MCP-F1-CORE-009 已关闭并推送 main）、注释更新三批 producer 证据",
+    "sdk/typescript/src/client.ts：getPublicUser(userId) 以无凭据头形态调用 GET /v1/users/{userId}（路径段编码、返回 PublicActor 类型化）；updateCurrentUser(body) 以用户令牌 PATCH /v1/me（body 字段封闭、客户端先验 display_name 1..80）；沿用既有 transport 规则",
+    "sdk/typescript/tests：扩展 client-surface 测试（公开方法不带 Authorization 头、路径编码、编辑 body 形状、问题映射）；contract-manifest 16 操作与 producer 锚定",
+    "Core 最终镜像按切片规则重建：docker build --target runtime -t mc-plan-core:mcp-f1-core-009-7d22539（自 7d22539 提交树）+ 冒烟（8 迁移/uid 1000/live/ready）；smoke:real 固定镜像更新并新增公开资料场景",
+    "docs/compatibility.md 矩阵 α.6 行回填最终状态；docs/STATUS.md、docs/development-plan.md 同步；契约文件与 validate_contracts.py 机器锁零变化",
+    "SDK 包保持 private、版本 0.1.0-alpha.6、本地 pack 消费（pack:check 在干净工程严格 tsc 消费两新方法并回归既有 14 操作）；不发布 npm 或 stable"
+  ],
+  "out_of_scope": [
+    "任何契约/Schema/scope/错误码变更（alpha.6 锁 6b80c4c 文件零漂移）；不新增 scope 或幂等语义扩展",
+    "修改 mc-plan-core/mc-plan-ops/mc-plan-skin/mc-plan-community 任何文件（全只读）；Core producer 任何变更",
+    "修改 MCP-F1-SKIN-008 的一切；发布 npm/稳定版本；生产部署；全局 Docker 清理",
+    "以 mock transport 替代真实 producer smoke；Skin/Community 产品消费者集成"
+  ],
+  "contract_impact": "none; the locked 0.1.0-alpha.6 contract files stay byte-identical; the SDK only gains callable wrappers for the two alpha.6 operations now carrying producer evidence (getPublicUser, updateCurrentUser), growing SUPPORTED_OPERATIONS from 14 to 16 with SUPPORTED_PRODUCER_COMMIT re-pinned to mc-plan-core 7d22539",
+  "acceptance_evidence": [
+    "validate_contracts.py（pined venv）与 redocly 三文档通过（契约零变化基线仍绿）",
+    "SDK 全部门禁：format:check、lint 0、typecheck、generate:check 零漂移、vitest 全绿（含公开资料新用例）、build、pack:check 干净工程严格 tsc 消费",
+    "smoke:real 以自 7d22539 重建的固定镜像 mc-plan-core:mcp-f1-core-009-7d22539 真实 HTTP 通过全部场景（既有 32 场景回归 + 公开资料：无凭据公开读取 200 与 404、编辑往返反映新值），日志绝对路径留证",
+    "Start/Continue/Finish 通过；Contracts main ff-only 整合并普通推送；分支本地删除；锁释放"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "2b1ba6a48c203b29ab29c5339e6fd32b68d7dcfd",
+      "branch": "feat/MCP-F1-CONTRACTS-005-public-profile-sdk",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-009",
+    "MCP-F1-CONTRACTS-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "contract-first-prerequisite",
+    "authorized_by": "MC Plan project owner instruction 2026-10-08 (全部操作同意授权、完成所有未完工作流) covering the published W02-a queue item SDK exposure after CORE-009 producer evidence, per the established producer-verified-SDK rule",
+    "reason": "The SDK surface is owned by mc-plan-contracts and may only expose operations with producer evidence; the closed MCP-F1-CORE-009 supplies that evidence, making this the next contract-owned slice. Contracts is the required first and only writer; Core joins nothing (its rebuilt image is a consumed artifact, no repo writes); the F1/mc-plan-core direction is unchanged."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-08 (Codely/master-control-20261008) from live state: registry 1 active (MCP-F1-SKIN-008, blocked, Skin-only) / 42 completed after the MCP-F1-CORE-009 closure (Core main 7d22539, Contracts main 2b1ba6a both pushed); Contracts clean on main at 2b1ba6a; producer evidence for getPublicUser/updateCurrentUser delivered by CORE-009 (producer commit 7d22539) pending the image rebuild which is part of this slice; ID CONTRACTS-005 allocated as the next unused; both canonical skills -Check current this session."
+  ]
+}
