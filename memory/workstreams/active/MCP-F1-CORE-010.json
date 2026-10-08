@@ -1,0 +1,70 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-010",
+  "title": "W02-b 注销权利端点纵向切片（α.7 契约先行，仅本地停用）",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/master-control-20261008",
+  "owner": "Codely/master-control-20261008",
+  "started_at": "2026-10-08T16:31:29.3510000+00:00",
+  "updated_at": "2026-10-08T16:31:29.3510000+00:00",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "按项目所有者 2026-10-08 拍板的 W02-b 决策（注销联动=仅本地停用：Keycloak 不动、Keycloak 登录仍可但 Core API 面一律拒绝）以契约先行实现注销权利端点：Contracts 0.1.0-alpha.7 新增 POST /v1/me/deactivation（deactivateCurrentUser，prerelease）：userOAuth 凭证面、需 profile:write（PAT 授予目录不含该 scope，机器校验锁定注销仅限交互式 OIDC 用户令牌）；成功 204 无响应体；注销后主体解析按既有锁定语义返回 403 ACCOUNT_UNAVAILABLE（重复调用同样 403），公开面 GET /v1/users/{userId} 经既有 ACTIVE-only 语义自动 404。Core 生产者以单事务将业务账号状态置为既有 PG 枚举值 CLOSED 并追加 ACCOUNT_DEACTIVATED 审计（含 previous_status/status 最小元数据）；零迁移、零新问题码、零新 scope。SDK/消费者暴露不在本切片。",
+  "in_scope": [
+    "Contracts 先行锁定 0.1.0-alpha.7：core.yaml 版本与描述更新、POST /v1/me/deactivation 操作（deactivateCurrentUser，prerelease，userOAuth+profile:write，204 无请求体无响应体，401/403 沿用既有锁定语义并在描述中锁定注销后重复调用 403 ACCOUNT_UNAVAILABLE 语义）；validate_contracts.py 新增 alpha.7 机器门槛（操作 ID/stability/security 含 profile:write/仅 userOAuth 面/204 形状/PAT 目录不新增）；docs/compatibility.md alpha.7 分类与矩阵行、api-catalog 注销操作行；SDK 类型基线随 alpha.7 重生成（generate:check 零漂移，支持操作清单保持 16 个 producer 已验证操作——deactivateCurrentUser 无 producer 证据前不暴露）；既有全部表面字节兼容",
+    "Core 生产者 POST /v1/me/deactivation：主体解析在前（account_unavailable 一律 403 ACCOUNT_UNAVAILABLE）；profile:write 直查 principal scopes（PAT 目录不含 → PAT 自然 403 INSUFFICIENT_SCOPE）；ProfileStore.deactivateAccount 单事务置业务账号状态 CLOSED 并写 ACCOUNT_DEACTIVATED 审计（previous_status/status 最小元数据）；成功 204 无体；注销后同一令牌的全部认证面（/v1/me、PATCH /v1/me、权益/积分/开发者应用/事件等经主体解析的面）按既有锁定语义 403 ACCOUNT_UNAVAILABLE，PAT 认证面同样拒绝；公开面 GET /v1/users/{userId} 经 ACTIVE-only 既有语义 404",
+    "回归保持：既有全部端点与语义不变；身份/PAT/权益/积分/开发者应用/事件投递/公开资料全部回归通过；契约锁定文件零漂移，Core 契约清单（contracts/core-api.lock.json）更新至 alpha.7 并验证；零迁移（复用既有 BusinessAccountStatus 枚举值 CLOSED）；profile:write 不进入任何服务面或 PAT 目录（机器门槛）",
+    "测试：单元（store 事务与审计元数据）、HTTP E2E（401 无凭证、403 缺 scope/PAT、204 成功、注销后 /v1/me 与 PATCH 403 ACCOUNT_UNAVAILABLE、公开面 404、重复注销 403、204 无响应体）、隔离 PostgreSQL 集成（真实 DB：CLOSED 落库、审计行含 previous_status/status、store 级幂等收敛、注销后 identity 主体解析 account_unavailable）、契约测试扩展（deactivation 操作按锁定 Schema 校验）",
+    "文档：更新 Core STATUS（当前契约 alpha.7、验收段、下一步）、开发计划（W02-b 权利骨架行）、运行边界与 docs/acceptance.md；更新 Contracts 状态面（api-catalog/compatibility/STATUS）；不修改 Community/Skin/Ops 业务文件"
+  ],
+  "out_of_scope": [
+    "D3 年龄 14+ 声明的实现（所有者 2026-10-07 20:53 权威决策集已定为内部落库无公共表面；当前无已定义的声明写入路径，本切片仅引用该决策并显式不实现）",
+    "注销后的积分/权益/账本处置（余额与 daily entitlement 保持现状）、PAT 行批量删除联动（维持 account_unavailable 拒绝语义）、Keycloak 联动（用户禁用/会话吊销——所有者 2026-10-08 明确仅本地停用）；导出/删除/申诉等其余权利项（D5 本轮冻结=仅注销）",
+    "SDK/消费者工作流（deactivateCurrentUser 待生产者证据后另开 Contracts 切片）；审核/频控/注销冷静期策略",
+    "任何事件/outbox/migration 变化；邮件/开发者应用/积分链路改动；生产部署或 Q-004/Q-006/Q-014/Q-015/Q-016 决策",
+    "修改 Community、Skin、Ops 业务文件或 Skin 工作流；MCP-F1-SKIN-008 一切不变",
+    "硬编码未决产品数值；创建远程仓库或镜像公开发布"
+  ],
+  "contract_impact": "prerelease compatible addition: Contracts 0.1.0-alpha.7 adds POST /v1/me/deactivation (deactivateCurrentUser) as a prerelease userOAuth surface requiring profile:write; success is 204 with no body and every post-deactivation call resolves through the locked account-unavailable 403 semantics while the public profile read stays ACTIVE-only 404; the PAT grant catalog is NOT extended and no new problem code or scope is introduced; all 0.1.0-alpha.6 locked surfaces stay byte-compatible",
+  "acceptance_evidence": [
+    "Contracts Python 校验通过（含 alpha.7 新机器门槛）与 Redocly lint 三文档通过；SDK generate:check 零漂移与门禁通过（支持操作保持 16）",
+    "Core format、lint、严格 typecheck、单元、HTTP E2E、architecture、migration（8 前向、零新增）、契约（alpha.7 清单）与 build 全部通过；隔离 PostgreSQL 集成通过",
+    "POST /v1/me/deactivation：OIDC+profile:write 返回 204 且同事务审计（状态置 CLOSED、审计含 previous_status）；注销后 /v1/me、PATCH /v1/me、公开读取与 PAT 面均按锁定语义拒绝；重复调用 403 ACCOUNT_UNAVAILABLE",
+    "E2E/集成边界全绿：401 无凭证、403 缺 scope/PAT、注销后全 API 面 403、公开面 404、审计行落库、回归套件零回退",
+    "文档如实更新（Core STATUS/开发计划/acceptance/runtime；Contracts 目录/兼容/状态）；SDK 暴露明确延后至下一 Contracts 切片并记录"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "7d2253999480117422aab48feb9f2602af8f444e",
+      "branch": "feat/MCP-F1-CORE-010-w02b-deactivation",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "3b0c2bd5a64978488b0fb733115e88996ecce17c",
+      "branch": "feat/MCP-F1-CORE-010-alpha7-contract",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-008",
+    "MCP-F1-CORE-009"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-09 (Codely/master-control-20261008) per the owner-approved boundary-remediation plan (approved Plan-Mode plan in this session): owner ask_user decisions 2026-10-08 set Q-015 = local bounded metrics, prerelease baseline = local record, W02-b deactivation linkage = local-only (Keycloak untouched, login still possible while every Core API face rejects), and SKIN-008 = owner injects the paid key then acceptance runs; D3 remains decided per the 2026-10-07 20:53 authoritative decision set (internal storage, no public surface) and is cited as out of scope because no declaration write path is defined. Live preflight: no workspace lock, six repos clean and synced with origin (core 7d22539, contracts 3b0c2bd, ops 3021123, foundation e4c940a), registry 1 active (SKIN-008 blocked) / 43 completed, IDs CORE-010/CORE-011/CONTRACTS-006/FOUNDATION-014 verified free. Deactivation maps to the existing PG enum value CLOSED so the slice needs zero migration; both principal resolution paths (OIDC provisioning and the PAT authenticator) already emit the locked account_unavailable 403 for non-ACTIVE accounts and the public read is ACTIVE-only 404, so no new problem code or scope is required. Core-primary with Contracts supporting mirrors the CORE-009 contract-first pattern."
+  ]
+}
