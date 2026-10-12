@@ -1,16 +1,17 @@
 {
   "$schema": "../../schemas/direction.v1.schema.json",
   "schema_version": 1,
-  "milestone": "F1",
-  "primary_repository": "mc-plan-core",
+  "milestone": "F2",
+  "primary_repository": "mc-plan-community",
   "status": "active",
-  "objective": "建立 Keycloak 与 Core 的最小身份、资料、权限和审计闭环，为后续 Community 与 Skin 集成提供稳定基础。",
-  "entry_gate": "MCP-F1-FOUNDATION-003 已依据项目所有者明确授权完成十项架构评审、验证并记录通过；后续工作流仍须遵守契约先行和仓库锁。",
+  "objective": "建立 Community 的本地资源上传、真实文件验证、不可变版本/许可、受控查询下载、下架与清理闭环，保留审核和正式发布门槛。",
+  "entry_gate": "所有者 2026-10-12 明确要求优先 Core 与社区；CORE-012 全量与镜像复验通过，已有 OPS-001/002/003 身份/邮件/恢复记录在 main 可达；ADR-0013 本地基线与 ADR-0014 资源工程入口已批准。",
   "exit_criteria": [
-    "Keycloak 邮箱身份流程与 Core issuer + subject 映射通过集成验收",
-    "Identity/Profile、Developer App/Scope/PAT、Entitlement/Credits、Audit/Outbox 按 Core 开发计划形成可验证闭环",
-    "公共接口先在 Contracts 定义、验证并记录兼容性",
-    "Ops 提供与真实 Core 镜像、端口、健康检查和迁移命令一致的开发与预发布基础"
+    "Community 预发布契约、生产者和真实 PostgreSQL/S3 兼容对象存储验证通过",
+    "用户 OAuth scope 与 Core 活动身份、归属、大小/哈希/真实媒体类型、版本和许可不可变性有集成证据",
+    "Q-009 审核方案经所有者决定，独立审核及故障保持待审通过真实发布闭环验收",
+    "立即下架、七天对象清理、三十天备份淘汰和恢复不复活有运行证据",
+    "自部署 OAuth 发布、受控下载、契约/迁移/恢复和运行镜像通过；F4 依次推进但不提前宣称完整首发"
   ],
   "allowed_supporting_repositories": [
     "mc-plan-contracts",
@@ -31,5 +32,5 @@
       "adr": "decisions/0009-skin-standalone-restricted-preparation.md"
     }
   ],
-  "updated_at": "2026-10-01T11:52:00Z"
+  "updated_at": "2026-10-12T11:44:17.596Z"
 }

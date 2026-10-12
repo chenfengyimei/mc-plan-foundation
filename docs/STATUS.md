@@ -1,11 +1,11 @@
 # 状态
 
-核对日期：2026-10-09。阶段：F0/GOV 已完成；F1 Core 以 ADR-0013 本地记录基线收敛证据。Foundation 维护治理文档和协作工具，不承载业务代码。
+核对日期：2026-10-12。F0/GOV 与 F1 本地技术基线已完成；全局进入 F2 Community 本地资源工程（ADR-0014，所有者优先 Core 与社区的明确指令）。
 
-已完成：六仓边界、宪法、工程标准、F1 架构评审、注册表、仓库锁、开发与统筹 Skill；同 Mac 短事务与隔离扫描工具；ADR-0011 消费者拉取、ADR-0012 Skin Standalone 匿名窗口、ADR-0013 本地预发布基线。
+Core 收尾 CORE-012 已关闭并合入本地 main 9303cc6：发布提交顺序由真实 AFTER UPDATE 阻塞测试复现并修复；118 单元、86 HTTP、25 契约、73 PostgreSQL/Keycloak 集成、架构/迁移/锁/build 及 canonical runtime 镜像/数据库故障 smoke 通过。该结果更正旧“自动提交即顺序安全”的推论。OPS-001/002/003 本地身份、邮件与恢复记录仍在 main 可达；不重复声称生产采购、公开计费或跨服务产品里程碑已完成。
 
-注册表核对（2026-10-09）：Core-001 至 Core-011、Contracts-001 至 Contracts-006、Ops-001 至 Ops-003、Foundation-001 至 013 全部有完成记录（Foundation-014 本切片进行中）；唯一活动业务工作流为 SKIN-008（blocked，等 Q-001 付费 key 注入后的视觉验收）。Core 事件投递乱序发布缺陷已在 CORE-008 关闭前修复并验收；注销权利端点已由 Contracts α.7 + CORE-010 + CONTRACTS-006（SDK 17 操作、真实 Keycloak/PKCE smoke）闭环；本地有界指标面（Q-015 已决，OTEL_METRICS_PORT Prometheus 拉取）已由 CORE-011 交付；双专属 project 备份-破坏-恢复演练已由 OPS-003 交付（实测 RPO/RTO 只作本地证据）。Skin alpha.1 匿名窗口生产者已实现但工作流保持 blocked；Community 尚无业务源码。
+Community 从禁止业务代码的 F0 转入已批准的 F2 工程，先契约后实现，上传威胁模型已建立。Q-009 审核提供商/降级方案仍待所有者选择，运行默认保持待审；Q-002 正式许可、Q-008 推荐权重、Q-010 管理权限与 V1 采购/法律门槛不代填。F4 全部完整范围保留。
 
-[项目组合状态](../memory/current/portfolio.md) 保存核对后的里程碑摘要；[完整交付路线](delivery-plan.md) 给出从当前状态到 F6/V1 的依赖、职责、验收和停止条件。活动工作流仍是所有权和锁的唯一真相，路线中的未来任务不预占 Tracking ID。
+SKIN-008 仍为另一 Owner 的 blocked 工作流，付费 flash 基准未通过视觉验收，未合 main；其未提交 provider-sdk 修改已识别并保留。本任务不接管或修改。
 
-预发布基线（ADR-0013）：F1 预发布以本地记录形态成立——单机 Docker 真实验收留证，不采购生产域名/邮件/托管数据层/监控产品；Q-004/Q-006/Q-014/Q-016 按待决事项原门槛顺延至 V1 真实部署前；Q-015 已决为本地有界指标；实测值不升格为正式目标；本地验收真实性标准不变。本治理切片只修正过时叙述并落 ADR-0013，不改变 F1/Core 全局方向，不修改其他 Owner 的记录或业务代码。开发、测试、协调关闭、本地集成、远端发布、产品完成分别记录。
+本次 Foundation 治理与代码交付仅本地；远端刷新连接失败，推送未授权/未执行。实时锁与 Owner 见工作流记录，组合摘要见 [portfolio](../memory/current/portfolio.md)，全局门槛见 [direction](../memory/current/direction.json)，完整产品完成判据见 [交付路线](delivery-plan.md)。
