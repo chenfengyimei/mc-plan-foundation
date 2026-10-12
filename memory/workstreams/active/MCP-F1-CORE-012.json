@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CORE-012",
+  "title": "Core closeout: commit-ordered event publication and runtime setup",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-12T11:23:39.689Z",
+  "updated_at": "2026-10-12T11:23:39.689Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "Prove and fix publication commit ordering to prevent watermark loss, complete startup configuration and run all real Core acceptance gates.",
+  "in_scope": [
+    "Database serialization from delivery-position assignment through commit and controlled PostgreSQL concurrency regression",
+    "Complete development environment example and runtime documentation",
+    "Full unit/e2e/contract/integration/architecture/migration/runtime-image acceptance"
+  ],
+  "out_of_scope": [
+    "Public interface, scope, migration or product-policy changes",
+    "Other business repository writes, production purchase, remote push or deployment",
+    "Skin takeover"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "Controlled delayed-commit regression proves no delivery below an acknowledged watermark",
+    "All declared Core gates pass and the environment example parses",
+    "Runtime image build, completed record and local main ff-only integration"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "48f2f03312ab150aaa79a89f96a75951eda0db2f",
+      "branch": "fix/MCP-F1-CORE-012-closeout",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-011"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Owner request 2026-10-12: complete project development and closeout with Core and Community first; local commits only, no remote push.",
+    "Remote refresh attempted with HTTP/2 and HTTP/1.1: network connection failed; working from clean local main and last-known origin/main, remote freshness unverified. No push or deployment."
+  ]
+}
