@@ -8,7 +8,7 @@
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-12T11:23:39.689Z",
-  "updated_at": "2026-10-12T11:23:39.689Z",
+  "updated_at": "2026-10-12T11:35:37.342Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,7 +39,7 @@
     "mc-plan-core": {
       "base_commit": "48f2f03312ab150aaa79a89f96a75951eda0db2f",
       "branch": "fix/MCP-F1-CORE-012-closeout",
-      "last_checkpoint_commit": null,
+      "last_checkpoint_commit": "b5c159e5c4abcdd722749ff460d67fa305bf31eb",
       "final_commit": null
     }
   },
@@ -51,6 +51,7 @@
   "handoff_history": [],
   "validation_results": [
     "Owner request 2026-10-12: complete project development and closeout with Core and Community first; local commits only, no remote push.",
-    "Remote refresh attempted with HTTP/2 and HTTP/1.1: network connection failed; working from clean local main and last-known origin/main, remote freshness unverified. No push or deployment."
+    "Remote refresh attempted with HTTP/2 and HTTP/1.1: network connection failed; working from clean local main and last-known origin/main, remote freshness unverified. No push or deployment.",
+    "T5 controlled AFTER UPDATE barrier reproduced overtaking (position 2 committed while position 1 waited); after database transaction advisory-lock serialization T5 and the full suite passed: unit 118, HTTP E2E 86, contracts 25, PostgreSQL/Keycloak integration 73; format/lint/typecheck/architecture (85 source files)/8 migrations/contract lock/build passed. Native pnpm fixture invocation and complete .env.example repaired. Logs: /Users/chenfeng/.codex/outputs/mc-closeout-20261012/core-*.log. Canonical image build still waiting on Docker Hub; no completion claim yet."
   ]
 }
