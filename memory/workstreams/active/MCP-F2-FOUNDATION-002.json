@@ -1,0 +1,60 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-002",
+  "title": "Q-009 moderation resolution ADR-0016: local manual review approval and reviewer semantics",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codely/csdk-community-20261012",
+  "owner": "Codely/csdk-community-20261012",
+  "started_at": "2026-10-12T16:13:57.000Z",
+  "updated_at": "2026-10-12T16:13:57.000Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-community",
+    "mc-plan-contracts"
+  ],
+  "objective": "File the owner's Q-009 resolution as ADR-0016 (formal moderation = local manual review approval; designated machine providers rejected; ADR-0014 fail-closed semantics unchanged; no external moderation API or data transfer; upgrade requires a new ADR), close the Q-009 open-question line per the Q-015 precedent, and record the owner's 2026-10-13 D1-D4 reviewer permission/semantics answers (moderation:review scope, single review endpoint, single-reviewer approval, no queue surface) as the decision package that enables the follow-up moderation contract slice (community alpha.4).",
+  "in_scope": [
+    "decisions/0016-community-local-manual-moderation.md (ADR-0016) capturing the 2026-10-12 Q-009 owner resolution and the 2026-10-13 D1-D4 answers with the fail-closed chain and upgrade conditions",
+    "memory/open-questions.md Q-009 closure following the Q-015 precedent (strikethrough + decided pointer + trailing decided-records entry)",
+    "memory/current/portfolio.md and docs/STATUS.md moderation-truth sync where stale after the 003 closure",
+    "Governance-branch registration per the f016 mechanism (register inside the ordinary lock, branch merged back to main, subsequent transactions through -GovernanceBranch/-GovernancePaths)"
+  ],
+  "out_of_scope": [
+    "Any contract change (the community.yaml alpha.4 review surface is a separate Contracts slice, predicted MCP-F2-CONTRACTS-004)",
+    "Community producer adapter implementation, realm/Keycloak changes, real moderation fault acceptance",
+    "Q-010 remaining sub-decisions (appeals responsibility, audit threat model, F4 admin-console dual review)",
+    "Skin/Core/Ops/Community repository writes"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "ADR-0016 filed with the full decision chain (2026-10-12 form resolution + 2026-10-13 D1-D4 semantics answers) and Q-009 closed in open-questions",
+    "validate-workspace / test-coordination / test-workspace-scanning / test-foundation-write regressions green",
+    "Start/Continue/Finish passed with the governance-branch mechanism"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "4e525f78d650e8f430c0c9feabcc0cba63952e23",
+      "branch": "docs/MCP-F2-FOUNDATION-002-q009-moderation-adr",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-COMMUNITY-001",
+    "MCP-F2-CONTRACTS-003",
+    "MCP-F1-FOUNDATION-016"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "Project owner 2026-10-12 Q-009 decision (local manual moderation approval, designated machine providers rejected; collected by the 06 master-control session) plus 2026-10-13 D1-D4 reviewer-semantics answers (moderation:review scope, single review endpoint, single-reviewer approval, no queue surface) given to Codely/csdk-community-20261012",
+    "reason": "Owner-ratified governance decision filing: this Foundation-primary slice records ADR-0016 and closes the Q-009 open-question line so the F2 moderation contract chain (community alpha.4) can follow; mc-plan-foundation is outside the current direction's primary/supporting set and therefore requires this exception."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered under the owner's 2026-10-13 'do both in sequence' continuation ruling (workstream B of the pair). The Q-009 form decision is the owner's 2026-10-12 ask_user answer collected by the 06 master-control session; the reviewer-permission/semantics D1-D4 answers are the owner's 2026-10-13 ask_user answers collected by this session (decision package at /Users/chenfeng/.codex/outputs/mc-csdk-community-20261012/q009-adr-0016-decision-package.md). Live preflight: Foundation main 4e525f7 with no active Foundation-primary record (MCP-F1-FOUNDATION-016 closed and merged by its owner); registry 57 completed + 1 active (SKIN-009, Skin-only, disjoint); ADR 0015 is taken by ADR-0015-skin-visual-acceptance-route-concept-bridge so this slice files ADR-0016."
+  ]
+}
