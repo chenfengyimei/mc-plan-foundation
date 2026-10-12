@@ -4,7 +4,7 @@
   "milestone": "F2",
   "primary_repository": "mc-plan-community",
   "status": "active",
-  "objective": "建立 Community 的本地资源上传、真实文件验证、不可变版本/许可、受控查询下载、下架与清理闭环，保留审核和正式发布门槛。",
+  "objective": "完成 Community F2 本地资源闭环后的审核/对象存储/恢复与官方接入门槛；已交付技术基线不代替完整社区与 V1 验收。",
   "entry_gate": "所有者 2026-10-12 明确要求优先 Core 与社区；CORE-012 全量与镜像复验通过，已有 OPS-001/002/003 身份/邮件/恢复记录在 main 可达；ADR-0013 本地基线与 ADR-0014 资源工程入口已批准。",
   "exit_criteria": [
     "Community 预发布契约、生产者和真实 PostgreSQL/S3 兼容对象存储验证通过",
@@ -32,5 +32,5 @@
       "adr": "decisions/0009-skin-standalone-restricted-preparation.md"
     }
   ],
-  "updated_at": "2026-10-12T11:44:17.596Z"
+  "updated_at": "2026-10-12T14:26:08.469Z"
 }

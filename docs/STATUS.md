@@ -1,11 +1,11 @@
 # 状态
 
-核对日期：2026-10-12。F0/GOV 与 F1 本地技术基线已完成；全局进入 F2 Community 本地资源工程（ADR-0014，所有者优先 Core 与社区的明确指令）。
+核对日期：2026-10-12。F0/GOV与F1本地技术基线已验证；当前F2 Community资源工程已交付本地alpha.2，完整F2/F4/V1未完成。
 
-Core 收尾 CORE-012 已关闭并合入本地 main 9303cc6：发布提交顺序由真实 AFTER UPDATE 阻塞测试复现并修复；118 单元、86 HTTP、25 契约、73 PostgreSQL/Keycloak 集成、架构/迁移/锁/build 及 canonical runtime 镜像/数据库故障 smoke 通过。该结果更正旧“自动提交即顺序安全”的推论。OPS-001/002/003 本地身份、邮件与恢复记录仍在 main 可达；不重复声称生产采购、公开计费或跨服务产品里程碑已完成。
+本轮关闭：CORE-012（Core main9303cc6，302测试+真实runtime/故障smoke，修复并发提交顺序）；FOUNDATION-015（F2入口/威胁模型）；F2-CONTRACTS-001（Community首个预发布）；F2-COMMUNITY-001（Community main70e55a1，代码779803e，45测试+真实Keycloak/PKCE、独立Core消费、S3协议与运行镜像上传待审/故障smoke；Contracts main63592a2显式补齐profile:read身份依赖）。
 
-Community 从禁止业务代码的 F0 转入已批准的 F2 工程，先契约后实现，上传威胁模型已建立。Q-009 审核提供商/降级方案仍待所有者选择，运行默认保持待审；Q-002 正式许可、Q-008 推荐权重、Q-010 管理权限与 V1 采购/法律门槛不代填。F4 全部完整范围保留。
+Community运行审核disabled，保持待审；正式审核方案Q-009尚待所有者回答。目标S3/三十天备份与恢复、正式许可与保留、官方Core开发者应用接线/SDK、F4全部社交与Web门槛均未完成。积分奖励/价格Q-003/Q-013及V1法律/生产决策保持未决，不代填。
 
-SKIN-008 仍为另一 Owner 的 blocked 工作流，付费 flash 基准未通过视觉验收，未合 main；其未提交 provider-sdk 修改已识别并保留。本任务不接管或修改。
+SKIN-008已由现Owner独立推进到cf386b6并更新checkpoint，工作树当前干净，但记录仍blocked，视觉验收未达；本轮没有写Skin、消息派工或接管锁。
 
-本次 Foundation 治理与代码交付仅本地；远端刷新连接失败，推送未授权/未执行。实时锁与 Owner 见工作流记录，组合摘要见 [portfolio](../memory/current/portfolio.md)，全局门槛见 [direction](../memory/current/direction.json)，完整产品完成判据见 [交付路线](delivery-plan.md)。
+本地提交已整合，未推送、未部署。组合与下一顺序见 [portfolio](../memory/current/portfolio.md) 和 [完整交付路线](delivery-plan.md)；最终执行记录和实时所有权以工作流为准。
