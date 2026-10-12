@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-CONTRACTS-001",
   "title": "Community alpha.1 upload completion, resource download and bounded semantics",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-12T11:48:07.743Z",
-  "updated_at": "2026-10-12T11:48:07.743Z",
+  "updated_at": "2026-10-12T11:55:29.056Z",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,8 +39,8 @@
     "mc-plan-contracts": {
       "base_commit": "f6a7927f329f6d8f2a2583dc9dda14f973bbb7bf",
       "branch": "feat/MCP-F2-CONTRACTS-001-community-alpha1",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "d205a59eb7ce638e47991236c72c11ad280cc3c7",
+      "final_commit": "d205a59eb7ce638e47991236c72c11ad280cc3c7"
     }
   },
   "depends_on": [
@@ -50,6 +50,7 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "ADR-0014 approves structural resource semantics; no social/moderator/production provider policies invented. Existing Core and Skin locks must remain byte-stable. Local-only delivery."
+    "ADR-0014 approves structural resource semantics; no social/moderator/production provider policies invented. Existing Core and Skin locks must remain byte-stable. Local-only delivery.",
+    "Actual gates passed: Python isolated requirements validation (20 schema/event IDs, 3 OpenAPI, 35 operations; examples included), Redocly lint all documents (one pre-existing Skin unused-security warning), Core SDK format/lint/typecheck/generate:check zero drift/37 tests/build/pack clean consumer/real HTTP+Keycloak smoke. Core and Skin OpenAPI, generated Core SDK surface and public source schemas byte unchanged. Community alpha.1 has 10 prerelease operations; no Community SDK exposed. Main local ff-only follows, no remote push."
   ]
 }
