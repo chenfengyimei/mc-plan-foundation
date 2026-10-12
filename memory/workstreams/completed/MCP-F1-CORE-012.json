@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CORE-012",
   "title": "Core closeout: commit-ordered event publication and runtime setup",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-12T11:23:39.689Z",
-  "updated_at": "2026-10-12T11:35:37.342Z",
+  "updated_at": "2026-10-12T11:38:53.453Z",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,8 +39,8 @@
     "mc-plan-core": {
       "base_commit": "48f2f03312ab150aaa79a89f96a75951eda0db2f",
       "branch": "fix/MCP-F1-CORE-012-closeout",
-      "last_checkpoint_commit": "b5c159e5c4abcdd722749ff460d67fa305bf31eb",
-      "final_commit": null
+      "last_checkpoint_commit": "9303cc62deeaa89fb07f77ba29a0b4f1b69457de",
+      "final_commit": "9303cc62deeaa89fb07f77ba29a0b4f1b69457de"
     }
   },
   "depends_on": [
@@ -52,6 +52,7 @@
   "validation_results": [
     "Owner request 2026-10-12: complete project development and closeout with Core and Community first; local commits only, no remote push.",
     "Remote refresh attempted with HTTP/2 and HTTP/1.1: network connection failed; working from clean local main and last-known origin/main, remote freshness unverified. No push or deployment.",
-    "T5 controlled AFTER UPDATE barrier reproduced overtaking (position 2 committed while position 1 waited); after database transaction advisory-lock serialization T5 and the full suite passed: unit 118, HTTP E2E 86, contracts 25, PostgreSQL/Keycloak integration 73; format/lint/typecheck/architecture (85 source files)/8 migrations/contract lock/build passed. Native pnpm fixture invocation and complete .env.example repaired. Logs: /Users/chenfeng/.codex/outputs/mc-closeout-20261012/core-*.log. Canonical image build still waiting on Docker Hub; no completion claim yet."
+    "T5 controlled AFTER UPDATE barrier reproduced overtaking (position 2 committed while position 1 waited); after database transaction advisory-lock serialization T5 and the full suite passed: unit 118, HTTP E2E 86, contracts 25, PostgreSQL/Keycloak integration 73; format/lint/typecheck/architecture (85 source files)/8 migrations/contract lock/build passed. Native pnpm fixture invocation and complete .env.example repaired. Logs: /Users/chenfeng/.codex/outputs/mc-closeout-20261012/core-*.log. Canonical image build still waiting on Docker Hub; no completion claim yet.",
+    "Canonical docker build --target runtime succeeded after transient registry delays. Image mc-plan-core:mcp-f1-core-012-closeout sha256:9f48bad577be79339e8870a92c62a13a49ac121ab58dffe5806287190a7996ea: all 8 migrations deploy in-image against an isolated real PostgreSQL; uid 1000, live/ready 200, unauthenticated /v1/me 401, real Prometheus metrics; after DB loss ready 503/live 200. Own containers/network removed. Final documentation format:check and diff --check passed. All scopes implemented; local main ff-only integration follows. Remote push not authorized/performed; production and product-pricing gates remain separate."
   ]
 }
