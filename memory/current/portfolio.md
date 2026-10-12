@@ -1,6 +1,6 @@
 # 项目组合状态
 
-核对日期：2026-10-13（凌晨，MCP-F1-FOUNDATION-016 F1 收官治理切片）。全局仍为 [F2 / Community](direction.json)。F1 里程碑按项目所有者 2026-10-13 ask_user 实答落档：**工程面完成，正式收官待 MCP-F1-SKIN-009 视觉验收通过**（34 项已关工作流证据矩阵逐条核验，见 [交付路线](../../docs/delivery-plan.md) F1 收官段；Q-001 路线决策见 [ADR-0015](../decisions/0015-skin-visual-acceptance-route-concept-bridge.md)）。F2 进行中；完整 F2/F4/V1 尚未完成。Owner/锁/检查点以工作流与 Git 为准。
+核对日期：2026-10-13（凌晨，MCP-F1-FOUNDATION-016 F1 收官治理切片）。全局仍为 [F2 / Community](direction.json)。F1 里程碑按项目所有者 2026-10-13 ask_user 实答落档：**工程面完成，正式收官待 MCP-F1-SKIN-009 视觉验收通过**（34 项已关工作流证据矩阵逐条核验，见 [交付路线](../../docs/delivery-plan.md) F1 收官段；Q-001 路线决策见 [ADR-0015](../../decisions/0015-skin-visual-acceptance-route-concept-bridge.md)）。F2 进行中；完整 F2/F4/V1 尚未完成。Owner/锁/检查点以工作流与 Git 为准。
 
 | 仓库 | 当前已证事实 | 未完成门槛 |
 | --- | --- | --- |
