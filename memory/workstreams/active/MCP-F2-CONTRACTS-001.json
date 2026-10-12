@@ -1,0 +1,55 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-CONTRACTS-001",
+  "title": "Community alpha.1 upload completion, resource download and bounded semantics",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-12T11:48:07.743Z",
+  "updated_at": "2026-10-12T11:48:07.743Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-community",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Lock Community alpha.1 from unimplemented draft with actual upload completion, author query, controlled download, explicit size/error/idempotency and fail-closed publication semantics before producer work.",
+  "in_scope": [
+    "Community alpha.1 OpenAPI convergence, upload-completion/author-list/download additions",
+    "Semantic validation and examples; compatibility classification and version lock",
+    "Existing Core SDK generation and package gates unchanged"
+  ],
+  "out_of_scope": [
+    "Community business implementation or SDK operation exposure without producer evidence",
+    "F4 social/admin contracts or production moderation/provider/legal choice",
+    "Changing Core/Skin interfaces"
+  ],
+  "contract_impact": "prerelease convergence and additions; Community draft has no producer/consumer. Core alpha.7 and Skin alpha.1 byte unchanged.",
+  "acceptance_evidence": [
+    "OpenAPI/schema/examples and alpha.1 semantic validator pass",
+    "Existing Core SDK format/lint/typecheck/generate-check/test/build/pack and real smoke pass",
+    "Clean completed record and local main ff-only integration"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "f6a7927f329f6d8f2a2583dc9dda14f973bbb7bf",
+      "branch": "feat/MCP-F2-CONTRACTS-001-community-alpha1",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-FOUNDATION-015"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "ADR-0014 approves structural resource semantics; no social/moderator/production provider policies invented. Existing Core and Skin locks must remain byte-stable. Local-only delivery."
+  ]
+}
