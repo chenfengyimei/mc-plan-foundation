@@ -1,0 +1,68 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-015",
+  "title": "F2 Community local engineering entry and upload threat model",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-12T11:39:21.288Z",
+  "updated_at": "2026-10-12T11:39:21.288Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [
+    "mc-plan-community"
+  ],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Advance the local F1 evidence baseline to F2 resource engineering after Core closeout, approve bounded upload/version/delete semantics, keep unresolved moderation/legal and V1 gates explicit.",
+  "in_scope": [
+    "ADR and Community upload/resource state/retention threat model",
+    "Direction, portfolio, delivery roadmap and status reconcile with verified Core closeout and existing Ops records",
+    "Community AGENTS/development-plan/architecture engineering entry; no business code in this governance slice"
+  ],
+  "out_of_scope": [
+    "Production moderation/provider/permission/price decisions",
+    "Skin takeover or business implementation",
+    "Production deployment, remote pushes, legal-text approval"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "Foundation workspace and all governance regressions pass",
+    "Community engineering scope matches ADR and pending decision gates",
+    "Finish with both clean repositories and local main integration"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "56551c8e72842619623447d89d0bd2ba337dd109",
+      "branch": "docs/MCP-F1-FOUNDATION-015-community-entry",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-community": {
+      "base_commit": "69ac5e9f4b171788f2c988d6c9ea6eb3e3c749d9",
+      "branch": "docs/MCP-F1-FOUNDATION-015-community-entry",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-012",
+    "MCP-F1-OPS-003",
+    "MCP-F1-FOUNDATION-014"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, explicit 2026-10-12 request to complete the project and prioritize Core and Community",
+    "reason": "Reconcile verified local Core completion and permit bounded Community engineering; no production or unresolved-policy decisions inferred."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Core 9303cc6 locally integrated; tests 118/86/25/73 and real runtime smoke passed; all Core/Ops locks released. Skin remains locked and its dirty work is preserved. Remote freshness unverified after failed fetch; local-only work."
+  ]
+}
