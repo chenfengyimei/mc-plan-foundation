@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-CONTRACTS-002",
+  "title": "Community TypeScript SDK first slice: producer-verified resource-loop operations",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codely/csdk-community-20261012",
+  "owner": "Codely/csdk-community-20261012",
+  "started_at": "2026-10-12T14:48:29.000Z",
+  "updated_at": "2026-10-12T14:48:29.000Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-community",
+    "mc-plan-core"
+  ],
+  "objective": "Deliver the first Community TypeScript SDK package (@mc-plan/community-sdk@0.1.0-alpha.2, private, local pack only) on the locked community.yaml 0.1.0-alpha.2 contract and the MCP-F2-COMMUNITY-001 producer evidence (community 70e55a1 + runtime image a4654b59fb48), exposing only producer-verified operations with typed ProblemDetails, abort/timeout and bounded key-stable idempotent retries.",
+  "in_scope": [
+    "New sdk/community package mirroring the sdk/typescript discipline: openapi-typescript deterministic generation from the in-repo locked openapi/community.yaml with committed raw generator output and .prettierignore exemption for src/generated and dist",
+    "SUPPORTED_OPERATIONS limited to producer-verified operations; SUPPORTED_PRODUCER_COMMIT anchored at community 70e55a1; SUPPORTED_CONTRACT_FILES embedding sha256 of every generation-input contract file",
+    "Injectable baseURL/fetch/user token provider (no OIDC flow handling), typed ProblemDetails, AbortSignal and configurable timeout, bounded idempotent retry rules mapped to per-operation contract idempotency (GET plus Idempotency-Key commands; retries never rotate the key)",
+    "Unit tests covering path/error/retry boundaries per exposed operation, pack:check clean-project strict-tsc consumption, real HTTP smoke against the fixed producer image mc-plan-community:mcp-f2-community-001-779803e",
+    "Contracts docs sync (STATUS/development-plan/api-catalog Community SDK section)"
+  ],
+  "out_of_scope": [
+    "Any change to community.yaml, JSON Schemas or lock files (contract zero drift, proven by generate:check and validate_contracts.py)",
+    "Any write to the mc-plan-community repository (producer evidence is read-only)",
+    "Q-009 moderation provider / Q-002 formal license decisions, npm publishing, stable version numbers",
+    "Claiming any real consumer has integrated the SDK (stabilization requires a separate real-consumer acceptance workflow)"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "SDK gates green: format:check, lint --max-warnings 0, strict typecheck, generate:check zero drift, vitest, build, pack:check clean consumer, smoke:real exit 0 twice against the fixed image",
+    "validate_contracts.py pinned venv and redocly three-document lint pass with contract files byte-unchanged",
+    "Real HTTP smoke scenarios: upload session lifecycle with real signed S3 PUT, list/download pagination determinism and sha256/Content-Type byte assertions, typed negative problems (401/403/404/400/409), per-operation success regression"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "63592a2deed8d6a14a290b6799f09730fd8486fe",
+      "branch": "feat/MCP-F2-CONTRACTS-002-community-sdk",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-CONTRACTS-001",
+    "MCP-F2-COMMUNITY-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered under the owner 2026-10-12 dispatch: Contracts line executes the Community TS SDK first slice; push authorization granted for contracts main including the three existing unpushed closed-workflow commits. Producer evidence re-verified live: MCP-F2-COMMUNITY-001 completed at community 70e55a1 with image mc-plan-community:mcp-f2-community-001-779803e (a4654b59fb48) present locally; registry has no same-goal active record (only SKIN-008, blocked, untouched)."
+  ]
+}
