@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-OPS-004",
+  "title": "Ops 固定镜像统一（CORE-012 closeout）与本地有界指标面接入验收",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/ops004-image-metrics-20261012",
+  "owner": "Codely/ops004-image-metrics-20261012",
+  "started_at": "2026-10-12T22:50:04.362014+08:00",
+  "updated_at": "2026-10-12T22:50:04.362014+08:00",
+  "primary_repository": "mc-plan-ops",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core"
+  ],
+  "objective": "统一 Ops 全部固定输入镜像到最新已关闭 Core 版 mc-plan-core:mcp-f1-core-012-closeout（image ID 9f48bad577be，对应 Core main 9303cc6 已关闭验收），把 MCP-F1-CORE-011 / ADR-0013 决策的本地有界指标面（OTEL_METRICS_PORT Prometheus 导出器 + 无标签有界计数器）接入 Ops 开发组合并真实验收，同步文档滞后行（Q-015 已决=本地有界指标面，不再待派工）。",
+  "in_scope": [
+    "镜像默认值统一：dev/identity/compose.yaml 两处 CORE_IMAGE 默认与 7 个脚本 -CoreImage 默认（validate-dev-environment / validate-dev-identity / validate-dev-entitlements / validate-dev-email-flows / validate-dev-developer-apps / validate-dev-events / validate-dev-recovery）统一为 mc-plan-core:mcp-f1-core-012-closeout；events/recovery 脚本的占位即失败关闭守卫保留（显式传入占位值仍失败关闭），静态门禁的 pinned 默认镜像断言随改",
+    "compose OTEL 接线：core 服务环境新增 OTEL_METRICS_PORT: ${OTEL_METRICS_PORT:-9464} 透传，OTEL_ENABLED 由硬编码 \"false\" 参数化为 ${OTEL_ENABLED:-false}（安全默认不变）；静态门禁新增 OTEL_METRICS_PORT 透传与 OTEL_ENABLED 参数化断言（沿用行正则读法）",
+    "新增 scripts/validate-dev-metrics.ps1：专属 compose project 与未占用端口组、两轮独立执行——OTEL_ENABLED=true 起栈（OUTBOX_PUBLISHER_ENABLED=true、OUTBOX_SINK=pull）、core 起来前指标端口关闭断言（fail-closed 语义）、[SYNTHETIC-DB-SEED] 锁定 Schema 先验 credit.changed.v1 信封经发布器达 PUBLISHED、真实 PKCE 用户 + events:consume 服务客户端真实 pull/ack、再以畸形/伪造游标触发拒绝，Prometheus 端点文本对 events_pulled/events_acked/cursor_rejected（以 Core 实名 mc_plan_core_events_*_total）做值级断言（pulled>=1/acked>=1/rejected>=1）+ target_info 存在 + 无业务敏感标签，对照运行 OTEL_ENABLED=false 重启后指标端口关闭，down -v 前后清理",
+    "全部真实栈脚本用新默认值（不传 -CoreImage 覆盖）重跑留证：validate-dev-identity / validate-dev-entitlements / validate-dev-email-flows / validate-dev-developer-apps / validate-dev-events / validate-dev-recovery，各按专属 project/端口组与 down -v 隔离惯例执行并记录日志",
+    "文档同步：docs/STATUS.md（Q-015 已决=本地有界指标面、镜像默认统一叙述含 image ID 9f48bad577be、新增指标面验收段）、docs/development-plan.md（验收命令与里程碑叙述）、docs/dev-identity.md（固定输入、project 表、验收命令、覆盖与断言、负例标注）、docs/backup-restore.md（镜像引用与运行输入）"
+  ],
+  "out_of_scope": [
+    "Core/Contracts/Skin/Community 任何文件（mc-plan-core 仅只读引用镜像与计数器实名）；realm 语义变更（不新增/修改客户端、scope、角色）",
+    "生产决策（Q-004/Q-006/Q-014/Q-016 维持未决；Q-015 已决=本地有界指标面，本切片仅本地验收、不引入生产监控产品）；预发布/生产环境",
+    "修改 MCP-F1-SKIN-008 记录与 Skin 工作流的任何内容；真实密钥入文件/日志（Keycloak secret 仅运行时读取的既有模式不变）"
+  ],
+  "contract_impact": "none; the slice consumes the fixed Core runtime image and the already-locked contract surfaces read-only (events envelopes/pages validated through the existing scripts/validate-events-schemas.py against the locked Contracts checkout); no contract, schema, scope or error-code change",
+  "acceptance_evidence": [
+    "validate-dev-environment.ps1 静态门禁在镜像统一与 OTEL 透传断言加入后实际运行 PASS",
+    "六个既有真实栈脚本全部以新默认镜像（不传 -CoreImage 覆盖）重跑全绿：identity / entitlements / email-flows / developer-apps / events / recovery（recovery 为双 project 备份-破坏-恢复全链），日志留证",
+    "validate-dev-metrics.ps1 两轮独立执行全绿：值级计数器断言（pulled/acked/rejected>=1，Core 实名）+ target_info + 无业务敏感标签 + OTEL_ENABLED=false 对照运行指标端口关闭",
+    "Start/Continue/Finish 通过；Ops main ff-only 整合与 origin 普通推送（本轮已授权）；分支本地删除（远端从未存在）；锁释放"
+  ],
+  "repositories": {
+    "mc-plan-ops": {
+      "base_commit": "30211238a80e00456a7d364ac67defbd13d5b707",
+      "branch": "feat/MCP-F1-OPS-004-image-metrics",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-011",
+    "MCP-F1-CORE-012",
+    "MCP-F1-OPS-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-12 (Codely/ops004-image-metrics-20261012) from live state per the owner 2026-10-12 dispatch (Ops full scope: image-default unification + real re-runs + OTEL wiring with a new validate-dev-metrics.ps1 + doc lag sync; push authorized for all gates-green + Finish): registry before registration 1 active (MCP-F1-SKIN-008, blocked, Skin-only, untouched) / 52 completed; no workspace lock; Ops main 3021123=origin clean; Foundation main d2afc79 local (01 号 SKIN-008 接管记录刚落；本切片记录增量在收官时随授权一并 ff-only 推送)；the fixed input image mc-plan-core:mcp-f1-core-012-closeout (ID 9f48bad577be) verified present locally; Core telemetry facts verified read-only from mc-plan-core source (OTEL_METRICS_PORT default 9464 zod-validated, fail-closed MetricsPortUnavailableError, PrometheusExporter /metrics text endpoint, label-free counters mc_plan_core_events_pulled_total / mc_plan_core_events_acked_total / mc_plan_core_events_cursor_rejected_total, target_info with service_name)."
+  ]
+}
