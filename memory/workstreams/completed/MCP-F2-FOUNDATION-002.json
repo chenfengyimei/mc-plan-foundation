@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-002",
   "title": "Q-009 moderation resolution ADR-0016: local manual review approval and reviewer semantics",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codely/csdk-community-20261012",
   "owner": "Codely/csdk-community-20261012",
   "started_at": "2026-10-12T16:13:57.000Z",
-  "updated_at": "2026-10-12T16:13:57.000Z",
+  "updated_at": "2026-10-12T16:24:00.000Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -38,8 +38,8 @@
     "mc-plan-foundation": {
       "base_commit": "4e525f78d650e8f430c0c9feabcc0cba63952e23",
       "branch": "docs/MCP-F2-FOUNDATION-002-q009-moderation-adr",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "16a2ec406c5316bf6b40a1eda2f26c01eae6e48e",
+      "final_commit": "16a2ec406c5316bf6b40a1eda2f26c01eae6e48e"
     }
   },
   "depends_on": [
@@ -55,6 +55,10 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Registered under the owner's 2026-10-13 'do both in sequence' continuation ruling (workstream B of the pair). The Q-009 form decision is the owner's 2026-10-12 ask_user answer collected by the 06 master-control session; the reviewer-permission/semantics D1-D4 answers are the owner's 2026-10-13 ask_user answers collected by this session (decision package at /Users/chenfeng/.codex/outputs/mc-csdk-community-20261012/q009-adr-0016-decision-package.md). Live preflight: Foundation main 4e525f7 with no active Foundation-primary record (MCP-F1-FOUNDATION-016 closed and merged by its owner); registry 57 completed + 1 active (SKIN-009, Skin-only, disjoint); ADR 0015 is taken by ADR-0015-skin-visual-acceptance-route-concept-bridge so this slice files ADR-0016."
+    "Registered under the owner's 2026-10-13 'do both in sequence' continuation ruling (workstream B of the pair). The Q-009 form decision is the owner's 2026-10-12 ask_user answer collected by the 06 master-control session; the reviewer-permission/semantics D1-D4 answers are the owner's 2026-10-13 ask_user answers collected by this session (decision package at /Users/chenfeng/.codex/outputs/mc-csdk-community-20261012/q009-adr-0016-decision-package.md). Live preflight: Foundation main 4e525f7 with no active Foundation-primary record (MCP-F1-FOUNDATION-016 closed and merged by its owner); registry 57 completed + 1 active (SKIN-009, Skin-only, disjoint); ADR 0015 is taken by ADR-0015-skin-visual-acceptance-route-concept-bridge so this slice files ADR-0016.",
+    "Registration used the f016 governance mechanism: ordinary lock, branch docs/MCP-F2-FOUNDATION-002-q009-moderation-adr created from main HEAD 4e525f7 inside the transaction, record committed on the branch (bd04fdf), branch ff-merged back to main so the ordinary transaction ended clean and on main; Start passed with the branch checked out (2 active / 57 completed).",
+    "Delivered (commit 16a2ec4 on the governance branch): decisions/0016-community-local-manual-moderation.md files ADR-0016 with the full chain — local manual review approval, designated machine providers rejected, no external moderation API or data transfer, ADR-0014 fail-closed semantics unchanged (absent/timeout/failed moderation stays pending, no silent approval, pre-existing resources not retro-approved), reviewer authorization via the new userOAuth scope moderation:review granted only by the realm to designated reviewer users (Community checks the token scope exactly like resource:write, zero Core contract change, revocation = realm-side scope removal), single decision endpoint POST /v1/resources/{resourceId}/versions/{versionId}/review with closed {decision: approve|reject, reason?} body + required Idempotency-Key on pending_moderation candidates only (approve reuses the existing promotion semantics incl. resource.published.v1 outbox; reject leaves the previously published version visible), single-reviewer approval with full audit trail, no queue endpoint this round, implementation order ADR -> Contracts alpha.4 -> producer adapter -> real fault acceptance, upgrade requires a new ADR. memory/open-questions.md closes Q-009 (strikethrough row + trailing decided-records entry, Q-015 precedent; Q-010 remainder untouched). memory/current/portfolio.md Contracts row drops the stale 003-archive-pending note (complete+Finish since done) and the Community row now records Q-009 decided with the ADR-0016 pointer; docs/STATUS.md registry line refreshed to 57 completed + 2 active and the moderation paragraph rewritten to the decided truth.",
+    "Governance regressions green on the branch (log f2f002-governance-gates.log): validate-workspace 6 repositories / 123 Markdown / 96 JSON; test-coordination 14/14; test-workspace-scanning 21/21; test-foundation-write 14/14.",
+    "Closure: final_commit 16a2ec4 (branch tip); the governance branch merges ff-only back to main and is deleted; Foundation main pushed per the standing owner authorization (increment over f016's 6ec0344). Follow-up queue enabled by this slice: Contracts moderation face lock (predicted MCP-F2-CONTRACTS-004, community alpha.4: moderation:review scope + single review endpoint per ADR-0016) -> Community producer local-manual-review adapter -> real moderation fault acceptance; web portal P3 needs the alpha.3 preview producer."
   ]
 }
