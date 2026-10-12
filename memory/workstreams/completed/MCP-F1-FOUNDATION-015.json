@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-FOUNDATION-015",
   "title": "F2 Community local engineering entry and upload threat model",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-12T11:39:21.288Z",
-  "updated_at": "2026-10-12T11:39:21.288Z",
+  "updated_at": "2026-10-12T11:47:01.844Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [
     "mc-plan-community"
@@ -40,14 +40,14 @@
     "mc-plan-foundation": {
       "base_commit": "56551c8e72842619623447d89d0bd2ba337dd109",
       "branch": "docs/MCP-F1-FOUNDATION-015-community-entry",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "e785203c233a252c16b0d42ef218d66c76dff918",
+      "final_commit": "e785203c233a252c16b0d42ef218d66c76dff918"
     },
     "mc-plan-community": {
       "base_commit": "69ac5e9f4b171788f2c988d6c9ea6eb3e3c749d9",
       "branch": "docs/MCP-F1-FOUNDATION-015-community-entry",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "488c6b2b6b5c418c9896ed5e70d9337e217356ff",
+      "final_commit": "488c6b2b6b5c418c9896ed5e70d9337e217356ff"
     }
   },
   "depends_on": [
@@ -63,6 +63,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Core 9303cc6 locally integrated; tests 118/86/25/73 and real runtime smoke passed; all Core/Ops locks released. Skin remains locked and its dirty work is preserved. Remote freshness unverified after failed fetch; local-only work."
+    "Core 9303cc6 locally integrated; tests 118/86/25/73 and real runtime smoke passed; all Core/Ops locks released. Skin remains locked and its dirty work is preserved. Remote freshness unverified after failed fetch; local-only work.",
+    "Foundation actual gates passed: validate-workspace (6 active repositories, 118 Markdown/81 JSON), coordination regression 14/14, workspace scanning 21/21, Foundation transaction isolation 14/14. ADR-0014 approves local F2 engineering and fail-closed unpublished moderation; direction/portfolio/STATUS/route and Community entry threat model are coherent. Q-009 is explicitly still pending, no provider/admin/legal choice inferred."
   ]
 }
