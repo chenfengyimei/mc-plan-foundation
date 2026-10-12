@@ -8,7 +8,7 @@
   "initial_owner": "Codely/ops004-image-metrics-20261012",
   "owner": "Codely/ops004-image-metrics-20261012",
   "started_at": "2026-10-12T22:50:04.362014+08:00",
-  "updated_at": "2026-10-12T22:50:04.362014+08:00",
+  "updated_at": "2026-10-12T22:52:03.075877+08:00",
   "primary_repository": "mc-plan-ops",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -48,9 +48,14 @@
     "MCP-F1-OPS-003"
   ],
   "blocked_reason": null,
-  "direction_exception": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, explicit 2026-10-12 dispatch of the Ops full scope (unify fixed inputs onto mc-plan-core:mcp-f1-core-012-closeout, re-run every real-stack acceptance, wire compose OTEL metrics and add validate-dev-metrics.ps1, sync lagging docs; push authorized)",
+    "reason": "Owner-directed completion of F1 closeout items under the active F2 direction: the slice finishes the F1 Q-015 local bounded metrics acceptance (ADR-0013 decision, CORE-011 exporter, CORE-012 closeout image) inside the Ops dev combination. No production decisions (Q-004/Q-006/Q-014/Q-016 stay undecided), no Community/F2 scope or contract change, no new realm semantics."
+  },
   "handoff_history": [],
   "validation_results": [
-    "Registered 2026-10-12 (Codely/ops004-image-metrics-20261012) from live state per the owner 2026-10-12 dispatch (Ops full scope: image-default unification + real re-runs + OTEL wiring with a new validate-dev-metrics.ps1 + doc lag sync; push authorized for all gates-green + Finish): registry before registration 1 active (MCP-F1-SKIN-008, blocked, Skin-only, untouched) / 52 completed; no workspace lock; Ops main 3021123=origin clean; Foundation main d2afc79 local (01 号 SKIN-008 接管记录刚落；本切片记录增量在收官时随授权一并 ff-only 推送)；the fixed input image mc-plan-core:mcp-f1-core-012-closeout (ID 9f48bad577be) verified present locally; Core telemetry facts verified read-only from mc-plan-core source (OTEL_METRICS_PORT default 9464 zod-validated, fail-closed MetricsPortUnavailableError, PrometheusExporter /metrics text endpoint, label-free counters mc_plan_core_events_pulled_total / mc_plan_core_events_acked_total / mc_plan_core_events_cursor_rejected_total, target_info with service_name)."
+    "Registered 2026-10-12 (Codely/ops004-image-metrics-20261012) from live state per the owner 2026-10-12 dispatch (Ops full scope: image-default unification + real re-runs + OTEL wiring with a new validate-dev-metrics.ps1 + doc lag sync; push authorized for all gates-green + Finish): registry before registration 1 active (MCP-F1-SKIN-008, blocked, Skin-only, untouched) / 52 completed; no workspace lock; Ops main 3021123=origin clean; Foundation main d2afc79 local (01 号 SKIN-008 接管记录刚落；本切片记录增量在收官时随授权一并 ff-only 推送)；the fixed input image mc-plan-core:mcp-f1-core-012-closeout (ID 9f48bad577be) verified present locally; Core telemetry facts verified read-only from mc-plan-core source (OTEL_METRICS_PORT default 9464 zod-validated, fail-closed MetricsPortUnavailableError, PrometheusExporter /metrics text endpoint, label-free counters mc_plan_core_events_pulled_total / mc_plan_core_events_acked_total / mc_plan_core_events_cursor_rejected_total, target_info with service_name).",
+    "Registration amended 2026-10-12 with a foundation-governance direction exception: coordination Start first rejected the record because direction.json switched to F2 (updated 2026-10-12T14:26Z, after the dispatch framing), while this owner-dispatched slice is F1-series closeout work (Q-015 metrics acceptance + CORE-012 image unification); the owner explicit 2026-10-12 dispatch of the Ops full scope is the authorization, following the active MCP-F1-SKIN-008 record exception pattern for an F1 workstream outside the current direction."
   ]
 }
