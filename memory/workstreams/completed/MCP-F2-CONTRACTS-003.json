@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-CONTRACTS-003",
+  "title": "Community alpha.3 anonymous inline preview contract lock (web portal prerequisite)",
+  "status": "completed",
+  "milestone": "F2",
+  "initial_owner": "Codely/csdk-community-20261012",
+  "owner": "Codely/csdk-community-20261012",
+  "started_at": "2026-10-12T15:53:40.000Z",
+  "updated_at": "2026-10-12T16:03:42.000Z",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-community",
+    "mc-plan-foundation",
+    "mc-plan-core"
+  ],
+  "objective": "Lock the owner-commissioned web-portal GAP-1 prerequisite as Community 0.1.0-alpha.3: one additive anonymous inline preview operation (GET /v1/resources/{resourceId}/versions/{versionId}/preview) with per-request published visibility, inline image/png bytes and security headers no weaker than the locked download surface, so the P3 public portal (future MCP-F2-COMMUNITY-002) and its first real community-sdk consumer can render cover images.",
+  "in_scope": [
+    "community.yaml 0.1.0-alpha.2 -> 0.1.0-alpha.3: new GET /v1/resources/{resourceId}/versions/{versionId}/preview (operationId previewResourceVersion, security: [], bodyless), 200 image/png inline bytes with Content-Type/Content-Disposition inline/X-Content-Type-Options nosniff/sandbox CSP/Cache-Control no-store semantics described per the prep package 05 section GAP-1, 404 semantics identical to download (unknown/mismatched/unpublished/cleaned indistinguishable) plus 400/429/503; existing ten operations, scopes and schemas byte-unchanged",
+    "validate_contracts.py alpha.3 machine gates: version lock, eleven-operation set, preview anonymous + PNG-only + bodyless + bounded error semantics, and a docs classification gate for the alpha.3 compatibility section",
+    "redocly lint three documents",
+    "sdk/community type baseline regeneration to alpha.3 with SUPPORTED_OPERATIONS unchanged (previewResourceVersion explicitly excluded: no producer evidence), package version 0.1.0-alpha.3, updated SUPPORTED_CONTRACT_VERSION/SUPPORTED_CONTRACT_LOCK_COMMIT/SUPPORTED_CONTRACT_FILES hashes, and the package gate suite (format:check/lint/typecheck/generate:check/vitest/build/pack:check)",
+    "Contracts docs sync (api-catalog Community v1, compatibility alpha.3 section + matrix row, STATUS, development-plan)"
+  ],
+  "out_of_scope": [
+    "Any producer implementation of the preview endpoint (mc-plan-community untouched; belongs to the portal/producer slice)",
+    "ResourceFile schema changes (role=preview stays schema-only unless the producer chooses to populate it)",
+    "List-page license badges or any list-contract field additions (GAP-2 v1 decision)",
+    "SDK exposure of previewResourceVersion (no producer evidence)",
+    "CORS/proxy runtime decisions and apps/web work (portal session)",
+    "Bounded private preview caching (owner would have to approve; conservative no-store is locked instead)",
+    "Q-009 moderation chain (separate follow-up workstream per the same owner ruling)"
+  ],
+  "contract_impact": "community.yaml 0.1.0-alpha.2 -> 0.1.0-alpha.3 prerelease compatible addition: one new anonymous inline preview operation; no change to the existing ten operations, scopes or schemas. Core alpha.7 and Skin alpha.1 byte-unchanged. The community-sdk type baseline regenerates to alpha.3 while SUPPORTED_OPERATIONS stays at the ten producer-verified operations.",
+  "acceptance_evidence": [
+    "validate_contracts.py pinned venv green on alpha.3 with the new machine gates (36 unique operationIds); redocly three-document lint exit 0 (only the expected skin.yaml no-unused-components warning)",
+    "sdk/community gates green after the alpha.3 regeneration: format:check, lint --max-warnings 0, strict typecheck, generate:check zero drift on the committed tree, vitest 38/38, build, pack:check clean consumer against the version-derived tarball",
+    "Compatibility classification and matrix row recorded; existing ten-operation surface byte-identical"
+  ],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "e4d6de19752f9bb996db9c576db6443ffe605b45",
+      "branch": "feat/MCP-F2-CONTRACTS-003-preview-alpha3",
+      "last_checkpoint_commit": "f723c9498a97403f74e8eff5d81283955a35ffb9",
+      "final_commit": "f723c9498a97403f74e8eff5d81283955a35ffb9"
+    }
+  },
+  "depends_on": [
+    "MCP-F2-CONTRACTS-001",
+    "MCP-F2-COMMUNITY-001",
+    "MCP-F2-CONTRACTS-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Registered under the owner 2026-10-12 'do both in sequence' ruling: this slice locks the web-portal preview prerequisite first (highest readiness, no new product decisions needed), then the Q-009 ADR governance slice follows. Design source is the owner-commissioned portal prep package (/Users/chenfeng/.codex/outputs/mc-community-web-portal-prep-20261012/05 section GAP-1); the prep package's 07 draft originally placed this lock inside the future MCP-F2-COMMUNITY-002 portal workstream as a Contracts supporting step — per the owner's ruling it is executed now as a standalone Contracts-primary slice, and the portal session re-aligns its registration draft to the live state (its own package mandates live re-preflight). Live preflight this session: registry 55 completed + 1 active (SKIN-009, Skin-only, disjoint); no lock; contracts main e4d6de1 = origin.",
+    "Contract lock (commit 664fb9d): community.yaml version 0.1.0-alpha.3 with the new anonymous bodyless GET /v1/resources/{resourceId}/versions/{versionId}/preview (previewResourceVersion) placed as the inline sibling of the download path; per-request visibility and 404 semantics identical to download, exact sealed verified PNG bytes, Content-Disposition inline + nosniff + sandbox CSP + Cache-Control no-store (conservative default; bounded private caching explicitly left to a future owner approval), version-scoped symmetry documented. Existing ten operations, scopes and all JSON Schemas byte-unchanged; ResourceFile role=preview stays schema-only.",
+    "validate_contracts.py alpha.3 machine gates added: version lock 0.1.0-alpha.3, eleven-operation set (no drift), previewResourceVersion anonymous/bodyless/PNG-only/400+404+429+503 bounded errors, download keeps 404, and a docs classification gate requiring the exact phrase 'Community `0.1.0-alpha.3`' + '预发布兼容新增（匿名内联预览）' in docs/compatibility.md. Gates green: 20 schemas/events, 20 unique $ids, 3 OpenAPI documents, 36 unique operationIds. redocly three documents exit 0 with only the expected skin.yaml no-unused-components warning.",
+    "SDK baseline regeneration (commit f723c94): sdk/community regenerated from the alpha.3 lock (764-line generated types including the preview path), package version 0.1.0-alpha.3, SUPPORTED_CONTRACT_VERSION/LOCK_COMMIT (664fb9d) and the openapi/community.yaml sha256 (fe8a45af...) updated; SUPPORTED_OPERATIONS deliberately unchanged at the ten producer-verified operations with previewResourceVersion explicitly excluded (no producer evidence) and asserted absent by the manifest test; README support-surface note updated. Gates green on the committed tree: format:check, lint --max-warnings 0, strict typecheck, generate:check zero drift (regeneration equals the committed file), vitest 38/38, build, pack:check clean consumer compiled against the version-derived tarball. smoke:real intentionally not re-run: the ten exposed operations and their producer are byte-unchanged from the MCP-F2-CONTRACTS-002 acceptance.",
+    "Docs synced: api-catalog Community v1 rewritten for alpha.3 (10 accepted operations + locked preview pending producer); compatibility gained the 'Community 0.1.0-alpha.3 兼容分类' section and matrix row (producer 未实现, SDK types-baseline note); STATUS version line and a new MCP-F2-CONTRACTS-003 paragraph; development-plan F2 paragraph updated. Closure: final_commit f723c94 (branch tip); mc-plan-contracts merges ff-only to main, feat branch deleted locally (remote never existed), main pushed per the standing owner authorization; Foundation record increments stay local for the 06 master-control Phase B push per the live Phase A ruling. The Q-009 ADR governance slice follows next under the same owner ruling."
+  ]
+}
