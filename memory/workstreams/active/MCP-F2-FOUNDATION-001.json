@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-001",
+  "title": "Core and Community local delivery evidence and remaining product gates",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-12T14:24:14.747Z",
+  "updated_at": "2026-10-12T14:24:14.747Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Reconcile current portfolio/status/delivery direction to verified local Core and Community commits, distinguish finished engineering from incomplete full milestones and record exact next gates without taking Skin ownership.",
+  "in_scope": [
+    "Portfolio/STATUS/delivery-plan/direction timestamp reconcile with actual commits and tests",
+    "Completed local acceptance, image evidence, local main reachability and pending product/provider gates",
+    "Full Foundation workspace and governance regressions, record closeout and local main integration"
+  ],
+  "out_of_scope": [
+    "Business code or interface changes",
+    "Other workstream ownership or records",
+    "Production decisions, remote push or deployment"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "Current Git/record facts agree; Core and Community commits reachable on local main",
+    "Workspace validation and all governance regressions pass",
+    "Finish with clean Foundation and local main integration"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "5e2aaf81445056d95b8617af27d11a36e26c46eb",
+      "branch": "docs/MCP-F2-FOUNDATION-001-closeout-evidence",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-012",
+    "MCP-F1-FOUNDATION-015",
+    "MCP-F2-CONTRACTS-001",
+    "MCP-F2-COMMUNITY-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "Project owner 2026-10-12 explicit request for whole-project development and closeout prioritizing Core and Community",
+    "reason": "Final evidence reconciliation after local integration; preserve unresolved provider/pricing/privacy/production gates and Skin ownership."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Core main9303cc6, Community main70e55a1, Contracts main63592a2 locally integrated and clean; Core302 and Community45 automated tests plus both actual runtime smoke passed. Community runtime a4654b59..., Core runtime9f48bad5...; no push/deploy. Skin owner independently committed cf386b6 and updated its blocked record; no takeover."
+  ]
+}
