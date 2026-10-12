@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-COMMUNITY-001",
+  "title": "Community resource producer: verified uploads, immutable versions and retention",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-12T11:56:07.668Z",
+  "updated_at": "2026-10-12T11:56:07.668Z",
+  "primary_repository": "mc-plan-community",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Implement Community alpha.1 as a runnable independently deployed resource service, with real PostgreSQL/S3-compatible byte verification, ownership/idempotency, immutable versions/licenses, controlled reads/downloads and deletion cleanup. Runtime moderation remains fail-closed pending Q-009.",
+  "in_scope": [
+    "Independent strict NestJS/Prisma/PostgreSQL service and runtime image with explicit migrations",
+    "Generate/lock public contract types and validation from Contracts d205a59; no copied public types",
+    "Core public API active-identity adapter and verified OIDC user authorization",
+    "Signed quarantine upload, byte/SHA/PNG/UV checks and private immutable seal",
+    "Resource/version/license/query/pagination/download/unpublish plus persisted audit/idempotency and recoverable cleanup",
+    "Moderation application port and disabled fail-closed runtime; explicit synthetic moderation fixture only for tests",
+    "Full declared gates, real database/S3 protocol integration and bounded fake-provider state-machine evidence"
+  ],
+  "out_of_scope": [
+    "Production moderation provider or manual/admin permissions before Q-009/Q-010 decision",
+    "F4 social/recommendation/admin surfaces before F2/F3 gates",
+    "Official Skin integration/takeover, other repository writes, product pricing or production deployment",
+    "Claiming backup expiry/recovery passed without Ops drill or formal license approval"
+  ],
+  "contract_impact": "Producer of already-locked Community 0.1.0-alpha.1 (Contracts d205a59). Public artifact changes require a new Contracts workflow first.",
+  "acceptance_evidence": [
+    "Full lint/typecheck/unit/integration/HTTP/contract/architecture/migration/object-storage/moderation/build gates and runtime build",
+    "Real PostgreSQL and S3-compatible HTTP storage prove ownership, concurrency/replay/conflict, upload overwrite isolation, immutability, pagination, fail-closed review, deletion and retryable cleanup",
+    "Runtime disabled moderation never publishes; synthetic allow/reject fixture is explicitly test-only",
+    "Clean committed milestone records, coordination Finish and local main integration"
+  ],
+  "repositories": {
+    "mc-plan-community": {
+      "base_commit": "488c6b2b6b5c418c9896ed5e70d9337e217356ff",
+      "branch": "feat/MCP-F2-COMMUNITY-001-resource-producer",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CORE-012",
+    "MCP-F1-FOUNDATION-015",
+    "MCP-F2-CONTRACTS-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Q-009 clarification remains pending; dependent production/manual-review choices will not be inferred. Other independent F2 engineering authorized by owner and ADR-0014. Core SDK/API contract read-only; S3 tests use a real local S3-compatible protocol server, not a mock storage port."
+  ]
+}
