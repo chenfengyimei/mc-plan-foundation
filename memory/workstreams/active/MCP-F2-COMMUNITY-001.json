@@ -8,18 +8,20 @@
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-12T11:56:07.668Z",
-  "updated_at": "2026-10-12T11:56:07.668Z",
+  "updated_at": "2026-10-12T12:08:28.005Z",
   "primary_repository": "mc-plan-community",
-  "supporting_repositories": [],
+  "supporting_repositories": [
+    "mc-plan-contracts"
+  ],
   "reference_repositories": [
     "mc-plan-foundation",
-    "mc-plan-contracts",
     "mc-plan-core",
     "mc-plan-ops",
     "mc-plan-skin"
   ],
   "objective": "Implement Community alpha.1 as a runnable independently deployed resource service, with real PostgreSQL/S3-compatible byte verification, ownership/idempotency, immutable versions/licenses, controlled reads/downloads and deletion cleanup. Runtime moderation remains fail-closed pending Q-009.",
   "in_scope": [
+    "Contract-first alpha.2 correction: declare existing Core profile:read alongside Community write/private-read scopes to resolve active business identity over the public Core API. No new scope invented.",
     "Independent strict NestJS/Prisma/PostgreSQL service and runtime image with explicit migrations",
     "Generate/lock public contract types and validation from Contracts d205a59; no copied public types",
     "Core public API active-identity adapter and verified OIDC user authorization",
@@ -34,7 +36,7 @@
     "Official Skin integration/takeover, other repository writes, product pricing or production deployment",
     "Claiming backup expiry/recovery passed without Ops drill or formal license approval"
   ],
-  "contract_impact": "Producer of already-locked Community 0.1.0-alpha.1 (Contracts d205a59). Public artifact changes require a new Contracts workflow first.",
+  "contract_impact": "Community alpha.2 prerelease security convergence: existing profile:read becomes explicit in authenticated Community operations because Core /v1/me owns active identity resolution. No alpha.1 producer/consumer or deployment exists; contract must commit and generate before producer. Core/Skin artifacts unchanged.",
   "acceptance_evidence": [
     "Full lint/typecheck/unit/integration/HTTP/contract/architecture/migration/object-storage/moderation/build gates and runtime build",
     "Real PostgreSQL and S3-compatible HTTP storage prove ownership, concurrency/replay/conflict, upload overwrite isolation, immutability, pagination, fail-closed review, deletion and retryable cleanup",
@@ -45,6 +47,12 @@
     "mc-plan-community": {
       "base_commit": "488c6b2b6b5c418c9896ed5e70d9337e217356ff",
       "branch": "feat/MCP-F2-COMMUNITY-001-resource-producer",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "d205a59eb7ce638e47991236c72c11ad280cc3c7",
+      "branch": "feat/MCP-F2-COMMUNITY-001-identity-contract",
       "last_checkpoint_commit": null,
       "final_commit": null
     }
@@ -58,6 +66,7 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "Q-009 clarification remains pending; dependent production/manual-review choices will not be inferred. Other independent F2 engineering authorized by owner and ADR-0014. Core SDK/API contract read-only; S3 tests use a real local S3-compatible protocol server, not a mock storage port."
+    "Q-009 clarification remains pending; dependent production/manual-review choices will not be inferred. Other independent F2 engineering authorized by owner and ADR-0014. Core SDK/API contract read-only; S3 tests use a real local S3-compatible protocol server, not a mock storage port.",
+    "Implementation exposed a concrete prerequisite: Core getCurrentUser requires profile:read; treating it as an undeclared hidden prerequisite would violate the alpha.1 scope surface. Expanded to Contracts as sole writable supporting repository before any Contract edit; alpha.2 will explicitly declare the existing scope. No other locks overlap."
   ]
 }
