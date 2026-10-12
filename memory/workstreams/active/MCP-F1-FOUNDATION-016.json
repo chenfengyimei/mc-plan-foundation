@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-FOUNDATION-016",
+  "title": "Q-001 路线决议落档（ADR-0015 概念图管线）与 F1 里程碑收官治理",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/f016-f1-closeout-20261012",
+  "owner": "Codely/f016-f1-closeout-20261012",
+  "started_at": "2026-10-13T00:01:24.9574160+08:00",
+  "updated_at": "2026-10-13T00:01:24.9574160+08:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-community",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "把 Q-001（正式 AI 生成提供商）的所有者决议与受控基准证据落为 ADR-0015 与 open-questions Q-001 行注记（正式厂商绑定按所有者实答保持未决）；完成 F1 里程碑收官治理：34 项已关工作流证据矩阵逐条核验，并按所有者 2026-10-13 ask_user 实答把 F1 落档为“工程面完成、正式收官待 MCP-F1-SKIN-009 视觉验收通过”。激活前提已实测：SKIN-008 于 2026-10-12 以工程范围收官（视觉验收未由任何候选通过，所有者改选概念图管线并移交 SKIN-009），Skin main 8932395=origin/main，远端 feat 分支已删除，Skin STATUS 为收官机器真相，基准证据目录齐备。",
+  "in_scope": [
+    "decisions/0015-skin-visual-acceptance-route-concept-bridge.md（ADR-0015）：按实际事实链记录 Q-001 决策路径（Q-001=B 受控付费基准 2026-10-09 授权 → flash 档证伪 1.5/2/4/1 高方差 2026-10-10/12 → 所有者 2026-10-12 三选一先选 a 旗舰重测 → 两把交付 key 对旗舰 glm-5.3 均 error 1113 无配额、受控生成 0/5 零消耗 → 同会话改选概念图管线并派发 02 号，a 被取代 → SKIN-008 工程范围收官、视觉验收与两路线可比指标口径移交 SKIN-009）；正式厂商绑定保持未决与“基准 ADR 决定前生产拒绝非基准适配器实例化”边界；Q-011/Q-012 未迁移事项注记",
+    "memory/open-questions.md：Q-001 行注记 2026-10-12 路线决策与 ADR-0015 指针，行保持开放、不写任何厂商已决值（所有者 ask_user 实答）",
+    "memory/current/portfolio.md：六行仓现状同步到 2026-10-13 凌晨机器真相（Skin SKIN-008 工程收官 8932395 已推送+SKIN-009 active；Contracts e4d6de1 含 Community SDK alpha.2 十操作；Ops a0e78d7 含 OPS-004 镜像统一+指标面；Core 9303cc6；Community 70e55a1；Foundation 治理增量）+ F1 里程碑落档段（工程面完成、正式收官待 SKIN-009 视觉验收）",
+    "docs/STATUS.md：F1 收官状态同步（注册表 55→56 completed / 2 active 实况、2026-10-12 深夜三关闭、ADR-0015、六仓 main 推送状态）",
+    "docs/delivery-plan.md：新增 F1 收官落档段（证据矩阵逐项、出口证据、F2 进行中基线）；F2-FOUNDATION-001 的 2026-10-12 对账结论保留为历史基线不重写",
+    "全量治理回归：validate-workspace、validate-coordination Start/Continue/Finish、test-coordination、test-workspace-scanning、test-foundation-write"
+  ],
+  "out_of_scope": [
+    "任何产品仓文件（Core/Contracts/Ops/Community/Skin 全部只读）；MCP-F1-SKIN-008 记录本体（已归档 completed 不动）；MCP-F1-SKIN-009 与 MCP-F2-CONTRACTS-003 等其他 Owner 的活动记录",
+    "Q-001 正式厂商绑定值（保持未决，待 SKIN-009 概念图管线受控基准后的新 ADR）；Q-003/Q-013/Q-004/Q-006/Q-009/Q-014/Q-016 等其余未决项与任何生产决策",
+    "F1 里程碑正式宣布（所有者实答=工程面完成、正式收官待 SKIN-009 视觉验收；不自行宣布正式收官）",
+    "Foundation Skill/工具代码（scripts/ 只读）；生产采购、部署或远端发布授权扩张"
+  ],
+  "contract_impact": "none: governance records only - ADR-0015 plus open-questions/portfolio/STATUS/delivery-plan prose; no public contract, code, or tooling change anywhere",
+  "acceptance_evidence": [
+    "ADR-0015 提交且与已记录事实链一致：每个事实有记录/提交/日志出处（mc-skin008-benchmark-20261010/ 四张候选 PNG 与基准报告、mc-skin008-flagship-20261012/SESSION-LOG.md 接管与探测台账、MCP-F1-SKIN-008.json 工程范围收官叙述、MCP-F1-SKIN-009.json 活动记录）",
+    "open-questions.md Q-001 行与 ADR-0015/SKIN-008/SKIN-009 记录一致，且不含任何厂商已决值（保持开放）",
+    "portfolio.md 与 docs/STATUS.md 与 docs/delivery-plan.md 与 Git/注册表机器真相一致（F1=工程面完成·正式收官待 SKIN-009 视觉验收；56 completed / 2 active；六仓 main 推送状态如实）",
+    "治理回归全绿留证：validate-workspace（六仓全量）、test-coordination 14/14、test-workspace-scanning 21/21、test-foundation-write 14/14、validate-coordination Start/Continue/Finish 通过"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "814a4890fa82e53cab5008699fcb320f53cc0bca",
+      "branch": "feat/MCP-F1-FOUNDATION-016-f1-closeout-q001-adr",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-008",
+    "MCP-F2-FOUNDATION-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "项目所有者 2026-10-12 f016 派工提示词（01 号 SKIN-008 收官后两项治理收口：Q-001 落 ADR 与 open-questions、F1 里程碑收官治理）+ 会话内 ask_user 实答（2026-10-13：F1=工程面完成·正式收官待 SKIN-009 视觉验收；ADR-0015 按实际事实链落档、Q-001 保持开放注记）",
+    "reason": "Foundation 主仓治理切片：把所有者 Q-001 路线决议与受控基准证据落为 ADR-0015、按所有者实答完成 F1 里程碑收官落档；不改变 F2/Community 全局方向，不触碰业务代码与其他 Owner 记录。"
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Registered 2026-10-13 (Codely/f016-f1-closeout-20261012) per the owner's 2026-10-12 f016 dispatch (two-item governance closeout after the 01-session SKIN-008 closure) and the in-session ask_user answers (F1 engineering complete, formal closeout pending SKIN-009 visual acceptance; ADR-0015 records the actual fact chain and Q-001 stays open with an ADR-0015 annotation). Activation prerequisites verified live before registration: MCP-F1-SKIN-008.json in completed with repositories.mc-plan-skin.final_commit 893239584d7e527100db07c4d7b88e2af43fd39f and the engineering-scope closeout narrative (visual acceptance NOT passed by any candidate; owner pivoted to the concept-bridge pipeline); Skin main = origin/main = 8932395 (15 workstream commits ff-merged 787bc34 to 4a16eb4 plus closeout docs, remote feat branch deleted, ls-remote shows only main); Skin docs/STATUS.md is closure machine truth; benchmark evidence present at /Users/chenfeng/.codex/outputs/mc-skin008-benchmark-20261010/ and /Users/chenfeng/.codex/outputs/mc-skin008-flagship-20261012/SESSION-LOG.md. In-lock checks: F1-FOUNDATION-015 completed (ID sequence 016 is next unused), dependencies MCP-F1-SKIN-008 and MCP-F2-FOUNDATION-001 completed, expected active set MCP-F1-SKIN-009 + MCP-F2-CONTRACTS-003 present with no active Foundation writer. Dispatch premise divergence recorded honestly: the dispatch assumed 'Q-001=a passed + owner accepted a candidate'; the authoritative live closure narrative is the engineering-scope closeout with the visual-acceptance transfer to SKIN-009, and the ADR content follows the recorded facts per the no-temporary-values-for-undecided-items red line."
+  ]
+}
+
