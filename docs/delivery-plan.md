@@ -1,6 +1,21 @@
 # MC Plan 完整交付路线
 
-状态：待逐项执行；核对日期：2026-10-09（风险段已按关闭记录更新）。目标：完成现有六仓的 F1–F6/V1 范围，包括完整社区、Skin 双模式、自部署和上线验收。本文安排跨仓交付依赖；接口以 Contracts、详细单仓顺序以各仓 development-plan、执行权以活动工作流为准。
+状态：待逐项执行；核对日期：2026-10-13（F1 收官落档段新增）。目标：完成现有六仓的 F1–F6/V1 范围，包括完整社区、Skin 双模式、自部署和上线验收。本文安排跨仓交付依赖；接口以 Contracts、详细单仓顺序以各仓 development-plan、执行权以活动工作流为准。
+
+## 2026-10-13 F1 收官落档（MCP-F1-FOUNDATION-016）
+
+F1 里程碑按项目所有者 2026-10-13 ask_user 实答落档：**工程面完成，正式收官待 MCP-F1-SKIN-009 视觉验收通过**。证据矩阵已逐条核验（每项的记录位于 `memory/workstreams/completed/`，终态提交经 `git merge-base --is-ancestor` 验证在对应仓 main 可达）：
+
+- **Core（9 项全关，main 9303cc6=origin）**：CORE-004 日额度、CORE-005 不可变积分账本/余额、CORE-006 outbox 发布器、CORE-007 dev-app Keycloak 生命周期、CORE-008 消费者拉取投递+首个真实消费者、CORE-009 公开资料、CORE-010 注销、CORE-011 本地有界指标面、CORE-012 发布位序串行化修复；302 项自动化 + 镜像 smoke。
+- **Contracts（6 项全关，main e4d6de1=origin）**：core `0.1.0-alpha.7`（PAT/权益/事件/公开资料/注销全链）+ Core SDK 17 操作、skin `0.1.0-alpha.1`（ADR-0012 匿名窗口八操作）、community `0.1.0-alpha.2` + Community SDK alpha.2 十操作（F2-CONTRACTS-002）。
+- **Ops（4 项全关，main a0e78d7=origin）**：OPS-001 真实 Keycloak 令牌、OPS-002 真实邮件流（Mailpit，非生产邮件）、OPS-003 备份-破坏-恢复演练（实测 RPO 5.0/5.2 秒、RTO 12.8 秒，只作本地证据不升格，Q-016 未决）、OPS-004 镜像统一 mcp-f1-core-012-closeout + OTEL_METRICS_PORT 指标接线 + validate-dev-metrics.ps1 真实验收。
+- **Skin（001..008 全关，main 8932395=origin）**：SKIN-008 按所有者 2026-10-12 权威决策以**工程范围**收官——离线 Pixel Foundry 工作台、skin alpha.1 生产者四端点、v4 逐像素蓝图协议第 1-6 轮与确定性渲染器全部完成并经全量门禁；**视觉验收未由任何候选通过**（flash 证伪 1.5/2/4/1、旗舰 glm-5.3 两把交付 key 均无配额未获测试窗口），连同两路线可比指标口径移交 MCP-F1-SKIN-009；Q-001 路线决策落 [ADR-0015](../decisions/0015-skin-visual-acceptance-route-concept-bridge.md)，**正式厂商绑定保持未决**。
+- **治理**：ADR-0011（消费者拉取）、ADR-0012（匿名窗口）、ADR-0013（预发布基线=本地记录：本地运行基线 + Q-015 已决 + Q-004/Q-006/Q-014/Q-016 顺延 V1 + 实测值不升格）、ADR-0014（F2 工程入口）、ADR-0015（Q-001 路线）。
+- **F1 出口证据**：身份/PAT/权益/积分/审计/outbox/事件投递完整闭环（真实容器与真实令牌）、恢复演练实测、本地指标面、canonical 非 root 镜像、六仓 main=origin 推送完成——均按 ADR-0013 本地记录形态成立。
+
+**F2 进行中基线**：F2-CONTRACTS-001（community alpha.2）、F2-COMMUNITY-001（生产者 main 70e55a1 + 镜像）、F2-CONTRACTS-002（Community SDK）、F2-FOUNDATION-001（全仓对账）已关；**MCP-F2-CONTRACTS-003（官网门户 GAP-1 preview alpha.3 契约）与 MCP-F1-SKIN-009（概念桥接）实施中**；Q-009 审核方案、Q-003/Q-013 及 V1 门槛维持未决。F1 正式收官的唯一待条件=SKIN-009 视觉验收通过（含其后的 Q-001 厂商绑定新 ADR）；F2 完整出口（目标 S3/备份恢复/审核放行）与 F4/F5/F6/V1 顺序不变。
+
+下一节（2026-10-12 F2-FOUNDATION-001 对账）结论保留为历史基线；其中"Skin 仍 blocked/cf386b6、记录仍 blocked"等行已被本节与 2026-10-12 深夜关闭事实取代（SKIN-008 已按所有者决策工程范围收官）。
 
 ## 2026-10-12 本轮实际交付与下一停止条件
 
