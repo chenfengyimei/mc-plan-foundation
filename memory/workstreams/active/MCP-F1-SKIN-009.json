@@ -1,0 +1,81 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-SKIN-009",
+  "title": "图像生成模型 Provider 扩展与概念图视觉桥接",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/skin009-concept-bridge-20261012",
+  "owner": "Codely/skin009-concept-bridge-20261012",
+  "started_at": "2026-10-12T23:35:00.6723090+08:00",
+  "updated_at": "2026-10-12T23:35:00.6723090+08:00",
+  "primary_repository": "mc-plan-skin",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-contracts"
+  ],
+  "objective": "以厂商中立方式为 Skin 预留图像生成模型接入能力：扩展 Provider 类型注册（fake|llm|image）与启动校验，新增图像生成客户端与视觉提取客户端两个注入式抽象，实现「用户描述 → 概念图生成 → 视觉模型读图提取 → v4 逐像素蓝图 → 现有确定性渲染器 → PNG」的图像 Provider 适配器，使图像生成模型与文本模型在同一 ProviderAdapter 接缝下可插拔互换；Q-001 基准 ADR 决定前不绑定任何正式厂商，生产环境继续拒绝非基准适配器实例化。",
+  "in_scope": [
+    "packages/config：WORKER_PROVIDERS 扩为 fake|llm|image；新增 SKIN_IMAGE_BASE_URL、SKIN_IMAGE_API_KEY、SKIN_IMAGE_MODEL 与可选 SKIN_IMAGE_SIZE、SKIN_IMAGE_TIMEOUT_MS；SKIN_PROVIDER=image 时缺必需连接配置启动失败并指出缺失字段，绝不静默回退 Fake（对齐 llm 现有行为）；密钥进 pino redact，不落日志",
+    "packages/provider-sdk：新增厂商中立 ImageClient 抽象（描述→概念图字节、用量、调用 ID、标准错误 rate_limited/timeout/unavailable），注入式、可离线 mock，模式对齐既有 LlmClient",
+    "packages/provider-sdk：新增视觉提取客户端抽象（图像+文本输入→结构化文本输出），实现上以 OpenAI 兼容消息体携带图像内容段，不绑定具体厂商；配置默认复用 SKIN_LLM_* 通道，可选独立 SKIN_VISION_* 配置（派工词已按最小改动原则定夺：默认复用 SKIN_LLM_*，可选 SKIN_VISION_* 独立覆盖）",
+    "新增 ImageConceptSkinProvider implements ProviderAdapter：内部两跳管线——① ImageClient 依用户描述与手臂模型产概念图 → ② 视觉提取客户端读概念图并依据原描述输出 v4 蓝图（复用既有 JSON 提取、尺寸/调色板校验、拒答判定、行补丁精修与边界兜底）→ ③ 现有确定性渲染器出 PNG；输出仍经 skin-validator 全量校验（64×64、Steve/Alex、双层、overlay 非空）",
+    "概念图或视觉提取的各失败类别分别映射标准错误码（PROVIDER_UNAVAILABLE/PROVIDER_TIMEOUT/PROVIDER_RATE_LIMITED/PROVIDER_INVALID_RESPONSE/PROVIDER_CONTENT_REJECTED），业务层零改动感知 Provider 类型",
+    "apps/worker createProvider() 增加 image 分支；apps/web 顶栏与工作台的 Provider 徽标及提示扩展呈现「真实图像生成」模式，Fake 概念图仅用于明确标识的演示与测试",
+    "scripts/start-demo.mjs：新增 --provider=image 演示入口（注入固定概念图 fixture，走完整视觉提取管线）；start:real --provider=image 缺配置拒绝启动，不回退",
+    "离线单元测试（mock 双客户端：概念图 fixture 字节→确定性蓝图提取→渲染→校验）与现有 provider-sdk 测试套并存不回归；Playwright 自包含栈沿用端口可覆盖能力完成 image 模式全链冒烟",
+    "pnpm check:full 全绿并留证（format/build/lint/严格 typecheck/单测/契约一致/fixtures/集成/Playwright）",
+    "Q-001 衔接记录：把图像路线纳入基准候选，在 Skin 文档中记录「文本直出 v4」与「概念图→视觉→v4」两条路线的可比指标口径（有效皮肤率、编辑一致性、延迟、成本、地区与数据条款），本工作流不实施基准本身（现场核定：ADR-0015 尚未落档，故按此条执行并注明图像路线为能力预留）"
+  ],
+  "out_of_scope": [
+    "Q-001 生产厂商绑定、基准执行与 ADR 本身（本工作流只建厂商中立扩展点；生产环境实例化图像适配器继续拒绝，与 LLM/Fake 一致）",
+    "公共 OpenAPI、JSON Schema、事件、数据库迁移或 SDK 修改（图像 Provider 走既有已锁 skin.yaml 0.1.0-alpha.1 八操作公共表面；现场微调：草案原文的 0.1.0-draft 四操作已由 CONTRACTS-003 与 SKIN-008 演进为 0.1.0-alpha.1 八操作，契约零漂移证明为准）",
+    "皮肤专用/微调模型直出 64×64 UV sheet 路线与图像模型只产调色板/纹样的混合路线（所有者 2026-10-05 已选定概念图→视觉→v4 路线）",
+    "img2img 编辑迭代、局部重绘、多图对比选优等图像编辑能力",
+    "Official 集成、登录、额度、积分与社区发布",
+    "改写 MCP-F1-SKIN-008 的完成记录或历史（现场微调：008 已于 2026-10-12 工程范围收官并归档 completed/，视觉验收按所有者决策移交本工作流；其 main 合并（8932395）即本工作流的基线策略 A 前提，本工作流从合并后干净 Skin main 起步）",
+    "硬编码 Q-013 模型成本等未决产品数值",
+    "在数据库中持久化概念图或内部设计 JSON、新增面向用户的调试接口"
+  ],
+  "contract_impact": "none; internal only — ProviderAdapter 为包内接口，公共表面维持既有已锁 skin.yaml 0.1.0-alpha.1（八操作）不变，无 Contracts 修改",
+  "acceptance_evidence": [
+    "SKIN_PROVIDER=image 缺任一必需连接配置时启动失败并指明缺失字段，任何路径不静默回退 Fake；生产环境拒绝实例化图像适配器",
+    "mock 双客户端下「描述→概念图→v4 蓝图→PNG」整条管线离线可测，输出通过 skin-validator 全量校验且 overlay 非空，同一概念图输入渲染字节确定",
+    "fake/llm/image 三种 Provider 在相同业务链路（渲染→校验→候选→确认→保留清理）下行为一致，Playwright 在自包含栈完成 image 模式全链冒烟（端口可覆盖）",
+    "概念图限流/超时/不可用与视觉提取拒答/协议不合法分别映射既有标准错误码并可重试进入死信，业务层不解析厂商文本",
+    "视觉提取复用 v4 解析、行补丁精修与边界兜底路径；视觉通道短暂不可用时按既有语义完成或失败，不浪费用户渲染机会也不伪造结果",
+    "Web 徽标与提示明确区分真实图像生成、真实文本生成与固定样例演示；缺配置启动路径给出可理解错误",
+    "pnpm check:full 全绿（含新增单测与 Playwright image 冒烟），Coordination Start/Continue/Finish 校验通过",
+    "Q-001 衔接记录落文档：两路线基准指标口径齐备，本工作流未实施基准"
+  ],
+  "repositories": {
+    "mc-plan-skin": {
+      "base_commit": "893239584d7e527100db07c4d7b88e2af43fd39f",
+      "branch": "feat/MCP-F1-SKIN-009-concept-bridge",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F1-SKIN-008"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, explicit 2026-10-12 dispatch of the SKIN-009 concept-bridge prompt under activation condition 1: the flagship retest stalled on key quota (probe error 1113 on both delivered keys), the owner course-changed to the concept-art pipeline, and the engineering-scope SKIN-008 closeout was executed first per that dispatch",
+    "reason": "Owner-directed continuation of the F1 Standalone Skin line under the active F2 direction: the slice keeps Q-001 undecided (no production vendor binding, no benchmark execution), changes no public contract, migration or F2/Community scope, and transfers the closed SKIN-008 visual acceptance into the concept-art pipeline capability reservation per the recorded 2026-10-12 owner decision."
+  },
+  "handoff_history": [
+    {
+      "at": "2026-10-12T23:35:00.6723090+08:00",
+      "from_owner": "MC Plan project owner",
+      "to_owner": "Codely/skin009-concept-bridge-20261012",
+      "reason": "Owner dispatched the finalized SKIN-009 concept-bridge prompt (activation condition 1) after the same conversation closed SKIN-008 in engineering scope per its step 1: Skin main merged to 8932395 (16 commits pushed, feat branch deleted), Foundation record archived completed with the Finish validation passing. The draft JSON (2026-10-05, owner-confirmed route: concept art → vision LLM → v4 blueprint; direct-UV and hybrid routes rejected) is the record base with live adjustments annotated in out_of_scope/contract_impact/validation_results."
+    }
+  ],
+  "validation_results": [
+    "Registration 2026-10-12 (Codely/skin009-concept-bridge-20261012): record base is the owner-finalized draft JSON at .codely-cli/memory/mcp-f1-skin-009-draft.md with two live adjustments annotated honestly — (1) the draft's contract-surface references (skin.yaml 0.1.0-draft four operations) predate CONTRACTS-003 and the SKIN-008 producer; the live locked surface is skin.yaml 0.1.0-alpha.1 with eight operations, so contract_impact and the public-surface out_of_scope line were updated to the live state with a zero-drift contract:check as the proof obligation; (2) the draft's out_of_scope line about not modifying SKIN-008 was rewritten for the completed reality (008 archived 2026-10-12, engineering-scope closeout, visual acceptance transferred here by the owner decision recorded in its blocked_reason). Baseline strategy A is satisfied by construction: the branch feat/MCP-F1-SKIN-009-concept-bridge starts from the merged clean Skin main 893239584d7e527100db07c4d7b88e2af43fd39f (v4 blueprint schema, deterministic renderer and 3D workbench all included). The vision-channel config sub-decision is resolved per the dispatch's minimal-change principle: default reuse of the SKIN_LLM_* channel with optional independent SKIN_VISION_* overrides. ADR-0015 does not exist yet (foundation decisions/ latest is 0014), so the Q-001 bridge documentation in step 3 records the two-route comparable-metrics framework in Skin docs with the image route noted as a capability reservation rather than referencing a filed ADR. No paid model call is authorized in this workstream; all tests run offline against mock clients."
+  ]
+}
+
