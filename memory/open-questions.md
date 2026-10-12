@@ -12,7 +12,7 @@
 | Q-006 | 生产邮件服务 | 送达率、区域合规、退信处理、成本和 Keycloak 集成验证 | Ops/Core | F1 登录闭环进入预发布前 |
 | Q-007 | PAT 默认最长有效期 | **已决：30 天**（项目所有者 2026-10-03 决策，见文末已决记录） | Core/Security | 已于 F1 PAT 接口冻结前（Contracts `0.1.0-alpha.2`）决策 |
 | Q-008 | 热门、排行与推荐的初始权重 | 可解释性、时间衰减、作弊模拟和冷启动样本 | Community/Product | F4 发现功能公开测试前 |
-| Q-009 | 机器审核提供商与降级策略 | 覆盖率、误判率、地区与数据条款、成本和故障演练 | Community/Security | F2 发布闭环预发布前 |
+| Q-009 | ~~机器审核提供商与降级策略~~ **已决：本地人工审核放行**（见文末已决记录） | — | Community/Security | 已于 2026-10-13 决策（ADR-0016） |
 | Q-010 | 社区管理员权限细分 | 最小权限、双人复核范围、申诉职责和审计威胁模型 | Community/Security | F4 管理端实现前 |
 | Q-011 | Skin 3D 预览库 | Java 64×64 与双层兼容、体积、许可证、无障碍和维护状态 | Skin | F3 前端工程初始化前 |
 | Q-012 | 结构化创作意图字段 | 对话原型、提供商可移植性、隐私最小化和契约稳定性 | Skin/Contracts | F3 Skin API 字段冻结前 |
@@ -29,3 +29,5 @@
 
 
 - **Q-007 PAT 默认最长有效期：30 天**。决策人：MC Plan 项目所有者；决策日期：2026-10-03；授权途径：CORE-003 派工提示词中所有者选择“完整第 4 步”并给出 30 天决策值。落实方式：Contracts `0.1.0-alpha.2` 的 `CreatePersonalAccessTokenRequest.expires_in_days` 以 `maximum: 30`、`default: 30` 机器锁定，并由 `scripts/validate_contracts.py` 强制检查；Core 运行时配置 `PAT_MAX_VALIDITY_DAYS` 允许 1–30、默认 30，不得调高突破契约。若未来需要延长上限，属于新的产品/安全决策，须由 Core/Security Owner 重新决策并同步契约。
+
+- **Q-009 审核方案：本地人工审核放行（拒绝指定机器审核提供商）**。决策人：MC Plan 项目所有者；决策日期：2026-10-12（方案拍板，06 总控会话 ask_user 收集）；2026-10-13 补齐审核员权限/语义 D1-D4（Codely/csdk-community-20261012 会话 ask_user 收集，全部采纳推荐值）。落实方式：[ADR-0016](../decisions/0016-community-local-manual-moderation.md) 落档形态/fail-closed/授权与操作面——新增 userOAuth scope `moderation:review`（realm 仅授予指定审核员，Community 验 scope 与 resource:write 同型）、单决定端点 `POST /v1/resources/{resourceId}/versions/{versionId}/review`（{decision: approve|reject, reason?} 字段封闭+Idempotency-Key，仅 pending_moderation 候选可审，approve 复用既有放行语义、reject 保持老版本）、单人放行+全审计、本轮不加待审队列；无外部审核 API/数据传输；实施顺序 = ADR → Contracts 审核 face（预计 Community 0.1.0-alpha.4）→ 生产者本地人工 adapter → 真实故障验收；升级到机器/外部审核须新 ADR。Q-010 其余细分仍按原门槛保留。
