@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-001",
   "title": "Core and Community local delivery evidence and remaining product gates",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-12T14:24:14.747Z",
-  "updated_at": "2026-10-12T14:24:14.747Z",
+  "updated_at": "2026-10-12T14:30:18.898Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,8 +39,8 @@
     "mc-plan-foundation": {
       "base_commit": "5e2aaf81445056d95b8617af27d11a36e26c46eb",
       "branch": "docs/MCP-F2-FOUNDATION-001-closeout-evidence",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "10a01fb8e3c3fe62cfb761a66450b51615230dfd",
+      "final_commit": "10a01fb8e3c3fe62cfb761a66450b51615230dfd"
     }
   },
   "depends_on": [
@@ -57,6 +57,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Core main9303cc6, Community main70e55a1, Contracts main63592a2 locally integrated and clean; Core302 and Community45 automated tests plus both actual runtime smoke passed. Community runtime a4654b59..., Core runtime9f48bad5...; no push/deploy. Skin owner independently committed cf386b6 and updated its blocked record; no takeover."
+    "Core main9303cc6, Community main70e55a1, Contracts main63592a2 locally integrated and clean; Core302 and Community45 automated tests plus both actual runtime smoke passed. Community runtime a4654b59..., Core runtime9f48bad5...; no push/deploy. Skin owner independently committed cf386b6 and updated its blocked record; no takeover.",
+    "Final governance gates actually passed: workspace (6 repositories,120 Markdown,86 JSON), coordination14/14, workspace scanning21/21, Foundation short-transaction14/14. Portfolio/status/delivery distinguish finished local Core302 and Community45 test/runtime results from unresolved complete F2/F4/V1 and owner/provider gates. Core9303cc6, Community70e55a1, Contracts63592a2 all clean and locally main-reachable; Skin cf386b6 is its owner's independent clean branch checkpoint, remains blocked and untouched. No remote push/deployment. Closure record and Finish precede local Foundation main ff-only integration."
   ]
 }
