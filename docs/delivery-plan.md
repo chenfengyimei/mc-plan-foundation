@@ -13,7 +13,7 @@ F1 里程碑按项目所有者 2026-10-13 ask_user 实答落档：**工程面完
 - **治理**：ADR-0011（消费者拉取）、ADR-0012（匿名窗口）、ADR-0013（预发布基线=本地记录：本地运行基线 + Q-015 已决 + Q-004/Q-006/Q-014/Q-016 顺延 V1 + 实测值不升格）、ADR-0014（F2 工程入口）、ADR-0015（Q-001 路线）。
 - **F1 出口证据**：身份/PAT/权益/积分/审计/outbox/事件投递完整闭环（真实容器与真实令牌）、恢复演练实测、本地指标面、canonical 非 root 镜像、六仓 main=origin 推送完成——均按 ADR-0013 本地记录形态成立。
 
-**F2 进行中基线**：F2-CONTRACTS-001（community alpha.2）、F2-COMMUNITY-001（生产者 main 70e55a1 + 镜像）、F2-CONTRACTS-002（Community SDK）、F2-FOUNDATION-001（全仓对账）已关；**MCP-F2-CONTRACTS-003（官网门户 GAP-1 preview alpha.3 契约）与 MCP-F1-SKIN-009（概念桥接）实施中**；Q-009 审核方案、Q-003/Q-013 及 V1 门槛维持未决。F1 正式收官的唯一待条件=SKIN-009 视觉验收通过（含其后的 Q-001 厂商绑定新 ADR）；F2 完整出口（目标 S3/备份恢复/审核放行）与 F4/F5/F6/V1 顺序不变。
+**F2 进行中基线**：F2-CONTRACTS-001（community alpha.2）、F2-COMMUNITY-001（生产者 main 70e55a1 + 镜像）、F2-CONTRACTS-002（Community SDK）、F2-FOUNDATION-001（全仓对账）已关；**MCP-F2-CONTRACTS-003 仓内契约与 SDK 已交付推送（community alpha.3 匿名内联 preview 锁 + SDK alpha.3，contracts main f723c94=origin；记录归档待本切片释放 Foundation 锁后补办）；MCP-F1-SKIN-009（概念桥接）实施中**；Q-009 审核方案、Q-003/Q-013 及 V1 门槛维持未决。F1 正式收官的唯一待条件=SKIN-009 视觉验收通过（含其后的 Q-001 厂商绑定新 ADR）；F2 完整出口（目标 S3/备份恢复/审核放行）与 F4/F5/F6/V1 顺序不变。
 
 下一节（2026-10-12 F2-FOUNDATION-001 对账）结论保留为历史基线；其中"Skin 仍 blocked/cf386b6、记录仍 blocked"等行已被本节与 2026-10-12 深夜关闭事实取代（SKIN-008 已按所有者决策工程范围收官）。
 
