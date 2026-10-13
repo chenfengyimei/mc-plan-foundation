@@ -1,0 +1,59 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-COMMUNITY-004",
+  "title": "Community self-deployment, target S3 recovery and resource portal",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T14:52:13.278582+08:00",
+  "updated_at": "2026-10-13T14:52:13.278582+08:00",
+  "primary_repository": "mc-plan-community",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-ops",
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-skin"
+  ],
+  "objective": "Deliver Community-owned public self-deployment/storage/recovery primitives and actual resource portal using existing alpha.4 contracts; preserve independent data ownership and fail-closed manual review.",
+  "in_scope": [
+    "Application-owned local private/versioned SeaweedFS S3 integration and self-deployment without official Ops topology edits",
+    "Encrypted consistent own DB/referenced-object archive and certified deletion replay before serving, bound30day archival expiry and actual version purge",
+    "Resource portal consumes fixed SDK artifact: PKCE, catalog/author/detail/preview/upload/manual-pending/license/unpublish with browser validation",
+    "Immutable Git-source contract generation so locked consumer reproduction does not read another active producer worktree; all existing producer gates plus new gates"
+  ],
+  "out_of_scope": [
+    "Writing Core/Contracts/Ops/Skin or taking over other session MCP-F4-CORE-001 locks",
+    "Public API/schema/scope policy changes, production target vendor choice, price/legal/reward decisions",
+    "Remote push, paid AI calls, production deploy; no claim of continuous production crash-recovery deletion journal"
+  ],
+  "contract_impact": "None: existing Community alpha.4 API and current single DB migration consumed as fixed images; Ops-only recovery operations under ADR0014 deletion-replay requirement. No public producer semantics change.",
+  "acceptance_evidence": [
+    "Real private S3 versioning/signatures/size/hash/CORS/permission integration plus destructive empty DB/object restore and no-resurrection checks",
+    "Authenticated archives/certificates/30day expiry negative tests and two independent recovery runs",
+    "Portal static/typecheck/build plus real browser acceptance existing alpha.4 resource endpoints",
+    "Existing full producer/runtime gates, own coordination Start/Continue/Finish and clean local main"
+  ],
+  "repositories": {
+    "mc-plan-community": {
+      "base_commit": "74d2bcc20bea038c52703998a49602afb134ae0e",
+      "branch": "feat/MCP-F2-COMMUNITY-004-selfdeploy-portal",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-COMMUNITY-003",
+    "MCP-F2-CORE-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "All six current worktrees clean; no active workstreams. Canonical skills Check passed. Owner requests all remaining work. MinIO historic official image pull returned401; evaluate maintained real S3 alternative only for isolated engineering, without changing production COS decision.",
+    "Read latest owner-directed ADR0018 and active MCP-F4-CORE-001: Core+Contracts+Ops locked by Codely. Ops registration was refused before repository branch/edit. Re-scope to sole primary Community and public application self-deployment (AGENTS ownership); official Ops combination remains separate."
+  ]
+}
