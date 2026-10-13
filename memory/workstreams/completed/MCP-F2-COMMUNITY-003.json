@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-COMMUNITY-003",
   "title": "Community source lock and real consumer upgrade to Core alpha.8",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-13T05:08:38.773Z",
-  "updated_at": "2026-10-13T05:08:38.773Z",
+  "updated_at": "2026-10-13T05:23:41.227Z",
   "primary_repository": "mc-plan-community",
   "supporting_repositories": [
     "mc-plan-contracts"
@@ -41,14 +41,14 @@
     "mc-plan-community": {
       "base_commit": "24f036411577c1f412333b6892024a72a3cc0960",
       "branch": "chore/MCP-F2-COMMUNITY-003-core-alpha8",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "74d2bcc20bea038c52703998a49602afb134ae0e",
+      "final_commit": "74d2bcc20bea038c52703998a49602afb134ae0e"
     },
     "mc-plan-contracts": {
       "base_commit": "481cc85e3f2f86adef5d43af27c6d24ee1f42b30",
       "branch": "chore/MCP-F2-COMMUNITY-003-core-alpha8",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "8090d8febe72fd3ad68812000184a31589b7fb5b",
+      "final_commit": "8090d8febe72fd3ad68812000184a31589b7fb5b"
     }
   },
   "depends_on": [
@@ -59,6 +59,7 @@
   "direction_exception": null,
   "handoff_history": [],
   "validation_results": [
-    "Both prerequisite workflows closed and local-main integrated. CurrentCoreapi unchangedgetCurrentUser shape, butCommunitygenerationstrictlyexpectedalpha.7/hashesneedsupgradeafteralpha.8; no silenthashdrift. Scope includesContractsSDKsmokeonly, no publicContractedits."
+    "Both prerequisite workflows closed and local-main integrated. CurrentCoreapi unchangedgetCurrentUser shape, butCommunitygenerationstrictlyexpectedalpha.7/hashesneedsupgradeafteralpha.8; no silenthashdrift. Scope includesContractsSDKsmokeonly, no publicContractedits.",
+    "Final consumer delivery: Corealpha.8source lock/11hashes regenerated fromContracts481cc85; CommunityAPIalpha.4/12operations unchanged. API/source checkpointd482331 with helperCore image fixed tofb1bc07. ActualCommunity check:full passed13unit+3contract+40integration=56,includingrealKeycloak/separateCorefb1bc07runtime;strictstatic,architecture26,existingmigration1/build/sourcehashzerodrift passed. Immutable consumer image mc-plan-community:mcp-f2-community-003-d482331 sha256:116a9003526d0fd758e2fae2bd14d2a338ee23c6207bec077854ff4482ee3e5f built and manual+disabledruntime bothpassed uid1000/migrate/signedPUT/seal/noautomaticpublish/author403/realmanualdecision+exactPNG/disabled503andprivate404/anonymous401/DBready503live200 withnewCore. CommunitySDKproducerpind482331,40tests/fullstatic/generate/cleanpack/realHTTP againstbothnewimages passed; bothSDKgeneratecheckszerodrift. CoreSDKfull37/realHTTP+Keycloak alreadypassedunderCORE001unchanged. Workspacepassed. No businessAPI/scope/migrationchanges, noCore/Ops/Skinwrites/remotepush/deploy. Evidence /Users/chenfeng/.codex/outputs/mc-core-oauth-20261013/. Allscopecomplete; Finish/main integration follow."
   ]
 }
