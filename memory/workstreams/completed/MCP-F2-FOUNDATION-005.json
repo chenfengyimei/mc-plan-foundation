@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-005",
   "title": "ADR-0018 admin console authorization model and bounded F4 management-line opening",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codely/admin-console-20261013",
   "owner": "Codely/admin-console-20261013",
   "started_at": "2026-10-13T14:43:33.301698+08:00",
-  "updated_at": "2026-10-13T06:45:27.5708600+00:00",
+  "updated_at": "2026-10-13T06:46:39.7707740+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -38,7 +38,8 @@
     "mc-plan-foundation": {
       "base_commit": "7343b47f57a3e418363ad0a6e3f45f91e2cc433c",
       "branch": "feat/MCP-F2-FOUNDATION-005-admin-console-adr0018",
-      "last_checkpoint_commit": "f5e4d05fda3fc249328b7ddf222c3683d8104585"
+      "last_checkpoint_commit": "f5e4d05fda3fc249328b7ddf222c3683d8104585",
+      "final_commit": "870e94caa0ab56a39b0bd50db577a7b1fdb1aead"
     }
   },
   "depends_on": [],
@@ -49,5 +50,7 @@
     "reason": "Foundation is not among the F2 direction allowed repositories; this governance slice only records the owner-authorized admin-console authorization model (ADR-0018) and the bounded F4-early opening, with no business implementation"
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "ADR-0018 committed as Accepted (content f5e4d05) with the owner 2026-10-13 dispatch and four same-day ask_user decisions recorded; direction entry_gate appended; portfolio/STATUS synced. Governance regressions on the final tree: validate-workspace 6 repositories/129 MD/103 JSON, test-coordination 14/14, test-workspace-scanning 21/21, test-foundation-write 15/15."
+  ]
 }
