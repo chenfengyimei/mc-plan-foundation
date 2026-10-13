@@ -1,0 +1,58 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-006",
+  "title": "Reconcile Community self-deployment and portal evidence in module audit",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T19:56:43.056151+08:00",
+  "updated_at": "2026-10-13T19:56:43.056151+08:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-community",
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Update the existing module completion audit to actual Community004 delivery and runtime-only model connectivity while preserving remaining release gates and other session ownership.",
+  "in_scope": [
+    "Only docs/module-completion-review.md facts and next dependency order; Community004 completed/main/image/70gates/publicselfdeploy/CLI/recovery/browser evidence",
+    "Current Coreadmin workstream remains active; budget and humanSkinvisual acceptance, formalmetadata/continuousOps/F3F4 remain explicit gates",
+    "Foundation declared coordination/workspace/scanning/shorttransaction regressions and cleanlocalmain closure"
+  ],
+  "out_of_scope": [
+    "No application/Contracts/Ops/Skin edits or messaging/takeover",
+    "No direction/milestone/provider/retention/price/legal change; no remote push/productiondeployment",
+    "No duplicate portfolio/status milestone update while globalF2 unchanged"
+  ],
+  "contract_impact": "None. Governance evidence reconciliation only, no public contract or durable policy change.",
+  "acceptance_evidence": [
+    "Foundation declared four validation commands plus Start/Continue/Finish and exactpathshorttransaction commit",
+    "Audit links and actual source/image/gates match completedCommunity004 and activeCore001 without fullV1 claim"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "a661ee37577d2f9d3a0d8cbdd74a2c6274d29c6c",
+      "branch": "docs/MCP-F2-FOUNDATION-006-module-evidence",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-COMMUNITY-004"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan owner latest whole-project completion continuation and prior per-module analysis/closeout instruction in this chat",
+    "reason": "Foundation governance only reconciles existing module audit after real Community004 closes; F2 direction and exit criteria unchanged."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Community004 closed, Finish passed, cleanlocalmain3e887c1. Canonicalfinal8811image2b24 passed bothruntime modes and publicCompose/actualCLI. Core001 admin work ownedbyCodely remainslocked; no takeover. Skin keyprovidedand47token auth probe passed, fullbenchmarkbudget question pending, no key saved."
+  ]
+}
