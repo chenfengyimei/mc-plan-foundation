@@ -1,8 +1,8 @@
 [CmdletBinding()]
-param()
+param([string]$EntryPoint = (Join-Path $PSScriptRoot 'invoke-foundation-write.ps1'))
 
 $ErrorActionPreference = 'Stop'
-$entry = Join-Path $PSScriptRoot 'invoke-foundation-write.ps1'
+$entry = (Resolve-Path -LiteralPath $EntryPoint).Path
 $pwsh = (Get-Process -Id $PID).Path
 $temporaryRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("mc-plan write spaces " + [guid]::NewGuid().ToString('N'))
 $passed = 0
@@ -168,6 +168,21 @@ param($Context)
     Set-Content -LiteralPath (Join-Path $repo 'foreign.md') -Value '# foreign'
     Expect-Failure { & $entry -WorkspaceRoot $root -Session governance-owner -TrackingId MCP-F1-FOUNDATION-001 -Transaction checkpoint -GovernanceBranch fix/MCP-F1-FOUNDATION-001-test -GovernancePaths @('own.md') -Action { throw 'must never enter' } } 'must be clean'
     Pass 'governance checkpoints accept exact own paths and reject foreign paths'
+
+    $root = New-WriteFixture 'missing active directory'
+    $repo = Join-Path $root 'mc-plan-foundation'
+    Remove-Item -LiteralPath (Join-Path $repo 'memory/workstreams/active') -Force
+    & $entry -WorkspaceRoot $root -Session owner -TrackingId MCP-F1-CORE-001 -Transaction missing-bucket -Action {
+        param($c)
+        Assert-True (Test-Path -LiteralPath (Join-Path $c.WorkspaceRoot '.mc-plan-foundation-write.lock/holder.json')) 'Parent creation must run inside the owned short transaction'
+        @{tracking_id=$c.TrackingId;owner=$c.Session;primary_repository='mc-plan-core';supporting_repositories=@()} | ConvertTo-Json |
+            Set-Content -LiteralPath (Join-Path $c.FoundationPath $c.ActiveRecordPath)
+        Submit-FoundationRecord -Context $c -Message 'test: register with missing active directory'
+    }
+    Assert-True (Test-Path -LiteralPath (Join-Path $repo 'memory/workstreams/active/MCP-F1-CORE-001.json')) 'Missing active directory registration did not persist'
+    Assert-True (-not (Test-Path -LiteralPath (Join-Path $root '.mc-plan-foundation-write.lock'))) 'Missing bucket registration leaked owned lock'
+    Assert-True (@(& git -C $repo status --porcelain).Count -eq 0) 'Missing bucket registration left dirty index'
+    Pass 'missing empty active bucket recreated within owned lock and precise registration succeeds'
 
     $root = New-WriteFixture 'record commit paths'
     $repo=Join-Path $root 'mc-plan-foundation'
