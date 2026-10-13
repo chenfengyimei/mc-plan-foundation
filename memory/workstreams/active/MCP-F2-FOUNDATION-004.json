@@ -1,0 +1,61 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-004",
+  "title": "Recover coordination after zero active records and refresh final module evidence",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T05:24:38.881Z",
+  "updated_at": "2026-10-13T05:24:38.881Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-community",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Fix observed Foundation transaction failure when Git omits emptyactivebucket, reproduce baseline and add isolated regression; reconcile completedCore/Community consumer evidence.",
+  "in_scope": [
+    "Foundation short-write helper creates absent active parent only within owned short lock",
+    "Optional explicit test entrypoint and real missing-bucket registration regression; preserve lock/index/branch invariants",
+    "Currentmodule table/portfolio/status updated to actualCore306 and Community56/officialOAuth/SDK evidence",
+    "FullFoundation declared gates, zeroSkillchanges, Finish/cleanlocalmain"
+  ],
+  "out_of_scope": [
+    "Any productrepoedit, scope/field change, owner policy or production/paid/remotepush action",
+    "ClaimcompleteF2/F3/F4/V1"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "Oldhelper baseline reproduces missing activebucket failure; newhelper registersownrecord without precreateddirectory",
+    "All15 short-write regressions plus14coordination/21scanner/workspacepass",
+    "Sourceanchoredtruthfor closedCORE001/COMMUNITY003 and currentknownunfinishedgates"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "35270bbbd529b7bb5dee2c3a2564e7fe158ce7f1",
+      "branch": "fix/MCP-F2-FOUNDATION-004-empty-active-bucket",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-FOUNDATION-003",
+    "MCP-F2-CORE-001",
+    "MCP-F2-COMMUNITY-003"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "Project owner 2026-10-13 explicit request to temporarily use manual review and continue entire project module-by-module completion/development, prioritizing Core and Community",
+    "reason": "Cross-project current evidence and necessary dependency ordering belong to Foundation; no business implementation or new product policy in this governance slice."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "ObservedregistrationfailureearlierwasGetChildItemonmissingemptyactivebucketafterGitcheckout; ownemptybrancheswererevertedandregistrationrecoveredbycreatingemptycoordinatorparent. No otherworkscopeaffected. Oldhelperbaselinecopiedto/private/tmp/mc-foundation-write-baseline-20261013.ps1forregressionproof. Core690193a,Community74d2bcc,Contracts8090d8f,Ops415a108cleanlocalmain; noactivebusinesslocks."
+  ]
+}
