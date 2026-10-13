@@ -74,3 +74,7 @@ pwsh -NoProfile -File scripts/validate-coordination.ps1 -WorkspaceRoot /Users/ch
 ## 不得提前实现
 
 Foundation 不初始化 Next.js、NestJS、Prisma、SDK 或生产部署，不替业务仓库决定未获得证据的字段和厂商。
+
+## 2026-10-13 零活动目录恢复回归
+
+FOUNDATION004实证Git省略空memory/workstreams/active目录后旧短事务入口提前失败。入口在本人短锁内创建该协调父目录，随后保持全部Owner/index/branch/record范围检查；新增真实隔离登记回归。test-foundation-write.ps1支持-EntryPoint以验证保存的旧入口复现失败，默认仍使用canonical入口。标准四门禁继续执行；不修改Skill或授权流程。

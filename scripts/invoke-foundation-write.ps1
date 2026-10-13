@@ -100,7 +100,11 @@ try {
             throw "Foundation must be clean before a transaction (governance may declare exact own paths); preserve files/index: $($status -join '; ')"
         }
     }
-    $records = @(Get-ChildItem -LiteralPath (Join-Path $foundation 'memory/workstreams/active') -Filter '*.json' -File |
+    # Git does not retain an empty directory after the last active record closes.
+    # Recreate the coordination parent only after acquiring this transaction's lock.
+    $activeDirectory = Join-Path $foundation 'memory/workstreams/active'
+    [System.IO.Directory]::CreateDirectory($activeDirectory) | Out-Null
+    $records = @(Get-ChildItem -LiteralPath $activeDirectory -Filter '*.json' -File |
         ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json -Depth 100 })
     $foundationOwners = @($records | Where-Object {
         $_.primary_repository -eq 'mc-plan-foundation' -or @($_.supporting_repositories) -contains 'mc-plan-foundation'
