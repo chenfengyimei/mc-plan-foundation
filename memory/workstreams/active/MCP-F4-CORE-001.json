@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F4-CORE-001",
+  "title": "Core admin read-only console face with apps/admin web and realm administrator acceptance",
+  "status": "active",
+  "milestone": "F4",
+  "initial_owner": "Codely/admin-console-20261013",
+  "owner": "Codely/admin-console-20261013",
+  "started_at": "2026-10-13T06:47:16.2090120+00:00",
+  "updated_at": "2026-10-13T06:47:16.2090120+00:00",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-ops"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "Deliver the ADR-0018 first admin-console slice: contract-first Core 0.1.0-alpha.9 read-only admin operations (admin:read), Core producer with scope+ADMIN-role+ACTIVE authorization, Ops realm-designated administrator with real acceptance and negatives, and the apps/admin PKCE web console for users/credits/entitlements/audit/outbox browsing.",
+  "in_scope": [
+    "Contracts: core.yaml 0.1.0-alpha.9 locks six read-only admin operations (listAdminUsers, getAdminUser, listAdminCreditLedger, listAdminEntitlementRecords, listAdminAuditRecords, listAdminOutboxRecords) under userOAuth scope admin:read with cursor pagination and field-closed schemas (no email/secret exposure); validate_contracts.py alpha.9 machine gates; SDK surface unchanged (17 operations, admin ops excluded until producer evidence)",
+    "Core producer: src/admin module with AdminStore port plus Prisma implementation, authorization = admin:read scope plus ADMIN business role plus ACTIVE status, PAT catalog excludes admin:read (UNKNOWN_SCOPE), service tokens rejected; contract/unit/e2e/integration tests and full gates; contracts/core-api.lock.json updated to alpha.9",
+    "Ops: realm admin:read client scope plus designated administrator user plus admin web PKCE client; validate-dev-environment.ps1 static gates; real-stack acceptance script covering administrator PKCE login and all six query surfaces plus labeled negatives (non-admin scope/role, PAT, service token)",
+    "apps/admin Next.js workspace package in mc-plan-core: PKCE login, users list/search, user detail, credit ledger, entitlement records, audit log, outbox delivery status pages calling the REST API directly; browser e2e smoke"
+  ],
+  "out_of_scope": [
+    "Any admin write operation (manual credit adjustment/refund exposure, PAT revocation, developer-app revocation, user status transitions) - deferred per ADR-0018 pending per-operation owner decisions and audit design",
+    "Community moderation queue/dual-review/appeals and any Community/Skin business change; SDK exposure of admin operations; production deployment",
+    "Q-010/Q-003/Q-013 decisions; price/legal/production values; claiming F2 or F4 complete"
+  ],
+  "contract_impact": "Core 0.1.0-alpha.9 adds six read-only admin operations under new userOAuth scope admin:read (realm-designated administrators only); existing 17 operations and all locked shapes unchanged; SDK surface unchanged until a later Contracts slice.",
+  "acceptance_evidence": [
+    "Core full gates green: unit/e2e/integration(real PostgreSQL)/contract vs locked alpha.9/architecture/migration/format/lint/typecheck/build",
+    "Ops real-stack acceptance green: administrator PKCE login queries all six surfaces; labeled negatives (no-scope user, wrong role, PAT UNKNOWN_SCOPE, service token) rejected",
+    "apps/admin browser e2e green against the real local stack (login + users + detail + ledger pages)",
+    "Runtime image rebuilt and smoke-verified on the final tree"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "690193aafdcefafd2349389fd540caca109d95ce",
+      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console"
+    },
+    "mc-plan-contracts": {
+      "base_commit": "8090d8febe72fd3ad68812000184a31589b7fb5b",
+      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console"
+    },
+    "mc-plan-ops": {
+      "base_commit": "415a1082bbbdbb22356482a49e2f1389eb5fd195",
+      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console"
+    }
+  },
+  "depends_on": [
+    "MCP-F2-FOUNDATION-005"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, explicit 2026-10-13 dispatch to complete the admin console with four same-day ask_user decisions (read-only-first; realm-designated users plus admin:read scope; apps/admin inside mc-plan-core; bounded F4-early opening), recorded in ADR-0018",
+    "reason": "Bounded F4-early admin-console slice under the active F2 direction per ADR-0018: Core-domain read-only admin queries plus apps/admin web and Ops realm acceptance only; no F2 exit criteria claimed, no admin write operations, Q-010 undecided items untouched"
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
