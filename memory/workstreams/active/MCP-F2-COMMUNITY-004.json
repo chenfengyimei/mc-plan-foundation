@@ -8,7 +8,7 @@
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-13T14:52:13.278582+08:00",
-  "updated_at": "2026-10-13T18:29:37.160613+08:00",
+  "updated_at": "2026-10-13T18:38:24.584027+08:00",
   "primary_repository": "mc-plan-community",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -23,7 +23,8 @@
     "Application-owned local private/versioned SeaweedFS S3 integration and self-deployment without official Ops topology edits",
     "Encrypted consistent own DB/referenced-object archive and certified deletion replay before serving, bound30day archival expiry and actual version purge",
     "Resource portal consumes fixed SDK artifact: PKCE, catalog/author/detail/preview/upload/manual-pending/license/unpublish with browser validation",
-    "Immutable Git-source contract generation so locked consumer reproduction does not read another active producer worktree; all existing producer gates plus new gates"
+    "Immutable Git-source contract generation so locked consumer reproduction does not read another active producer worktree; all existing producer gates plus new gates",
+    "Verify and fix duplicate immutable version label conflict using existing locked409 RESOURCE_STATE_CONFLICT, including atomic rollback/upload reuse; no new public shapes/scopes/policies."
   ],
   "out_of_scope": [
     "Writing Core/Contracts/Ops/Skin or taking over other session MCP-F4-CORE-001 locks",
@@ -55,6 +56,7 @@
   "validation_results": [
     "All six current worktrees clean; no active workstreams. Canonical skills Check passed. Owner requests all remaining work. MinIO historic official image pull returned401; evaluate maintained real S3 alternative only for isolated engineering, without changing production COS decision.",
     "Read latest owner-directed ADR0018 and active MCP-F4-CORE-001: Core+Contracts+Ops locked by Codely. Ops registration was refused before repository branch/edit. Re-scope to sole primary Community and public application self-deployment (AGENTS ownership); official Ops combination remains separate.",
-    "Community implementation e648fac and composition checkpoint committed. Full producer gates passed19unit+3contract+46integration=68, all formatting/lint/strict typecheck/migration1/build/architecture27 and Git-immutable contract11hashes passed. Two real destructive recovery runs and authenticated filesystem rotation; Keycloak PKCE/browser/mobile/permission/XSS/callback/actual downloads/unpublish passed. Isolated measured final RPO0.103/0.094s and RTO4.441/4.454s;30day simulatedclock with actual version/file deletion. Full startup races from concurrent Docker port bindings reproduced and resolved by maxWorkers1; actual domain concurrency assertions retained. All SDK consumed as SHA-locked packed artifacts. Runtime image/public Compose/executable CLI gates pending, no production claims."
+    "Community implementation e648fac and composition checkpoint committed. Full producer gates passed19unit+3contract+46integration=68, all formatting/lint/strict typecheck/migration1/build/architecture27 and Git-immutable contract11hashes passed. Two real destructive recovery runs and authenticated filesystem rotation; Keycloak PKCE/browser/mobile/permission/XSS/callback/actual downloads/unpublish passed. Isolated measured final RPO0.103/0.094s and RTO4.441/4.454s;30day simulatedclock with actual version/file deletion. Full startup races from concurrent Docker port bindings reproduced and resolved by maxWorkers1; actual domain concurrency assertions retained. All SDK consumed as SHA-locked packed artifacts. Runtime image/public Compose/executable CLI gates pending, no production claims.",
+    "Runtimeimage4f2f70f built, public composition/executable recovery CLI acceptance running. Module read uncovered duplicate-label unique constraint reaches generic503 rather than existing409; reproduce observable HTTP regression before a bounded correction."
   ]
 }
