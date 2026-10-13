@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-COMMUNITY-003",
+  "title": "Community source lock and real consumer upgrade to Core alpha.8",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T05:08:38.773Z",
+  "updated_at": "2026-10-13T05:08:38.773Z",
+  "primary_repository": "mc-plan-community",
+  "supporting_repositories": [
+    "mc-plan-contracts"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Complete the sequential consumer phase after Corealpha.8 producer closure: regenerate lockedCoretypes and validate Community with new immutable Core runtime and updated SDK smoke.",
+  "in_scope": [
+    "Corealpha.8 source pin/types generation while Communityalpha.4 DTO/operations unchanged",
+    "Community Core HTTP test fixtures consume finalnewimage; actualfullgates andruntimeverification",
+    "CommunitySDK realHTTP smoke reference/compatibility evidence toCorefinalimage; unchangedSDKmethods",
+    "Cleanlocalmain/coordinationFinish"
+  ],
+  "out_of_scope": [
+    "NewpublicAPI/scopes/migrations or Core/Ops/Skinbusiness edits",
+    "Production storage/backups/licenses/pricing/moderatorpolicy/deployment/remotepush",
+    "ClaimfullF2/F4completion"
+  ],
+  "contract_impact": "No contract changes. Communityalpha.4 unchanged; read-only consume lockedCorealpha.8 ebb00a6 through joint source snapshotContracts481cc85. Regenerate rather than hand-copy publictypes.",
+  "acceptance_evidence": [
+    "Generationhashzero drift; allCommunity56tests/strict/migration/build withnew Coreimage includingrealKeycloak",
+    "BothSDK generation checks; CommunitySDK40tests/static/pack/realHTTP againstnew Coreimage",
+    "NewCommunityruntimeimageverifyactualCore identity/manual/disabledrollback, Finish/main"
+  ],
+  "repositories": {
+    "mc-plan-community": {
+      "base_commit": "24f036411577c1f412333b6892024a72a3cc0960",
+      "branch": "chore/MCP-F2-COMMUNITY-003-core-alpha8",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "481cc85e3f2f86adef5d43af27c6d24ee1f42b30",
+      "branch": "chore/MCP-F2-COMMUNITY-003-core-alpha8",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-CORE-001",
+    "MCP-F2-COMMUNITY-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Both prerequisite workflows closed and local-main integrated. CurrentCoreapi unchangedgetCurrentUser shape, butCommunitygenerationstrictlyexpectedalpha.7/hashesneedsupgradeafteralpha.8; no silenthashdrift. Scope includesContractsSDKsmokeonly, no publicContractedits."
+  ]
+}
