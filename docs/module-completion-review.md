@@ -1,6 +1,6 @@
 # 六仓逐模块收尾核查
 
-核对：2026-10-13，MCP-F2-FOUNDATION-004（对003逐模块表追加实际交付）。用户要求临时人工审核并逐模块理解、开发与收尾；本表依据当前源码、已关闭记录与 Git，而非计划中的功能。已完成技术切片不等于完整产品、生产部署或视觉质量通过。当前执行方向 F2 / Community。
+核对：2026-10-13，MCP-F2-FOUNDATION-006（追加Community004真实交付，保留004协调修复事实）。用户要求临时人工审核并逐模块理解、开发与收尾；本表依据当前源码、已关闭记录与 Git。已完成技术切片不等于完整产品、生产部署或视觉质量通过。当前执行方向 F2 / Community；ADR0018只读管理台例外保持有界。
 
 ## Core：已实现模块及剩余范围
 
@@ -9,7 +9,7 @@
 | identity-link | 固定 OIDC issuer/audience/JWKS/有效期/已验证邮箱，issuer+sub 幂等映射业务 ID | IdP 迁移/重绑/恢复、MFA 和生产事故流程不能由首次登录实现替代 |
 | profile | 活动账号私有/公开资料、仅 display_name 编辑、业务账号注销与审计 | 年龄声明写入及其他权利表面按已有延期决定后置；注销不等于 IdP 删除 |
 | authorization | 主体/业务角色/scope/凭证隔离；服务与用户认证分离 | Developer App与PAT目录已分离，既有Community三scope委托与条件audience已完成；生产realm/角色管理仍后续 |
-| developer-app | 真实 Keycloak public/confidential 客户端、S256/精确回调、一次性机密、scope 收窄/撤销/补偿/核对 | 官方Community scope/audience接线已验收；生产realm硬化、官方门户消费者与角色管理入口仍后续 |
+| developer-app | 真实 Keycloak public/confidential 客户端、S256/精确回调、一次性机密、scope 收窄/撤销/补偿/核对 | Community委托/真实资源链与独立门户已验收；生产realm硬化与角色管理入口仍后续 |
 | token-metadata | PAT 哈希/前缀/最长30天/撤销/过期/最后使用与审计 | 目录拆分已完成，PAT仍不能获得Community/审核/service/profile:write；正式安全与生命周期扩展另行验收 |
 | entitlement | 上海日界每天3次，不累计，快照/并发/幂等消费 | Official Skin 消费者、失败策略与实际跨服务体验 |
 | credits | 不可变 grant/consume/refund/adjustment，非负余额、退款封顶、只读余额、核对 | Q-003 奖励值、Q-013 会话价格；公共计费/奖励接入不能填猜测值 |
@@ -18,45 +18,47 @@
 
 Core main690193a，API代码fb1bc07；CORE-012实证302基础已由F2-CORE-001增量扩至306项。CoreSDKalpha.8仍17操作，37项/pack及新固定镜像真实HTTP/Keycloak回归通过。源目录为 mc-plan-core/src 的对应模块，基础证据在CORE-012，增量在MCP-F2-CORE-001完成记录。
 
+并行管理台 MCP-F4-CORE-001 由 Codely 持有 Core/Contracts/Ops，已见只读管理台源码提交29939a0；记录仍active，不能据提交存在替其宣称全部门禁通过或释放锁。既有alpha.8证据与这条alpha.9管理面分别核对，Community004固定消费alpha.8，未修改另一会话源码。
+
 ## Community：已实现模块及剩余范围
 
 | 模块/源码归属 | 已验证能力 | 下一门槛 |
 |---|---|---|
-| platform/identity | 双 audience 用户令牌 + 每次 Core 活动身份解析、scope/速率/错误白名单 | 官方Developer App接入与Source锁alpha.8已完成；正式Web消费者与部署级全局限流后续 |
-| upload / storage | 私有短期 PUT、真实大小/SHA/CRC/64×64/有界解压/UV/第二层验证、封存不可覆盖 | 实际目标 S3 私有桶/CORS/签名/权限/版本清理验收 |
+| platform/identity | 双 audience用户令牌、每次Core活动身份、scope/速率/错误白名单、实际门户PKCE | 官方realm/全局限流/TLS与容量验收 |
+| upload / storage | 私有签名PUT、大小/SHA/CRC/64×64/有界解压/UV/第二层、不可覆盖封存；真实版本S3/CORS/桶权限隔离、容器/浏览器端点 | 生产COS/地域/细粒度IAM与正式容量验收 |
 | resource | 归属、容器、不可变版本/文件/许可、规范化幂等、事务审计 | 正式许可 Q-002、完整权利与保留 Q-005 |
-| catalog | 公开资源/作者分页、受控 download/inline preview，同一封存字节、下架即时404 | 正式消费者/门户，搜索标签/其他发现功能后置 F4 |
+| catalog / portal | 官方打包SDK消费：最新/作者/详情、纹理预览/字节下载、显式许可、上传/待审/作者下架；真实桌面/手机浏览器 | 搜索标签/互动等F4；当前无私有作品列表或审核队列，不虚构权限 |
 | manual-review | 指定 realm 审核员 scope、确切候选 approve/reject、审计业务 ID/哈希/原因；批准原子发布/outbox | 私有待审队列、申诉与细分权限属于 Q-010/F4，当前人工按作者提供文件和ID审核 |
-| worker | 持久作业、租约 fencing/恢复/重试、过期上传与7天原文件清理、下架终态 | 对象版本/备份最长30天淘汰及恢复前删除重放；清理积压观测 |
+| worker / selfdeploy-recovery | 持久作业/租约/重试/7天清理；下架及过期上传的30天历史版本扫除、加密归档轮换；认证删除重放后空环境恢复 | 持续独立删除journal/PITR、离机调度/告警、正式元数据最小化Q005；无证明保持下线 |
 | discovery / interaction / comment / social-graph | 未实施 | 标签搜索最新 → 点赞收藏 → 评论 → 关注流，逐批契约与真实验收 |
 | recommendation / notification / governance | 未实施 | Q-008 权重、规则反作弊；通知；Q-010 举报处置申诉与管理面 |
 
-Community main74d2bcc，Corealpha.8来源代码d482331；alpha.4共12操作，13单元+3契约+40集成=56项。manual/disabled镜像验收均过：私有待审、普通作者403、授权决定、原始哈希预览、下架、依赖失效；无新增迁移。详情：[人工审核手册](../../mc-plan-community/docs/manual-review.md)。角色回收不追溯修改离线JWT，权限撤销窗口需短token生命周期；Core业务停用仍逐请求拒绝。
+Community main3e887c1，最新实现8811b69；alpha.4十二操作与Corealpha.8保持不变，20单元+3契约+47集成=70项，全量通过。固定镜像mcp-f2-community-004-8811b69，image ID sha256:2b24e90a992d92ed08c96e1a8a062fbba2121dff9a8e7b76655c07bceb101f84，manual/disabled真实runtime与公共Compose/编译后恢复CLI均通过。两轮真实Keycloak/PG/版本S3先备份后HTTP下架、销毁全部源DB/S3、空环境恢复保持404、保留字节不变；VALIDATED未绑定上传也可恢复后绑定。30天使用模拟时钟而实际删除历史版本与加密文件，非等待30个自然日。没有新增迁移，详细范围/命令/限制见 [自部署手册](../../mc-plan-community/docs/self-deployment.md) 与 completed记录。权限撤销窗口需短JWT；Core业务停用逐请求拒绝。
 
 ## Contracts、Skin、Ops、Foundation
 
 | 仓库/模块 | 已验证 | 未交付/门槛 |
 |---|---|---|
-| Contracts / API-Schema-event | Core alpha.8、Community alpha.4、Skin alpha.1，生成/哈希漂移校验；Core alpha.8明确委托目录增量；Skin表面未变 | 官方OAuth委托目录alpha.8与实际Ops消费者已完成；门户消费者与稳定发行仍后续 |
-| Contracts / SDK | Core17操作37测试；Community12操作40测试；干净pack、真实HTTP/Keycloak组合证据 | Skin SDK、官方产品消费者；SDK验收不等于产品已集成 |
+| Contracts / API-Schema-event | Corealpha.8、Communityalpha.4、Skinalpha.1已闭环；Community生成固定Git来源，避免活动树漂移 | Corealpha.9管理面属于active切片；稳定发行与未来F3/F4契约仍后续 |
+| Contracts / SDK | Core17/37测试、Community12/40测试、干净pack/真实HTTP/Keycloak；Community门户已实际消费锁哈希打包工件 | SkinSDK与Official完整链；不将SDK测试等同全部产品 |
 | Skin / API-db-worker | Standalone八操作、幂等/三次渲染、队列重试、30天会话/24小时候选、删除防复活 | Official身份/年龄/权益/计费及Community发布未实现 |
 | Skin / skin-core-validator-provider-sdk | v4确定性UV、Steve/Alex双层；fake/llm/image同链；概念图→视觉→v4厂商中立桥接 | SKIN-009已工程关闭，付费真实概念管线基准与所有者视觉验收未完成，Q-001仍未绑定厂商 |
 | Skin / Web-preview | Pixel Foundry工作台、桌面/移动链、第一方动态3D/键盘交互、Provider标识 | Official完整体验与生产无障碍/性能验收；不能以离线fixture证明生成质量 |
-| Ops / identity-mail-client-events-metrics | 隔离Core/Keycloak DB、真实PKCE、Mailpit、客户端生命周期、事件/指标验收，收官镜像统一 | Community运行组合、目标S3、TLS/限流/正式邮件/生产采购 |
-| Ops / backup-restore | 本地Core+Keycloak备份/破坏/恢复、撤销重放、30天清理演示与实测RPO/RTO | Community DB+对象/版本恢复不复活；正式RPO/RTO Q-016未定 |
+| Ops / identity-mail-client-events-metrics | 隔离Core/Keycloak、PKCE、Mailpit、客户端/事件/指标；Community已有自己可运行自部署组合 | 官方组合与TLS/全局限流/正式邮件/生产采购；当前Ops锁在管理台切片 |
+| Ops / backup-restore | Core/Keycloak恢复、撤销重放、轮换实测；Community独立DB/对象恢复已由应用自部署真实验收 | 官方离机持续恢复/独立删除journal、Q-005最小化与Q-016正式目标未完成 |
 | Foundation / governance-coordination | 六仓归属/版本/锁/短事务/链接扫描与标准、真实记录关闭 | 实际门槛通过才推进里程碑，历史段不能替代当前表；本文件不决定法律或生产值 |
 
-Skin main14a8fe3，实现检查点0462b20的历史门禁：128单元、API15/worker12真实DB集成、Playwright fake2/image1、fixture6。此次核查关闭记录与main可达性，不声称重跑其全部门禁或视觉验收。Ops main415a108新增实际登记PKCE客户端→Community资源链、审核/收窄/撤销/故障验收；数据层与目标对象恢复仍后续。
+Skin main14a8fe3，实现检查点0462b20的历史门禁：128单元、API15/worker12真实DB、Playwright fake2/image1、fixture6；本轮未改Skin源码，不能把历史门禁冒充重跑或视觉验收。所有者提供GLM-5.3-Flash凭据后，仅运行时连通探测成功HTTP200，15输入+32思考输出=47tokens，未产生皮肤；不保存key或模型内容。完整概念图/视觉/v4基准预算问题待答，所有者视觉判定仍必需；Q001未绑定正式厂商。
 
 ## 后续执行顺序与停止条件
 
-1. Community + Ops：私有 S3 兼容目标、容器/浏览器端点、实际 CORS 和最小权限；完整原文件/对象版本/备份淘汰与恢复删除重放。优先本地隔离真实服务演练，不需要生产采购才能完善工程。
+1. Community004已完成本地私有/版本S3、端点/CORS/桶隔离、历史对象/归档淘汰、认证恢复与门户；官方Ops组合、离机调度/持续journal与Q005仍接续。过期下架数据不得靠新备份续期，现阶段超期元数据存在时备份失败关闭。
 2. 已完成：Core+Contracts+Ops按ADR0017完成官方Community委托/PAT隔离、条件audience/核对/真实登记PKCE资源链；Community003随后完成Corealpha.8来源锁与SDK/双模式新镜像消费闭环。正式realm/门户角色管理与上线硬化继续后续。
-3. 产品消费者/门户：使用已验收 SDK/preview，完成 PKCE、上传、待审状态、资源/作者浏览、许可和下架体验；管理队列权限仍按 Q-010，不提前构造。
-4. Skin：受控概念管线真实基准需要新的预算/有效凭据授权与所有者视觉判定，再按已决定条件进入 F3 Official 与 Community发布。不能替其Owner发消息、付费调用或追认fixture质量。
+3. 门户消费者已完成上述F2链与浏览器实测；审核队列、申诉及其他管理写入口继续按Q010决策，不提前构造。
+4. Skin：有效凭据连通已确认；等待当前明确预算答复后，做两条路线的受控对照及所有者视觉判定，再按既定条件进入F3 Official/Community发布。只读诊断不等于完整生成，也不追认fixture质量；不向另一会话发消息。
 5. F2可运行且F3可集成后，按表列顺序逐批F4，之后F5/F6/V1：升级/自部署、权利/正式保留/许可、生产恢复目标/容量/监控/法律与发布。
 
-可以独立开发的工程继续推进；Q-001/002/003/005/008/010/013与生产决策不从“做到完美”推断具体值。当前无新增付费调用、远端push或生产部署；本次Community/Contracts提交已本地main整合，详细命令与最终SHA以各完成记录为准。
+可以独立开发的工程继续推进；Q001/002/003/005/008/010/013与生产决策不从“做到完美”推断值。本轮只增加已授权凭据的极小连通探测，完整皮肤生成预算待答；没有远端push/生产部署。Community004本地main已整合且锁已释放；Core/Contracts/Ops仍由另一活动管理台工作流持有。详细命令、SHA与限制以正确仓库及completed记录为准，F2与V1不提前完成。
 
 ## 协调工具收尾
 
