@@ -5,7 +5,7 @@
   "primary_repository": "mc-plan-community",
   "status": "active",
   "objective": "完成 Community F2 本地资源闭环后的审核/对象存储/恢复与官方接入门槛；已交付技术基线不代替完整社区与 V1 验收。",
-  "entry_gate": "所有者 2026-10-12 明确要求优先 Core 与社区；CORE-012 全量与镜像复验通过，已有 OPS-001/002/003 身份/邮件/恢复记录在 main 可达；ADR-0013 本地基线与 ADR-0014 资源工程入口已批准。；所有者2026-10-13逐模块收尾指令、ADR-0016人工审核与COMMUNITY-002已闭环，ADR-0017允许有界Core官方OAuth前置。",
+  "entry_gate": "所有者 2026-10-12 明确要求优先 Core 与社区；CORE-012 全量与镜像复验通过，已有 OPS-001/002/003 身份/邮件/恢复记录在 main 可达；ADR-0013 本地基线与 ADR-0014 资源工程入口已批准。；所有者2026-10-13逐模块收尾指令、ADR-0016人工审核与COMMUNITY-002已闭环，ADR-0017允许有界Core官方OAuth前置。所有者2026-10-13派工管理员后台，ADR-0018开放F4管理端有界先行（只读admin:read面，不代决Q-010）。",
   "exit_criteria": [
     "Community 预发布契约、生产者和真实 PostgreSQL/S3 兼容对象存储验证通过",
     "用户 OAuth scope 与 Core 活动身份、归属、大小/哈希/真实媒体类型、版本和许可不可变性有集成证据",
@@ -33,5 +33,5 @@
       "adr": "decisions/0009-skin-standalone-restricted-preparation.md"
     }
   ],
-  "updated_at": "2026-10-13T04:40:58.969Z"
+  "updated_at": "2026-10-13T06:43:57Z"
 }

@@ -9,3 +9,5 @@
 截至本切片注册前为60个已完成、0活动；本治理注册/关闭的实际计数及Owner以机器记录为准。本次不推送远端、不部署生产；其他会话的历史push事实保留在对应完成记录，不能扩成当前授权。
 
 2026-10-13当前终态更新（FOUNDATION004）：Corealpha.8官方Communityscope/audience/PAT隔离与辅助scope漂移修复已完成，306producer项与真实登记PKCE资源链；Community来源锁已升级alpha.8，56项/新固定镜像manual和disabled/SDK40项真实消费组合完整通过。三生产仓最终本地main为Core690193a、Community74d2bcc、Contracts8090d8f，Ops415a108。详细行覆盖上文早期“官方接入后续”门槛，完整F2对象/恢复、门户/F4、Skin真实质量与V1仍未通过。FOUNDATION004另外修复短锁入口无法登记缺失空active目录的问题；新回归不削弱Owner、共享index、branch或锁释放规则。
+
+2026-10-13管理台线开启（FOUNDATION005/ADR-0018）：所有者派工管理员后台并同日四项实答——第一阶段只读先行、realm指定用户+新userOAuth scope admin:read、管理台Web放mc-plan-core仓内apps/admin、F2保持active的有界例外。预计MCP-F4-CORE-001按契约先行落地Core alpha.9只读管理面（用户/积分账本/权益/审计/outbox查询）；管理改操作与Community待审队列/双人复核仍按Q-010与逐项所有者决策后置，本ADR不代决。
