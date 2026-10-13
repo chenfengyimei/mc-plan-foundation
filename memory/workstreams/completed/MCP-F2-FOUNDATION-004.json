@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-004",
   "title": "Recover coordination after zero active records and refresh final module evidence",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-13T05:24:38.881Z",
-  "updated_at": "2026-10-13T05:24:38.881Z",
+  "updated_at": "2026-10-13T05:36:55.638Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -39,8 +39,8 @@
     "mc-plan-foundation": {
       "base_commit": "35270bbbd529b7bb5dee2c3a2564e7fe158ce7f1",
       "branch": "fix/MCP-F2-FOUNDATION-004-empty-active-bucket",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "1c4279bfae846af30c3dca521ce269680ee72e7b",
+      "final_commit": "1c4279bfae846af30c3dca521ce269680ee72e7b"
     }
   },
   "depends_on": [
@@ -56,6 +56,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "ObservedregistrationfailureearlierwasGetChildItemonmissingemptyactivebucketafterGitcheckout; ownemptybrancheswererevertedandregistrationrecoveredbycreatingemptycoordinatorparent. No otherworkscopeaffected. Oldhelperbaselinecopiedto/private/tmp/mc-foundation-write-baseline-20261013.ps1forregressionproof. Core690193a,Community74d2bcc,Contracts8090d8f,Ops415a108cleanlocalmain; noactivebusinesslocks."
+    "ObservedregistrationfailureearlierwasGetChildItemonmissingemptyactivebucketafterGitcheckout; ownemptybrancheswererevertedandregistrationrecoveredbycreatingemptycoordinatorparent. No otherworkscopeaffected. Oldhelperbaselinecopiedto/private/tmp/mc-foundation-write-baseline-20261013.ps1forregressionproof. Core690193a,Community74d2bcc,Contracts8090d8f,Ops415a108cleanlocalmain; noactivebusinesslocks.",
+    "Deliveredregression4564d0a,fixcd50b4b,currentdocsfinalcheckpoint: baselineoldentry /private/tmp/mc-foundation-write-baseline-20261013.ps1 reproducedmissingactivebucket failure before registrationaction (exit1,ownedlockreleased); newentryrecreatesparentonlyinsideownedshortlock. test-foundation-write.ps1 optionalEntryPointdoesnotchange defaultcanonical path. Actual15/15 short-writecases includingmissingbucketregistration/preciseownrecord/cleanindex/lockreleased passed; existing14coordination/21scanner passed; finalworkspace6repos128MD102JSONpassed andrerunafterdocsclarificationpassed. NoSkill/API/ownerpolicychanges. Portfolio/module/status refreshed Core690193a/API fb1bc07 alpha.8/306tests, Community74d2bcc/source d482331 alpha.4/56tests, Contracts8090d8f/CoreSDK17methods37tests andCommunitySDK12methods40tests, Ops415a108 realregisteredPKCE/Communityresourcechain; final2images/newconsumer/UID/fault/S3protocol/reviewer/narrow/revoke evidence distinguishedfromproductionstorage/backups/price/license/Skinvisualquality gates. Allbusinessreposcleanlocalmain; noremotepush/paidcalls/proddeploy. Evidence /Users/chenfeng/.codex/outputs/mc-core-oauth-20261013/foundation-*.log. Allscopecompleted; Finish/main integration follow."
   ]
 }
