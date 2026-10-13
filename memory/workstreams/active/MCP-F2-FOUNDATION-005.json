@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-005",
+  "title": "ADR-0018 admin console authorization model and bounded F4 management-line opening",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codely/admin-console-20261013",
+  "owner": "Codely/admin-console-20261013",
+  "started_at": "2026-10-13T06:43:33.3016980+00:00",
+  "updated_at": "2026-10-13T06:43:33.3016980+00:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "Governance slice for the owner-directed admin console: record ADR-0018 (admin authorization model and bounded F4 management-line opening), append the ADR-0018 allowance to the current direction entry gate, and sync portfolio/STATUS summaries. F2 stays active with its exit criteria unchanged.",
+  "in_scope": [
+    "ADR-0018 decisions/0018-admin-console-authorization-model.md: read-only-first admin face; new userOAuth scope admin:read granted only to realm-designated administrator users; Core authorizes admin operations by admin:read scope plus ADMIN business role plus ACTIVE status; MFA stays a realm-side requirement per docs/identity-and-access.md; PAT catalog excludes admin:read (runtime UNKNOWN_SCOPE, profile:write precedent); service tokens cannot call admin operations",
+    "memory/current/direction.json entry_gate append: ADR-0018 permits the bounded F4-early admin-console slice (predicted MCP-F4-CORE-001) while F2 remains active; no F2 exit criterion is claimed or changed",
+    "memory/current/portfolio.md and docs/STATUS.md summary sync opening the admin-console line"
+  ],
+  "out_of_scope": [
+    "No business implementation, contract, realm, migration, SDK or web change in any product repository; those belong to the follow-up Core-led workstream under ADR-0018",
+    "Admin write operations (manual credit adjustment/refund, PAT revocation, developer-app revocation, user status transitions) and Community moderation queue/dual-review/appeals remain per-slice owner decisions; Q-010 keeps its gate",
+    "No price/legal/production values, no F2/F4 completion claim, no change to F2 exit criteria"
+  ],
+  "contract_impact": "None in this governance slice. The follow-up slice will lock Core 0.1.0-alpha.9 read-only admin operations contract-first before any producer code.",
+  "acceptance_evidence": [
+    "validate-coordination Start/Continue/Finish pass for MCP-F2-FOUNDATION-005 with the governance branch merged back to a clean main",
+    "validate-workspace passes after the ADR/direction/portfolio/STATUS commits",
+    "ADR-0018 committed as Accepted with the owner 2026-10-13 dispatch and four ask_user decisions recorded"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "7343b47f57a3e418363ad0a6e3f45f91e2cc433c",
+      "branch": "feat/MCP-F2-FOUNDATION-005-admin-console-adr0018"
+    }
+  },
+  "depends_on": [],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, explicit 2026-10-13 dispatch to complete the admin console (admin login to view/query/manage the whole MC Plan), with four same-day ask_user decisions: read-only-first slice; realm-designated users plus new admin:read userOAuth scope; apps/admin web inside mc-plan-core; bounded F4-early opening while F2 stays active",
+    "reason": "Foundation is not among the F2 direction allowed repositories; this governance slice only records the owner-authorized admin-console authorization model (ADR-0018) and the bounded F4-early opening, with no business implementation"
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
