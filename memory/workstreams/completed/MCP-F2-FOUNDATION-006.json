@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-006",
   "title": "Reconcile Community self-deployment and portal evidence in module audit",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-13T19:56:43.056151+08:00",
-  "updated_at": "2026-10-13T19:56:43.056151+08:00",
+  "updated_at": "2026-10-13T20:02:06.265096+08:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -38,8 +38,8 @@
     "mc-plan-foundation": {
       "base_commit": "a661ee37577d2f9d3a0d8cbdd74a2c6274d29c6c",
       "branch": "docs/MCP-F2-FOUNDATION-006-module-evidence",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "bde74a059a104f9e7cbc65332cbf706f3ea6d0a7",
+      "final_commit": "bde74a059a104f9e7cbc65332cbf706f3ea6d0a7"
     }
   },
   "depends_on": [
@@ -53,6 +53,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Community004 closed, Finish passed, cleanlocalmain3e887c1. Canonicalfinal8811image2b24 passed bothruntime modes and publicCompose/actualCLI. Core001 admin work ownedbyCodely remainslocked; no takeover. Skin keyprovidedand47token auth probe passed, fullbenchmarkbudget question pending, no key saved."
+    "Community004 closed, Finish passed, cleanlocalmain3e887c1. Canonicalfinal8811image2b24 passed bothruntime modes and publicCompose/actualCLI. Core001 admin work ownedbyCodely remainslocked; no takeover. Skin keyprovidedand47token auth probe passed, fullbenchmarkbudget question pending, no key saved.",
+    "Only existingmoduleaudit edited; recordsseparateScope. AccurateCommunity004 source8811/finalmain3e887c1/70gates/finalimage2b24/publicCompose/actualCLI/destructiveRecovery/browser. CoreAdminactiveScope preserved, no outsidewrites/messages. Usermodelkey connectivity47tokens recordedwithoutkey/content, notskinquality/fullbenchmarkapproval. F2/V1unchanged; continuousjournal/PITR/metadataQ005/F3F4/legal gates explicit. All declared Foundationchecks actualpassed: workspace6repos130Markdown117JSON; coordination14, scanning21, shorttransactions15. Start/Continuepassed, exactpathgovernancecommit viaownedshortlock passed. Finish/cleanlocalmainfollow; no remote push/deploy."
   ]
 }
