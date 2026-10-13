@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-COMMUNITY-002",
+  "title": "Community manual review and immutable inline preview",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T04:05:08.504Z",
+  "updated_at": "2026-10-13T04:05:08.507Z",
+  "primary_repository": "mc-plan-community",
+  "supporting_repositories": [
+    "mc-plan-contracts"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Deliver ADR-0016 authorized manual moderation and alpha.3 preview with contract-first alpha.4, real identity/state/concurrency checks, runtime image and evidence-backed SDK operations.",
+  "in_scope": [
+    "Lock alpha.4 reviewer scope, closed request, idempotent decision endpoint and bounded errors before producer changes",
+    "Manual/disabled modes, explicit immutable candidate approve/reject, reviewer audit, atomic publication/outbox and owner/reviewer concurrency fencing",
+    "Implement alpha.3 inline PNG preview with download-identical visibility and safe headers",
+    "Generate public types; advance Community SDK only after real producer evidence; preserve Core/Skin contracts",
+    "Full declared static/contract/integration/runtime/SDK gates, docs and closed local-main records"
+  ],
+  "out_of_scope": [
+    "F4 queue/admin/social/Web endpoints; external machine moderation; full Q-010 role policy",
+    "Skin takeover, Core/Ops writes, production deployment or remote push",
+    "Formal license/retention decisions and production object-store/backup proof"
+  ],
+  "contract_impact": "Compatible prerelease addition alpha.4 to alpha.3: moderation:review scope and reviewResourceVersion endpoint under accepted ADR-0016. Existing scopes and public resource schemas unchanged. Producer then SDK order.",
+  "acceptance_evidence": [
+    "Actual PostgreSQL/S3 and real Keycloak active reviewer authorization; no review leaves pending",
+    "Approve/reject, replay/conflict, reviewer attribution, multiple reviewers, stale candidates, replacement and unpublish races; fault rollback",
+    "Preview exact sealed bytes and no-store/inline/nosniff/sandbox; unpublished addressing 404",
+    "Full declared gates, final source runtime image and real SDK smoke, coordination Finish and clean main integration"
+  ],
+  "repositories": {
+    "mc-plan-community": {
+      "base_commit": "70e55a1375e8afe6e26451d861d819996d698c58",
+      "branch": "feat/MCP-F2-COMMUNITY-002-manual-review",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "f723c9498a97403f74e8eff5d81283955a35ffb9",
+      "branch": "feat/MCP-F2-COMMUNITY-002-manual-review",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-COMMUNITY-001",
+    "MCP-F2-CONTRACTS-003",
+    "MCP-F2-FOUNDATION-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Owner explicitly selected temporary manual review in this chat; accepted ADR-0016 already records exact authority/endpoint semantics. All six worktrees clean, no active business locks. Scope includes preview producer prerequisite already locked in alpha.3."
+  ]
+}
