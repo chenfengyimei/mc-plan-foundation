@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-003",
+  "title": "Current module evidence and bounded F2 integration dependencies",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T04:37:13.594Z",
+  "updated_at": "2026-10-13T04:37:13.596Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-community",
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-ops",
+    "mc-plan-skin"
+  ],
+  "objective": "Reconcile current six-repository module implementation, manual moderation and Skin engineering evidence; establish actionable remaining module gates and allow bounded Core prerequisite work for F2 official OAuth.",
+  "in_scope": [
+    "Evidence-backed module audit with implementation vs milestone/production distinction",
+    "Refresh current portfolio/status/delivery directions without rewriting accepted ADR history",
+    "New technical ADR for bounded Core support as F2 official scope/audience prerequisite; realm moderation authority and PAT restrictions remain intact",
+    "Full Foundation declared validators and own record closure/local-main integration"
+  ],
+  "out_of_scope": [
+    "Any product repository edit or takeover",
+    "Owner pricing/license/retention/weights/provider decisions, paid calls, remote push or production release",
+    "Declare full F2/F3/F4/V1 complete without actual exit evidence"
+  ],
+  "contract_impact": "No public contract changes here. Future OAuth scope/catalog change requires separate Contracts-first producer/SDK/consumer/Ops workstream.",
+  "acceptance_evidence": [
+    "Read current Git/source/status/active and closed records for six repos; source-anchored module table and exact blockers",
+    "Direction maintains Community primary, at most2 supports per task; Core permission bounded to F2 OAuth prerequisites",
+    "Workspace, coordination14, scanning21, short-transaction14 regressions; Start/Continue/Finish and clean local main"
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "b807d72fdd2130679959cdcaccda493e2d754035",
+      "branch": "docs/MCP-F2-FOUNDATION-003-module-evidence",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-COMMUNITY-002",
+    "MCP-F2-FOUNDATION-002",
+    "MCP-F1-SKIN-009"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "Project owner 2026-10-13 explicit request to temporarily use manual review and continue entire project module-by-module completion/development, prioritizing Core and Community",
+    "reason": "Cross-project current evidence and necessary dependency ordering belong to Foundation; no business implementation or new product policy in this governance slice."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Fresh evidence: zero active workstreams; all six repos clean. Community24f0364/Contracts17dde54 newly integrated local main, manual/disabled runtime and both SDK smokes passed; Skin009 is now closed at14a8fe3 with provider-neutral image bridge engineering delivered but real visual benchmark still owner-gated."
+  ]
+}
