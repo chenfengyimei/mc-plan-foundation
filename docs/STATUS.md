@@ -1,9 +1,9 @@
 # 状态
 
-核对日期：2026-10-13（凌晨）。F0/GOV 与 F1 工程面已全部验证关闭；F1 里程碑按项目所有者 2026-10-13 ask_user 实答落档为**工程面完成、正式收官待 MCP-F1-SKIN-009 视觉验收通过**（MCP-F1-FOUNDATION-016 证据矩阵逐条核验：34 项已关工作流终态提交全部在六仓 main 可达）。当前 F2 Community 资源工程已交付本地 alpha.2 + Community SDK；完整 F2/F4/V1 未完成。
+核对日期：2026-10-13，MCP-F2-FOUNDATION-003。F0治理与F1技术工程基线已有完成证据；Skin009概念桥接工程已关闭于14a8fe3，真实视觉基准与所有者判定仍未完成，不能标记F1正式收官或F3完成。当前F2 Communityalpha.4十二操作与官方CommunitySDK已交付本地；完整F2/F4/V1仍未完成。
 
-2026-10-12 深夜批次关闭（均已推送 origin）：CORE-012（Core main 9303cc6，302 测试 + 发布位序串行化修复）；FOUNDATION-015（F2 入口 ADR-0014/威胁模型）；F2-CONTRACTS-001（Community alpha.2）；F2-COMMUNITY-001（Community main 70e55a1，45 测试 + 真实验收）；F2-FOUNDATION-001（全仓对账）；**MCP-F1-SKIN-008 工程范围收官**（所有者改选概念图管线：Skin main 8932395=origin，15 提交 ff 合入 + 收官 docs，远端 feat 分支已删除；视觉验收未由任何候选通过，移交 SKIN-009；Q-001 路线决策落 ADR-0015，厂商绑定保持未决）；F2-CONTRACTS-002（Contracts main e4d6de1，Community SDK alpha.2 十操作）；OPS-004（Ops main a0e78d7，全部脚本镜像统一至 mcp-f1-core-012-closeout + OTEL_METRICS_PORT 指标接线 + validate-dev-metrics.ps1 真实验收）。
+本次新增：MCP-F2-COMMUNITY-002已关闭并本地main整合——Community24f0364、Contracts17dde54；临时人工审核按ADR0016只授指定realm审核员，批准/拒绝确切候选与原子审计/outbox，普通作者不可自授权。13单元+3契约+40集成，真实Keycloak/S3/PG与manual/disabled镜像验证；SDK12方法40测试/干净pack/真实HTTP、CoreSDK37项及真实Keycloak回归通过。预览与下载同封存PNG，下架即时404。
 
-注册表实况：57 completed + 2 active——MCP-F1-SKIN-009（概念图→视觉→v4 管线，厂商中立，实施中）、MCP-F2-FOUNDATION-002（Q-009 决议落档 ADR-0016 治理切片，本切片）。MCP-F2-CONTRACTS-003 已补办 complete+Finish 关闭（官网门户 preview alpha.3 契约锁+SDK 已交付推送 contracts main f723c94=origin）。六仓 main 推送状态（fetch 实测）：core/contracts/community/ops/skin/foundation 均已=origin/main。
+当前源码与各模块剩余范围见[模块收尾核查](module-completion-review.md)、[组合状态](../memory/current/portfolio.md)及[交付路线](delivery-plan.md)。ADR0017仅开放Core为F2官方OAuth前置的有界辅助/主仓，仍唯一主仓、至多两个辅助，Contracts-first；不新增价格、法律或审核管理员政策。Q009已落地，目标对象/备份恢复、官方接入与消费者、F4、Skin真实质量及V1门槛继续独立验收。
 
-Community 运行审核 disabled 保持待审至本地人工 adapter 落地；正式审核方案 Q-009 已决：**本地人工审核放行（ADR-0016，2026-10-13）**——拒绝指定机器提供商、无外部审核 API/数据传输、fail-closed 语义不变；审核员 `moderation:review` scope + 单 review 决定端点 + 单人放行已定（所有者 D1-D4 实答），实施顺序 = ADR → alpha.4 契约 → 生产者 adapter → 真实故障验收。积分奖励/价格 Q-003/Q-013 及 V1 法律/生产决策（Q-004/Q-006/Q-014/Q-016）保持未决，不代填。组合与下一顺序见 [portfolio](../memory/current/portfolio.md) 和 [完整交付路线](delivery-plan.md)；最终执行记录和实时所有权以工作流为准。
+截至本切片注册前为60个已完成、0活动；本治理注册/关闭的实际计数及Owner以机器记录为准。本次不推送远端、不部署生产；其他会话的历史push事实保留在对应完成记录，不能扩成当前授权。

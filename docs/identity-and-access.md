@@ -45,3 +45,7 @@ PAT 明文只在创建时显示一次；哈希必须使用适合高熵 token 的
 - 管理员和审核员启用 MFA。
 - 账号、客户端、scope、令牌和角色变化写入不可变审计日志。
 - 邮箱只在必要服务中处理，不传播到 Community 或 Skin 展示模型。
+
+## 当前已锁权限表面
+
+上文初始命名为规划；实际授权以Contracts与producer证据为准。Communityalpha.4人工审核仅使用ADR0016已批准的moderation:review，不实现moderation:write管理权限。官方Developer App的Community委托和条件audience按ADR0017先契约再实现；PAT目录与审核realm指定用户授权不能被混用。

@@ -93,3 +93,7 @@ Core + Ops 可以与仅 Skin 的实现并行；Contracts 修改必须串行并�
 ## V1 完成判据
 
 六仓能独立构建/部署且跨仓契约兼容；真实用户完成注册、生成、发布、社区互动、删除与权利流程；Standalone 和 Official 均有端到端证据；完整 F4 范围、保留清理、备份恢复、安全/法律/运维门槛均通过。未达这些条件时必须报告仍未完成的批次和 Owner，不给无依据百分比。
+
+## 2026-10-13 当前执行更新（优先于上文历史快照）
+
+MCP-F2-COMMUNITY-002已关闭：alpha.4人工审核和alpha.3预览producer + 十二方法SDK + 真实权限/故障/双模式runtime证据。Q009不再是待决或adapter未落地的门槛。Skin009已关闭为厂商中立工程能力，受控真实基准与视觉判定仍待Owner条件；没有active Skin实现锁。当前逐模块现状和剩余工程见module-completion-review.md，ADR0017允许Core官方OAuth前置而不改变F2主方向。下一顺序为Community/Ops对象与恢复、Core/Contracts/Ops官方接入、消费者门户，再满足F3后逐批F4。历史“Q009未决/Community无源码/Skin009实施中”的文字仅是当时快照，不作为当前事实。
