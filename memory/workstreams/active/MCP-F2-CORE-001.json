@@ -1,0 +1,72 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-CORE-001",
+  "title": "Official registered OAuth clients for Community resource publishing",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
+  "started_at": "2026-10-13T04:47:49.632Z",
+  "updated_at": "2026-10-13T04:47:49.632Z",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-ops"
+  ],
+  "reference_repositories": [
+    "mc-plan-foundation",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "Deliver ADR0017 contract-first Core Developer App Community scope/audience prerequisite with independent PAT restrictions and real registered-client OAuth resource-chain evidence.",
+  "in_scope": [
+    "Corealpha.8 compatible declaration of existing Community delegatable scopes; PAT enum and realm reviewer/service restrictions unchanged",
+    "Separate app/PAT validation catalogs; conditional Community audience, complete auxiliary-scope reconciliation, lifecycle failure compensation",
+    "Ops local realm support and actual registered PKCE client acceptance through independent Core and Community APIs",
+    "Both SDK generation/static/unit/pack/realHTTP gates, full Core producer gates, finalruntime image and localmain closure"
+  ],
+  "out_of_scope": [
+    "Community/Skin/Foundation business edits, production deployment/remotepush or paid calls",
+    "New moderator/admin policy, reward/pricing, productionobject/backup/retention decisions",
+    "Claiming full F2/F3/F4 complete"
+  ],
+  "contract_impact": "Corealpha.8 compatible prerelease adds explicit existing resource:read/resource:write/upload:write Developer App delegation under caller ceiling. PAT enum unchanged; moderation:review and service permissions excluded. Contract-before-producer-before-SDK-before-Ops.",
+  "acceptance_evidence": [
+    "Full Core gates plus conditional audience/narrowing/complete reconciliation and failure/negative PAT tests",
+    "Real Keycloak registered public PKCE client token through actual Core/Community HTTP resource lifecycle; narrowing/revocation enforced on new authorization",
+    "BothSDK full declared checks/real smoke, Ops static/client lifecycle regression/new integration",
+    "Canonicalruntime build, cleancommits, Finish and localmain"
+  ],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "9303cc62deeaa89fb07f77ba29a0b4f1b69457de",
+      "branch": "feat/MCP-F2-CORE-001-community-oauth",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-contracts": {
+      "base_commit": "17dde5423b419eb02e0e5721d5cff4df544e7e58",
+      "branch": "feat/MCP-F2-CORE-001-community-oauth",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    },
+    "mc-plan-ops": {
+      "base_commit": "a0e78d7f923e5428a9576bdbc7b63d7b0f4fe3ae",
+      "branch": "feat/MCP-F2-CORE-001-community-oauth",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": [
+    "MCP-F2-FOUNDATION-003",
+    "MCP-F2-COMMUNITY-002",
+    "MCP-F1-CORE-012"
+  ],
+  "blocked_reason": null,
+  "direction_exception": null,
+  "handoff_history": [],
+  "validation_results": [
+    "Owner explicit whole-project module continuation and Core/Community priority; ADR0017 Accepted permits this bounded F2 prerequisite. All six worktrees clean and no active locks. Core current reconciliation misses missing auxiliary scopes; same expected-set helper must cover both producer provisioning and reconciliation. Earlier registration hit a missing empty active directory; only own empty branches were created then reverted, no business edits occurred. AllocateID and recreate coordinator directory inside the short transaction."
+  ]
+}
