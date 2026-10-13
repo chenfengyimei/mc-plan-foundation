@@ -3,12 +3,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-003",
   "title": "Current module evidence and bounded F2 integration dependencies",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "owner": "Codex/01a12fd2-1e5d-7890-9d35-925436626eaa",
   "started_at": "2026-10-13T04:37:13.594Z",
-  "updated_at": "2026-10-13T04:37:13.596Z",
+  "updated_at": "2026-10-13T04:42:53.503Z",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -40,8 +40,8 @@
     "mc-plan-foundation": {
       "base_commit": "b807d72fdd2130679959cdcaccda493e2d754035",
       "branch": "docs/MCP-F2-FOUNDATION-003-module-evidence",
-      "last_checkpoint_commit": null,
-      "final_commit": null
+      "last_checkpoint_commit": "10be70ebf2218ea38cb74bef6917b717ce7642ae",
+      "final_commit": "10be70ebf2218ea38cb74bef6917b717ce7642ae"
     }
   },
   "depends_on": [
@@ -57,6 +57,7 @@
   },
   "handoff_history": [],
   "validation_results": [
-    "Fresh evidence: zero active workstreams; all six repos clean. Community24f0364/Contracts17dde54 newly integrated local main, manual/disabled runtime and both SDK smokes passed; Skin009 is now closed at14a8fe3 with provider-neutral image bridge engineering delivered but real visual benchmark still owner-gated."
+    "Fresh evidence: zero active workstreams; all six repos clean. Community24f0364/Contracts17dde54 newly integrated local main, manual/disabled runtime and both SDK smokes passed; Skin009 is now closed at14a8fe3 with provider-neutral image bridge engineering delivered but real visual benchmark still owner-gated.",
+    "Final governance delivery10be70e: source-anchored module table across Core identity/profile/authorization/app/PAT/entitlement/credits/outbox/events/platform, Community upload/resource/catalog/manual/worker and unimplemented F4, Contracts SDK/API, SkinAPI/providers/Web and Ops restore; updated current portfolio/status/delivery truth. Skin009 closure14a8fe3 verified, benchmark remains owner-gated. ADR0017 permits only bounded F2 Core official OAuth prerequisite and preserves PAT/reviewer authority; direction stillF2/Community. Actual declared checks passed: workspace6repos127Markdown99JSON; coordination14/14; scanning21/21; Foundation short-write14/14. No business repo edits, no new owner policy, no paid calls/remotepush/deploy. Finish and clean local-main integration follow; evidence /Users/chenfeng/.codex/outputs/mc-community-manual-20261013/foundation-*.log."
   ]
 }
