@@ -16,7 +16,7 @@
 | outbox / events | 租约、重试、发布取位至提交串行化，拉取/确认、消费者幂等去重 | Community 发布事件传输与真实奖励消费者另立契约/工作流；不能直接改余额 |
 | platform | 非root镜像、显式8迁移、严格配置、结构化日志、健康/本地 OTel 指标 | 生产观测、安全/容量、正式恢复目标、告警与升级演练 |
 
-Core main690193a，API代码fb1bc07；CORE-012实证302基础已由F2-CORE-001增量扩至306项。CoreSDKalpha.8仍17操作，37项/pack及新固定镜像真实HTTP/Keycloak回归通过。源目录为 mc-plan-core/src 的对应模块，完整证据在 CORE-012 记录。
+Core main690193a，API代码fb1bc07；CORE-012实证302基础已由F2-CORE-001增量扩至306项。CoreSDKalpha.8仍17操作，37项/pack及新固定镜像真实HTTP/Keycloak回归通过。源目录为 mc-plan-core/src 的对应模块，基础证据在CORE-012，增量在MCP-F2-CORE-001完成记录。
 
 ## Community：已实现模块及剩余范围
 
@@ -37,7 +37,7 @@ Community main74d2bcc，Corealpha.8来源代码d482331；alpha.4共12操作，13
 
 | 仓库/模块 | 已验证 | 未交付/门槛 |
 |---|---|---|
-| Contracts / API-Schema-event | Core alpha.8、Community alpha.4、Skin alpha.1，生成/哈希漂移校验；Core/Skin表面本次未变 | 官方OAuth委托目录alpha.8与实际Ops消费者已完成；门户消费者与稳定发行仍后续 |
+| Contracts / API-Schema-event | Core alpha.8、Community alpha.4、Skin alpha.1，生成/哈希漂移校验；Core alpha.8明确委托目录增量；Skin表面未变 | 官方OAuth委托目录alpha.8与实际Ops消费者已完成；门户消费者与稳定发行仍后续 |
 | Contracts / SDK | Core17操作37测试；Community12操作40测试；干净pack、真实HTTP/Keycloak组合证据 | Skin SDK、官方产品消费者；SDK验收不等于产品已集成 |
 | Skin / API-db-worker | Standalone八操作、幂等/三次渲染、队列重试、30天会话/24小时候选、删除防复活 | Official身份/年龄/权益/计费及Community发布未实现 |
 | Skin / skin-core-validator-provider-sdk | v4确定性UV、Steve/Alex双层；fake/llm/image同链；概念图→视觉→v4厂商中立桥接 | SKIN-009已工程关闭，付费真实概念管线基准与所有者视觉验收未完成，Q-001仍未绑定厂商 |
