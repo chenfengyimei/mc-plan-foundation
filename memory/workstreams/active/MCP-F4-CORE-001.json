@@ -6,8 +6,8 @@
   "milestone": "F4",
   "initial_owner": "Codely/admin-console-20261013",
   "owner": "Codely/admin-console-20261013",
-  "started_at": "2026-10-13T06:47:16.2090120+00:00",
-  "updated_at": "2026-10-13T06:47:16.2090120+00:00",
+  "started_at": "2026-10-13T14:47:16.209012+08:00",
+  "updated_at": "2026-10-14T12:30:09.5754990+00:00",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-contracts",
@@ -40,15 +40,18 @@
   "repositories": {
     "mc-plan-core": {
       "base_commit": "690193aafdcefafd2349389fd540caca109d95ce",
-      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console"
+      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console",
+      "last_checkpoint_commit": "06de705698f126a8eb462b828c7aaad16e992cbf"
     },
     "mc-plan-contracts": {
       "base_commit": "8090d8febe72fd3ad68812000184a31589b7fb5b",
-      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console"
+      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console",
+      "last_checkpoint_commit": "b90a3b0007e9e45f5eb9316afd77a50dc2ebbd62"
     },
     "mc-plan-ops": {
       "base_commit": "415a1082bbbdbb22356482a49e2f1389eb5fd195",
-      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console"
+      "branch": "feat/MCP-F4-CORE-001-admin-readonly-console",
+      "last_checkpoint_commit": "ef00a72d89d312e35a80c33617eb6e4cbc5f2181"
     }
   },
   "depends_on": [
@@ -61,5 +64,7 @@
     "reason": "Bounded F4-early admin-console slice under the active F2 direction per ADR-0018: Core-domain read-only admin queries plus apps/admin web and Ops realm acceptance only; no F2 exit criteria claimed, no admin write operations, Q-010 undecided items untouched"
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Contracts lock: core.yaml 0.1.0-alpha.9 committed first (8f917bd, 16 files: 6 admin operations + admin:read scope + 11 field-closed schemas + validator gates + docs), then SDK regenerated at alpha.9 with SUPPORTED_OPERATIONS kept at 17 (b90a3b0; admin operations asserted absent, core.yaml sha pinned; SDK gates format/lint/typecheck/generate:check/test/build/pack:check all green). Core producer committed with admin module (AdminStore port + Prisma keyset store + cursor codec + controller triple authorization admin:read+ADMIN role+OIDC credential) and lock file at 25 files; gates green: unit 125, HTTP e2e 97, contract suite with 6 locked-schema admin validations, real-PostgreSQL integration 80, architecture, 8 migrations, format/lint/typecheck/build. apps/admin Next.js console (PKCE login + six read-only pages) built; browser e2e fixed (redirect host kept on the session-cookie origin, NODE_ENV=development for the dev server) and PASSED on the real stack: login -> users -> detail -> credit ledger round trip. Runtime image mc-plan-core:mcp-f4-core-001-29939a0 (ID ac3bbdd2bf46) built from the implementation tree. Ops: realm admin:read scope + mc-plan-admin role mapping + mc-plan-local-admin-web PKCE client; validate-dev-admin.ps1 ran two independent fresh-stack rounds ALL GREEN (real PKCE logins, six surfaces 200 with field-closed asserts, cursor continuation, 8 labeled negatives, identity 1:1:1 invariant, [SYNTHETIC-DB-SEED] role elevation + one consistent ledger fixture row honestly labeled); Playwright browser e2e green against the kept round-2 stack; static gate extended and passing."
+  ]
 }
