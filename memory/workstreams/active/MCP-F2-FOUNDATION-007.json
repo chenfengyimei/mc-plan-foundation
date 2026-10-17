@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-007",
+  "title": "SDK closeout governance sync: plan baseline, module-relationship architecture and terminal-state pushes",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codely/master-20261016-sdk-closeout",
+  "owner": "Codely/master-20261016-sdk-closeout",
+  "started_at": "2026-10-17T06:13:52.1750210+00:00",
+  "updated_at": "2026-10-17T06:13:52.1750210+00:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-contracts",
+    "mc-plan-ops",
+    "mc-plan-community",
+    "mc-plan-skin"
+  ],
+  "objective": "Record the 2026-10-16 SDK closeout (MCP-F4-CONTRACTS-001 admin exposure and MCP-F1-CONTRACTS-007 skin SDK first slice), publish the terminal-state community main push, persist the refined whole-plan module-relationship architecture baseline, and sync portfolio/STATUS/delivery-plan/module-completion-review to machine truth with all governance regressions green.",
+  "in_scope": [
+    "Foundation docs truth sync: memory/current/portfolio.md, docs/STATUS.md, docs/delivery-plan.md (new dated governance section with the refined queue), docs/module-completion-review.md (SDK rows, registry counts, F4-CORE-001 closure truth)",
+    "Persist the module-relationship architecture baseline (contract-first boundaries, realm scope delegation, consumer-pull events, per-domain SDKs, Ops acceptance independence, Foundation governance, no cross-repo source/database sharing, refactor-on-coupling rule)",
+    "Terminal-state push bookkeeping: community main 70e55a1..3e887c1 published under the owner 2026-10-16 blanket completion directive (the terminal states of the closed MCP-F2-COMMUNITY-002/003/004), verified six-repo main=origin afterwards",
+    "Governance regressions: validate-workspace, test-coordination, test-workspace-scanning, test-foundation-write all green on the final tree"
+  ],
+  "out_of_scope": [
+    "Any product repository content change (all five product repos are references only; both SDK slices already closed with their own records)",
+    "Owner-gated decisions: Q-001 visual acceptance and vendor binding, admin write operations per-item decisions, Q-003/Q-013 values, Q-010 remainder, V1 gates Q-004/Q-006/Q-014/Q-016, F3 direction",
+    "Claiming F1 formal closeout, F2 completion or any milestone exit beyond recorded engineering facts"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "74931c060776a99cb925713d8323833f7ab4a46e",
+      "branch": "feat/MCP-F2-FOUNDATION-007-sdk-closeout-governance"
+    }
+  },
+  "depends_on": [
+    "MCP-F4-CONTRACTS-001",
+    "MCP-F1-CONTRACTS-007"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, 2026-10-16 blanket directive to read the whole MC plan, complete every remaining module development with well-bounded module relationships, and keep iterating to completion (this session start)",
+    "reason": "Cross-line Foundation governance bookkeeping under the active F2 direction (F2-FOUNDATION-001..006 precedent): truth sync of already-closed workstreams, terminal-state push publication and plan-baseline persistence only; no product content, no owner-gated decisions, no F2 exit criteria claimed."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
