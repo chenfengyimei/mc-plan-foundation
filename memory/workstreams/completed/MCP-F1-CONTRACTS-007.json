@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F1-CONTRACTS-007",
   "title": "Skin Standalone TypeScript SDK first slice: producer-verified anonymous-window operations",
-  "status": "active",
+  "status": "completed",
   "milestone": "F1",
   "initial_owner": "Codely/master-20261016-sdk-closeout",
   "owner": "Codely/master-20261016-sdk-closeout",
   "started_at": "2026-10-17T13:52:53.293085+08:00",
-  "updated_at": "2026-10-17T06:09:52.0353730+00:00",
+  "updated_at": "2026-10-17T06:11:44.6392880+00:00",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -29,12 +29,17 @@
     "npm publishing, stable versions, claiming any real consumer has integrated the Skin SDK"
   ],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "SDK gates green on the final tree (base 1409762, commits b7cde65 SDK feature + 601c0f3 docs, 28 files +5040): format:check, lint --max-warnings 0, strict typecheck, generate:check byte-zero drift with openapi/schemas/events/examples unchanged, 29 unit tests, build, pack:check clean-consumer strict-tsc (tarball mc-plan-skin-sdk-0.1.0-alpha.1.tgz); validate_contracts.py (31 schemas/events, 31 unique ids, 3 OpenAPI documents, 43 operationIds) and redocly three-document lint pass (1 expected skin.yaml warning).",
+    "Real HTTP smoke:real exit 0 twice against the producer tree (skin main 14a8fe3, the SUPPORTED_PRODUCER_COMMIT anchor) running from the neighboring read-only checkout with node-spawned api + worker, SKIN_PROVIDER=fake, session-unique manually-started PostgreSQL 17 and Redis 7 containers and a session temp storage root; honest attribution: no LLM/image model, no paid credentials, Q-001 untouched, candidates are fixture quality proving the SDK and the anonymous-window protocol only. Full chain: create - same-key replay and 409 SKIN_IDEMPOTENCY_CONFLICT - render poll to succeeded with candidate_id - candidate preview bytes with unknown-candidate 404 - detail with field-closed message history - finalize poll to succeeded with resource_id and same-key replay - finalized download bytes and unknown-resource 404 - post-completion finalize 409 SKIN_CONVERSATION_NOT_ACTIVE - fourth render 409 SKIN_ATTEMPTS_EXHAUSTED - unknown job/conversation 404 codes - delete 204 void then detail/preview/download all 404 with no resurrection; no clock manipulation; zero credential leaks and zero leftover containers, volumes or processes.",
+    "Contract impact none: skin.yaml/schemas/events/examples byte-unchanged; the new @mc-plan/skin-sdk@0.1.0-alpha.1 exposes exactly the eight producer-verified anonymous-window operations with SUPPORTED_PRODUCER_COMMIT anchored at skin 14a8fe3 and SUPPORTED_CONTRACT_FILES embedding both generation-input hashes; contracts main ff-merged from feat/MCP-F1-CONTRACTS-007-skin-sdk (branch deleted locally, never on remote) and pushed to origin (1409762..601c0f3) under the owner 2026-10-16 blanket completion directive; zero writes to any other repository (the skin checkout served read-only producer evidence); Official mode, F3 integration, Q-001/Q-011/Q-012/Q-013 and real consumer integration remain owner-gated and unclaimed."
+  ],
   "repositories": {
     "mc-plan-contracts": {
       "base_commit": "140976252654074073c1b09b81fed0cb16d8e142",
       "branch": "feat/MCP-F1-CONTRACTS-007-skin-sdk",
-      "last_checkpoint_commit": "601c0f3f463b5f77e3e89cff49b30da35cd94580"
+      "last_checkpoint_commit": "601c0f3f463b5f77e3e89cff49b30da35cd94580",
+      "final_commit": "601c0f3f463b5f77e3e89cff49b30da35cd94580"
     }
   },
   "depends_on": [
@@ -52,6 +57,7 @@
   "validation_results": [
     "Implementation complete on feat/MCP-F1-CONTRACTS-007-skin-sdk (two commits on base 1409762: b7cde65 SDK feature 23 files +5011 + 601c0f3 docs). All final-tree gates green: format:check, lint --max-warnings 0, strict typecheck (noUncheckedIndexedAccess/exactOptionalPropertyTypes), generate:check byte-zero drift with openapi/schemas/events/examples unchanged, 29 unit tests, build, pack:check clean-consumer strict-tsc (tarball mc-plan-skin-sdk-0.1.0-alpha.1.tgz), validate_contracts.py (31 schemas/events, 31 unique ids, 3 OpenAPI documents, 43 operationIds) and redocly three-document lint (1 expected skin.yaml warning).",
     "Real HTTP smoke:real exit 0 twice (runs 3 and 4) against the producer tree (skin main 14a8fe3, SUPPORTED_PRODUCER_COMMIT anchor) running from the neighboring read-only checkout: node-spawned api + worker with SKIN_PROVIDER=fake, SKIN_RUN_MODE=standalone, session-unique manually-started PostgreSQL 17 and Redis 7 containers (the established local workaround for the testcontainers strategy probe) and a session temp SKIN_CANDIDATE_STORAGE_ROOT; honest attribution: no LLM or image model involved, no paid credentials read, Q-001 untouched, candidates are fixture quality proving the SDK and the anonymous-window protocol, not model quality. Full chain through the SDK: create (field-closed conversation, attempts 0/3) - same-key/same-request replay returns the original conversation and same-key/different-request 409 SKIN_IDEMPOTENCY_CONFLICT - render 202 + job poll to succeeded with candidate_id (field-closed Job) - candidate preview bytes (image/png, SDK 64x64 PNG/IHDR pre-validation) and unknown candidate 404 SKIN_CANDIDATE_NOT_FOUND - conversation detail with field-closed message history and attempts 1/3 - finalize 202 + poll to succeeded with resource_id, same-key replay returns the original job - finalized download bytes and unknown resource 404 SKIN_RESOURCE_NOT_FOUND - finalize after completion 409 SKIN_CONVERSATION_NOT_ACTIVE - second conversation: three queued renders then the fourth 409 SKIN_ATTEMPTS_EXHAUSTED - unknown job/conversation 404 SKIN_JOB_NOT_FOUND/SKIN_CONVERSATION_NOT_FOUND - delete 204 void then detail/preview/download all 404 with no resurrection; no clock manipulation (24h/30d retention windows only read as metadata); zero credential leaks in smoke logs and zero leftover containers, volumes or processes.",
-    "Harness findings fixed during smoke authoring (test-only): the manually published Redis URL must not append the container port after the dynamic host port (bullmq/ioredis ERR_INVALID_URL surfaced as producer 500 SKIN_INTERNAL before the fix); producer child diagnostics are captured and printed on failure."
+    "Harness findings fixed during smoke authoring (test-only): the manually published Redis URL must not append the container port after the dynamic host port (bullmq/ioredis ERR_INVALID_URL surfaced as producer 500 SKIN_INTERNAL before the fix); producer child diagnostics are captured and printed on failure.",
+    "Closure: final_commit is the docs commit 601c0f3 on contracts main (= origin/main 1409762..601c0f3 pushed); Finish validated with the repository clean; the SDK stays private, local-pack only, and no real consumer integration is claimed."
   ]
 }
