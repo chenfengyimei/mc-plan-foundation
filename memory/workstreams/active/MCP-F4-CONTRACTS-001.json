@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F4-CONTRACTS-001",
+  "title": "Core SDK admin read-only operations exposure (ADR-0018 follow-up)",
+  "status": "active",
+  "milestone": "F4",
+  "initial_owner": "Codely/master-20261016-sdk-closeout",
+  "owner": "Codely/master-20261016-sdk-closeout",
+  "started_at": "2026-10-17T05:27:44.5708010+00:00",
+  "updated_at": "2026-10-17T05:27:44.5708010+00:00",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-foundation"
+  ],
+  "objective": "Expose the six admin read-only operations locked in core.yaml 0.1.0-alpha.9 (listAdminUsers, getAdminUser, listAdminCreditLedger, listAdminEntitlementRecords, listAdminAuditRecords, listAdminOutboxRecords) in the private @mc-plan/core-sdk package on the producer evidence of MCP-F4-CORE-001 (Core main 06de705), raising SUPPORTED_OPERATIONS from 17 to 23 with zero contract drift.",
+  "in_scope": [
+    "SUPPORTED_OPERATIONS extended to the six admin read-only operationIds; SUPPORTED_PRODUCER_COMMIT re-anchored at Core 06de705 (MCP-F4-CORE-001 final tree); SUPPORTED_CONTRACT_FILES unchanged at the alpha.9 lock 8f917bd manifest",
+    "Typed client methods for the six operations: userOAuth admin:read credential shape, cursor pagination parameters, field-closed payload types from the committed alpha.9 generated types",
+    "Unit tests per new method (path/param/error/retry boundaries, admin scope surface), pack:check consumer updated, real HTTP smoke against the fixed MCP-F4-CORE-001 producer runtime image (rebuilt from the producer commit if the local image is absent) with honestly labeled local-JWKS tokens plus [SYNTHETIC-DB-SEED] admin role elevation and labeled negatives",
+    "Contracts docs sync: STATUS, development-plan, api-catalog SDK coverage, compatibility SDK acceptance section; generate:check zero drift and validate_contracts.py/redocly re-run"
+  ],
+  "out_of_scope": [
+    "Any change to openapi/core.yaml, JSON schemas, events or lock files (contract zero drift)",
+    "Any write to mc-plan-core, mc-plan-ops or other repositories (references only)",
+    "Admin write operations, moderation queue, dual review, appeals (Q-010 owner-gated), apps/admin web changes",
+    "npm publishing, stable versions, claiming any real consumer integration of the admin SDK"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "b90a3b0007e9e45f5eb9316afd77a50dc2ebbd62",
+      "branch": "feat/MCP-F4-CONTRACTS-001-admin-sdk"
+    }
+  },
+  "depends_on": [
+    "MCP-F4-CORE-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, 2026-10-16 blanket directive to read the whole MC plan, complete every remaining module development with well-bounded module relationships, and keep iterating to completion (this session start)",
+    "reason": "Bounded F4-early admin-console SDK follow-up under the active F2 direction per ADR-0018: Contracts-domain read-only exposure of the six producer-verified admin operations only; no admin write operations, no Q-010 decisions, no F2 exit criteria claimed."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
