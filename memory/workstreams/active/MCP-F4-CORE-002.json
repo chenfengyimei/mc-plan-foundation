@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F4-CORE-002",
+  "title": "Core admin credit-adjustment write producer with Ops real acceptance",
+  "status": "active",
+  "milestone": "F4",
+  "initial_owner": "Codely/master-20261016-sdk-closeout",
+  "owner": "Codely/master-20261016-sdk-closeout",
+  "started_at": "2026-10-17T07:00:27.0677800+00:00",
+  "updated_at": "2026-10-17T07:00:27.0677800+00:00",
+  "primary_repository": "mc-plan-core",
+  "supporting_repositories": [
+    "mc-plan-ops"
+  ],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-foundation"
+  ],
+  "objective": "Implement the MCP-F4-CONTRACTS-002 locked alpha.10 admin credit-adjustment write face in Core (createAdminCreditAdjustment with admin:write three-credential authorization, kind/symbol validation, idempotent replay, the non-negative-balance 409 CREDIT_ADJUSTMENT_CONFLICT and 201 AdminCreditLedgerEntry responses) and validate it end-to-end with the Ops real Keycloak administrator stack: contract lock upgrade to alpha.10, producer, tests, realm admin:write authorization and the validate-dev-admin.ps1 write-face acceptance scenarios.",
+  "in_scope": [
+    "Core contracts lock upgrade from 0.1.0-alpha.9 to 0.1.0-alpha.10 (contracts/core-api.lock.json pointing at the b50f62a lock) with verify-contracts and the contract test suite green against the new face",
+    "Admin write producer: POST /v1/admin/users/{userId}/credit-adjustments on the ADR-0018 AdminController with parameterized admin:write authorization (OIDC credential + admin:write scope + ADMIN business role, ACTIVE via principal resolution), path UUID 404 semantics, body field-closed parsing (kind grant/refund/adjustment, non-zero amount with positive grant/refund, reason 1..512 mandatory, reference_id up to 255), Idempotency-Key 8..200 mandatory with the CreditsLedgerService idempotent command semantics (same-key/same-request replay returns the original recorded response; different request 409 IDEMPOTENCY_KEY_CONFLICT), ledger primitive mapping (grant/refund/adjust with callerId = administrator user id, operation naming and reason recorded verbatim), rejection mapping (INSUFFICIENT_BALANCE/REFUND_LIMIT/BALANCE_CEILING to the admin-face-only 409 CREDIT_ADJUSTMENT_CONFLICT problem code added to the public problem catalog), 201 AdminCreditLedgerEntry response shape with no new migration",
+    "Tests: contract tests against the alpha.10 lock, HTTP e2e for the write face (success, replay, conflict, symbol rejection, insufficient balance, authorization negatives) and real-PostgreSQL integration reusing the established fixture patterns; existing admin read-face regression untouched",
+    "Ops realm: admin:write grant for the designated administrator web client plus validate-dev-admin.ps1 write-face scenarios (administrator PKCE login, grant/refund/adjustment success paths with detail and ledger read-backs, same-key replay, key conflict, negative balance 409, kind/symbol 400, missing scope 403, non-ADMIN role 403, PAT admin:write catalog rejection, unknown user 404) run twice for real acceptance",
+    "Core docs sync (STATUS/development-plan/runtime inputs unchanged by design) and Ops docs sync for the acceptance extension; final trees pass the full gate suites; ff-only main merges and pushes under the owner blanket directives"
+  ],
+  "out_of_scope": [
+    "Any further admin write batch (PAT/app revocation, user status changes) - later owner decisions only",
+    "SDK exposure of createAdminCreditAdjustment (a separate Contracts slice needs this producer as evidence), public credit billing surfaces, Q-003/Q-013 values",
+    "New middleware, new migrations beyond what the ledger primitives already have, changes to the alpha.9 read face"
+  ],
+  "contract_impact": "Core implements the already-locked Contracts 0.1.0-alpha.10 face; no contract file changes in this slice",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-core": {
+      "base_commit": "06de705698f126a8eb462b828c7aaad16e992cbf",
+      "branch": "feat/MCP-F4-CORE-002-admin-credit-adjustments"
+    },
+    "mc-plan-ops": {
+      "base_commit": "ef00a72d89d312e35a80c33617eb6e4cbc5f2181",
+      "branch": "feat/MCP-F4-CORE-002-admin-write-realm"
+    }
+  },
+  "depends_on": [
+    "MCP-F4-CORE-001",
+    "MCP-F4-CONTRACTS-002"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, 2026-10-17 ask_user batch decision: admin write operations first batch = credit adjustments and refunds only",
+    "reason": "Bounded F4-early admin-console write producer under the active F2 direction per ADR-0018: implements only the owner-approved first write batch locked in alpha.10; no other admin write operations, no Q-010 decisions, no F2 exit criteria claimed."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
