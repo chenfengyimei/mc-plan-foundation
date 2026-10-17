@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F4-CONTRACTS-002",
   "title": "Core admin credit-adjustment write face contract lock (alpha.10)",
-  "status": "active",
+  "status": "completed",
   "milestone": "F4",
   "initial_owner": "Codely/master-20261016-sdk-closeout",
   "owner": "Codely/master-20261016-sdk-closeout",
-  "started_at": "2026-10-17T06:31:17.1377870+00:00",
-  "updated_at": "2026-10-17T06:31:17.1377870+00:00",
+  "started_at": "2026-10-17T14:31:17.137787+08:00",
+  "updated_at": "2026-10-17T06:38:09.9299810+00:00",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -28,11 +28,17 @@
     "npm publishing, stable versions, F2 exit claims"
   ],
   "contract_impact": "Core 0.1.0-alpha.9 -> 0.1.0-alpha.10 prerelease additive change (admin write face); community.yaml and skin.yaml byte-unchanged",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "Contract lock green on the final tree (base 601c0f3, commits a610464 lock + b50f62a docs): core.yaml 0.1.0-alpha.10 with the new admin:write scope and POST /v1/admin/users/{userId}/credit-adjustments (createAdminCreditAdjustment: kind grant/refund/adjustment, non-zero amount with positive grant/refund, mandatory reason 1..512, optional reference_id <=255, mandatory Idempotency-Key, 201 AdminCreditLedgerEntry, 409 IDEMPOTENCY_KEY_CONFLICT plus the admin-face-only CREDIT_ADJUSTMENT_CONFLICT, 400/401/403/404 locked problems); field-closed schemas/core/admin-credit-adjustment-request.json (sha256 f481d19f...); validate_contracts.py alpha.10 gates all green (32 schemas/events, 32 unique $ids, 3 OpenAPI documents, 44 unique operationIds) including the admin:write three-catalog isolation (PAT grantable, app delegation and serviceOAuth all exclude it), the full operation shape gate and the request-schema field-closure gate; redocly three-document lint passes (1 expected skin.yaml warning).",
+    "Core SDK type baseline regenerated at alpha.10 with generator-output stability proven (byte-identical regeneration hash): SUPPORTED_CONTRACT_VERSION 0.1.0-alpha.10, SUPPORTED_CONTRACT_FILES grown to 24 entries (new core.yaml sha 1a4cd422... and the adjustment-request schema), SUPPORTED_OPERATIONS kept at 23 with createAdminCreditAdjustment asserted absent pending producer evidence; SDK gates green: format:check, lint --max-warnings 0, strict typecheck, 47 unit tests, build, pack:check clean-consumer strict-tsc; docs synced in STATUS, development-plan, api-catalog and compatibility (alpha.10 classification section with the locked phrase, matrix row, producer sequencing).",
+    "Contract impact none beyond the additive alpha.10 face: the full alpha.9 surface stays byte-compatible, community.yaml and skin.yaml byte-unchanged; contracts main ff-merged from the branch (deleted locally, never on remote) and pushed to origin under the owner 2026-10-16/17 blanket completion directives; zero writes to any other repository; producer implementation (Core, predicted MCP-F4-CORE-002), Ops realm acceptance and the SDK 23-to-24 exposure remain sequenced follow-ups; no other admin write batch is taken in this slice."
+  ],
   "repositories": {
     "mc-plan-contracts": {
       "base_commit": "601c0f3f463b5f77e3e89cff49b30da35cd94580",
-      "branch": "feat/MCP-F4-CONTRACTS-002-admin-credit-adjustments"
+      "branch": "feat/MCP-F4-CONTRACTS-002-admin-credit-adjustments",
+      "last_checkpoint_commit": "b50f62a04c8adb6a7565b6c86a6f68f960ac890b",
+      "final_commit": "b50f62a04c8adb6a7565b6c86a6f68f960ac890b"
     }
   },
   "depends_on": [
@@ -46,5 +52,7 @@
     "reason": "Bounded F4-early admin-console write-face contract slice under the active F2 direction per ADR-0018: contract-first lock of the owner-approved first write batch only; no other admin write operations, no Q-010 decisions, no F2 exit criteria claimed."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Closure: final_commit is the docs commit b50f62a on contracts main (= origin/main after the ff-only merge and push); Finish validated with the repository clean; the write face has no producer yet and nothing is claimed beyond the contract lock."
+  ]
 }
