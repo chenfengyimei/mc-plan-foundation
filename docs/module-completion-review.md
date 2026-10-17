@@ -1,6 +1,6 @@
 # 六仓逐模块收尾核查
 
-核对：2026-10-13，MCP-F2-FOUNDATION-006（追加Community004真实交付，保留004协调修复事实）。用户要求临时人工审核并逐模块理解、开发与收尾；本表依据当前源码、已关闭记录与 Git。已完成技术切片不等于完整产品、生产部署或视觉质量通过。当前执行方向 F2 / Community；ADR0018只读管理台例外保持有界。
+核对：2026-10-16，MCP-F2-FOUNDATION-007（SDK 收官同步；保留 006/005 事实）。用户要求临时人工审核并逐模块理解、开发与收尾；本表依据当前源码、已关闭记录与 Git。已完成技术切片不等于完整产品、生产部署或视觉质量通过。当前执行方向 F2 / Community；ADR0018只读管理台例外已连同其 SDK 关闭。
 
 ## Core：已实现模块及剩余范围
 
@@ -18,7 +18,7 @@
 
 Core main690193a，API代码fb1bc07；CORE-012实证302基础已由F2-CORE-001增量扩至306项。CoreSDKalpha.8仍17操作，37项/pack及新固定镜像真实HTTP/Keycloak回归通过。源目录为 mc-plan-core/src 的对应模块，基础证据在CORE-012，增量在MCP-F2-CORE-001完成记录。
 
-并行管理台 MCP-F4-CORE-001 由 Codely 持有 Core/Contracts/Ops，已见只读管理台源码提交29939a0；记录仍active，不能据提交存在替其宣称全部门禁通过或释放锁。既有alpha.8证据与这条alpha.9管理面分别核对，Community004固定消费alpha.8，未修改另一会话源码。
+管理台 MCP-F4-CORE-001 已关闭（Core 06de705=origin：alpha.9 六管理只读操作 + apps/admin web + Ops ef00a72 真实管理员栈验收 + 浏览器 e2e；Contracts b90a3b0=origin：alpha.9 锁+SDK 重生成）。其 SDK 暴露已由 MCP-F4-CONTRACTS-001 关闭（见文末补记）。
 
 ## Community：已实现模块及剩余范围
 
@@ -40,7 +40,7 @@ Community main3e887c1，最新实现8811b69；alpha.4十二操作与Corealpha.8�
 | 仓库/模块 | 已验证 | 未交付/门槛 |
 |---|---|---|
 | Contracts / API-Schema-event | Corealpha.8、Communityalpha.4、Skinalpha.1已闭环；Community生成固定Git来源，避免活动树漂移 | Corealpha.9管理面属于active切片；稳定发行与未来F3/F4契约仍后续 |
-| Contracts / SDK | Core17/37测试、Community12/40测试、干净pack/真实HTTP/Keycloak；Community门户已实际消费锁哈希打包工件 | SkinSDK与Official完整链；不将SDK测试等同全部产品 |
+| Contracts / SDK | Core 23 操作/47 测试（六管理只读已暴露，MCP-F4-CONTRACTS-001）、Community 12 方法/40 测试、Skin 8 操作/29 测试（MCP-F1-CONTRACTS-007），三包干净 pack/真实 HTTP 两轮；Community门户已实际消费锁哈希打包工件 | Official完整链与稳定发行；管理写操作契约待逐项所有者决策；不将SDK测试等同全部产品 |
 | Skin / API-db-worker | Standalone八操作、幂等/三次渲染、队列重试、30天会话/24小时候选、删除防复活 | Official身份/年龄/权益/计费及Community发布未实现 |
 | Skin / skin-core-validator-provider-sdk | v4确定性UV、Steve/Alex双层；fake/llm/image同链；概念图→视觉→v4厂商中立桥接 | SKIN-009已工程关闭，付费真实概念管线基准与所有者视觉验收未完成，Q-001仍未绑定厂商 |
 | Skin / Web-preview | Pixel Foundry工作台、桌面/移动链、第一方动态3D/键盘交互、Provider标识 | Official完整体验与生产无障碍/性能验收；不能以离线fixture证明生成质量 |
@@ -63,3 +63,7 @@ Skin main14a8fe3，实现检查点0462b20的历史门禁：128单元、API15/wor
 ## 协调工具收尾
 
 FOUNDATION004修复本轮真实复现的零活动目录问题：Git省略空active目录后，旧短事务入口Get-ChildItem在调用登记action前失败；新入口在取得本人短锁后重建父目录。旧入口baseline复现失败，新登记回归与全部原锁/index/branch隔离测试验证。没有修改Skill或授权规则。
+
+## 2026-10-16 SDK 收官补记（MCP-F2-FOUNDATION-007）
+
+MCP-F4-CONTRACTS-001 与 MCP-F1-CONTRACTS-007 均已关闭：Core SDK 17→23（admin:read 六只读操作，producer 锚 Core 06de705，固定镜像 mcp-f4-core-001-29939a0 两轮真实 HTTP smoke，`SUPPORTED_CONTRACT_FILES` 诚实化为 23 项）；Skin SDK 首包 @mc-plan/skin-sdk 0.1.0-alpha.1（8 操作，producer 锚 skin 14a8fe3，生产者树+确定性 Fake Provider 两轮真实 HTTP smoke，匿名窗口无凭据头+64x64 PNG 先验+SKIN_* 错误码类型化）。community 终态存量 70e55a1..3e887c1 按所有者 2026-10-16 完成指令 ff-only 补推。六仓 main=origin；注册表 70 completed / 1 active（本治理切片）。执行队列已清空，剩余全部为所有者门槛项（Q-001 视觉验收/F3、管理写操作逐项、Q-003/Q-013、F2 残余、Q-010 余项、F4 批次、V1 门槛），详见 delivery-plan 2026-10-16 段的模块关系架构基线与队列。

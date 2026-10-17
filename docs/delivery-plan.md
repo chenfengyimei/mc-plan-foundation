@@ -1,6 +1,30 @@
 # MC Plan 完整交付路线
 
-状态：待逐项执行；核对日期：2026-10-13（F1 收官落档段新增）。目标：完成现有六仓的 F1–F6/V1 范围，包括完整社区、Skin 双模式、自部署和上线验收。本文安排跨仓交付依赖；接口以 Contracts、详细单仓顺序以各仓 development-plan、执行权以活动工作流为准。
+状态：待逐项执行；核对日期：2026-10-16（SDK 收官治理段更新），MCP-F2-FOUNDATION-007。目标：完成现有六仓的 F1–F6/V1 范围，包括完整社区、Skin 双模式、自部署和上线验收。本文安排跨仓交付依赖；接口以 Contracts、详细单仓顺序以各仓 development-plan、执行权以活动工作流为准。
+
+## 2026-10-16 SDK 收官治理段（MCP-F2-FOUNDATION-007）
+
+本轮（所有者 2026-10-16 全量完成指令）交付与终态：①MCP-F4-CONTRACTS-001——Core SDK 暴露 ADR-0018 六管理只读操作（支持操作 17→23，producer 锚 Core 06de705，SUPPORTED_CONTRACT_FILES 补齐 11 个 admin Schema 后 23 项，固定镜像 mcp-f4-core-001-29939a0 真实 HTTP smoke 两轮，47 单测/pack/validate_contracts/redocly 全绿，contracts 1409762=origin）；②MCP-F1-CONTRACTS-007——首个 Skin SDK @mc-plan/skin-sdk@0.1.0-alpha.1（8 操作全暴露，producer 锚 skin 14a8fe3，生产者树 node 直启+确定性 Fake Provider+手工隔离 PostgreSQL/Redis 真实 HTTP smoke 两轮，29 单测/pack 全绿，匿名窗口无凭据头+64x64 PNG 先验+10 个 SKIN_* 错误码类型化，Q-001 不触碰，contracts 601c0f3=origin）；③community 终态存量 70e55a1..3e887c1 按授权 ff-only 补推（F2-COMMUNITY-002/003/004 已关闭终态）。六仓 main=origin 全同步。
+
+### 模块关系架构基线（六仓解耦原则，后续切片遵循）
+
+1. **契约先行**：一切跨仓公共表面先在 Contracts 锁定（core alpha.9 / community alpha.4 / skin alpha.1 三 OpenAPI+Schema+事件），生产者与 SDK 只消费锁定文件；Contracts 单通道串行，契约修订与 SDK 写入不同时进行；`generate:check` 各包字节级零漂移。
+2. **身份与授权**：身份只在 Keycloak realm；跨仓授权=OIDC scope 委托（Developer App 委托受调用者 scope 上限约束；PAT 目录/App 目录/serviceOAuth 三者互不含 admin:read/moderation:review/profile:write，机器校验锁定；admin:read 需 realm 指定管理员+ADMIN 业务角色+ACTIVE 三重校验）。
+3. **事件**：Core outbox→消费者拉取（ADR-0011），无共享库、无新中间件；发布位次发布时原子赋序；消费者按 event_id 幂等去重；at-least-once。
+4. **SDK 按域分包**：core-sdk（23 操作）/community-sdk（12 方法）/skin-sdk（8 操作）三包独立，只暴露 producer 验证操作，SUPPORTED_PRODUCER_COMMIT 锚定生产者终树；SDK 不内置 OIDC 流程；匿名面绝不带凭据头；SDK 通过≠消费者已集成；包间保持零依赖（纪律模板复用而非抽公共运行时包），由各包 manifest+测试锚定。
+5. **Ops=真实验收独立面**：固定镜像+真实容器脚本族验收各表面；**Foundation=治理**：记录/方向/ADR/短锁事务，机器真相优先于叙述。
+6. **红线**：跨仓不共享业务源码与数据库；Skin Standalone 不依赖 Core/Keycloak/Community；回退不得保留与契约语义不一致的表面；**发现真实耦合才重构**（不预防性抽象）。
+
+### 当前队列（2026-10-16 实测：70 completed / 1 active，执行队列已清空）
+
+剩余全部为所有者门槛项，按 roadmap 顺序：
+1. **Q-001 视觉验收**（F1 正式收官与 F3 开线的唯一前置）：概念管线受控基准——所有者注入预算与凭据（key 只经 gitignored mc-plan-skin/apps/worker/.env）→两路线受控对照→所有者视觉终裁→正式厂商绑定新 ADR（ADR-0015 变更条件）。
+2. **管理写操作逐项决策**（F4）：人工积分调整/退款暴露、PAT/应用撤销、用户状态变更，每项须所有者决策+审计设计后另开契约（alpha.10+）。
+3. **Q-003/Q-013**：注册/贡献积分值与额外会话价格→公共计费面与真实奖励消费者（Core+Contracts+Ops）。
+4. **F2 残余**：官方 Ops 组合、离机调度/持续删除 journal、Q-005 最小审核记录与安全日志期限。
+5. **Q-010 余项**：Community 待审队列端点、双人复核、申诉（F4 管理端强化）。
+6. **F4 批次**（F2 可运行且 F3 可集成后严格逐批）：标签搜索→点赞收藏→评论→关注流→推荐（Q-008）→通知→举报处置申诉。
+7. **V1 门槛**：Q-004 域名/地域、Q-006 生产邮件、Q-014 托管数据层、Q-016 正式 RPO/RTO；F5 自部署/稳定 SDK 与 F6 法律/容量/监控/发布审查按 roadmap。
 
 ## 2026-10-13 F1 收官落档（MCP-F1-FOUNDATION-016）
 
