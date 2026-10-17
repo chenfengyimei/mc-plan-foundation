@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F1-CONTRACTS-007",
+  "title": "Skin Standalone TypeScript SDK first slice: producer-verified anonymous-window operations",
+  "status": "active",
+  "milestone": "F1",
+  "initial_owner": "Codely/master-20261016-sdk-closeout",
+  "owner": "Codely/master-20261016-sdk-closeout",
+  "started_at": "2026-10-17T05:52:53.2930850+00:00",
+  "updated_at": "2026-10-17T05:52:53.2930850+00:00",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-skin",
+    "mc-plan-foundation"
+  ],
+  "objective": "Deliver the first Skin TypeScript SDK package (@mc-plan/skin-sdk@0.1.0-alpha.1, private, local pack only) on the locked skin.yaml 0.1.0-alpha.1 contract and the MCP-F1-SKIN-008/009 producer evidence (skin main 14a8fe3), exposing all eight producer-verified Standalone anonymous-window operations with typed SKIN problem codes, abort/timeout and bounded key-stable idempotent retries.",
+  "in_scope": [
+    "New sdk/skin package mirroring the sdk/community discipline: openapi-typescript deterministic generation from the in-repo locked openapi/skin.yaml with committed raw generator output and .prettierignore exemption for src/generated and dist",
+    "SUPPORTED_OPERATIONS covering all eight operations (createConversation, createRender, finalizeSkin, getJob, getConversation, deleteConversation, getCandidatePreview, downloadSkin); SUPPORTED_PRODUCER_COMMIT anchored at skin 14a8fe3; SUPPORTED_CONTRACT_FILES embedding the sha256 of every generation-input contract file (skin.yaml plus the referenced common problem schema)",
+    "Anonymous-window client with NO credential model: the SDK never takes token providers and never sends credential headers (ADR-0012); typed ProblemDetails for the ten producer-stable SKIN_* codes; AbortSignal and configurable timeout; bounded idempotent retries that never rotate the Idempotency-Key (three keyed commands plus five GETs are contract-idempotent); binary preview/download returning bytes plus mediaType with client-side PNG magic and 64x64 IHDR pre-validation; client-side pre-validation of message lengths, key 8..200, title 1..120, description bounds and the arm-model enum",
+    "Unit tests per exposed operation (transport/path/auth-free surface/retry/idempotency boundaries/problem parsing/binary assertions), pack:check clean-project strict-tsc consumption, real HTTP smoke against the producer tree (skin main 14a8fe3) running from the neighboring read-only checkout with session-unique manually-started PostgreSQL and Redis containers and the deterministic fake provider (honest attribution: no LLM/image provider involved and Q-001 untouched): full create - render-poll - preview - finalize-poll - download - detail - delete chain, idempotent same-key replay and SKIN_IDEMPOTENCY_CONFLICT, attempts-exhausted 409, unknown/expired-deleted 404 families, delete cascade non-resurrection, and no clock manipulation of the retention windows",
+    "Contracts docs sync: STATUS, development-plan, api-catalog Skin SDK coverage, compatibility Skin SDK acceptance section and matrix row, AGENTS three official SDK packages; generate:check zero drift with validate_contracts.py and redocly re-run"
+  ],
+  "out_of_scope": [
+    "Any change to skin.yaml, JSON schemas or other contract files (contract zero drift)",
+    "Any write to the mc-plan-skin repository (producer evidence is read-only; its containers run from the clean checkout)",
+    "Official-mode userOAuth flows (documentational only in ADR-0012), vendor binding or Q-001/Q-011/Q-012/Q-013 decisions, F3 Official integration, retention-window clock manipulation",
+    "npm publishing, stable versions, claiming any real consumer has integrated the Skin SDK"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "140976252654074073c1b09b81fed0cb16d8e142",
+      "branch": "feat/MCP-F1-CONTRACTS-007-skin-sdk"
+    }
+  },
+  "depends_on": [
+    "MCP-F1-CONTRACTS-003",
+    "MCP-F1-SKIN-008",
+    "MCP-F1-SKIN-009"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, 2026-10-16 blanket directive to read the whole MC plan, complete every remaining module development and keep iterating to completion (this session start)",
+    "reason": "Owner-directed continuation of the F1 Skin/Contracts line under the active F2 direction (SKIN-009/OPS-004 precedent): exposes the already producer-verified Standalone anonymous-window surface only, keeps Q-001 vendor binding undecided, changes no contract and claims no F2 exit criteria."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
