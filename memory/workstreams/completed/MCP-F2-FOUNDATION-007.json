@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F2-FOUNDATION-007",
   "title": "SDK closeout governance sync: plan baseline, module-relationship architecture and terminal-state pushes",
-  "status": "active",
+  "status": "completed",
   "milestone": "F2",
   "initial_owner": "Codely/master-20261016-sdk-closeout",
   "owner": "Codely/master-20261016-sdk-closeout",
-  "started_at": "2026-10-17T06:13:52.1750210+00:00",
-  "updated_at": "2026-10-17T06:13:52.1750210+00:00",
+  "started_at": "2026-10-17T14:13:52.175021+08:00",
+  "updated_at": "2026-10-17T06:22:02.7635000+00:00",
   "primary_repository": "mc-plan-foundation",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -30,11 +30,18 @@
     "Claiming F1 formal closeout, F2 completion or any milestone exit beyond recorded engineering facts"
   ],
   "contract_impact": "none",
-  "acceptance_evidence": [],
+  "acceptance_evidence": [
+    "Both SDK closeout slices verified as completed records with pushed final commits: MCP-F4-CONTRACTS-001 (contracts 1409762=origin, Core SDK 17 to 23 admin read-only operations, producer anchor Core 06de705, fixed image mcp-f4-core-001-29939a0 two-round real HTTP smoke) and MCP-F1-CONTRACTS-007 (contracts 601c0f3=origin, @mc-plan/skin-sdk 0.1.0-alpha.1 exposing all eight anonymous-window operations, producer anchor skin 14a8fe3, producer-tree two-round real HTTP smoke with the deterministic fake provider); both carry full gate suites (47 and 29 unit tests, pack:check clean consumers, generate:check zero drift, validate_contracts and redocly).",
+    "Terminal-state publication verified: six-repo main=origin (community 70e55a1..3e887c1 pushed under the owner 2026-10-16 blanket completion directive as the terminal states of the closed MCP-F2-COMMUNITY-002/003/004; core 06de705, contracts 601c0f3, ops ef00a72, skin 14a8fe3, foundation already current); no lock residue; registry 70 completed plus this governance slice.",
+    "Plan baseline persisted in the delivery-plan 2026-10-16 section: the module-relationship architecture baseline (contract-first locked boundaries, Keycloak realm scope delegation, consumer-pull events, per-domain zero-dependency SDKs exposing only producer-verified operations, Ops real-acceptance independence, Foundation governance, no cross-repo source/database sharing, refactor-on-real-coupling only) and the refined owner-gated queue (Q-001 visual acceptance then F3, admin write operations per-item, Q-003/Q-013, F2 residue, Q-010 remainder, F4 batches, V1 gates).",
+    "Governance regressions green on the final tree: validate-workspace (6 active repositories, 131 Markdown files, 124 JSON files), test-coordination (14 cases), test-workspace-scanning (21 cases), test-foundation-write (15 cases)."
+  ],
   "repositories": {
     "mc-plan-foundation": {
       "base_commit": "74931c060776a99cb925713d8323833f7ab4a46e",
-      "branch": "feat/MCP-F2-FOUNDATION-007-sdk-closeout-governance"
+      "branch": "feat/MCP-F2-FOUNDATION-007-sdk-closeout-governance",
+      "last_checkpoint_commit": "a4286cdeb3297be7ff86e4206bc14e32572fb856",
+      "final_commit": "a4286cdeb3297be7ff86e4206bc14e32572fb856"
     }
   },
   "depends_on": [
@@ -48,5 +55,8 @@
     "reason": "Cross-line Foundation governance bookkeeping under the active F2 direction (F2-FOUNDATION-001..006 precedent): truth sync of already-closed workstreams, terminal-state push publication and plan-baseline persistence only; no product content, no owner-gated decisions, no F2 exit criteria claimed."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Docs synced in the docs commit: memory/current/portfolio.md (2026-10-16 truth rows and push bookkeeping), docs/STATUS.md (SDK closeout paragraph and F4-CORE-001 closure correction), docs/delivery-plan.md (2026-10-16 SDK closeout governance section with the architecture baseline and queue), docs/module-completion-review.md (header date, Core admin-console closure, three-package SDK row, SDK closeout addendum).",
+    "Closure: final_commit is the governance docs commit on the branch; the completed record commit follows; the branch is ff-merged back to main, pushed, and deleted; no product repository was written by this slice and no owner-gated decision was taken."
+  ]
 }
