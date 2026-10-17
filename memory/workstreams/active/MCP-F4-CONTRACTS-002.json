@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F4-CONTRACTS-002",
+  "title": "Core admin credit-adjustment write face contract lock (alpha.10)",
+  "status": "active",
+  "milestone": "F4",
+  "initial_owner": "Codely/master-20261016-sdk-closeout",
+  "owner": "Codely/master-20261016-sdk-closeout",
+  "started_at": "2026-10-17T06:31:17.1377870+00:00",
+  "updated_at": "2026-10-17T06:31:17.1377870+00:00",
+  "primary_repository": "mc-plan-contracts",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-core",
+    "mc-plan-foundation"
+  ],
+  "objective": "Lock Core 0.1.0-alpha.10 per the owner 2026-10-17 first-batch admin write decision (credit adjustments and refunds only): new userOAuth scope admin:write plus POST /v1/admin/users/{userId}/credit-adjustments (kind grant/refund/adjustment, non-zero amount, mandatory reason 1..512, optional reference_id, mandatory Idempotency-Key, 201 AdminCreditLedgerEntry) with machine gates for the three-catalog scope isolation, field-closed request schema, symbol/kind consistency and the non-negative-balance 409 semantics; SDK types regenerate at alpha.10 with SUPPORTED_OPERATIONS kept at 23 until producer evidence exists.",
+  "in_scope": [
+    "core.yaml alpha.10: new admin:write scope declaration and createAdminCreditAdjustment operation on top of the unchanged alpha.9 read-only face",
+    "New field-closed schema admin-credit-adjustment-request (kind enum grant/refund/adjustment, non-zero integer amount, reason 1..512 required, optional reference_id up to 255) plus the locked 409/400 semantics (same-key/different-request IDEMPOTENCY_KEY_CONFLICT; kind/symbol inconsistency 400 VALIDATION_FAILED; non-negative-balance violation 409 with the admin-face-only code CREDIT_ADJUSTMENT_CONFLICT)",
+    "validate_contracts.py alpha.10 machine gates: version bump, admin write operation set, admin:write exclusion from the PAT/app-delegation/serviceOAuth catalogs, reason/amount/Idempotency-Key locks, docs classification phrases",
+    "Core SDK type baseline regeneration at alpha.10 with SUPPORTED_OPERATIONS kept at 23 (createAdminCreditAdjustment asserted absent pending producer evidence) and the contract-file manifest updated to the new lock",
+    "Docs sync: STATUS, development-plan, api-catalog, compatibility (alpha.10 classification section + matrix row), AGENTS unchanged; generate:check zero drift and validate_contracts/redocly green"
+  ],
+  "out_of_scope": [
+    "Any producer implementation (Core/Ops workflows follow the contract lock), any SDK exposure of the write operation, admin PAT/app revocation or user-status changes (later batches per owner decisions)",
+    "Q-003/Q-013 values (owner reaffirmed deferral on 2026-10-17), public credit billing surfaces, automated reward consumers",
+    "npm publishing, stable versions, F2 exit claims"
+  ],
+  "contract_impact": "Core 0.1.0-alpha.9 -> 0.1.0-alpha.10 prerelease additive change (admin write face); community.yaml and skin.yaml byte-unchanged",
+  "acceptance_evidence": [],
+  "repositories": {
+    "mc-plan-contracts": {
+      "base_commit": "601c0f3f463b5f77e3e89cff49b30da35cd94580",
+      "branch": "feat/MCP-F4-CONTRACTS-002-admin-credit-adjustments"
+    }
+  },
+  "depends_on": [
+    "MCP-F4-CORE-001",
+    "MCP-F4-CONTRACTS-001"
+  ],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "MC Plan project owner, 2026-10-17 ask_user batch decision: admin write operations first batch = credit adjustments and refunds only",
+    "reason": "Bounded F4-early admin-console write-face contract slice under the active F2 direction per ADR-0018: contract-first lock of the owner-approved first write batch only; no other admin write operations, no Q-010 decisions, no F2 exit criteria claimed."
+  },
+  "handoff_history": [],
+  "validation_results": []
+}
