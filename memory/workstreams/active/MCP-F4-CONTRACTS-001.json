@@ -6,8 +6,8 @@
   "milestone": "F4",
   "initial_owner": "Codely/master-20261016-sdk-closeout",
   "owner": "Codely/master-20261016-sdk-closeout",
-  "started_at": "2026-10-17T05:27:44.5708010+00:00",
-  "updated_at": "2026-10-17T05:27:44.5708010+00:00",
+  "started_at": "2026-10-17T13:27:44.570801+08:00",
+  "updated_at": "2026-10-17T05:50:33.7601880+00:00",
   "primary_repository": "mc-plan-contracts",
   "supporting_repositories": [],
   "reference_repositories": [
@@ -32,7 +32,8 @@
   "repositories": {
     "mc-plan-contracts": {
       "base_commit": "b90a3b0007e9e45f5eb9316afd77a50dc2ebbd62",
-      "branch": "feat/MCP-F4-CONTRACTS-001-admin-sdk"
+      "branch": "feat/MCP-F4-CONTRACTS-001-admin-sdk",
+      "last_checkpoint_commit": "140976252654074073c1b09b81fed0cb16d8e142"
     }
   },
   "depends_on": [
@@ -45,5 +46,9 @@
     "reason": "Bounded F4-early admin-console SDK follow-up under the active F2 direction per ADR-0018: Contracts-domain read-only exposure of the six producer-verified admin operations only; no admin write operations, no Q-010 decisions, no F2 exit criteria claimed."
   },
   "handoff_history": [],
-  "validation_results": []
+  "validation_results": [
+    "Implementation complete on feat/MCP-F4-CONTRACTS-001-admin-sdk (two commits on base b90a3b0: 10c5690 SDK feature + 1409762 docs). All final-tree gates green: format:check, lint --max-warnings 0, strict typecheck, generate:check zero drift (openapi/schemas/events/examples byte-unchanged), 47 unit tests (37 existing + 10 admin surface), build, pack:check clean-consumer strict-tsc consuming the six admin methods, validate_contracts.py (31 schemas/events, 31 unique ids, 3 OpenAPI documents, 43 operationIds) and redocly three-document lint (1 expected skin.yaml warning).",
+    "Real HTTP smoke:real passed twice (runs 4 and 5) against the fixed image mc-plan-core:mcp-f4-core-001-29939a0 (the exact image the MCP-F4-CORE-001 record declares; the producer anchor commit 06de705 differs from the image source 29939a0 only in apps/admin web files, verified by git diff) + isolated PostgreSQL 17 + local JWKS issuer for the admin phase (honestly attributed, not Keycloak) + isolated real Keycloak 26.8.0 for the deactivation regression: the 16 established operations and the real PKCE deactivation chain regress unchanged; the new admin phase exercises all six operations with field-closed payload assertions, cursor pagination walked to a null cursor, [SYNTHETIC-DB-SEED] labeled ADMIN role promotion plus a chain-consistent grant ledger fixture row (everything else observed is real producer data: materialized entitlement granted 3/consumed 1, real audit trail with user_id filter convergence, real outbox rows with PUBLISHED filter and delivery positions); labeled negatives: missing admin:read 403 INSUFFICIENT_SCOPE, admin:read without the ADMIN role 403 ROLE_REQUIRED, bare and service tokens both rejected at the authentication layer with 401 AUTHENTICATION_REQUIRED (the admin face declares userOAuth credentials only), raw limit=101 and forged cursor 400 VALIDATION_FAILED, pat:manage-holding administrator requesting an admin:read PAT rejected 400 VALIDATION_FAILED (UNKNOWN_SCOPE catalog exclusion). Zero Bearer/secret occurrences in smoke logs; zero leftover containers, volumes or networks.",
+    "Harness findings fixed during smoke authoring (test-only, no SDK behavior change): the service-token admin probe must be a raw HTTP request because the SDK client-side boundary rejects a service-token-only client before sending anything (the producer then rejects the service credential at the authentication layer with 401, not 403, matching the locked userOAuth-only credential face); the PAT catalog exclusion probe needs a caller holding pat:manage with a DEVELOPMENT role (ADMIN qualifies per DEVELOPMENT_ROLES) so the request reaches the locked PUBLIC_SCOPE_CATALOG check."
+  ]
 }
