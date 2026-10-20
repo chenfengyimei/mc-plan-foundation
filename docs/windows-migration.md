@@ -63,7 +63,7 @@ Playwright Linux 运行库不足时依官方提示安装目标系统依赖。Con
 
 ## 5. Git 以外的资料
 
-本次在 Mac 工作区同级制作本地私有传输包 `MC-private-transfer-20261020.tar.gz`，旁边放 SHA256 校验文件。该包含可能敏感的本地配置及历史，只能用可信的私有渠道搬运，不能上传公开仓库。包内 `PRIVATE-README.md` 和 `inventory.json` 列出范围与恢复步骤。
+最终私有传输包已加密上传到私有仓库 [mc-plan-private-transfer](https://github.com/chenfengyimei/mc-plan-private-transfer) 的 Release `pre-wipe-2026-10-20`。加密资产为 `MC-private-transfer-20261020.tar.gz.enc`（54,596,240 bytes，SHA256 `4ce0ae90b587cdf1df46fb25d2c1fe4195f65987a163cda089db43a775755d76`）；解密后归档 SHA256 为 `bc0966e5cab9d1fee701dc5e143a301ff95b478a49d4f00b7479ee60fcfe0129`。恢复密钥保存在该私有仓库变量 `MC_PLAN_BACKUP_RECOVERY_KEY`，未提交 Git。包内 `PRIVATE-README.md` 和 `inventory.json` 列出范围与恢复步骤。
 
 | 内容 | 迁移方式 | 接收后处理 |
 |---|---|---|
@@ -75,10 +75,24 @@ Playwright Linux 运行库不足时依官方提示安装目标系统依赖。Con
 | Mac Codex `config.toml` | 私有包 `codex-reference/config.mac.toml` | 仅作人工参考，不能整份覆盖 Windows/WSL 配置 |
 | Codex auth、SQLite、浏览器登录、SSH 私钥 | 不打包 | 新机器重新登录，服务密钥通过原私有渠道配置 |
 | node_modules、dist、`.next`、生成物、Playwright 浏览器 | 不打包 | 在 WSL 按锁文件重建 |
-| Core/Keycloak 开发库及旧 mc-c010 测试库（3 个停止容器的卷） | 私有包 `docker/`：冷快照和逻辑 SQL dump | 逻辑导出从独立副本运行，三份均已在全新隔离数据库验证恢复；原卷未启动/修改 |
-| Docker 镜像、其余无归属匿名卷、外部 S3 | 不在文件包中，镜像清单在包内 | 按各仓 Dockerfile/runbook 重建；Mac 原件保留到接收验收 |
+| Docker 卷、数据库快照、Docker 镜像、外部 S3 | 不打包 | 按各仓 Dockerfile、迁移和 runbook 在 Windows/WSL 重建 |
 
-Git bundle 包含本地 refs 的快照。额外保存的三份数据库备份均完成本机全新隔离集群恢复（`psql -X -v ON_ERROR_STOP=1`），清单见私有包 `docker/database-inventory.json`。未复制 Docker VM 原始磁盘，未验证 Windows/x64 上的恢复；跨机器优先使用逻辑 SQL，而不是直接装载冷卷。全部原始数据库容器保持停止，临时验证容器/卷已清理。
+Git bundle 包含本地 refs 的完整快照。最终包按所有者指示排除了 Docker 卷、数据库快照、依赖目录与构建缓存，只保留代码历史、不可重建的本地源码/配置覆盖层、交接资料、MC Codex 会话与提示词。
+
+Windows/WSL 恢复加密包：
+
+```bash
+gh release download pre-wipe-2026-10-20 --repo chenfengyimei/mc-plan-private-transfer
+export MC_PLAN_BACKUP_RECOVERY_KEY="$(gh variable get MC_PLAN_BACKUP_RECOVERY_KEY --repo chenfengyimei/mc-plan-private-transfer)"
+sha256sum -c MC-private-transfer-20261020.tar.gz.enc.sha256
+openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -md sha256 \
+  -in MC-private-transfer-20261020.tar.gz.enc \
+  -out MC-private-transfer-20261020.tar.gz \
+  -pass env:MC_PLAN_BACKUP_RECOVERY_KEY
+echo 'bc0966e5cab9d1fee701dc5e143a301ff95b478a49d4f00b7479ee60fcfe0129  MC-private-transfer-20261020.tar.gz' | sha256sum -c -
+tar -xzf MC-private-transfer-20261020.tar.gz
+unset MC_PLAN_BACKUP_RECOVERY_KEY
+```
 
 旧验证日志中有 `/Users/...` 历史路径。它们是证据出处，不是新机器执行路径；新会话必须发现自己的根目录。重建索引、任务侧栏和聊天记录不是 Git 的作用，本次用可追溯文件和提示词交接工作状态。
 
@@ -90,4 +104,4 @@ Windows 桌面与 WSL CLI 默认使用不同的 Codex home；官方[说明](http
 - 代理实际运行在 WSL2，两个 MC Skill 版本检查通过，协调和工作区验证通过。
 - Windows 接收会话按 Foundation 短事务协议追加 `MCP-F4-CORE-002` 的 Owner 交接记录，保留 Core/Ops 锁；迁移记录关闭不关闭产品工作流。
 - 新机器完成所需 Docker/DB/Keycloak/浏览器基础验证，记录通过、失败和未运行项。
-- 在确认运行时数据不再需要前，保留 Mac 工作区、Docker 卷和私有包。继续开发顺序见[交接](../memory/handoffs/2026-10-20-windows.md)。
+- GitHub 私有 Release 与六仓远端可访问后即可按本交接恢复；继续开发顺序见[交接](../memory/handoffs/2026-10-20-windows.md)。
