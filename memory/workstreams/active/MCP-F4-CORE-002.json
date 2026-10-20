@@ -5,9 +5,9 @@
   "status": "active",
   "milestone": "F4",
   "initial_owner": "Codely/master-20261016-sdk-closeout",
-  "owner": "Codely/master-20261016-sdk-closeout",
-  "started_at": "2026-10-17T07:00:27.0677800+00:00",
-  "updated_at": "2026-10-17T07:00:27.0677800+00:00",
+  "owner": "Codex/windows-migration-20261020",
+  "started_at": "2026-10-17T15:00:27.06778+08:00",
+  "updated_at": "2026-10-20T02:07:13.1520630+00:00",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-ops"
@@ -51,6 +51,18 @@
     "authorized_by": "MC Plan project owner, 2026-10-17 ask_user batch decision: admin write operations first batch = credit adjustments and refunds only",
     "reason": "Bounded F4-early admin-console write producer under the active F2 direction per ADR-0018: implements only the owner-approved first write batch locked in alpha.10; no other admin write operations, no Q-010 decisions, no F2 exit criteria claimed."
   },
-  "handoff_history": [],
+  "handoff_history": [
+    {
+      "from": "Codely/master-20261016-sdk-closeout",
+      "to": "Codex/windows-migration-20261020",
+      "at": "2026-10-20T02:07:13.1520630+00:00",
+      "reason": "Project owner explicitly requested migration of the current workspace and unfinished work to Windows Codex on 2026-10-20, including GitHub commits/push and a handoff prompt. This session only preserves the existing work and records evidence; Windows will acknowledge receipt before implementation resumes.",
+      "repositories": {
+        "mc-plan-core": "06de705698f126a8eb462b828c7aaad16e992cbf plus five tracked unstaged files",
+        "mc-plan-ops": "ef00a72d89d312e35a80c33617eb6e4cbc5f2181 clean"
+      },
+      "remaining_work": "Unverified Core admin credit-adjustment draft; new HTTP/integration/contract tests, Ops admin:write realm and two real acceptance runs, complete repository gates, review and workstream closure."
+    }
+  ],
   "validation_results": []
 }
