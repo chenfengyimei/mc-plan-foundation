@@ -26,9 +26,13 @@ MC Plan（MC 计划）的治理与架构真相仓库。这里保存跨项目长�
 3. 单仓实现细节、验收命令和局部状态以对应仓库为准。
 4. 具体任务、讨论和审查以 GitHub Issue/PR 为准，不复制到多份 Markdown。
 
+## Windows 迁移（2026-10-20）
+
+从[Windows 迁移手册](docs/windows-migration.md)开始；[具体交接](memory/handoffs/2026-10-20-windows.md)记录未完成的 Core/Ops 工作，[可复制提示词](templates/windows-codex-handoff-prompt.md)供新机器 Codex 接收。
+
 ## 当前阶段
 
-Foundation v1.0 文档与治理基线、F1 架构评审已完成，六仓均已有 GitHub remote。当前全局方向仍为 `F1 / mc-plan-core`；Core-008（Core + Ops）与 Skin-008（blocked）仍未关闭，Community 尚未实现业务工程，不能视为 V1 完成。最新里程碑见 [项目组合状态](memory/current/portfolio.md)，从当前代码到完整 V1 的职责与验收顺序见 [完整交付路线](docs/delivery-plan.md)，阶段定义见 [路线图](docs/roadmap.md)。活动锁与 Git 状态须在每次派工前重新核对。
+Foundation v1.0 文档与治理基线、F1 架构评审已完成，六仓均已有 GitHub remote。2026-10-20 核对：当前全局方向为 `F2 / mc-plan-community`，管理员后台按 ADR-0018 有界先行；`MCP-F4-CORE-002`（Core + Ops）待 Windows 接收，完整 F2/F3/F4/V1 尚未完成。最新里程碑见 [项目组合状态](memory/current/portfolio.md)，从当前代码到完整 V1 的职责与验收顺序见 [完整交付路线](docs/delivery-plan.md)，阶段定义见 [路线图](docs/roadmap.md)。活动锁与 Git 状态须在每次派工前重新核对。
 
 所有写任务必须先按 [多仓协调模型](docs/coordination.md) 声明唯一主仓库和仓库锁；各项目固定开发顺序见对应 `docs/development-plan.md`。
 

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "captured_on": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "migration_tracking_id": "MCP-F2-FOUNDATION-008",
+  "unfinished_tracking_id": "MCP-F4-CORE-002",
+  "repositories": [
+    {
+      "name": "mc-plan-foundation",
+      "url": "https://github.com/chenfengyimei/mc-plan-foundation.git",
+      "branch": "docs/MCP-F2-FOUNDATION-008-windows-migration",
+      "checkpoint": "c466706ad3b42726c5b35b81b25d5157d7d488a4",
+      "allow_descendant": true
+    },
+    {
+      "name": "mc-plan-contracts",
+      "url": "https://github.com/chenfengyimei/mc-plan-contracts.git",
+      "branch": "main",
+      "checkpoint": "b50f62a04c8adb6a7565b6c86a6f68f960ac890b",
+      "allow_descendant": false
+    },
+    {
+      "name": "mc-plan-core",
+      "url": "https://github.com/chenfengyimei/mc-plan-core.git",
+      "branch": "feat/MCP-F4-CORE-002-admin-credit-adjustments",
+      "checkpoint": "e7e83ca06647227253be93ff95badfeb3322d637",
+      "allow_descendant": false
+    },
+    {
+      "name": "mc-plan-community",
+      "url": "https://github.com/chenfengyimei/mc-plan-community.git",
+      "branch": "main",
+      "checkpoint": "3e887c169567064659d53e14b01fee77311d20a6",
+      "allow_descendant": false
+    },
+    {
+      "name": "mc-plan-skin",
+      "url": "https://github.com/chenfengyimei/mc-plan-skin.git",
+      "branch": "main",
+      "checkpoint": "14a8fe3d24ecb68b02cc8ab765f57b6103893e76",
+      "allow_descendant": false
+    },
+    {
+      "name": "mc-plan-ops",
+      "url": "https://github.com/chenfengyimei/mc-plan-ops.git",
+      "branch": "feat/MCP-F4-CORE-002-admin-write-realm",
+      "checkpoint": "ef00a72d89d312e35a80c33617eb6e4cbc5f2181",
+      "allow_descendant": false
+    }
+  ]
+}
