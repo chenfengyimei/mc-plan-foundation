@@ -2,12 +2,12 @@
   "schema_version": 1,
   "tracking_id": "MCP-F4-CORE-002",
   "title": "Core admin credit-adjustment write producer with Ops real acceptance",
-  "status": "handoff_required",
+  "status": "active",
   "milestone": "F4",
   "initial_owner": "Codely/master-20261016-sdk-closeout",
-  "owner": "Codex/windows-migration-20261020",
+  "owner": "Codex/windows-receiver-01a15726-47db-7cc3-89ee-a51d678b90a9",
   "started_at": "2026-10-17T15:00:27.06778+08:00",
-  "updated_at": "2026-10-20T02:07:59.8030370+00:00",
+  "updated_at": "2026-10-20T04:29:34.2302659+00:00",
   "primary_repository": "mc-plan-core",
   "supporting_repositories": [
     "mc-plan-ops"
@@ -66,10 +66,22 @@
       "remaining_work": "Unverified Core admin credit-adjustment draft; new HTTP/integration/contract tests, Ops admin:write realm and two real acceptance runs, complete repository gates, review and workstream closure.",
       "from_owner": "Codely/master-20261016-sdk-closeout",
       "to_owner": "Codex/windows-migration-20261020"
+    },
+    {
+      "at": "2026-10-20T04:29:34.2302659+00:00",
+      "reason": "Project owner explicitly authorized the Windows receiver to resume the existing MCP-F4-CORE-002 workflow after GitHub recovery. The receiver verified the six repository origins, branches, clean worktrees and checkpoints; verified the encrypted release, plaintext archive, all 1,640 inventory hashes and six bundles; restored private overlays without overwriting local files; and acknowledges that product implementation and full runtime acceptance remain incomplete.",
+      "repositories": {
+        "mc-plan-core": "e7e83ca06647227253be93ff95badfeb3322d637 clean on feat/MCP-F4-CORE-002-admin-credit-adjustments",
+        "mc-plan-ops": "ef00a72d89d312e35a80c33617eb6e4cbc5f2181 clean on feat/MCP-F4-CORE-002-admin-write-realm"
+      },
+      "remaining_work": "Review and complete the Core admin credit-adjustment producer semantics; fix the known admin.controller.ts formatting failure; add missing write-face HTTP and real-PostgreSQL tests; implement the Ops admin:write realm and validate-dev-admin.ps1 scenarios; run two real acceptance rounds, complete declared gates and image validation, then close only if all evidence passes. The Codex desktop agent still requires the user-visible WSL setting plus app restart, and Docker Desktop WSL integration is not yet available, so no real DB/Keycloak/Ops/image acceptance is claimed by this handoff.",
+      "from_owner": "Codex/windows-migration-20261020",
+      "to_owner": "Codex/windows-receiver-01a15726-47db-7cc3-89ee-a51d678b90a9"
     }
   ],
   "validation_results": [
     "2026-10-20 migration checkpoint: git diff --check passed before commit; pnpm typecheck passed; MC_PLAN_CONTRACTS_DIR=../mc-plan-contracts pnpm test:contract passed (26 locked files at alpha.10, 31 tests / 6 files). pnpm format:check FAILED on src/admin/adapter/http/admin.controller.ts; preserved rather than edited during transport. No claim of full gates, new write-face tests, real acceptance, image build, closure or main integration.",
-    "2026-10-20 custody handoff owner fields corrected to from_owner/to_owner after coordination validator rejected the initial field names; Continue validation subsequently passed."
+    "2026-10-20 custody handoff owner fields corrected to from_owner/to_owner after coordination validator rejected the initial field names; Continue validation subsequently passed.",
+    "2026-10-20 Windows recovery receipt: Foundation audit branch fd9632c and five product checkpoints verified clean; MC Skill checks passed; encrypted and plaintext SHA256 plus 1,640 inventory entries and six Git bundles verified; private overlays restored without overwrite. Foundation coordination/workspace checks passed. The current desktop chat still reports a Windows-native host and Docker is not exposed in Ubuntu WSL2, so runtime acceptance remains pending and the workflow stays active."
   ]
 }
