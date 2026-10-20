@@ -69,14 +69,16 @@ Playwright Linux 运行库不足时依官方提示安装目标系统依赖。Con
 |---|---|---|
 | 六仓提交、分支、文档、权威 MC Skills | GitHub；另附六个 Git bundle | 先核对清单；无网时 bundle 可克隆 |
 | MC 相关 `.codex/outputs/mc*`（旧提示词、证据、草稿） | 私有传输包 `codex-outputs/` | 参考资料，旧提示词不直接当最新派工 |
+| MC Codex 原始 JSONL 会话（5 文件，34.3 MiB 快照） | 私有包 `codex-sessions/` | 仅供查阅，不保证可导入新客户端 |
 | 工作区 `CODELY.md`、`.codely-cli` | 私有传输包 `workspace-local/` | 原始历史仅供查阅，不覆盖当前规则 |
 | Skin `data/`、worker `.env`，被忽略的局部代理说明 | 私有传输包 `repository-local/` | 人工核对后复制到对应仓；密钥不进 Git、不显示 |
 | Mac Codex `config.toml` | 私有包 `codex-reference/config.mac.toml` | 仅作人工参考，不能整份覆盖 Windows/WSL 配置 |
 | Codex auth、SQLite、浏览器登录、SSH 私钥 | 不打包 | 新机器重新登录，服务密钥通过原私有渠道配置 |
 | node_modules、dist、`.next`、生成物、Playwright 浏览器 | 不打包 | 在 WSL 按锁文件重建 |
-| Docker 镜像/卷、PostgreSQL、Keycloak、S3 持久数据 | 不在文件包中 | 有需保留的数据须使用对应仓备份/恢复 runbook；Mac 原件保留到接收验收 |
+| Core/Keycloak 开发库及旧 mc-c010 测试库（3 个停止容器的卷） | 私有包 `docker/`：冷快照和逻辑 SQL dump | 逻辑导出从独立副本运行，三份均已在全新隔离数据库验证恢复；原卷未启动/修改 |
+| Docker 镜像、其余无归属匿名卷、外部 S3 | 不在文件包中，镜像清单在包内 | 按各仓 Dockerfile/runbook 重建；Mac 原件保留到接收验收 |
 
-Git bundle 包含本地 refs 的快照，不能代替运行时数据库备份。没有把 Docker VM 原始磁盘复制到 Windows，也没有验证 Windows 运行时恢复。
+Git bundle 包含本地 refs 的快照。额外保存的三份数据库备份均完成本机全新隔离集群恢复（`psql -X -v ON_ERROR_STOP=1`），清单见私有包 `docker/database-inventory.json`。未复制 Docker VM 原始磁盘，未验证 Windows/x64 上的恢复；跨机器优先使用逻辑 SQL，而不是直接装载冷卷。全部原始数据库容器保持停止，临时验证容器/卷已清理。
 
 旧验证日志中有 `/Users/...` 历史路径。它们是证据出处，不是新机器执行路径；新会话必须发现自己的根目录。重建索引、任务侧栏和聊天记录不是 Git 的作用，本次用可追溯文件和提示词交接工作状态。
 
