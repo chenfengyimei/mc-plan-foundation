@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-008",
+  "title": "Windows migration inventory, reproducible workspace restore and Codex handoff",
+  "status": "completed",
+  "milestone": "F2",
+  "initial_owner": "Codex/windows-migration-20261020",
+  "owner": "Codex/windows-migration-20261020",
+  "started_at": "2026-10-20T10:09:01.981717+08:00",
+  "updated_at": "2026-10-20T02:20:40.1706470+00:00",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": [
+    "mc-plan-contracts",
+    "mc-plan-core",
+    "mc-plan-community",
+    "mc-plan-skin",
+    "mc-plan-ops"
+  ],
+  "objective": "Publish a reviewable migration guide, six-repository snapshot and reproducible restore script plus an explicit Windows Codex handoff, preserving unfinished CORE-002 and private local evidence.",
+  "in_scope": [
+    "Foundation migration guide and sanitized reusable handoff prompt explicitly requested by the owner",
+    "Six repository remote/branch/checkpoint manifest and clone/verify script with non-destructive defaults",
+    "Separate private local transport archive of MC outputs, Codely history, ignored data and selected configuration; no credentials or private archive in Git",
+    "Validate Foundation gates, publish migration branch to GitHub and preserve CORE-002 branch without claiming implementation complete"
+  ],
+  "out_of_scope": [
+    "No product feature changes, no public API changes, no production deployment or paid provider calls",
+    "No implementation resumption or release of the Core/Ops handoff locks",
+    "No migration of Codex authentication databases or unrelated projects; no secret values or raw chat histories in Git"
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "docs/windows-migration.md: WSL2 agent route, native Windows write boundary, versions, reconstruction and private-data inventory.",
+    "migration/windows-20261020.json and scripts/restore-workspace.ps1: six origins, exact product checkpoints, Foundation migration descendant and non-destructive restore.",
+    "memory/handoffs/2026-10-20-windows.md and templates/windows-codex-handoff-prompt.md: current snapshot, custody, explicit receiving protocol and unfinished product work.",
+    "Core e7e83ca pushed on the existing active branch; Ops ef00a72 pushed on its active branch; all other product remote heads match the manifest.",
+    "Private local transport archive prepared: six verified Git bundles, 1621 files including historical MC outputs/Codely/5 MC JSONL sessions, ignored local instructions and Skin data/config; credentials/auth databases excluded except local project env and Mac config retained privately for manual reference.",
+    "Three stopped PostgreSQL databases exported as cold readonly snapshots and logical dumps from temporary copies; each logical dump restored successfully into a brand-new isolated cluster with psql ON_ERROR_STOP=1. Original volumes/containers retained, temporary resources removed.",
+    "The archive payload hashes were all read back and verified; final packaging refresh will include this closeout commit. Windows execution and actual receiver environment acceptance remain receiver steps, not claims of this migration-preparation task."
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "8f3addf4002327fa190d31df4f7b655620b9edf4",
+      "branch": "docs/MCP-F2-FOUNDATION-008-windows-migration",
+      "last_checkpoint_commit": "2732d52d409da48f2cad5630b1df374c4e3d00d2",
+      "final_commit": "2732d52d409da48f2cad5630b1df374c4e3d00d2"
+    }
+  },
+  "depends_on": [],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "foundation-governance",
+    "authorized_by": "Project owner 2026-10-20 explicitly requested Windows migration, organization, GitHub commits/push and handoff prompts.",
+    "reason": "Cross-repository development environment and handoff documentation under the current F2 direction; Foundation only is writable and no milestone completion is claimed."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    "Both canonical Skill installers -Check passed: mc-plan-development 1.1.2 and mc-plan-orchestrator 1.0.0.",
+    "validate-coordination Start and Continue passed with the non-overlapping Foundation-only workstream and existing Core/Ops lock.",
+    "validate-workspace passed after initial documents and again after final evidence: six repositories, 134 Markdown and 129 JSON files.",
+    "test-coordination.ps1 passed 14 cases; test-workspace-scanning.ps1 passed 21 cases; test-foundation-write.ps1 passed 15 cases.",
+    "restore-workspace.ps1 verified the actual workspace. Five isolated-clone transport cases passed: exact product checkpoints/Foundation descendant, dirty checkout preservation, branch mismatch preservation, checkpoint mismatch rejection, origin mismatch rejection.",
+    "Core checkpoint only: typecheck and 31 contract tests passed; format check failed on admin.controller.ts and preserved as a known receiving task. No new producer acceptance or full gates were claimed.",
+    "All five product remote heads independently verified by ls-remote after pushes; Foundation migration branch first push passed. No main pushes, main integration, history rewrite, production deployment or paid provider calls.",
+    "Private archive: six bundle verifications passed; 1621 payload files SHA256 verified after tar read-back. Database logical exports and all three fresh-cluster restores passed. No Windows/x64 runtime test was performed."
+  ]
+}
