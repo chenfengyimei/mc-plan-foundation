@@ -1,0 +1,62 @@
+{
+  "$schema": "../../../schemas/workstream.v1.schema.json",
+  "schema_version": 1,
+  "tracking_id": "MCP-F2-FOUNDATION-009",
+  "title": "Pre-wipe GitHub backup audit and encrypted private transfer",
+  "status": "active",
+  "milestone": "F2",
+  "initial_owner": "Codex/pre-wipe-github-backup-20261020",
+  "owner": "Codex/pre-wipe-github-backup-20261020",
+  "started_at": "2026-10-20T02:39:50Z",
+  "updated_at": "2026-10-20T03:23:00Z",
+  "primary_repository": "mc-plan-foundation",
+  "supporting_repositories": [],
+  "reference_repositories": ["mc-plan-contracts", "mc-plan-core", "mc-plan-community", "mc-plan-skin", "mc-plan-ops"],
+  "objective": "Audit the Mac workspace before it is erased and publish the important MC Plan code, local overlays, prompts and handoff state to a private encrypted GitHub release without exposing plaintext secrets.",
+  "in_scope": [
+    "Reconcile every registered repository branch, commit, stash, worktree, remote reachability and untracked or ignored non-rebuildable file against the migration manifest and Git bundles.",
+    "Preserve MC-related Codex sessions and referenced attachments, workspace overlays and migration evidence while excluding authentication material and rebuildable artifacts.",
+    "Create a dedicated private GitHub backup repository, upload an AES-256 encrypted release asset plus checksums and restore metadata, and record the exact recovery route.",
+    "Run Foundation coordination and workspace validation, preserve the active MCP-F4-CORE-002 handoff lock, complete this backup workstream, integrate the Foundation documentation and push the resulting branch state to GitHub."
+  ],
+  "out_of_scope": [
+    "No plaintext secret, token, production value, personal data, raw AI prompt archive or database dump may be committed to Git; the private transfer must remain encrypted at rest on GitHub.",
+    "Do not resume or close MCP-F4-CORE-002, change public contracts, deploy production, run paid providers, or claim any product milestone complete.",
+    "Do not upload Codex auth.json, browser cookies, SSH private keys, macOS keychain material, GitHub credential stores or rebuildable node_modules, build output and architecture-specific Docker images."
+  ],
+  "contract_impact": "none",
+  "acceptance_evidence": [
+    "Private repository https://github.com/chenfengyimei/mc-plan-private-transfer is PRIVATE and its main branch contains the recovery entrypoint.",
+    "Release pre-wipe-2026-10-20 reports the 54,596,240-byte encrypted asset as uploaded with SHA256 4ce0ae90b587cdf1df46fb25d2c1fe4195f65987a163cda089db43a775755d76.",
+    "Six Git bundles passed git bundle verify; all 1,640 files in the 54,596,210-byte plaintext archive passed manifest SHA256 verification.",
+    "Docker volumes, database snapshots, node_modules and build caches were removed from the final asset by owner direction; no GitHub re-download was requested."
+  ],
+  "repositories": {
+    "mc-plan-foundation": {
+      "base_commit": "42b3ef45af47bf916f409ab899f5ad20bfcbd97c",
+      "branch": "docs/MCP-F2-FOUNDATION-009-github-backup-audit",
+      "last_checkpoint_commit": null,
+      "final_commit": null
+    }
+  },
+  "depends_on": ["MCP-F2-FOUNDATION-008"],
+  "blocked_reason": null,
+  "direction_exception": {
+    "category": "data-loss",
+    "authorized_by": "Project owner, 2026-10-20: upload everything to GitHub and verify completeness because the current computer will be erased.",
+    "reason": "One-time pre-wipe recovery work protects existing F2/F4 code, local evidence and development data without changing product scope."
+  },
+  "handoff_history": [],
+  "validation_results": [
+    {
+      "name": "private-transfer-archive",
+      "result": "passed",
+      "details": "6 Git bundles verified; 1,640 archive file hashes verified; plaintext SHA256 bc0966e5cab9d1fee701dc5e143a301ff95b478a49d4f00b7479ee60fcfe0129"
+    },
+    {
+      "name": "github-release-upload",
+      "result": "passed",
+      "details": "GitHub release API reports encrypted asset, checksum and recovery metadata as uploaded; repository visibility is PRIVATE"
+    }
+  ]
+}
